@@ -14,6 +14,19 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
+@theme {
+  --color-primary: #F37335;
+  --color-secondary: #6EC1E4;
+
+  --color-font-main: #333333;
+  --color-font-highlight: #1C244B;
+  --color-bluish-grey: #F2F7FD;
+
+  --color-dark-grey: #F4F5F9;
+  --color-light-grey: #F9FAFD;
+}
+
 @layer base {
   *,
   ::after,
@@ -26,7 +39,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-gray-950 text-font-main;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
