@@ -2,10 +2,7 @@ import type { MetaFunction } from '@remix-run/node'
 import constants from '~/constants'
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: `${constants.pages.defaultTitle} - ${constants.sbbs.name.long}` },
-    { name: 'description', content: constants.sbbs.siteDescription },
-  ]
+  return constants.pageMetas.default
 }
 
 export default function Index() {
