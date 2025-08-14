@@ -23,8 +23,8 @@
   --color-font-highlight: #1C244B;
   --color-bluish-grey: #F2F7FD;
 
-  --color-dark-grey: #F4F5F9;
-  --color-light-grey: #F9FAFD;
+  --color-grey-dark: #F4F5F9;
+  --color-grey-light: #F9FAFD;
 }
 
 @layer base {
