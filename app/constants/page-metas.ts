@@ -6,6 +6,10 @@ const pageMetas = {
     { title: `${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: sbbs.siteDescription },
   ],
+  adminDefault: [
+    { title: `Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'SBBS Admin Site' },
+  ],
 }
 
 export default pageMetas
