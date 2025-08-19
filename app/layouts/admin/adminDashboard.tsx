@@ -42,7 +42,7 @@ export default function AdminDashboardLayout() {
                 onClick={closeSidebar}
               >
                 <div className='flex flex-row items-center gap-2'>
-                  {item.icon}
+                  <div className='text-xl'>{item.icon}</div>
                   <p>{item.label}</p>
                 </div>
               </Link>
