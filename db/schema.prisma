@@ -1,0 +1,33 @@
+datasource db {
+  provider  = "postgresql"
+  url       = "postgresql://postgres.ekqfuwmyodzfoojyazey:YevdAMjz5gsPTa5F@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
+  directUrl = "postgresql://postgres.ekqfuwmyodzfoojyazey:YevdAMjz5gsPTa5F@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  SISWA
+  GURU
+  ORANGTUA
+}
+
+model Akun {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique
+  password       String
+  role           Role      @default(SISWA)
+  point          Int       @default(0)
+  updatedAt      DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+  createdById    Int?
+  createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById Int?
+  lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  akunCreator    Akun[]    @relation(name: "createdBy")
+  akunUpdator    Akun[]    @relation(name: "lastUpdateBy")
+}
