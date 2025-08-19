@@ -49,7 +49,13 @@ export default function AdminDashboardLayout() {
             ))}
           </div>
 
-          <div className='bg-secondary p-8 md:p-4'>Account box</div>
+          <div className='p-8 md:p-4 flex flex-row items-center gap-2 cursor-pointer hover:bg-primary/10 duration-300'>
+            <div className='rounded-full w-10 h-10 bg-primary'></div>
+            <div className='flex flex-col justify-center grow'>
+              <p className='line-clamp-1 font-semibold text-xl md:text-lg'>Admin 1</p>
+              <p className='line-clamp-1 text-gray-500 md:text-sm'>admin001</p>
+            </div>
+          </div>
         </div>
       </div>
       <button
