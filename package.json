@@ -9,7 +9,9 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prisma:generate": "npx prisma generate",
+    "prisma:db-push": "npx prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",

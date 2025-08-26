@@ -2,7 +2,7 @@ import { Akun } from '@prisma/client'
 import { json } from '@remix-run/node'
 import { MetaFunction, useLoaderData } from '@remix-run/react'
 import constants from '~/constants'
-import { prisma } from '~/db.server'
+import { prisma } from '~/utils/db.server'
 import AdminDashboardLayout from '~/layouts/admin/AdminDashboard'
 
 export const meta: MetaFunction = () => {
@@ -10,6 +10,9 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader() {
+  // await prisma.akun
+  //   .create({ data: { username: 'superadmin', password: 'superadmin' } })
+  //   .then(res => console.log('success', res))
   const user = await prisma.akun.findUnique({
     where: { username: 'superadmin' },
   })

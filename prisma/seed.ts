@@ -1,4 +1,4 @@
-import { prisma } from '~/db.server'
+import { prisma } from '~/utils/db.server'
 
 async function seed() {
   await prisma.akun.createMany({

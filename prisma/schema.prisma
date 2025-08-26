@@ -16,7 +16,7 @@ enum Role {
 }
 
 model Akun {
-  id             Int       @id @default(autoincrement())
+  id             String    @id @default(cuid())
   username       String    @unique
   password       String
   role           Role      @default(SISWA)
@@ -24,9 +24,9 @@ model Akun {
   updatedAt      DateTime  @default(now())
   createdAt      DateTime  @default(now())
   deletedAt      DateTime?
-  createdById    Int?
+  createdById    String?
   createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById Int?
+  lastUpdateById String?
   lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   akunCreator    Akun[]    @relation(name: "createdBy")
   akunUpdator    Akun[]    @relation(name: "lastUpdateBy")

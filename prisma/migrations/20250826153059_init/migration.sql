@@ -3,7 +3,7 @@ CREATE TYPE "public"."Role" AS ENUM ('ADMIN', 'SISWA', 'GURU', 'ORANGTUA');
 
 -- CreateTable
 CREATE TABLE "public"."Akun" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" "public"."Role" NOT NULL DEFAULT 'SISWA',
@@ -11,8 +11,8 @@ CREATE TABLE "public"."Akun" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(3),
-    "createdById" INTEGER,
-    "lastUpdateById" INTEGER,
+    "createdById" TEXT,
+    "lastUpdateById" TEXT,
 
     CONSTRAINT "Akun_pkey" PRIMARY KEY ("id")
 );
