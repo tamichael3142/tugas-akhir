@@ -20,6 +20,7 @@ model Akun {
   username       String    @unique
   password       String
   role           Role      @default(SISWA)
+  displayName    String?
   point          Int       @default(0)
   updatedAt      DateTime  @default(now())
   createdAt      DateTime  @default(now())

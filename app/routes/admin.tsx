@@ -1,5 +1,4 @@
 import { Akun } from '@prisma/client'
-import { json } from '@remix-run/node'
 import { MetaFunction, useLoaderData } from '@remix-run/react'
 import constants from '~/constants'
 import { prisma } from '~/utils/db.server'
@@ -16,12 +15,12 @@ export async function loader() {
   const user = await prisma.akun.findUnique({
     where: { username: 'superadmin' },
   })
-  return json({ ...user })
+  return { user }
 }
 
 export default function AdminRoute() {
-  const user = useLoaderData<Akun>()
-  console.log(user)
+  const loader = useLoaderData<{ user: Akun }>()
+  console.log(loader.user)
 
   return <AdminDashboardLayout />
 }
