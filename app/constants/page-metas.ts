@@ -14,6 +14,10 @@ const pageMetas = {
     { title: `Login | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Masuk ke SBBS' },
   ],
+  authForgotPassword: [
+    { title: `Lupa Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Lupa password di SBBS' },
+  ],
 }
 
 export default pageMetas

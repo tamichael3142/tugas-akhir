@@ -36,9 +36,9 @@ const labels = {
 
 export default function MainFooter() {
   return (
-    <footer className='bg-bluish-grey py-10 w-full'>
+    <footer className='bg-bluish-grey py-10 px-8 w-full'>
       <div className='max-w-6xl mx-auto'>
-        <div className='flex flex-col md:flex-row gap-6'>
+        <div className='flex flex-col md:flex-row gap-10'>
           {schools.map((school, index) => (
             <div key={`footer-school-${index}`} className='flex-1 flex flex-col flex-wrap gap-6'>
               <p className='font-semibold text-xl'>{school.name}</p>
@@ -69,20 +69,27 @@ export default function MainFooter() {
                   <p className='font-semibold'>{labels.map}</p>
                 </div>
               </div>
-              Map
+              <iframe
+                src={school.mapSrc}
+                title={school.address}
+                allowFullScreen
+                loading='lazy'
+                referrerPolicy='no-referrer-when-downgrade'
+                className='aspect-square'
+              ></iframe>
             </div>
           ))}
         </div>
         <div className='border-b border-font-main my-12' />
         <div className='flex flex-col md:flex-row gap-6'>
           <div className='flex-1'>
-            <img src={assets.images.logoFooter()} alt={assets.images.logoFooter()} />
+            <img src={assets.images.logoFooter()} alt={assets.images.logoFooter()} className='w-full h-auto' />
           </div>
           <div className='flex-1'>
-            <p>{constants.sbbs.footer.description}</p>
+            <p className='text-center md:text-left'>{constants.sbbs.footer.description}</p>
           </div>
           <div className='flex-1'>
-            <p className='text-end whitespace-pre-wrap'>
+            <p className='text-center md:text-end whitespace-pre-wrap'>
               {constants.sbbs.footer.copyright.replace('{year}', new Date().getFullYear().toString())}
             </p>
           </div>

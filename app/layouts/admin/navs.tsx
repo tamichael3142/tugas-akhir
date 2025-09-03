@@ -13,8 +13,8 @@ export const adminNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.admin.dashboard() },
   {
     icon: <FaCalendarAlt />,
-    label: 'Master Tahun Ajaran dan Semester',
-    href: AppNav.admin.masterTahunAjaranDanSemester(),
+    label: 'Master Tahun Ajaran',
+    href: AppNav.admin.masterTahunAjaran(),
   },
   { icon: <FaPeopleRoof />, label: 'Master Kelas', href: AppNav.admin.masterKelas() },
   { icon: <IoBookSharp />, label: 'Master Mata Pelajaran', href: AppNav.admin.masterMataPelajaran() },

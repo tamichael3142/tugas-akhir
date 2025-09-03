@@ -4,7 +4,7 @@ function dashboard() {
   return `${baseUrl}`
 }
 
-function masterTahunAjaranDanSemester() {
+function masterTahunAjaran() {
   return `${baseUrl}/master-tahun-ajaran`
 }
 
@@ -38,7 +38,7 @@ function reporting() {
 
 const admin = {
   dashboard,
-  masterTahunAjaranDanSemester,
+  masterTahunAjaran,
   masterKelas,
   masterMataPelajaran,
   masterEkstrakulikuler,
