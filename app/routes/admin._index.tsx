@@ -1,10 +1,5 @@
-import { useEffect } from 'react'
-import useAdminPageStore from '~/store/adminPageStore'
+import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 
 export default function AdminIndexRoute() {
-  useEffect(() => {
-    useAdminPageStore.setState({ title: 'Dashboard' })
-  }, [])
-
-  return <div>{'Admin > Dashboard'}</div>
+  return <AdminPageContainer title='Dashboard'>{'Admin > Dashboard'}</AdminPageContainer>
 }

@@ -1,13 +1,18 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { IoMenuSharp } from 'react-icons/io5'
 import useAdminPageStore from '~/store/adminPageStore'
 
 interface Props {
+  title?: string
   children?: ReactNode
 }
 
 export default function AdminPageContainer(props: Props) {
   const title = useAdminPageStore(state => state.title)
+
+  useEffect(() => {
+    useAdminPageStore.setState({ title: props.title })
+  }, [props.title])
 
   return (
     <div>

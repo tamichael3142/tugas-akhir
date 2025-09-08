@@ -5,7 +5,6 @@ import assets from '~/assets'
 import AppNav from '~/navigation'
 import useAdminPageStore from '~/store/adminPageStore'
 import { IoClose } from 'react-icons/io5'
-import AdminPageContainer from './AdminPageContainer'
 
 export default function AdminDashboardLayout() {
   const location = useLocation()
@@ -76,9 +75,7 @@ export default function AdminDashboardLayout() {
         onClick={closeSidebar}
       />
       <div className='md:pl-[300px] bg-grey-light min-w-screen min-h-screen'>
-        <AdminPageContainer>
-          <Outlet />
-        </AdminPageContainer>
+        <Outlet />
       </div>
     </div>
   )
