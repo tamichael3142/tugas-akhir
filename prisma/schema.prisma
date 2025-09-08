@@ -8,6 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ? ENUMS
 enum Role {
   ADMIN
   SISWA
@@ -15,13 +16,141 @@ enum Role {
   ORANGTUA
 }
 
+enum JenisKelamin {
+  UNKNOWN
+  MALE
+  FEMALE
+}
+
+enum GolonganDarah {
+  UNKNOWN
+  A
+  B
+  AB
+  O
+}
+
+enum Kewarganegaraan {
+  UNKNOWN
+  INDONESIA
+  FOREIGN
+}
+
+enum SemesterAjaranUrutan {
+  SATU
+  DUA
+}
+
+// ? =====
+
+// ? TABLES
 model Akun {
+  id                       String                     @id @default(cuid())
+  // ? credentials
+  username                 String                     @unique
+  password                 String
+  role                     Role                       @default(SISWA)
+  // ? general
+  displayName              String?
+  email                    String?                    @unique
+  tanggalLahir             DateTime?
+  tempatLahir              String?
+  jenisKelamin             JenisKelamin               @default(UNKNOWN)
+  agama                    String?
+  golonganDarah            GolonganDarah              @default(UNKNOWN)
+  kewarganegaraan          Kewarganegaraan            @default(UNKNOWN)
+  point                    Int                        @default(0)
+  // ? meta data
+  updatedAt                DateTime                   @default(now())
+  createdAt                DateTime                   @default(now())
+  deletedAt                DateTime?
+  createdById              String?
+  createdBy                Akun?                      @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById           String?
+  lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? action relations
+  akunCreator              Akun[]                     @relation(name: "createdBy")
+  akunUpdator              Akun[]                     @relation(name: "lastUpdateBy")
+  tahunAjaranCreator       TahunAjaran[]              @relation(name: "createdBy")
+  tahunAjaranUpdator       TahunAjaran[]              @relation(name: "lastUpdateBy")
+  semesterAjaranCreator    SemesterAjaran[]           @relation(name: "createdBy")
+  semesterAjaranUpdator    SemesterAjaran[]           @relation(name: "lastUpdateBy")
+  kelasCreator             Kelas[]                    @relation(name: "createdBy")
+  kelasUpdator             Kelas[]                    @relation(name: "lastUpdateBy")
+  mataPelajaranCreator     MataPelajaran[]            @relation(name: "createdBy")
+  mataPelajaranUpdator     MataPelajaran[]            @relation(name: "lastUpdateBy")
+  pengumumanCreator        Pengumuman[]               @relation(name: "createdBy")
+  pengumumanUpdator        Pengumuman[]               @relation(name: "lastUpdateBy")
+  // ? relations
+  siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+  guruMataPelajaran        MataPelajaran[]
+}
+
+model TahunAjaran {
+  id             String           @id @default(cuid())
+  // ? credentials
+  nama           String           @unique
+  // ? meta data
+  updatedAt      DateTime         @default(now())
+  createdAt      DateTime         @default(now())
+  deletedAt      DateTime?
+  createdById    String?
+  createdBy      Akun?            @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById String?
+  lastUpdateBy   Akun?            @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  semesterAjaran SemesterAjaran[]
+  kelas          Kelas[]
+}
+
+model SemesterAjaran {
+  id                       String                     @id @default(cuid())
+  // ? credentials
+  urutan                   SemesterAjaranUrutan       @default(SATU)
+  // ? foreign
+  tahunAjaranId            String
+  tahunAjaran              TahunAjaran                @relation(fields: [tahunAjaranId], references: [id])
+  // ? meta data
+  updatedAt                DateTime                   @default(now())
+  createdAt                DateTime                   @default(now())
+  deletedAt                DateTime?
+  createdById              String?
+  createdBy                Akun?                      @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById           String?
+  lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+}
+
+model Kelas {
+  id                       String                     @id @default(cuid())
+  // ? credentials
+  nama                     String
+  // ? foreign
+  tahunAjaranId            String
+  tahunAjaran              TahunAjaran                @relation(fields: [tahunAjaranId], references: [id])
+  // ? meta data
+  updatedAt                DateTime                   @default(now())
+  createdAt                DateTime                   @default(now())
+  deletedAt                DateTime?
+  createdById              String?
+  createdBy                Akun?                      @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById           String?
+  lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+}
+
+model MataPelajaran {
   id             String    @id @default(cuid())
-  username       String    @unique
-  password       String
-  role           Role      @default(SISWA)
-  displayName    String?
-  point          Int       @default(0)
+  // ? credentials
+  nama           String
+  // ? general
+  jumlahSesi     Int       @default(1)
+  // ? foreign
+  guruId         String?
+  guru           Akun?     @relation(fields: [guruId], references: [id])
+  // ? meta data
   updatedAt      DateTime  @default(now())
   createdAt      DateTime  @default(now())
   deletedAt      DateTime?
@@ -29,6 +158,36 @@ model Akun {
   createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById String?
   lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
-  akunCreator    Akun[]    @relation(name: "createdBy")
-  akunUpdator    Akun[]    @relation(name: "lastUpdateBy")
 }
+
+model Pengumuman {
+  id             String    @id @default(cuid())
+  // ? credentials
+  nama           String
+  // ? general
+  content        String
+  // ? meta data
+  updatedAt      DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+  createdById    String?
+  createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById String?
+  lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+}
+
+// ? ======
+
+// ? RELATIONS
+model SiswaPerKelasDanSemester {
+  id               Int            @id @default(autoincrement())
+  // ? foreign
+  siswaId          String
+  siswa            Akun           @relation(fields: [siswaId], references: [id])
+  kelasId          String
+  kelas            Kelas          @relation(fields: [kelasId], references: [id])
+  semesterAjaranId String
+  semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+}
+
+// ? =========
