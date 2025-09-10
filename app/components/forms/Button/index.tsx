@@ -10,6 +10,7 @@ export type ButtonProps = {
   startIcon?: ReactNode
   endIcon?: ReactNode
   buttonProps?: ComponentProps<'button'>
+  onlyIconOnSmallView?: boolean
 }
 
 export default function Button(props: ButtonProps) {
@@ -21,16 +22,21 @@ export default function Button(props: ButtonProps) {
       type='button'
       className={classNames(
         'flex flex-row items-center justify-center gap-2 rounded-lg cursor-pointer',
+        'disabled:cursor-not-allowed',
         {
           ['px-4 py-2']: size === 'md',
           ['bg-primary text-white hover:opacity-80']: color === 'primary' && variant === 'contained',
+          ['bg-secondary text-white hover:opacity-80']: color === 'secondary' && variant === 'contained',
+          ['disabled:bg-gray-400 disabled:opacity-80']: variant === 'contained',
         },
         props.className,
         className,
       )}
       {...restButtonProps}
     >
-      {props.label}
+      {props.startIcon}
+      <span className={classNames({ ['hidden md:block']: props.onlyIconOnSmallView })}>{props.label}</span>
+      {props.endIcon}
     </button>
   )
 }
