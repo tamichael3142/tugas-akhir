@@ -50,6 +50,7 @@ model Akun {
   username                 String                     @unique
   password                 String
   role                     Role                       @default(SISWA)
+  nip                      String?
   // ? general
   displayName              String?
   email                    String?                    @unique
