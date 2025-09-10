@@ -1,13 +1,16 @@
+import { ReactNode } from 'react'
 import { create } from 'zustand'
 
 type AdminPageStoreType = {
-  title: string
+  title: string | undefined
   openSidebar: boolean
+  actions: ReactNode[]
 }
 
 const useAdminPageStore = create<AdminPageStoreType>(() => ({
-  title: 'Dashboard',
+  title: undefined,
   openSidebar: false,
+  actions: [],
 }))
 
 export default useAdminPageStore
