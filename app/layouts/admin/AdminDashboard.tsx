@@ -13,10 +13,10 @@ export default function AdminDashboardLayout() {
   const closeSidebar = () => useAdminPageStore.setState({ openSidebar: false })
 
   return (
-    <div className='min-w-screen min-h-screen relative'>
+    <div className='w-screen min-h-screen relative'>
       <div
         className={classNames(
-          'absolute bg-white w-[300px] md:translate-x-0 h-screen z-20 rounded-r-2xl md:shadow-2xl duration-300',
+          'fixed bg-white w-[300px] md:translate-x-0 h-screen z-20 rounded-r-2xl md:shadow-2xl duration-300',
           {
             ['translate-x-[-300px]']: !openSidebar,
             ['shadow-2xl']: openSidebar,
@@ -74,7 +74,7 @@ export default function AdminDashboardLayout() {
         })}
         onClick={closeSidebar}
       />
-      <div className='md:pl-[300px] bg-grey-light min-w-screen min-h-screen'>
+      <div className='bg-grey-light min-h-screen md:pl-[300px]'>
         <Outlet />
       </div>
     </div>
