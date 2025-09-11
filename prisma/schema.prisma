@@ -53,7 +53,7 @@ model Akun {
   nip                      String?
   // ? general
   displayName              String?
-  email                    String?                    @unique
+  email                    String?
   tanggalLahir             DateTime?
   tempatLahir              String?
   jenisKelamin             JenisKelamin               @default(UNKNOWN)
@@ -72,6 +72,7 @@ model Akun {
   // ? action relations
   akunCreator              Akun[]                     @relation(name: "createdBy")
   akunUpdator              Akun[]                     @relation(name: "lastUpdateBy")
+  tempAkunCreator          TempAkun[]                 @relation(name: "createdBy")
   tahunAjaranCreator       TahunAjaran[]              @relation(name: "createdBy")
   tahunAjaranUpdator       TahunAjaran[]              @relation(name: "lastUpdateBy")
   semesterAjaranCreator    SemesterAjaran[]           @relation(name: "createdBy")
@@ -85,6 +86,25 @@ model Akun {
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
   guruMataPelajaran        MataPelajaran[]
+}
+
+model TempAkun {
+  id              String          @id @default(cuid())
+  username        String
+  password        String
+  role            Role            @default(SISWA)
+  displayName     String?
+  email           String?
+  tanggalLahir    DateTime?
+  tempatLahir     String?
+  jenisKelamin    JenisKelamin    @default(UNKNOWN)
+  agama           String?
+  golonganDarah   GolonganDarah   @default(UNKNOWN)
+  kewarganegaraan Kewarganegaraan @default(UNKNOWN)
+  // ? meta data
+  createdAt       DateTime        @default(now())
+  createdById     String?
+  createdBy       Akun?           @relation(fields: [createdById], references: [id], name: "createdBy")
 }
 
 model TahunAjaran {

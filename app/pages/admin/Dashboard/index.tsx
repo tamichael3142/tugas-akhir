@@ -1,18 +1,39 @@
 import { useRemixForm } from 'remix-hook-form'
-import { emptyUserValue, FormType, resolver } from './form'
+import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form'
 import { Form } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
 import { $Enums } from '@prisma/client'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
+import { useRef } from 'react'
 
-const formId = 'andasd'
+const formId = 'admin-bulk-insert-user-form'
+const importExcelFormId = 'admin-import-excel-user-form'
+const tableSectionId = 'admin-bulk-insert-user-table'
+
+const headers: { label: string }[] = [
+  { label: 'Nama Lengkap' },
+  { label: 'Tempat Lahir' },
+  { label: 'Tanggal Lahir' },
+  { label: 'Role' },
+  { label: 'Username' },
+  { label: 'Password' },
+  { label: 'Email' },
+  { label: 'Jenis Kelamin' },
+  { label: 'Agama' },
+  { label: 'Alamat' },
+  { label: 'Gol Darah' },
+  { label: 'Kewarganegaraan' },
+]
 
 export default function AdminDashboardPage() {
+  const importExcelFormRef = useRef<HTMLFormElement>(null)
+  const importExcelInputRef = useRef<HTMLInputElement>(null)
+
   const formHook = useRemixForm<FormType>({
     defaultValues: {
-      newUsers: [emptyUserValue],
+      newUsers: [],
     },
     mode: 'all',
     resolver,
@@ -23,7 +44,12 @@ export default function AdminDashboardPage() {
     <AdminPageContainer
       title='Dashboard'
       actions={[
-        <Button key={'import-excel'} label='Import Excel' color='secondary' />,
+        <Button
+          key={importExcelFormId}
+          label='Import Excel'
+          color='secondary'
+          buttonProps={{ onClick: () => importExcelInputRef.current?.click() }}
+        />,
         <Button
           key={formId}
           label='Simpan'
@@ -33,30 +59,40 @@ export default function AdminDashboardPage() {
         />,
       ]}
     >
+      <Form
+        id={importExcelFormId}
+        method='post'
+        action='/action/admin/import-excel-user'
+        ref={importExcelFormRef}
+        encType='multipart/form-data'
+      >
+        <input
+          type='file'
+          name='file'
+          hidden
+          ref={importExcelInputRef}
+          accept='.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          onChange={() => importExcelFormRef.current?.submit()}
+        />
+      </Form>
       <Form id={formId} method='post' onSubmit={formHook.handleSubmit}>
         <div className='max-w-full max-h-[70vh] overflow-x-auto border-2 rounded-lg relative'>
           <table className='w-full bg-white'>
             <thead className='sticky top-0 bg-white'>
               <tr>
-                <th className='border'>Nama Lengkap</th>
-                <th className='border'>Tempat Lahir</th>
-                <th className='border'>Tanggal Lahir</th>
-                <th className='border'>Role</th>
-                <th className='border'>Username</th>
-                <th className='border'>Password</th>
-                <th className='border'>Email</th>
-                <th className='border'>Jenis Kelamin</th>
-                <th className='border'>Agama</th>
-                <th className='border'>Alamat</th>
-                <th className='border'>Gol Darah</th>
-                <th className='border'>Kewarganegaraan</th>
+                {headers.map((hdr, index) => (
+                  <th key={`${tableSectionId}-header-${index}`} className='border'>
+                    {hdr.label}
+                  </th>
+                ))}
                 <th className='border min-w-20'>Aksi</th>
               </tr>
             </thead>
             <tbody>
               {arrayField.map((_, index) => (
-                <tr key={`admin-bulk-insert-user-table-row-${index}`}>
+                <tr key={`${tableSectionId}-row-${index}`}>
                   <td className='border'>
+                    <input hidden {...formHook.register(`newUsers.${index}.tempAkunId`)} />
                     <input required {...formHook.register(`newUsers.${index}.displayName`)} />
                   </td>
                   <td className='border'>
@@ -141,7 +177,13 @@ export default function AdminDashboardPage() {
       <Button
         label='Tambah'
         className='w-full mt-4'
-        buttonProps={{ onClick: () => formHook.setValue('newUsers', [...arrayField, emptyUserValue]) }}
+        buttonProps={{
+          onClick: () =>
+            formHook.setValue('newUsers', [
+              ...arrayField,
+              process.env.NODE_ENV === 'development' ? getDummyUserValue() : emptyUserValue,
+            ]),
+        }}
       />
     </AdminPageContainer>
   )

@@ -1,5 +1,6 @@
 import Card, { CardProps } from './Card'
+import LoadingFullScreen from './Loading/FullScreen'
 
-export { Card }
+export { Card, LoadingFullScreen }
 
 export type { CardProps }

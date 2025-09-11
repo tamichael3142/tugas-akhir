@@ -1,3 +1,4 @@
+import dateFormats from './date-formats'
 import pageMetas from './page-metas'
 import pages from './pages'
 import sbbs from './sbbs'
@@ -10,6 +11,7 @@ const constants = {
   sbbsSD,
   pages,
   pageMetas,
+  dateFormats,
 }
 
 export default constants
