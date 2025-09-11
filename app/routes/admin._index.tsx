@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from '@remix-run/node'
 import { getValidatedFormData } from 'remix-hook-form'
 import AdminIndexPage from '~/pages/admin/Dashboard'
-import { FormType, resolver } from '~/pages/admin/Dashboard/form'
+import { FormType, resolver } from '~/pages/admin/Dashboard/form.server'
 
 export async function action({ request }: ActionFunctionArgs) {
   const { errors, data, receivedValues: defaultValues } = await getValidatedFormData<FormType>(request, resolver)

@@ -5,7 +5,7 @@ import * as dateFns from 'date-fns'
 import AppNav from '~/navigation'
 import XLSXUtils from '~/utils/xlsx.utils'
 import constants from '~/constants'
-import EnumsValueUtils from '~/utils/enums-value.utils'
+import EnumsValueUtils from '~/utils/enums-value.utils.server'
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()

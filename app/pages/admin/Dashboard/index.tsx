@@ -1,11 +1,11 @@
 import { useRemixForm } from 'remix-hook-form'
-import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form'
+import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form.server'
 import { Form } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
 import { $Enums } from '@prisma/client'
-import EnumsTitleUtils from '~/utils/enums-title.utils'
+import EnumsTitleUtils from '~/utils/enums-title.utils.server'
 import { useRef } from 'react'
 
 const formId = 'admin-bulk-insert-user-form'
