@@ -14,10 +14,10 @@ export const validaionSchema = z.object({
       username: z.string().min(2),
       password: z.string().min(2),
       email: z.email().nullish(),
-      gender: z.enum(Object.values(JenisKelamin)),
+      jenisKelamin: z.enum(Object.values(JenisKelamin)),
       agama: z.string().nullish(),
       alamat: z.string().nullish(),
-      golDarah: z.enum(Object.values(GolonganDarah)),
+      golonganDarah: z.enum(Object.values(GolonganDarah)),
       kewarganegaraan: z.enum(Object.values(Kewarganegaraan)),
     }),
   ),
@@ -36,10 +36,10 @@ export const emptyUserValue: FormType['newUsers'][0] = {
   username: '',
   password: '',
   email: null,
-  gender: JenisKelamin.UNKNOWN,
+  jenisKelamin: JenisKelamin.UNKNOWN,
   agama: null,
   alamat: null,
-  golDarah: GolonganDarah.UNKNOWN,
+  golonganDarah: GolonganDarah.UNKNOWN,
   kewarganegaraan: Kewarganegaraan.INDONESIA,
 }
 
@@ -53,10 +53,10 @@ export function getDummyUserValue(): FormType['newUsers'][0] {
     username: 'michael-' + dateFns.getTime(new Date()),
     password: 'michael3142',
     email: 'tamichael3142@gmail.com',
-    gender: JenisKelamin.MALE,
+    jenisKelamin: JenisKelamin.MALE,
     agama: null,
     alamat: null,
-    golDarah: GolonganDarah.UNKNOWN,
+    golonganDarah: GolonganDarah.UNKNOWN,
     kewarganegaraan: Kewarganegaraan.INDONESIA,
   }
 }

@@ -1,7 +1,8 @@
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+  schemas  = ["public"]
 }
 
 generator client {
@@ -14,12 +15,16 @@ enum Role {
   SISWA
   GURU
   ORANGTUA
+
+  @@schema("public")
 }
 
 enum JenisKelamin {
   UNKNOWN
   MALE
   FEMALE
+
+  @@schema("public")
 }
 
 enum GolonganDarah {
@@ -28,17 +33,23 @@ enum GolonganDarah {
   B
   AB
   O
+
+  @@schema("public")
 }
 
 enum Kewarganegaraan {
   UNKNOWN
   INDONESIA
   FOREIGN
+
+  @@schema("public")
 }
 
 enum SemesterAjaranUrutan {
   SATU
   DUA
+
+  @@schema("public")
 }
 
 // ? =====
@@ -57,6 +68,7 @@ model Akun {
   tanggalLahir             DateTime?
   tempatLahir              String?
   jenisKelamin             JenisKelamin               @default(UNKNOWN)
+  alamat                   String?
   agama                    String?
   golonganDarah            GolonganDarah              @default(UNKNOWN)
   kewarganegaraan          Kewarganegaraan            @default(UNKNOWN)
@@ -86,6 +98,8 @@ model Akun {
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
   guruMataPelajaran        MataPelajaran[]
+
+  @@schema("public")
 }
 
 model TempAkun {
@@ -98,6 +112,7 @@ model TempAkun {
   tanggalLahir    DateTime?
   tempatLahir     String?
   jenisKelamin    JenisKelamin    @default(UNKNOWN)
+  alamat          String?
   agama           String?
   golonganDarah   GolonganDarah   @default(UNKNOWN)
   kewarganegaraan Kewarganegaraan @default(UNKNOWN)
@@ -105,6 +120,8 @@ model TempAkun {
   createdAt       DateTime        @default(now())
   createdById     String?
   createdBy       Akun?           @relation(fields: [createdById], references: [id], name: "createdBy")
+
+  @@schema("public")
 }
 
 model TahunAjaran {
@@ -122,6 +139,8 @@ model TahunAjaran {
   // ? relations
   semesterAjaran SemesterAjaran[]
   kelas          Kelas[]
+
+  @@schema("public")
 }
 
 model SemesterAjaran {
@@ -141,6 +160,8 @@ model SemesterAjaran {
   lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+
+  @@schema("public")
 }
 
 model Kelas {
@@ -160,6 +181,8 @@ model Kelas {
   lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+
+  @@schema("public")
 }
 
 model MataPelajaran {
@@ -179,6 +202,8 @@ model MataPelajaran {
   createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById String?
   lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+
+  @@schema("public")
 }
 
 model Pengumuman {
@@ -195,6 +220,8 @@ model Pengumuman {
   createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById String?
   lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+
+  @@schema("public")
 }
 
 // ? ======
@@ -209,6 +236,8 @@ model SiswaPerKelasDanSemester {
   kelas            Kelas          @relation(fields: [kelasId], references: [id])
   semesterAjaranId String
   semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+
+  @@schema("public")
 }
 
 // ? =========

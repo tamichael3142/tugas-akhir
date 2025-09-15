@@ -1,12 +1,15 @@
 import { useRemixForm } from 'remix-hook-form'
 import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form'
-import { Form } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
+import { LoaderDataAdminIndex } from '~/types/loaders-data/admin'
+import * as dateFns from 'date-fns'
+import constants from '~/constants'
 
 const formId = 'admin-bulk-insert-user-form'
 const importExcelFormId = 'admin-import-excel-user-form'
@@ -28,6 +31,9 @@ const headers: { label: string }[] = [
 ]
 
 export default function AdminDashboardPage() {
+  const loader = useLoaderData<LoaderDataAdminIndex>()
+  console.log(loader)
+
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
 
@@ -39,6 +45,32 @@ export default function AdminDashboardPage() {
     resolver,
   })
   const arrayField = formHook.watch('newUsers')
+
+  useEffect(() => {
+    if (!!loader && !!loader.tempAkuns) {
+      formHook.setValue(
+        'newUsers',
+        loader.tempAkuns.map(item => ({
+          tempAkunId: item.id,
+          displayName: item.displayName ?? '',
+          tempatLahir: item.tempatLahir,
+          tanggalLahir: item.tanggalLahir
+            ? dateFns.format(item.tanggalLahir, constants.dateFormats.rawDateInput)
+            : null,
+          role: item.role as Role,
+          username: item.username,
+          password: item.password,
+          email: item.email,
+          jenisKelamin: item.jenisKelamin as JenisKelamin,
+          agama: item.agama,
+          alamat: item.alamat,
+          golonganDarah: item.golonganDarah as GolonganDarah,
+          kewarganegaraan: item.kewarganegaraan as Kewarganegaraan,
+        })),
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loader, loader.tempAkuns])
 
   return (
     <AdminPageContainer
@@ -120,7 +152,7 @@ export default function AdminDashboardPage() {
                     <input type='email' {...formHook.register(`newUsers.${index}.email`)} />
                   </td>
                   <td className='border'>
-                    <select {...formHook.register(`newUsers.${index}.gender`)}>
+                    <select {...formHook.register(`newUsers.${index}.jenisKelamin`)}>
                       {Object.values(JenisKelamin).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getJenisKelamin(opt)}
@@ -135,7 +167,7 @@ export default function AdminDashboardPage() {
                     <input {...formHook.register(`newUsers.${index}.alamat`)} />
                   </td>
                   <td className='border'>
-                    <select {...formHook.register(`newUsers.${index}.golDarah`)}>
+                    <select {...formHook.register(`newUsers.${index}.golonganDarah`)}>
                       {Object.values(GolonganDarah).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getGolonganDarah(opt)}
