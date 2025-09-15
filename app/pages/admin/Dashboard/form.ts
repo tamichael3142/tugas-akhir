@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import * as dateFns from 'date-fns'
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums.client'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
 
 export const validaionSchema = z.object({
   newUsers: z.array(

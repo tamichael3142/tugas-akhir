@@ -6,7 +6,7 @@ import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { useRef } from 'react'
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums.client'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
 
 const formId = 'admin-bulk-insert-user-form'
 const importExcelFormId = 'admin-import-excel-user-form'
