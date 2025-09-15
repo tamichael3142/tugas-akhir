@@ -1,12 +1,12 @@
 import { useRemixForm } from 'remix-hook-form'
-import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form.server'
+import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form'
 import { Form } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
-import { $Enums } from '@prisma/client'
-import EnumsTitleUtils from '~/utils/enums-title.utils.server'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { useRef } from 'react'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums.client'
 
 const formId = 'admin-bulk-insert-user-form'
 const importExcelFormId = 'admin-import-excel-user-form'
@@ -103,7 +103,7 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className='border'>
                     <select {...formHook.register(`newUsers.${index}.role`)}>
-                      {Object.values($Enums.Role).map((opt, index) => (
+                      {Object.values(Role).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getRole(opt)}
                         </option>
@@ -121,7 +121,7 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className='border'>
                     <select {...formHook.register(`newUsers.${index}.gender`)}>
-                      {Object.values($Enums.JenisKelamin).map((opt, index) => (
+                      {Object.values(JenisKelamin).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getJenisKelamin(opt)}
                         </option>
@@ -136,7 +136,7 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className='border'>
                     <select {...formHook.register(`newUsers.${index}.golDarah`)}>
-                      {Object.values($Enums.GolonganDarah).map((opt, index) => (
+                      {Object.values(GolonganDarah).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getGolonganDarah(opt)}
                         </option>
@@ -145,7 +145,7 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className='border'>
                     <select {...formHook.register(`newUsers.${index}.kewarganegaraan`)}>
-                      {Object.values($Enums.Kewarganegaraan).map((opt, index) => (
+                      {Object.values(Kewarganegaraan).map((opt, index) => (
                         <option key={index} value={opt}>
                           {EnumsTitleUtils.getKewarganegaraan(opt)}
                         </option>
