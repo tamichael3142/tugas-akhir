@@ -47,8 +47,14 @@ export async function action({ request }: ActionFunctionArgs) {
     })
   }
 
+  // TODO: ganti ini nanti pake auth
+  const currUser = await prisma.akun.findUnique({ where: { username: 'superadmin' } })
+
   await prisma.tempAkun.createManyAndReturn({
-    data: jsonData,
+    data: jsonData.map(item => ({
+      ...item,
+      createdById: currUser?.id,
+    })),
   })
 
   return redirect(AppNav.admin.dashboard())

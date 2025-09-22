@@ -4,6 +4,7 @@ import * as dateFns from 'date-fns'
 import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
 
 export const validaionSchema = z.object({
+  deletedTempAkunIds: z.array(z.string()),
   newUsers: z.array(
     z.object({
       tempAkunId: z.string().nullish(),
@@ -59,4 +60,9 @@ export function getDummyUserValue(): FormType['newUsers'][0] {
     golonganDarah: GolonganDarah.UNKNOWN,
     kewarganegaraan: Kewarganegaraan.INDONESIA,
   }
+}
+
+export const defaultValues: FormType = {
+  deletedTempAkunIds: [],
+  newUsers: [],
 }

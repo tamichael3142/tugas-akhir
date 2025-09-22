@@ -1,6 +1,6 @@
 import { useRemixForm } from 'remix-hook-form'
-import { getDummyUserValue, emptyUserValue, FormType, resolver } from './form'
-import { Form, useLoaderData } from '@remix-run/react'
+import { getDummyUserValue, emptyUserValue, FormType, resolver, defaultValues } from './form'
+import { Form, useActionData, useLoaderData } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
@@ -10,10 +10,13 @@ import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/pris
 import { LoaderDataAdminIndex } from '~/types/loaders-data/admin'
 import * as dateFns from 'date-fns'
 import constants from '~/constants'
+import AppNav from '~/navigation'
+import { ActionDataAdminIndex } from '~/types/actions-data/admin'
 
-const formId = 'admin-bulk-insert-user-form'
+const sectionPrefix = 'admin-bulk-insert'
+const formId = `${sectionPrefix}-user-form`
 const importExcelFormId = 'admin-import-excel-user-form'
-const tableSectionId = 'admin-bulk-insert-user-table'
+const tableSectionId = `${sectionPrefix}-user-table`
 
 const headers: { label: string }[] = [
   { label: 'Nama Lengkap' },
@@ -32,15 +35,38 @@ const headers: { label: string }[] = [
 
 export default function AdminDashboardPage() {
   const loader = useLoaderData<LoaderDataAdminIndex>()
-  console.log(loader)
+  const actionData = useActionData<ActionDataAdminIndex>()
+  const createdAkuns = actionData?.success && !!actionData.data.createdAkuns ? actionData.data.createdAkuns : null
+  // const createdAkuns = [
+  //   {
+  //     id: 'cmfv8dy17000cx9tcht1zomkm',
+  //     username: 'michael-1758551838647',
+  //     password: '$2b$10$x3ZmlR37gPsI3fhRGyGF7eaYQyofB.3EQTUGRAkQMTuAbhjThsS2i',
+  //     role: 'SISWA',
+  //     nip: null,
+  //     displayName: 'Michael',
+  //     email: 'tamichael3142@gmail.com',
+  //     tanggalLahir: '2001-04-21T00:00:00.000Z',
+  //     tempatLahir: 'Surabaya',
+  //     jenisKelamin: 'MALE',
+  //     alamat: 'Jl. Surabaya',
+  //     agama: 'Kristen',
+  //     golonganDarah: 'A',
+  //     kewarganegaraan: 'INDONESIA',
+  //     point: 0,
+  //     updatedAt: '2025-09-22T14:38:04.098Z',
+  //     createdAt: '2025-09-22T14:38:04.098Z',
+  //     deletedAt: null,
+  //     createdById: 'cmespztg60000x948hhy4ihzs',
+  //     lastUpdateById: 'cmespztg60000x948hhy4ihzs',
+  //   },
+  // ]
 
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
 
   const formHook = useRemixForm<FormType>({
-    defaultValues: {
-      newUsers: [],
-    },
+    defaultValues,
     mode: 'all',
     resolver,
   })
@@ -94,9 +120,9 @@ export default function AdminDashboardPage() {
       <Form
         id={importExcelFormId}
         method='post'
-        action='/action/admin/import-excel-user'
-        ref={importExcelFormRef}
         encType='multipart/form-data'
+        action={AppNav.adminAction.importExcelUser()}
+        ref={importExcelFormRef}
       >
         <input
           type='file'
@@ -190,6 +216,12 @@ export default function AdminDashboardPage() {
                         type='button'
                         className='cursor-pointer disabled:cursor-not-allowed text-red-500 disabled:text-gray-500'
                         onClick={() => {
+                          // ? Masukin ID yang mau dihapus dari db juga jika asalnya dari TempAkun
+                          const prevDeletedTempAkunIds = formHook.getValues('deletedTempAkunIds')
+                          const currId = formHook.getValues(`newUsers.${index}.tempAkunId`)
+                          if (currId) formHook.setValue('deletedTempAkunIds', [...prevDeletedTempAkunIds, currId])
+
+                          // ? Hapus row dari array
                           formHook.setValue(
                             'newUsers',
                             [...arrayField].filter((_, idx) => idx !== index),
@@ -217,6 +249,26 @@ export default function AdminDashboardPage() {
             ]),
         }}
       />
+
+      {!!createdAkuns && createdAkuns.length ? (
+        <div className='mt-4 p-4 bg-primary/10 rounded-xl'>
+          <p className='font-semibold mb-4'>Akun yang berhasil dibuat:</p>
+          <div className='grid grid-cols-4 gap-4'>
+            {createdAkuns.map((akun, index) => (
+              <div
+                key={`${sectionPrefix}-createdAkun-${index}`}
+                className='col-span-4 md:col-span-2 xl:col-span-1 bg-white rounded shadow-lg p-2'
+              >
+                <p className='text-lg font-medium'>{akun.displayName}</p>
+                <p className='text-sm text-slate-500'>{akun.username}</p>
+                <p className='text-sm'>
+                  {`${EnumsTitleUtils.getJenisKelamin(akun.jenisKelamin as JenisKelamin)} - ${EnumsTitleUtils.getGolonganDarah(akun.golonganDarah as GolonganDarah)} - ${EnumsTitleUtils.getKewarganegaraan(akun.kewarganegaraan as Kewarganegaraan)}`}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </AdminPageContainer>
   )
 }
