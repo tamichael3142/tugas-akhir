@@ -5,7 +5,7 @@ export type ButtonProps = {
   label?: string
   className?: string
   color?: 'primary' | 'secondary'
-  variant?: 'outline' | 'contained'
+  variant?: 'outlined' | 'contained'
   size?: 'sm' | 'md' | 'lg'
   startIcon?: ReactNode
   endIcon?: ReactNode

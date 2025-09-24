@@ -31,10 +31,6 @@ export async function action({ request }: ActionFunctionArgs) {
       displayName: (item['Nama Lengkap'] ?? '') as string,
       tempatLahir: (item['Tempat Lahir'] ?? null) as string | null,
       tanggalLahir: XLSXUtils.excelDateToJSDate(item['Tanggal Lahir']).toISOString(),
-      // tanggalLahir: dateFns.format(
-      //   XLSXUtils.excelDateToJSDate(item['Tanggal Lahir']),
-      //   constants.dateFormats.rawDateInput,
-      // ),
       role: EnumsValueUtils.getRole(item['Role']),
       username: (item['Username'] ?? '') as string,
       password: (item['Password'] ?? item['Username'] ?? '') as string,

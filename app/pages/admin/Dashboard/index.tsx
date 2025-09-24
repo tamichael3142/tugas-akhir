@@ -37,30 +37,6 @@ export default function AdminDashboardPage() {
   const loader = useLoaderData<LoaderDataAdminIndex>()
   const actionData = useActionData<ActionDataAdminIndex>()
   const createdAkuns = actionData?.success && !!actionData.data.createdAkuns ? actionData.data.createdAkuns : null
-  // const createdAkuns = [
-  //   {
-  //     id: 'cmfv8dy17000cx9tcht1zomkm',
-  //     username: 'michael-1758551838647',
-  //     password: '$2b$10$x3ZmlR37gPsI3fhRGyGF7eaYQyofB.3EQTUGRAkQMTuAbhjThsS2i',
-  //     role: 'SISWA',
-  //     nip: null,
-  //     displayName: 'Michael',
-  //     email: 'tamichael3142@gmail.com',
-  //     tanggalLahir: '2001-04-21T00:00:00.000Z',
-  //     tempatLahir: 'Surabaya',
-  //     jenisKelamin: 'MALE',
-  //     alamat: 'Jl. Surabaya',
-  //     agama: 'Kristen',
-  //     golonganDarah: 'A',
-  //     kewarganegaraan: 'INDONESIA',
-  //     point: 0,
-  //     updatedAt: '2025-09-22T14:38:04.098Z',
-  //     createdAt: '2025-09-22T14:38:04.098Z',
-  //     deletedAt: null,
-  //     createdById: 'cmespztg60000x948hhy4ihzs',
-  //     lastUpdateById: 'cmespztg60000x948hhy4ihzs',
-  //   },
-  // ]
 
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
