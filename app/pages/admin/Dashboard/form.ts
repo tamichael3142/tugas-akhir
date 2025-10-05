@@ -1,14 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import * as dateFns from 'date-fns'
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
+import DBHelpers from '~/database/helpers'
 
 export const validaionSchema = z.object({
   deletedTempAkunIds: z.array(z.string()),
   newUsers: z.array(
     z.object({
       tempAkunId: z.string().nullish(),
-      displayName: z.string().min(2),
+      firstName: z.string().min(2),
+      lastName: z.string().min(2),
       tempatLahir: z.string().nullish(),
       tanggalLahir: z.string().nullish(),
       role: z.enum(Object.values(Role)),
@@ -24,13 +25,14 @@ export const validaionSchema = z.object({
   ),
 })
 
-export type FormType = z.infer<typeof validaionSchema>
+export type AdminDashboardInsertBulkAkunFormType = z.infer<typeof validaionSchema>
 
 export const resolver = zodResolver(validaionSchema)
 
-export const emptyUserValue: FormType['newUsers'][0] = {
+export const emptyUserValue: AdminDashboardInsertBulkAkunFormType['newUsers'][0] = {
   tempAkunId: null,
-  displayName: '',
+  firstName: '',
+  lastName: '',
   tempatLahir: null,
   tanggalLahir: null,
   role: Role.SISWA,
@@ -44,15 +46,21 @@ export const emptyUserValue: FormType['newUsers'][0] = {
   kewarganegaraan: Kewarganegaraan.INDONESIA,
 }
 
-export function getDummyUserValue(): FormType['newUsers'][0] {
+export function getDummyUserValue(): AdminDashboardInsertBulkAkunFormType['newUsers'][0] {
+  const firstName = 'Michael'
+  const lastName = 'Zefanya'
+  const tanggalLahir = '2001-04-21'
+  const username = DBHelpers.akun.generateUsername({ firstName, lastName, tanggalLahir: new Date(tanggalLahir) })
+
   return {
     tempAkunId: null,
-    displayName: 'Michael',
+    firstName,
+    lastName,
     tempatLahir: 'Surabaya',
-    tanggalLahir: '2001-04-21',
+    tanggalLahir,
     role: Role.SISWA,
-    username: 'michael-' + dateFns.getTime(new Date()),
-    password: 'michael3142',
+    username,
+    password: username,
     email: 'tamichael3142@gmail.com',
     jenisKelamin: JenisKelamin.MALE,
     agama: null,
@@ -62,7 +70,7 @@ export function getDummyUserValue(): FormType['newUsers'][0] {
   }
 }
 
-export const defaultValues: FormType = {
+export const defaultValues: AdminDashboardInsertBulkAkunFormType = {
   deletedTempAkunIds: [],
   newUsers: [],
 }

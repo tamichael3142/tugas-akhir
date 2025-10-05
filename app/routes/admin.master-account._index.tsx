@@ -10,7 +10,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     model: prisma.akun,
     options: {
       defaultLimit: 10,
-      orderBy: [{ createdAt: 'desc' }, { displayName: 'asc' }],
+      orderBy: [{ createdAt: 'desc' }, { tanggalLahir: 'asc' }],
     },
   })
 

@@ -28,8 +28,18 @@ function masterPengumuman() {
   return `${baseUrl}/master-pengumuman`
 }
 
+const masterAccountUrl = '/master-account'
+
 function masterAccount() {
-  return `${baseUrl}/master-account`
+  return `${baseUrl}${masterAccountUrl}`
+}
+
+function masterAccountCreate() {
+  return `${baseUrl}${masterAccountUrl}/create`
+}
+
+function masterAccountDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterAccountUrl}/detail/${id}`
 }
 
 function reporting() {
@@ -45,6 +55,8 @@ const admin = {
   masterJadwalPelajaran,
   masterPengumuman,
   masterAccount,
+  masterAccountCreate,
+  masterAccountDetail,
   reporting,
 }
 

@@ -1,9 +1,10 @@
-import { useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
 import { FaPlus } from 'react-icons/fa'
 import { Button } from '~/components/forms'
-import DataGrid from '~/components/ui/DataGrid'
-import { Role } from '~/enums/prisma.enums'
+import { DataGrid } from '~/components/ui'
+import { Role } from '~/database/enums/prisma.enums'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
+import AppNav from '~/navigation'
 import { LoaderDataAdminMasterAkun } from '~/types/loaders-data/admin'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
@@ -24,17 +25,20 @@ export default function AdminMasterAccountPage() {
     <AdminPageContainer
       title='Master Account'
       actions={[
-        <Button key={`${sectionPrefix}-add-button`} label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />,
+        <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterAccountCreate()}>
+          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+        </Link>,
       ]}
     >
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'checkbox', label: '', render: () => <input type='checkbox' /> },
-          { field: 'displayName', label: 'Nama' },
-          { field: 'email', label: 'Email' },
+          // { field: 'checkbox', label: '', render: () => <input type='checkbox' /> },
           { field: 'username', label: 'Username' },
           { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.role as Role) },
+          { field: 'firstName', label: 'Nama Depan' },
+          { field: 'lastName', label: 'Nama Belakang' },
+          { field: 'email', label: 'Email' },
           { field: 'createdAt', label: 'Created At', render: row => row.createdAt.toISOString() },
         ]}
         rows={loader.akuns.data}
@@ -45,15 +49,8 @@ export default function AdminMasterAccountPage() {
           totalPages: loader.akuns.pagination.totalPages,
           onPageChange: handlePageChange,
         }}
+        className='shadow-primary'
       />
-      {/* <div>
-        {loader.akuns.data?.map((akun, index) => (
-          <Fragment key={`${sectionPrefix}-akun-${index}`}>
-            <p>{akun.displayName}</p>
-            <br />
-          </Fragment>
-        ))}
-      </div> */}
     </AdminPageContainer>
   )
 }

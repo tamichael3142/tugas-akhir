@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from '@remix-run/node'
 import { getValidatedFormData } from 'remix-hook-form'
 import AdminIndexPage from '~/pages/admin/Dashboard'
-import { FormType, resolver } from '~/pages/admin/Dashboard/form'
+import { AdminDashboardInsertBulkAkunFormType, resolver } from '~/pages/admin/Dashboard/form'
 import { ActionDataAdminIndex } from '~/types/actions-data/admin'
 import { LoaderDataAdminIndex } from '~/types/loaders-data/admin'
 import { prisma } from '~/utils/db.server'
@@ -18,7 +18,7 @@ export async function loader() {
 }
 
 export async function action({ request }: ActionFunctionArgs): Promise<ActionDataAdminIndex> {
-  const { errors, data } = await getValidatedFormData<FormType>(request, resolver)
+  const { errors, data } = await getValidatedFormData<AdminDashboardInsertBulkAkunFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -36,7 +36,8 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   for (let i = 0; i < data.newUsers.length; i++) {
     const item = data.newUsers[i]
     creatingAkuns.push({
-      displayName: item.displayName,
+      firstName: item.firstName,
+      lastName: item.lastName,
       tempatLahir: item.tempatLahir,
       tanggalLahir: item.tanggalLahir ? new Date(item.tanggalLahir) : undefined,
       role: item.role,

@@ -1,13 +1,14 @@
 import { Button } from '~/components/forms'
 import Card from '../Card'
 import { DataGridProps } from './types'
+import classNames from 'classnames'
+import { GrNext, GrPrevious } from 'react-icons/gr'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function DataGrid<T>(props: DataGridProps<T>) {
   const { id, columns = [], rows = [], pagination, actions } = props
 
   return (
-    <Card className='w-full shadow-primary'>
+    <Card className={classNames('w-full', props.className)}>
       <div className='overflow-x-auto'>
         <table id={id} className='w-full border-collapse text-left'>
           <thead>
@@ -52,7 +53,7 @@ export default function DataGrid<T>(props: DataGridProps<T>) {
               <Button
                 variant='contained'
                 color='secondary'
-                label='Prev'
+                label={<GrPrevious />}
                 buttonProps={{
                   disabled: pagination.page <= 1,
                   onClick: () => pagination.onPageChange(pagination.page - 1),
@@ -61,7 +62,7 @@ export default function DataGrid<T>(props: DataGridProps<T>) {
               <Button
                 variant='contained'
                 color='secondary'
-                label='Next'
+                label={<GrNext />}
                 buttonProps={{
                   disabled: pagination.page >= pagination.totalPages,
                   onClick: () => pagination.onPageChange(pagination.page + 1),

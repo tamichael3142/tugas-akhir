@@ -1,17 +1,26 @@
 import { useRemixForm } from 'remix-hook-form'
-import { getDummyUserValue, emptyUserValue, FormType, resolver, defaultValues } from './form'
+import { Controller } from 'react-hook-form'
+import {
+  getDummyUserValue,
+  emptyUserValue,
+  AdminDashboardInsertBulkAkunFormType,
+  resolver,
+  defaultValues,
+} from './form'
 import { Form, useActionData, useLoaderData } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
 import { FaSave, FaTrash } from 'react-icons/fa'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { useEffect, useRef } from 'react'
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
 import { LoaderDataAdminIndex } from '~/types/loaders-data/admin'
 import * as dateFns from 'date-fns'
 import constants from '~/constants'
 import AppNav from '~/navigation'
 import { ActionDataAdminIndex } from '~/types/actions-data/admin'
+import DBHelpers from '~/database/helpers'
+import { Akun } from '@prisma/client'
 
 const sectionPrefix = 'admin-bulk-insert'
 const formId = `${sectionPrefix}-user-form`
@@ -19,7 +28,8 @@ const importExcelFormId = 'admin-import-excel-user-form'
 const tableSectionId = `${sectionPrefix}-user-table`
 
 const headers: { label: string }[] = [
-  { label: 'Nama Lengkap' },
+  { label: 'Nama Depan' },
+  { label: 'Nama Belakang' },
   { label: 'Tempat Lahir' },
   { label: 'Tanggal Lahir' },
   { label: 'Role' },
@@ -41,7 +51,7 @@ export default function AdminDashboardPage() {
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
 
-  const formHook = useRemixForm<FormType>({
+  const formHook = useRemixForm<AdminDashboardInsertBulkAkunFormType>({
     defaultValues,
     mode: 'all',
     resolver,
@@ -54,7 +64,8 @@ export default function AdminDashboardPage() {
         'newUsers',
         loader.tempAkuns.map(item => ({
           tempAkunId: item.id,
-          displayName: item.displayName ?? '',
+          firstName: item.firstName ?? '',
+          lastName: item.lastName ?? '',
           tempatLahir: item.tempatLahir,
           tanggalLahir: item.tanggalLahir
             ? dateFns.format(item.tanggalLahir, constants.dateFormats.rawDateInput)
@@ -73,6 +84,12 @@ export default function AdminDashboardPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader, loader.tempAkuns])
+
+  function setNewUsername(index: number) {
+    const data = formHook.getValues(`newUsers.${index}`) as Akun
+    const newUsername = DBHelpers.akun.generateUsername(data)
+    formHook.setValue(`newUsers.${index}.username`, newUsername, { shouldValidate: true })
+  }
 
   return (
     <AdminPageContainer
@@ -127,13 +144,57 @@ export default function AdminDashboardPage() {
                 <tr key={`${tableSectionId}-row-${index}`}>
                   <td className='border'>
                     <input hidden {...formHook.register(`newUsers.${index}.tempAkunId`)} />
-                    <input required {...formHook.register(`newUsers.${index}.displayName`)} />
+                    <Controller
+                      control={formHook.control}
+                      name={`newUsers.${index}.firstName`}
+                      render={({ field }) => (
+                        <input
+                          required
+                          {...field}
+                          onChange={e => {
+                            field.onChange(e)
+                            setNewUsername(index)
+                          }}
+                        />
+                      )}
+                    />
+                  </td>
+                  <td className='border'>
+                    <Controller
+                      control={formHook.control}
+                      name={`newUsers.${index}.lastName`}
+                      render={({ field }) => (
+                        <input
+                          required
+                          {...field}
+                          onChange={e => {
+                            field.onChange(e)
+                            setNewUsername(index)
+                          }}
+                        />
+                      )}
+                    />
                   </td>
                   <td className='border'>
                     <input {...formHook.register(`newUsers.${index}.tempatLahir`)} />
                   </td>
                   <td className='border'>
-                    <input type='date' {...formHook.register(`newUsers.${index}.tanggalLahir`)} />
+                    <Controller
+                      control={formHook.control}
+                      name={`newUsers.${index}.tanggalLahir`}
+                      render={({ field }) => (
+                        <input
+                          required
+                          type='date'
+                          {...field}
+                          value={field.value ?? ''}
+                          onChange={e => {
+                            field.onChange(e)
+                            setNewUsername(index)
+                          }}
+                        />
+                      )}
+                    />
                   </td>
                   <td className='border'>
                     <select {...formHook.register(`newUsers.${index}.role`)}>
@@ -145,7 +206,7 @@ export default function AdminDashboardPage() {
                     </select>
                   </td>
                   <td className='border'>
-                    <input required {...formHook.register(`newUsers.${index}.username`)} />
+                    <input required readOnly {...formHook.register(`newUsers.${index}.username`)} />
                   </td>
                   <td className='border'>
                     <input required {...formHook.register(`newUsers.${index}.password`)} />
@@ -235,7 +296,7 @@ export default function AdminDashboardPage() {
                 key={`${sectionPrefix}-createdAkun-${index}`}
                 className='col-span-4 md:col-span-2 xl:col-span-1 bg-white rounded shadow-lg p-2'
               >
-                <p className='text-lg font-medium'>{akun.displayName}</p>
+                <p className='text-lg font-medium'>{DBHelpers.akun.getDisplayName(akun)}</p>
                 <p className='text-sm text-slate-500'>{akun.username}</p>
                 <p className='text-sm'>
                   {`${EnumsTitleUtils.getJenisKelamin(akun.jenisKelamin as JenisKelamin)} - ${EnumsTitleUtils.getGolonganDarah(akun.golonganDarah as GolonganDarah)} - ${EnumsTitleUtils.getKewarganegaraan(akun.kewarganegaraan as Kewarganegaraan)}`}

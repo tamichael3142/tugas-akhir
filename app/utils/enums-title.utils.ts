@@ -1,4 +1,4 @@
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/enums/prisma.enums'
+import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
 
 function getRole(value: Role) {
   switch (value) {

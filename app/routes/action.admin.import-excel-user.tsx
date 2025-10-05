@@ -4,8 +4,9 @@ import * as XLSX from 'xlsx'
 import AppNav from '~/navigation'
 import XLSXUtils from '~/utils/xlsx.utils'
 import EnumsValueUtils from '~/utils/enums-value.utils'
-import { FormType } from '~/pages/admin/Dashboard/form'
+import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/form'
 import { prisma } from '~/utils/db.server'
+import DBHelpers from '~/database/helpers'
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
@@ -22,18 +23,28 @@ export async function action({ request }: ActionFunctionArgs) {
   const sheetName = workbook.SheetNames[0]
   const worksheet = workbook.Sheets[sheetName]
   const jsonDataRaw = XLSX.utils.sheet_to_json(worksheet)
-  const jsonData: FormType['newUsers'] = []
+  const jsonData: AdminDashboardInsertBulkAkunFormType['newUsers'] = []
 
   for (let i = 0; i < jsonDataRaw.length; i++) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item: any = jsonDataRaw[i]
+    const firstName = (item['Nama Depan'] ?? '') as string
+    const lastName = (item['Nama Belakang'] ?? '') as string
+    const tanggalLahir = XLSXUtils.excelDateToJSDate(item['Tanggal Lahir']).toISOString()
+    const username = DBHelpers.akun.generateUsername({
+      firstName,
+      lastName,
+      tanggalLahir: tanggalLahir ? new Date(tanggalLahir) : new Date('2000-01-01'),
+    })
+
     jsonData.push({
-      displayName: (item['Nama Lengkap'] ?? '') as string,
+      firstName,
+      lastName,
       tempatLahir: (item['Tempat Lahir'] ?? null) as string | null,
-      tanggalLahir: XLSXUtils.excelDateToJSDate(item['Tanggal Lahir']).toISOString(),
+      tanggalLahir,
       role: EnumsValueUtils.getRole(item['Role']),
-      username: (item['Username'] ?? '') as string,
-      password: (item['Password'] ?? item['Username'] ?? '') as string,
+      username,
+      password: (item['Password'] ?? username ?? '') as string,
       email: (item['Email'] ?? null) as string | null,
       jenisKelamin: EnumsValueUtils.getJenisKelamin(item['Jenis Kelamin']),
       agama: (item['Agama'] ?? null) as string | null,
