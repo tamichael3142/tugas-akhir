@@ -39,7 +39,11 @@ function masterAccountCreate() {
 }
 
 function masterAccountDetail({ id }: { id: string }) {
-  return `${baseUrl}${masterAccountUrl}/detail/${id}`
+  return `${baseUrl}${masterAccountUrl}/${id}/detail`
+}
+
+function masterAccountEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterAccountUrl}/${id}/edit`
 }
 
 function reporting() {
@@ -57,6 +61,7 @@ const admin = {
   masterAccount,
   masterAccountCreate,
   masterAccountDetail,
+  masterAccountEdit,
   reporting,
 }
 

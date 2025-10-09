@@ -10,6 +10,10 @@ const pageMetas = {
     { title: `Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
+  adminMasterAccount: [
+    { title: `Master Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs admin SBBS' },
+  ],
   authLogin: [
     { title: `Login | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Masuk ke SBBS' },

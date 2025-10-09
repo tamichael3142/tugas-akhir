@@ -1,5 +1,7 @@
 import { ActionFunctionArgs } from '@remix-run/node'
+import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
+import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
 import AdminMasterAccountCreatePage from '~/pages/admin/MasterAccount/Create'
 import { AdminMasterAccountInsertAkunFormType, resolver } from '~/pages/admin/MasterAccount/Create/form'
@@ -8,6 +10,10 @@ import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import PasswordUtils from '~/utils/password.utils'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
+
+export const meta: MetaFunction = () => {
+  return constants.pageMetas.adminMasterAccount
+}
 
 export async function action({ request }: ActionFunctionArgs): Promise<ActionDataAdminMasterAccountCreate> {
   const { errors, data } = await getValidatedFormData<AdminMasterAccountInsertAkunFormType>(request, resolver)

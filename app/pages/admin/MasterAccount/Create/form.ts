@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Akun } from '@prisma/client'
 import * as z from 'zod'
+import constants from '~/constants'
 import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
+import * as dateFns from 'date-fns'
 
 export const validaionSchema = z.object({
   nip: z.string(),
@@ -67,3 +70,22 @@ export function getDummyUserValue(): AdminMasterAccountInsertAkunFormType {
 
 export const defaultValues: AdminMasterAccountInsertAkunFormType =
   process.env.NODE_ENV === 'production' ? emptyUserValue : getDummyUserValue()
+
+export function translateRawToFormData(data: Akun): AdminMasterAccountInsertAkunFormType {
+  return {
+    nip: data.nip ?? '',
+    firstName: data.firstName,
+    lastName: data.lastName,
+    tempatLahir: data.tempatLahir ?? '',
+    tanggalLahir: data.tanggalLahir ? dateFns.format(data.tanggalLahir, constants.dateFormats.rawDateInput) : null,
+    role: data.role as Role,
+    username: data.username,
+    password: data.password,
+    email: data.email ?? '',
+    jenisKelamin: data.jenisKelamin as JenisKelamin,
+    agama: data.agama ?? '',
+    alamat: data.alamat ?? '',
+    golonganDarah: data.golonganDarah as GolonganDarah,
+    kewarganegaraan: data.kewarganegaraan as Kewarganegaraan,
+  }
+}

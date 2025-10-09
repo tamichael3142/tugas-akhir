@@ -12,3 +12,7 @@ export type LoaderDataAdminIndex = {
 export type LoaderDataAdminMasterAkun = {
   akuns: PaginationReturns<Akun>
 }
+
+export type LoaderDataAdminMasterAkunEdit = {
+  akun: Akun | null
+}

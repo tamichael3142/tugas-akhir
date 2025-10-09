@@ -9,6 +9,9 @@ import { LoaderDataAdminMasterAkun } from '~/types/loaders-data/admin'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import * as dateFns from 'date-fns'
 import constants from '~/constants'
+import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
+import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
+import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 
 const sectionPrefix = 'admin-master-account'
 
@@ -46,20 +49,23 @@ export default function AdminMasterAccountPage() {
             label: 'Created At',
             render: row => dateFns.format(row.createdAt, constants.dateFormats.dateColumn),
           },
-          // {
-          //   field: 'actions',
-          //   label: 'Aksi',
-          //   render: row => (
-          //     <div>
-          //       <button>
-          //         <IoConstruct />
-          //       </button>
-          //       <button>
-          //         <IoAccessibility />
-          //       </button>
-          //     </div>
-          //   ),
-          // },
+          {
+            field: 'updatedAt',
+            label: 'Updated At',
+            render: row => dateFns.format(row.updatedAt, constants.dateFormats.dateColumn),
+          },
+          {
+            field: 'actions',
+            label: 'Aksi',
+            render: row => (
+              <DataGridActionButtonWrapper>
+                <Link to={AppNav.admin.masterAccountEdit({ id: row.id })}>
+                  <DataGridActionButton icon={DataGridActionButtonHelper.getEditIcon()} color='warning' />
+                </Link>
+                <DataGridActionButton icon={DataGridActionButtonHelper.getDeleteIcon()} color='error' />
+              </DataGridActionButtonWrapper>
+            ),
+          },
         ]}
         rows={loader.akuns.data}
         pagination={{

@@ -21,3 +21,12 @@ export type ActionDataAdminMasterAccountCreate = BaseActionData & {
     oldFormData?: AdminMasterAccountInsertAkunFormType
   }
 }
+
+export type ActionDataAdminMasterAccountEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedAkun?: Akun
+    // * Error
+    oldFormData?: AdminMasterAccountInsertAkunFormType
+  }
+}
