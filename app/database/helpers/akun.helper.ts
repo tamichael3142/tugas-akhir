@@ -2,6 +2,8 @@ import * as dateFns from 'date-fns'
 import { Akun } from '@prisma/client'
 import constants from '~/constants'
 
+const normalUsernameLength = 8
+
 function generateUsername(value: Partial<Akun>): string {
   try {
     let result = value.firstName?.substring(0, 1) ?? ''
@@ -23,7 +25,6 @@ function getDisplayName(value: Partial<Akun>): string {
 }
 
 function uniqifyExistingUsername(latestUsername: string): string {
-  const normalUsernameLength = 8
   const currCount =
     latestUsername.length > normalUsernameLength
       ? // * Have existed more than 2
@@ -34,6 +35,7 @@ function uniqifyExistingUsername(latestUsername: string): string {
 }
 
 const akun = {
+  normalUsernameLength,
   generateUsername,
   getDisplayName,
   uniqifyExistingUsername,

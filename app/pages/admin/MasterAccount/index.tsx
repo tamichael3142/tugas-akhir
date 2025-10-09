@@ -7,6 +7,8 @@ import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
 import { LoaderDataAdminMasterAkun } from '~/types/loaders-data/admin'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
+import * as dateFns from 'date-fns'
+import constants from '~/constants'
 
 const sectionPrefix = 'admin-master-account'
 
@@ -39,7 +41,25 @@ export default function AdminMasterAccountPage() {
           { field: 'firstName', label: 'Nama Depan' },
           { field: 'lastName', label: 'Nama Belakang' },
           { field: 'email', label: 'Email' },
-          { field: 'createdAt', label: 'Created At', render: row => row.createdAt.toISOString() },
+          {
+            field: 'createdAt',
+            label: 'Created At',
+            render: row => dateFns.format(row.createdAt, constants.dateFormats.dateColumn),
+          },
+          // {
+          //   field: 'actions',
+          //   label: 'Aksi',
+          //   render: row => (
+          //     <div>
+          //       <button>
+          //         <IoConstruct />
+          //       </button>
+          //       <button>
+          //         <IoAccessibility />
+          //       </button>
+          //     </div>
+          //   ),
+          // },
         ]}
         rows={loader.akuns.data}
         pagination={{

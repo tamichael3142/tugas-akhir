@@ -7,8 +7,12 @@ import EnumsValueUtils from '~/utils/enums-value.utils'
 import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/form'
 import { prisma } from '~/utils/db.server'
 import DBHelpers from '~/database/helpers'
+import { requireAuthCookie } from '~/utils/auth.utils'
 
 export async function action({ request }: ActionFunctionArgs) {
+  const userId = await requireAuthCookie(request)
+  const currUser = await prisma.akun.findUnique({ where: { id: userId } })
+
   const formData = await request.formData()
   const file = formData.get('file') as File
 
@@ -53,9 +57,6 @@ export async function action({ request }: ActionFunctionArgs) {
       kewarganegaraan: EnumsValueUtils.getKewarganegaraan(item['Kewarganegaraan']),
     })
   }
-
-  // TODO: ganti ini nanti pake auth
-  const currUser = await prisma.akun.findUnique({ where: { username: 'superadmin' } })
 
   await prisma.tempAkun.createManyAndReturn({
     data: jsonData.map(item => ({

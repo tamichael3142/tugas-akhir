@@ -10,7 +10,7 @@ import {
 import { Form, useActionData, useLoaderData } from '@remix-run/react'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import { Button } from '~/components/forms'
-import { FaSave, FaTrash } from 'react-icons/fa'
+import { FaFileExcel, FaSave, FaTrash } from 'react-icons/fa'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { useEffect, useRef } from 'react'
 import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
@@ -98,7 +98,9 @@ export default function AdminDashboardPage() {
         <Button
           key={importExcelFormId}
           label='Import Excel'
+          startIcon={<FaFileExcel />}
           color='secondary'
+          onlyIconOnSmallView
           buttonProps={{ onClick: () => importExcelInputRef.current?.click() }}
         />,
         <Button

@@ -1,27 +1,22 @@
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
-import { prisma } from '~/utils/db.server'
 import AdminDashboardLayout from '~/layouts/admin/AdminDashboard'
+import { requireAuthCookie } from '~/utils/auth.utils'
+import { LoaderFunctionArgs } from '@remix-run/node'
+import { prisma } from '~/utils/db.server'
+import { LoaderDataAdmin } from '~/types/loaders-data/admin'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.adminDefault
 }
 
-export async function loader() {
-  // await prisma.akun
-  //   .create({ data: { username: 'superadmin', password: 'superadmin' } })
-  //   .then(res => console.log('success', res))
-  const user = await prisma.akun
-    .findFirst({
-      where: { username: 'superadmin' },
-    })
-    .catch(() => ({}))
-  return { user }
+export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataAdmin> {
+  const userId = await requireAuthCookie(request)
+  const currUser = await prisma.akun.findUnique({ where: { id: userId } })
+
+  return { user: currUser }
 }
 
 export default function AdminRoute() {
-  // const loader = useLoaderData<{ user: Akun }>()
-  // console.log(loader.user)
-
   return <AdminDashboardLayout />
 }

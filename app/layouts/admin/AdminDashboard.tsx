@@ -1,16 +1,26 @@
-import { Link, Outlet, useLocation } from '@remix-run/react'
+import { Link, Outlet, useLoaderData, useLocation } from '@remix-run/react'
 import classNames from 'classnames'
 import { adminNavs } from './navs'
 import assets from '~/assets'
 import AppNav from '~/navigation'
 import useAdminPageStore from '~/store/adminPageStore'
 import { IoClose } from 'react-icons/io5'
+import { LoaderDataAdmin } from '~/types/loaders-data/admin'
+import { useEffect } from 'react'
+import useAuthStore from '~/store/authStore'
+import DBHelpers from '~/database/helpers'
 
 export default function AdminDashboardLayout() {
+  const loader = useLoaderData<LoaderDataAdmin>()
   const location = useLocation()
+  const user = useAuthStore(state => state.user)
   const openSidebar = useAdminPageStore(state => state.openSidebar)
 
   const closeSidebar = () => useAdminPageStore.setState({ openSidebar: false })
+
+  useEffect(() => {
+    if (loader.user) useAuthStore.setState({ user: loader.user })
+  }, [loader])
 
   return (
     <div className='w-screen min-h-screen relative'>
@@ -48,13 +58,15 @@ export default function AdminDashboardLayout() {
             ))}
           </div>
 
-          <div className='p-8 md:p-4 flex flex-row items-center gap-2 cursor-pointer hover:bg-primary/10 duration-300'>
-            <div className='rounded-full w-10 h-10 bg-primary'></div>
-            <div className='flex flex-col justify-center grow'>
-              <p className='line-clamp-1 font-semibold text-xl md:text-lg'>Admin 1</p>
-              <p className='line-clamp-1 text-gray-500 md:text-sm'>admin001</p>
+          {user ? (
+            <div className='p-8 md:p-4 flex flex-row items-center gap-2 cursor-pointer hover:bg-primary/10 duration-300'>
+              <div className='rounded-full w-10 h-10 bg-primary'></div>
+              <div className='flex flex-col justify-center grow'>
+                <p className='line-clamp-1 font-semibold text-xl md:text-lg'>{DBHelpers.akun.getDisplayName(user)}</p>
+                <p className='line-clamp-1 text-gray-500 md:text-sm'>{user.username}</p>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
       <button

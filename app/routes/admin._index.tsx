@@ -4,6 +4,7 @@ import AdminIndexPage from '~/pages/admin/Dashboard'
 import { AdminDashboardInsertBulkAkunFormType, resolver } from '~/pages/admin/Dashboard/form'
 import { ActionDataAdminIndex } from '~/types/actions-data/admin'
 import { LoaderDataAdminIndex } from '~/types/loaders-data/admin'
+import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import PasswordUtils from '~/utils/password.utils'
 
@@ -24,8 +25,8 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
     return { success: false, error: errors, data: { oldFormData: data } }
   }
 
-  // TODO: ganti ini nanti pake auth
-  const currUser = await prisma.akun.findUnique({ where: { username: 'superadmin' } })
+  const userId = await requireAuthCookie(request)
+  const currUser = await prisma.akun.findUnique({ where: { id: userId } })
 
   const deletingIds = [...data.deletedTempAkunIds]
   data.newUsers.forEach(item => {

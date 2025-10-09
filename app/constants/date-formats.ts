@@ -4,6 +4,7 @@ const dateFormats = {
   monthNumberFull: 'MM',
   yearFull: 'yyyy',
   akunUsername: 'ddMM',
+  dateColumn: 'dd/MM/yyyy H:mm',
 }
 
 export default dateFormats
