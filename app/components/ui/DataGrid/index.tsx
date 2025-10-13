@@ -34,7 +34,7 @@ export default function DataGrid<T>(props: DataGridProps<T>) {
                   {columns.map(col => (
                     <td key={col.field.toString()} className='p-2'>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {col.render ? col.render(row) : (row as any)[col.field]}
+                      {col.render ? col.render(row, idx) : (row as any)[col.field]}
                     </td>
                   ))}
                   {actions && <td className='p-2 text-right'>{actions(row)}</td>}

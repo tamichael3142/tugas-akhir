@@ -30,3 +30,10 @@ export type ActionDataAdminMasterAccountEdit = BaseActionData & {
     oldFormData?: AdminMasterAccountInsertAkunFormType
   }
 }
+
+export type ActionDataAdminMasterAccountDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedAkun?: Akun
+  }
+}

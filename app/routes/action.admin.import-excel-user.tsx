@@ -8,10 +8,12 @@ import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/fo
 import { prisma } from '~/utils/db.server'
 import DBHelpers from '~/database/helpers'
 import { requireAuthCookie } from '~/utils/auth.utils'
+import { Role } from '~/database/enums/prisma.enums'
 
 export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
+  if (currUser?.role !== Role.ADMIN) return redirect(AppNav.admin.dashboard())
 
   const formData = await request.formData()
   const file = formData.get('file') as File

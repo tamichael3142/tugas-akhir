@@ -17,6 +17,6 @@ export type DataGridProps<T> = {
 
 export type DataGridColumnProps<T> = {
   field: keyof T | string
-  label?: string
-  render?: (row: T) => ReactNode
+  label?: ReactNode
+  render?: (row: T, index: number) => ReactNode
 }

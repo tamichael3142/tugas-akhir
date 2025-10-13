@@ -42,7 +42,9 @@ export default function Button(props: ButtonProps) {
       {...restButtonProps}
     >
       {props.startIcon}
-      <span className={classNames({ ['hidden md:block']: props.onlyIconOnSmallView })}>{props.label}</span>
+      {props.label ? (
+        <span className={classNames({ ['hidden md:block']: props.onlyIconOnSmallView })}>{props.label}</span>
+      ) : null}
       {props.endIcon}
     </button>
   )

@@ -18,7 +18,7 @@ export default function DataGridActionButton(props: DataGridActionButtonProps) {
       type='button'
       className={classNames(
         'flex flex-row items-center justify-center gap-2 rounded-lg cursor-pointer px-2 py-1 duration-200',
-        'disabled:cursor-not-allowed',
+        'disabled:cursor-not-allowed disabled:border-slate-300 disabled:text-slate-300 disabled:hover:bg-white',
         {
           ['border-1 border-neutral-400 text-neutral-400 hover:bg-neutral-400/10']: color === 'default',
           ['border-1 border-primary text-primary hover:bg-primary/10']: color === 'primary',
