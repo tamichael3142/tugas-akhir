@@ -6,20 +6,20 @@ import { Button } from '~/components/forms'
 import { BackButton, Card } from '~/components/ui'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
-import { AdminMasterAccountInsertAkunFormType, resolver, defaultValues } from './form'
-import { ActionDataAdminMasterAccountCreate } from '~/types/actions-data/admin'
+import { AdminMasterTahunAjaranCreateFormType, resolver, emptyUserValue } from './form'
+import { ActionDataAdminMasterTahunAjaranCreate } from '~/types/actions-data/admin'
 import toast from 'react-hot-toast'
-import AdminMasterAccountFormComponent from '../form-component'
+import AdminMasterTahunAjaranFormComponent from '../form-component'
 
-const sectionPrefix = 'admin-master-account-create'
+const sectionPrefix = 'admin-master-tahunAjaran-create'
 
-export default function AdminMasterAccountCreatePage() {
-  const actionData = useActionData<ActionDataAdminMasterAccountCreate>()
+export default function AdminMasterTahunAjaranCreatePage() {
+  const actionData = useActionData<ActionDataAdminMasterTahunAjaranCreate>()
   const navigate = useNavigate()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
 
-  const formHook = useRemixForm<AdminMasterAccountInsertAkunFormType>({
-    defaultValues,
+  const formHook = useRemixForm<AdminMasterTahunAjaranCreateFormType>({
+    defaultValues: emptyUserValue,
     mode: 'onChange',
     resolver,
   })
@@ -32,7 +32,7 @@ export default function AdminMasterAccountCreatePage() {
     if (actionData?.success) {
       resetForm()
       toast.success(actionData.message ?? '')
-      navigate(AppNav.admin.masterAccount())
+      navigate(AppNav.admin.masterTahunAjaran())
     } else if (actionData?.error) {
       toast.error(actionData.message ?? '')
     }
@@ -41,16 +41,16 @@ export default function AdminMasterAccountCreatePage() {
 
   return (
     <AdminPageContainer
-      title='Create Account'
-      actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterAccount()} />]}
+      title='Create Tahun Ajaran'
+      actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterTahunAjaran()} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <Card className=''>
-          <p className='font-semibold text-lg'>Tambah Akun</p>
+          <p className='font-semibold text-lg'>Tambah Tahun Ajaran</p>
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
-            <AdminMasterAccountFormComponent />
+            <AdminMasterTahunAjaranFormComponent />
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>

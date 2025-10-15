@@ -1,56 +1,38 @@
 import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { FaPlus } from 'react-icons/fa'
-import { CgExport } from 'react-icons/cg'
 import { Button } from '~/components/forms'
 import { DataGrid, LoadingFullScreen } from '~/components/ui'
-import { Role } from '~/database/enums/prisma.enums'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
-import { LoaderDataAdminMasterAkun } from '~/types/loaders-data/admin'
-import EnumsTitleUtils from '~/utils/enums-title.utils'
+import { LoaderDataAdminMasterTahunAjaran } from '~/types/loaders-data/admin'
 import * as dateFns from 'date-fns'
 import constants from '~/constants'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import { usePopup } from '~/hooks/usePopup'
-import { Akun } from '@prisma/client'
-import DBHelpers from '~/database/helpers'
+import { TahunAjaran } from '@prisma/client'
 import { Fragment } from 'react/jsx-runtime'
-import { useEffect, useState } from 'react'
-import { ActionDataAdminMasterAccountDelete } from '~/types/actions-data/admin'
-import XLSXUtils from '~/utils/xlsx.utils'
-import { IoMdClose } from 'react-icons/io'
-import Checkbox from '~/components/forms/Checkbox'
+import { useEffect } from 'react'
+import { ActionDataAdminMasterTahunAjaranDelete } from '~/types/actions-data/admin'
 
-const sectionPrefix = 'admin-master-account'
+const sectionPrefix = 'admin-master-tahunAjaran'
 const deleteFormId = `${sectionPrefix}-delete-form`
 
-export default function AdminMasterAccountPage() {
-  const loader = useLoaderData<LoaderDataAdminMasterAkun>()
+export default function AdminMasterTahunAjaranPage() {
+  const loader = useLoaderData<LoaderDataAdminMasterTahunAjaran>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const fetcher = useFetcher<ActionDataAdminMasterAccountDelete>({ key: deleteFormId })
+  const fetcher = useFetcher<ActionDataAdminMasterTahunAjaranDelete>({ key: deleteFormId })
   const revalidator = useRevalidator()
   const popup = usePopup()
 
   const isDeleting = fetcher.state === 'submitting'
   const isSuccess = fetcher.data?.success
 
-  const [selectedIds, setSelectedIds] = useState<Akun['id'][]>([])
-
-  function downloadExportIds() {
-    if (selectedIds.length) {
-      XLSXUtils.downloadExcelFromIds({
-        ids: selectedIds,
-        fileName: `export-account-id-${new Date().toTimeString()}.xlsx`,
-      })
-    }
-  }
-
   useEffect(() => {
     if (isSuccess) {
-      fetcher.load(AppNav.admin.masterAccount())
+      fetcher.load(AppNav.admin.masterTahunAjaran())
       revalidator.revalidate() // refresh data loader parent
       popup.close()
     }
@@ -63,20 +45,20 @@ export default function AdminMasterAccountPage() {
     navigate(`?${params.toString()}`, { replace: false })
   }
 
-  function openDeletePopup(row: Akun) {
+  function openDeletePopup(row: TahunAjaran) {
     popup.open({
-      title: 'Hapus akun?',
+      title: 'Hapus tahun ajaran?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus akun{' '}
-            <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span>?
+            Apakah anda yakin untuk menghapus tahun ajaran{' '}
+            <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
             method='delete'
-            action={AppNav.adminAction.masterAccountDelete({ akunId: row.id })}
+            action={AppNav.adminAction.masterTahunAjaranDelete({ tahunAjaranId: row.id })}
           ></fetcher.Form>
         </Fragment>
       ),
@@ -100,17 +82,9 @@ export default function AdminMasterAccountPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Master Account'
+      title='Master Tahun Ajaran'
       actions={[
-        <Button
-          key={`${sectionPrefix}-export-button`}
-          label={`Export ID${selectedIds.length > 0 ? ` (${selectedIds.length})` : ''}`}
-          color='secondary'
-          startIcon={<CgExport />}
-          onlyIconOnSmallView
-          buttonProps={{ onClick: downloadExportIds, disabled: selectedIds.length <= 0 }}
-        />,
-        <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterAccountCreate()}>
+        <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterTahunAjaranCreate()}>
           <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
@@ -118,39 +92,7 @@ export default function AdminMasterAccountPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          {
-            field: 'checkbox',
-            label: (
-              <div className='flex items-center justify-center'>
-                <DataGridActionButton
-                  icon={<IoMdClose />}
-                  buttonProps={{ disabled: selectedIds.length <= 0, onClick: () => setSelectedIds([]) }}
-                />
-              </div>
-            ),
-            render: row => (
-              <div className='flex items-center justify-center'>
-                <Checkbox
-                  inputProps={{
-                    checked: selectedIds.includes(row.id),
-                    onChange: e =>
-                      setSelectedIds(oldValues => {
-                        let newValues: Akun['id'][] = []
-                        if (e.target.checked && !oldValues.includes(row.id)) newValues = [...oldValues, row.id]
-                        else newValues = oldValues.filter(item => item !== row.id)
-
-                        return newValues
-                      }),
-                  }}
-                />
-              </div>
-            ),
-          },
-          { field: 'username', label: 'Username' },
-          { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.role as Role) },
-          { field: 'firstName', label: 'Nama Depan' },
-          { field: 'lastName', label: 'Nama Belakang' },
-          { field: 'email', label: 'Email' },
+          { field: 'nama', label: 'Nama' },
           {
             field: 'createdAt',
             label: 'Created At',
@@ -171,7 +113,7 @@ export default function AdminMasterAccountPage() {
             label: 'Aksi',
             render: row => (
               <DataGridActionButtonWrapper>
-                <Link to={AppNav.admin.masterAccountEdit({ id: row.id })}>
+                <Link to={AppNav.admin.masterTahunAjaranEdit({ id: row.id })}>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}
                     color='warning'
@@ -187,12 +129,12 @@ export default function AdminMasterAccountPage() {
             ),
           },
         ]}
-        rows={loader.akuns.data}
+        rows={loader.tahunAjarans.data}
         pagination={{
-          page: loader.akuns.pagination.page,
-          pageSize: loader.akuns.pagination.limit,
-          total: loader.akuns.pagination.total,
-          totalPages: loader.akuns.pagination.totalPages,
+          page: loader.tahunAjarans.pagination.page,
+          pageSize: loader.tahunAjarans.pagination.limit,
+          total: loader.tahunAjarans.pagination.total,
+          totalPages: loader.tahunAjarans.pagination.totalPages,
           onPageChange: handlePageChange,
         }}
         className='shadow-primary'

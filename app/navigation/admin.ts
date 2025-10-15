@@ -4,8 +4,22 @@ function dashboard() {
   return `${baseUrl}`
 }
 
+const masterTahunAjaranUrl = '/master-tahun-ajaran'
+
 function masterTahunAjaran() {
-  return `${baseUrl}/master-tahun-ajaran`
+  return `${baseUrl}${masterTahunAjaranUrl}`
+}
+
+function masterTahunAjaranCreate() {
+  return `${baseUrl}${masterTahunAjaranUrl}/create`
+}
+
+function masterTahunAjaranDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterTahunAjaranUrl}/${id}/detail`
+}
+
+function masterTahunAjaranEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterTahunAjaranUrl}/${id}/edit`
 }
 
 function masterKelas() {
@@ -53,6 +67,9 @@ function reporting() {
 const admin = {
   dashboard,
   masterTahunAjaran,
+  masterTahunAjaranCreate,
+  masterTahunAjaranDetail,
+  masterTahunAjaranEdit,
   masterKelas,
   masterMataPelajaran,
   masterEkstrakulikuler,
