@@ -13,12 +13,19 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const tahunAjaranId = params.tahunAjaranId as TahunAjaran['id'] | null
 
+    const deletedAt = new Date()
     return await prisma.tahunAjaran
       .update({
         where: { id: tahunAjaranId ?? '' },
         data: {
-          deletedAt: new Date(),
+          deletedAt,
           lastUpdateById: currUser?.id,
+          semesterAjaran: {
+            updateMany: {
+              where: { tahunAjaranId: tahunAjaranId ?? '' },
+              data: { deletedAt, lastUpdateById: currUser?.id },
+            },
+          },
         },
       })
       .then(result => {

@@ -1,3 +1,4 @@
+import { SemesterAjaranUrutan } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -29,6 +30,12 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
         data: {
           ...data,
           createdById: currUser?.id,
+          semesterAjaran: {
+            create: [
+              { urutan: SemesterAjaranUrutan.SATU, createdById: currUser?.id },
+              { urutan: SemesterAjaranUrutan.DUA, createdById: currUser?.id },
+            ],
+          },
         },
       })
       .then(result => {
