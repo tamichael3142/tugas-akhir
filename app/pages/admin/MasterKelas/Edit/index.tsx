@@ -6,33 +6,33 @@ import { Button } from '~/components/forms'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
-import { ActionDataAdminMasterAccountEdit } from '~/types/actions-data/admin'
+import { ActionDataAdminMasterKelasEdit } from '~/types/actions-data/admin'
 import toast from 'react-hot-toast'
-import AdminMasterAccountFormComponent from '../form-component'
-import { LoaderDataAdminMasterAkunEdit } from '~/types/loaders-data/admin'
-import { AdminMasterAccountInsertAkunFormType } from '../form-types'
+import AdminMasterKelasFormComponent from '../form-component'
+import { LoaderDataAdminMasterKelasEdit } from '~/types/loaders-data/admin'
+import { AdminMasterKelasCreateFormType } from '../form-types'
 import { emptyUserValue, resolver, translateRawToFormData } from '../Create/form'
 
-const sectionPrefix = 'admin-master-account-edit'
+const sectionPrefix = 'admin-master-kelas-edit'
 
-export default function AdminMasterAccountEditPage() {
-  const loader = useLoaderData<LoaderDataAdminMasterAkunEdit>()
-  const actionData = useActionData<ActionDataAdminMasterAccountEdit>()
-  const fetcher = useFetcher({ key: `${sectionPrefix}-form-${loader.akun?.id}` })
+export default function AdminMasterKelasEditPage() {
+  const loader = useLoaderData<LoaderDataAdminMasterKelasEdit>()
+  const actionData = useActionData<ActionDataAdminMasterKelasEdit>()
+  const fetcher = useFetcher({ key: `${sectionPrefix}-form-${loader.kelas?.id}` })
   const revalidator = useRevalidator()
 
-  const formHook = useRemixForm<AdminMasterAccountInsertAkunFormType>({
+  const formHook = useRemixForm<AdminMasterKelasCreateFormType>({
     defaultValues: emptyUserValue,
     mode: 'onChange',
     resolver,
   })
 
   function resetForm() {
-    if (loader && loader.akun) formHook.reset(translateRawToFormData(loader.akun))
+    if (loader && loader.kelas) formHook.reset(translateRawToFormData(loader.kelas))
   }
 
   useEffect(() => {
-    if (loader && loader.akun) resetForm()
+    if (loader && loader.kelas) resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader])
 
@@ -50,16 +50,16 @@ export default function AdminMasterAccountEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Edit Account'
-      actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.admin.masterAccount()} />]}
+      title='Edit Kelas'
+      actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.admin.masterKelas()} />]}
     >
-      <RemixFormProvider key={`${sectionPrefix}-form-${loader.akun?.id}`} {...formHook}>
+      <RemixFormProvider key={`${sectionPrefix}-form-${loader.kelas?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Akun</p>
+            <p className='font-semibold text-lg'>Edit Kelas</p>
             <hr className='my-4' />
 
-            <AdminMasterAccountFormComponent dontTriggerSetNewUsername />
+            <AdminMasterKelasFormComponent tahunAjarans={loader.tahunAjarans} />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>
               <Button variant='text' color='secondary' label='Reset form' buttonProps={{ onClick: resetForm }} />

@@ -8,9 +8,15 @@ export type PaginationParams<T> = {
     count: (args?: any) => Promise<number>
   }
   options?: {
-    where?: any
+    where?: Record<string, any>
+    include?: Record<string, any>
     orderBy?: any | any[]
     defaultLimit?: number
+    /**
+     * Optional mapper untuk convert query params jadi Prisma where.
+     * Misal: (query) => ({ name: { contains: query.search } })
+     */
+    mapQueryToWhere?: (query: URLSearchParams) => Record<string, any>
   }
 }
 
@@ -24,6 +30,7 @@ export type PaginationReturns<T> = {
     hasNextPage: boolean
     hasPrevPage: boolean
   }
+  filters: object
 }
 
 export async function getPaginatedData<T>({
@@ -32,19 +39,28 @@ export async function getPaginatedData<T>({
   options,
 }: PaginationParams<T>): Promise<PaginationReturns<T>> {
   const url = new URL(request.url)
-  const page = Math.max(Number(url.searchParams.get('page')) || 1, 1)
-  const limit = Math.max(Number(url.searchParams.get('limit')) || options?.defaultLimit || 10, 1)
+  const query = url.searchParams
 
+  const page = Math.max(Number(query.get('page')) || 1, 1)
+  const limit = Math.max(Number(query.get('limit')) || options?.defaultLimit || 10, 1)
   const skip = (page - 1) * limit
+
+  // 🔍 Bangun `where` condition gabungan
+  const dynamicWhere = options?.mapQueryToWhere ? options.mapQueryToWhere(query) : {}
+  const where = {
+    ...options?.where,
+    ...dynamicWhere,
+  }
 
   const [data, total] = await Promise.all([
     model.findMany({
       skip,
       take: limit,
-      where: options?.where,
+      where,
+      include: options?.include,
       orderBy: options?.orderBy ?? [{ createdAt: 'desc' }],
     }),
-    model.count({ where: options?.where }),
+    model.count({ where }),
   ])
 
   const totalPages = Math.ceil(total / limit)
@@ -59,5 +75,6 @@ export async function getPaginatedData<T>({
       hasNextPage: page < totalPages,
       hasPrevPage: page > 1,
     },
+    filters: Object.fromEntries(query.entries()),
   }
 }

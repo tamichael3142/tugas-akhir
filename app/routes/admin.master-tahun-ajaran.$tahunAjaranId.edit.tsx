@@ -70,6 +70,6 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   }
 }
 
-export default function AdminMasterAccountEditRoute() {
+export default function AdminMasterTahunAjaranEditRoute() {
   return <AdminMasterTahunAjaranEditPage />
 }

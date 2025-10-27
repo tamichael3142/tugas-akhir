@@ -1,9 +1,15 @@
 const baseUrl = '/admin'
 
+/*
+ * Admin's lower level routes
+ */
 function dashboard() {
   return `${baseUrl}`
 }
 
+/*
+ * Admin's master tahun ajaran level routes
+ */
 const masterTahunAjaranUrl = '/master-tahun-ajaran'
 
 function masterTahunAjaran() {
@@ -22,26 +28,58 @@ function masterTahunAjaranEdit({ id }: { id: string }) {
   return `${baseUrl}${masterTahunAjaranUrl}/${id}/edit`
 }
 
+/*
+ * Admin's master kelas level routes
+ */
+const masterKelasUrl = '/master-kelas'
+
 function masterKelas() {
-  return `${baseUrl}/master-kelas`
+  return `${baseUrl}${masterKelasUrl}`
 }
 
+function masterKelasCreate() {
+  return `${baseUrl}${masterKelasUrl}/create`
+}
+
+function masterKelasDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterKelasUrl}/${id}/detail`
+}
+
+function masterKelasEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterKelasUrl}/${id}/edit`
+}
+
+/*
+ * Admin's master mata pelajaran level routes
+ */
 function masterMataPelajaran() {
   return `${baseUrl}/master-mata-pelajaran`
 }
 
+/*
+ * Admin's master ekstrakulikuler level routes
+ */
 function masterEkstrakulikuler() {
   return `${baseUrl}/master-ekstrakulikuler`
 }
 
+/*
+ * Admin's master jadwal pelajaran level routes
+ */
 function masterJadwalPelajaran() {
   return `${baseUrl}/master-jadwal-pelajaran`
 }
 
+/*
+ * Admin's master pengumuman level routes
+ */
 function masterPengumuman() {
   return `${baseUrl}/master-pengumuman`
 }
 
+/*
+ * Admin's master account level routes
+ */
 const masterAccountUrl = '/master-account'
 
 function masterAccount() {
@@ -60,6 +98,9 @@ function masterAccountEdit({ id }: { id: string }) {
   return `${baseUrl}${masterAccountUrl}/${id}/edit`
 }
 
+/*
+ * Admin's reporting level routes
+ */
 function reporting() {
   return `${baseUrl}/reporting`
 }
@@ -71,6 +112,9 @@ const admin = {
   masterTahunAjaranDetail,
   masterTahunAjaranEdit,
   masterKelas,
+  masterKelasCreate,
+  masterKelasDetail,
+  masterKelasEdit,
   masterMataPelajaran,
   masterEkstrakulikuler,
   masterJadwalPelajaran,
