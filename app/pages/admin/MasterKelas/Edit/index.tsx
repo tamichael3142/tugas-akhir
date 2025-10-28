@@ -59,7 +59,7 @@ export default function AdminMasterKelasEditPage() {
             <p className='font-semibold text-lg'>Edit Kelas</p>
             <hr className='my-4' />
 
-            <AdminMasterKelasFormComponent tahunAjarans={loader.tahunAjarans} />
+            <AdminMasterKelasFormComponent tahunAjarans={loader.tahunAjarans} gurus={loader.gurus} />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>
               <Button variant='text' color='secondary' label='Reset form' buttonProps={{ onClick: resetForm }} />

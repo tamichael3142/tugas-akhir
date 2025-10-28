@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -15,10 +16,15 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader(): Promise<LoaderDataAdminMasterKelasCreate> {
-  const tahunAjarans = await prisma.tahunAjaran.findMany({ where: { deletedAt: null } })
+  const tahunAjarans = await prisma.tahunAjaran.findMany({ where: { deletedAt: null }, orderBy: { nama: 'desc' } })
+  const gurus = await prisma.akun.findMany({
+    where: { role: Role.GURU, deletedAt: null },
+    orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }],
+  })
 
   return {
     tahunAjarans,
+    gurus,
   }
 }
 
@@ -38,6 +44,8 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
         data: {
           nama: data.nama,
           tahunAjaranId: data.tahunAjaranId ?? '',
+          // eslint-disable-next-line no-extra-boolean-cast
+          waliId: !!data.waliId ? data.waliId : null,
           createdById: currUser?.id,
         },
       })

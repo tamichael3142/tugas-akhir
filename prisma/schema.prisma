@@ -99,6 +99,7 @@ model Akun {
   pengumumanUpdator        Pengumuman[]               @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+  waliKelas                Kelas[]                    @relation(name: "wali")
   guruMataPelajaran        MataPelajaran[]
 
   @@schema("public")
@@ -163,6 +164,7 @@ model SemesterAjaran {
   lastUpdateById           String?
   lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
+  mataPelajaran            MataPelajaran[]
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
 
   @@schema("public")
@@ -175,6 +177,8 @@ model Kelas {
   // ? foreign
   tahunAjaranId            String
   tahunAjaran              TahunAjaran                @relation(fields: [tahunAjaranId], references: [id])
+  waliId                   String?
+  wali                     Akun?                      @relation(fields: [waliId], references: [id], name: "wali")
   // ? meta data
   updatedAt                DateTime                   @default(now())
   createdAt                DateTime                   @default(now())
@@ -190,22 +194,24 @@ model Kelas {
 }
 
 model MataPelajaran {
-  id             String    @id @default(cuid())
+  id               String         @id @default(cuid())
   // ? credentials
-  nama           String
+  nama             String
   // ? general
-  jumlahSesi     Int       @default(1)
+  jumlahSesi       Int            @default(1)
   // ? foreign
-  guruId         String?
-  guru           Akun?     @relation(fields: [guruId], references: [id])
+  guruId           String?
+  guru             Akun?          @relation(fields: [guruId], references: [id])
+  semesterAjaranId String
+  semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
   // ? meta data
-  updatedAt      DateTime  @default(now())
-  createdAt      DateTime  @default(now())
-  deletedAt      DateTime?
-  createdById    String?
-  createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById String?
-  lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt        DateTime       @default(now())
+  createdAt        DateTime       @default(now())
+  deletedAt        DateTime?
+  createdById      String?
+  createdBy        Akun?          @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById   String?
+  lastUpdateBy     Akun?          @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
 
   @@schema("public")
 }

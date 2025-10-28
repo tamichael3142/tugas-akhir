@@ -12,6 +12,16 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataAdminMasterKelas> {
   const tahunAjarans = await prisma.tahunAjaran.findMany({ where: { deletedAt: null } })
+  const waliKelass = await prisma.akun.findMany({
+    where: {
+      waliKelas: {
+        some: {
+          // ? Kalau hanya mau filter kelas yang belum didelete
+          // deletedAt: null,
+        },
+      },
+    },
+  })
 
   const kelass = await getPaginatedData({
     request,
@@ -20,6 +30,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       defaultLimit: 10,
       include: {
         tahunAjaran: true,
+        wali: true,
       },
       mapQueryToWhere: query => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,18 +50,20 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         }
 
         const tahunAjaranId = query.get('tahunAjaranId')
-        if (tahunAjaranId) {
-          where.tahunAjaranId = tahunAjaranId
-        }
+        if (tahunAjaranId) where.tahunAjaranId = tahunAjaranId
+
+        const waliId = query.get('waliId')
+        if (waliId) where.waliId = waliId
 
         return where
       },
-      orderBy: [{ nama: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [{ createdAt: 'desc' }],
     },
   })
 
   return {
     tahunAjarans,
+    waliKelass,
     kelass,
   } as LoaderDataAdminMasterKelas
 }

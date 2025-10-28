@@ -13,8 +13,9 @@ import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/he
 import { usePopup } from '~/hooks/usePopup'
 import { Kelas } from '@prisma/client'
 import { Fragment } from 'react/jsx-runtime'
-import { useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { ActionDataAdminMasterKelasDelete } from '~/types/actions-data/admin'
+import DBHelpers from '~/database/helpers'
 
 const sectionPrefix = 'admin-master-kelas'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -39,11 +40,21 @@ export default function AdminMasterKelasPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, revalidator])
 
-  function handlePageChange({ newPage, tahunAjaranId }: { newPage: number; tahunAjaranId?: string }) {
+  function handlePageChange({
+    newPage,
+    tahunAjaranId,
+    waliId,
+  }: {
+    newPage: number
+    tahunAjaranId?: string
+    waliId?: string
+  }) {
     const params = new URLSearchParams(searchParams)
     params.set('page', String(newPage))
     if (tahunAjaranId) params.set('tahunAjaranId', tahunAjaranId)
     else params.delete('tahunAjaranId')
+    if (waliId) params.set('waliId', waliId)
+    else params.delete('waliId')
     navigate(`?${params.toString()}`, { replace: false })
   }
 
@@ -80,6 +91,10 @@ export default function AdminMasterKelasPage() {
     })
   }
 
+  function FilterGridItem({ children }: { children?: ReactNode }) {
+    return <div className='col-span-2 md:col-span-1'>{children}</div>
+  }
+
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
@@ -91,25 +106,57 @@ export default function AdminMasterKelasPage() {
       ]}
     >
       <Card className='mb-8 shadow-lg'>
-        <StaticSelect
-          label='Tahun Ajaran'
-          options={[
-            { value: '', label: 'Pilih tahun ajaran...' },
-            ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
-          ]}
-          selectProps={{
-            value: searchParams.get('tahunAjaranId') ?? '',
-            onChange: newValue => {
-              handlePageChange({ newPage: loader.kelass.pagination.page, tahunAjaranId: newValue.target.value })
-            },
-          }}
-        />
+        <div className='grid grid-cols-2 gap-4'>
+          <FilterGridItem>
+            <StaticSelect
+              label='Tahun Ajaran'
+              options={[
+                { value: '', label: 'Semua' },
+                ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
+              ]}
+              selectProps={{
+                value: searchParams.get('tahunAjaranId') ?? '',
+                onChange: newValue => {
+                  handlePageChange({
+                    newPage: loader.kelass.pagination.page,
+                    tahunAjaranId: newValue.target.value,
+                    waliId: searchParams.get('waliId') ?? '',
+                  })
+                },
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <StaticSelect
+              label='Wali Kelas'
+              options={[
+                { value: '', label: 'Semua' },
+                ...loader.waliKelass.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
+              ]}
+              selectProps={{
+                value: searchParams.get('waliId') ?? '',
+                onChange: newValue => {
+                  handlePageChange({
+                    newPage: loader.kelass.pagination.page,
+                    tahunAjaranId: searchParams.get('tahunAjaranId') ?? '',
+                    waliId: newValue.target.value,
+                  })
+                },
+              }}
+            />
+          </FilterGridItem>
+        </div>
       </Card>
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
           { field: 'nama', label: 'Nama' },
           { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
+          {
+            field: 'wali',
+            label: 'Wali Kelas',
+            render: row => (row.wali ? DBHelpers.akun.getDisplayName(row.wali) : '-'),
+          },
           {
             field: 'createdAt',
             label: 'Created At',

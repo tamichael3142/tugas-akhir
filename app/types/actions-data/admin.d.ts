@@ -1,10 +1,13 @@
-import { Akun, Kelas, TahunAjaran } from '@prisma/client'
+import { Akun, Kelas, MataPelajaran, TahunAjaran } from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/form'
 import { AdminMasterAccountInsertAkunFormType } from '~/pages/admin/MasterAccount/form-types'
 import { AdminMasterTahunAjaranCreateFormType } from '~/pages/admin/MasterTahunAjaran/Create/form'
 import { AdminMasterKelasCreateFormType } from '~/pages/admin/MasterKelas/Create/form'
 
+/**
+ * * Dashboard
+ */
 export type ActionDataAdminIndex = BaseActionData & {
   data: {
     // * Success
@@ -15,6 +18,9 @@ export type ActionDataAdminIndex = BaseActionData & {
   }
 }
 
+/**
+ * * Master Tahun Ajaran
+ */
 export type ActionDataAdminMasterTahunAjaranCreate = BaseActionData & {
   data: {
     // * Success
@@ -40,6 +46,9 @@ export type ActionDataAdminMasterTahunAjaranDelete = BaseActionData & {
   }
 }
 
+/**
+ * * Master Kelas
+ */
 export type ActionDataAdminMasterKelasCreate = BaseActionData & {
   data: {
     // * Success
@@ -65,6 +74,37 @@ export type ActionDataAdminMasterKelasDelete = BaseActionData & {
   }
 }
 
+/**
+ * * Master Mata Pelajaran
+ */
+export type ActionDataAdminMasterMataPelajaranCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdMataPelajaran?: MataPelajaran
+    // * Error
+    oldFormData?: AdminMasterMataPelajaranCreateFormType
+  }
+}
+
+export type ActionDataAdminMasterMataPelajaranEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedMataPelajaran?: MataPelajaran
+    // * Error
+    oldFormData?: AdminMasterMataPelajaranCreateFormType
+  }
+}
+
+export type ActionDataAdminMasterMataPelajaranDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedMataPelajaran?: MataPelajaran
+  }
+}
+
+/**
+ * * Master Account
+ */
 export type ActionDataAdminMasterAccountCreate = BaseActionData & {
   data: {
     // * Success

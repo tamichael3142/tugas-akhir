@@ -1,4 +1,4 @@
-import { Akun, Kelas } from '@prisma/client'
+import { Akun, Kelas, Role } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -18,11 +18,18 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderDataAdminMasterKelasEdit> {
   const kelasId = params.kelasId as Akun['id'] | null
-  const kelas = await prisma.kelas.findUnique({ where: { id: kelasId ?? '' }, include: { tahunAjaran: true } })
+  const kelas = await prisma.kelas.findUnique({
+    where: { id: kelasId ?? '' },
+    include: { tahunAjaran: true, wali: true },
+  })
 
   const tahunAjarans = await prisma.tahunAjaran.findMany({ where: { deletedAt: null } })
+  const gurus = await prisma.akun.findMany({
+    where: { role: Role.GURU, deletedAt: null },
+    orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }],
+  })
 
-  return { kelas, tahunAjarans }
+  return { kelas, tahunAjarans, gurus }
 }
 
 export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataAdminMasterKelasEdit> {
@@ -44,6 +51,8 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         data: {
           nama: data.nama,
           tahunAjaranId: data.tahunAjaranId ?? '',
+          // eslint-disable-next-line no-extra-boolean-cast
+          waliId: !!data.waliId ? data.waliId : null,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

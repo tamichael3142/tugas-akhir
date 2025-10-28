@@ -52,7 +52,7 @@ export default function AdminMasterKelasCreatePage() {
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
-            <AdminMasterKelasFormComponent tahunAjarans={loader.tahunAjarans} />
+            <AdminMasterKelasFormComponent tahunAjarans={loader.tahunAjarans} gurus={loader.gurus} />
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
