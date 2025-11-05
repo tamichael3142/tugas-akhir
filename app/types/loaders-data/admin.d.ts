@@ -1,4 +1,4 @@
-import { Akun, Kelas, TahunAjaran, TempAkun } from '@prisma/client'
+import { Akun, Kelas, MataPelajaran, SemesterAjaran, TahunAjaran, TempAkun } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
 export type LoaderDataAdmin = {
@@ -44,20 +44,27 @@ export type LoaderDataAdminMasterKelasEdit = {
 }
 
 /**
- * * Master Kelas
+ * * Master Mata Pelajaran
  */
 export type LoaderDataAdminMasterMataPelajaran = {
-  tahunAjarans: TahunAjaran[]
-  kelass: PaginationReturns<Kelas & { tahunAjaran: TahunAjaran }>
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
+  gurus: Akun[]
+  mataPelajarans: PaginationReturns<
+    MataPelajaran & { semesterAjaran: SemesterAjaran & { tahunAjaran: TahunAjaran }; guru: Akun | null }
+  >
 }
 
 export type LoaderDataAdminMasterMataPelajaranCreate = {
-  tahunAjarans: TahunAjaran[]
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
+  gurus: Akun[]
 }
 
 export type LoaderDataAdminMasterMataPelajaranEdit = {
-  tahunAjarans: TahunAjaran[]
-  kelas: (Kelas & { tahunAjaran: TahunAjaran }) | null
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
+  gurus: Akun[]
+  mataPelajaran:
+    | (MataPelajaran & { semesterAjaran: SemesterAjaran & { tahunAjaran: TahunAjaran }; guru: Akun | null })
+    | null
 }
 
 /**

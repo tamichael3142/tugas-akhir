@@ -1,4 +1,4 @@
-import { Akun, Kelas, Role } from '@prisma/client'
+import { Kelas, Role } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderDataAdminMasterKelasEdit> {
-  const kelasId = params.kelasId as Akun['id'] | null
+  const kelasId = params.kelasId as Kelas['id'] | null
   const kelas = await prisma.kelas.findUnique({
     where: { id: kelasId ?? '' },
     include: { tahunAjaran: true, wali: true },

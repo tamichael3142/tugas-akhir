@@ -16,7 +16,7 @@ export type PaginationParams<T> = {
      * Optional mapper untuk convert query params jadi Prisma where.
      * Misal: (query) => ({ name: { contains: query.search } })
      */
-    mapQueryToWhere?: (query: URLSearchParams) => Record<string, any>
+    mapQueryToWhere?: (query: URLSearchParams) => Promise<Record<string, any>>
   }
 }
 
@@ -46,7 +46,7 @@ export async function getPaginatedData<T>({
   const skip = (page - 1) * limit
 
   // 🔍 Bangun `where` condition gabungan
-  const dynamicWhere = options?.mapQueryToWhere ? options.mapQueryToWhere(query) : {}
+  const dynamicWhere = options?.mapQueryToWhere ? await options.mapQueryToWhere(query) : {}
   const where = {
     ...options?.where,
     ...dynamicWhere,

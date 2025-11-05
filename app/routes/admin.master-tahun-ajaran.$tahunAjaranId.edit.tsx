@@ -1,4 +1,4 @@
-import { Akun, TahunAjaran } from '@prisma/client'
+import { TahunAjaran } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderDataAdminMasterTahunAjaranEdit> {
-  const tahunAjaranId = params.tahunAjaranId as Akun['id'] | null
+  const tahunAjaranId = params.tahunAjaranId as TahunAjaran['id'] | null
   const tahunAjaran = await prisma.tahunAjaran.findUnique({ where: { id: tahunAjaranId ?? '' } })
 
   return { tahunAjaran }

@@ -52,8 +52,22 @@ function masterKelasEdit({ id }: { id: string }) {
 /*
  * Admin's master mata pelajaran level routes
  */
+const masterMataPelajaranUrl = '/master-mata-pelajaran'
+
 function masterMataPelajaran() {
-  return `${baseUrl}/master-mata-pelajaran`
+  return `${baseUrl}${masterMataPelajaranUrl}`
+}
+
+function masterMataPelajaranCreate() {
+  return `${baseUrl}${masterMataPelajaranUrl}/create`
+}
+
+function masterMataPelajaranDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterMataPelajaranUrl}/${id}/detail`
+}
+
+function masterMataPelajaranEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterMataPelajaranUrl}/${id}/edit`
 }
 
 /*
@@ -116,6 +130,9 @@ const admin = {
   masterKelasDetail,
   masterKelasEdit,
   masterMataPelajaran,
+  masterMataPelajaranCreate,
+  masterMataPelajaranDetail,
+  masterMataPelajaranEdit,
   masterEkstrakulikuler,
   masterJadwalPelajaran,
   masterPengumuman,
