@@ -73,8 +73,22 @@ function masterMataPelajaranEdit({ id }: { id: string }) {
 /*
  * Admin's master ekstrakulikuler level routes
  */
+const masterEkstrakulikulerUrl = '/master-ekstrakulikuler'
+
 function masterEkstrakulikuler() {
   return `${baseUrl}/master-ekstrakulikuler`
+}
+
+function masterEkstrakulikulerCreate() {
+  return `${baseUrl}${masterEkstrakulikulerUrl}/create`
+}
+
+function masterEkstrakulikulerDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterEkstrakulikulerUrl}/${id}/detail`
+}
+
+function masterEkstrakulikulerEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterEkstrakulikulerUrl}/${id}/edit`
 }
 
 /*
@@ -134,6 +148,9 @@ const admin = {
   masterMataPelajaranDetail,
   masterMataPelajaranEdit,
   masterEkstrakulikuler,
+  masterEkstrakulikulerCreate,
+  masterEkstrakulikulerDetail,
+  masterEkstrakulikulerEdit,
   masterJadwalPelajaran,
   masterPengumuman,
   masterAccount,

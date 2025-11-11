@@ -22,6 +22,10 @@ const pageMetas = {
     { title: `Master Mata Pelajaran - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
+  adminMasterEkstrakulikuler: [
+    { title: `Master Ekstrakulikuler - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs admin SBBS' },
+  ],
   adminMasterAccount: [
     { title: `Master Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
