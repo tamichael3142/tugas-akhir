@@ -20,6 +20,10 @@ function masterEkstrakulikulerDelete({ ekstrakulikulerId }: { ekstrakulikulerId:
   return `${baseUrl}/master-ekstrakulikuler/${ekstrakulikulerId}/delete`
 }
 
+function masterPengumumanDelete({ pengumumanId }: { pengumumanId: string }) {
+  return `${baseUrl}/master-pengumuman/${pengumumanId}/delete`
+}
+
 function masterAccountDelete({ akunId }: { akunId: string }) {
   return `${baseUrl}/master-account/${akunId}/delete`
 }
@@ -30,6 +34,7 @@ const adminAction = {
   masterKelasDelete,
   masterMataPelajaranDelete,
   masterEkstrakulikulerDelete,
+  masterPengumumanDelete,
   masterAccountDelete,
 }
 

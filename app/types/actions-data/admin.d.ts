@@ -1,4 +1,4 @@
-import { Akun, Ekstrakulikuler, Kelas, MataPelajaran, TahunAjaran } from '@prisma/client'
+import { Akun, Ekstrakulikuler, Kelas, MataPelajaran, Pengumuman, TahunAjaran } from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/form'
 import { AdminMasterAccountInsertAkunFormType } from '~/pages/admin/MasterAccount/form-types'
@@ -127,6 +127,34 @@ export type ActionDataAdminMasterEkstrakulikulerDelete = BaseActionData & {
   data: {
     // * Success
     deletedEkstrakulikuler?: Ekstrakulikuler
+  }
+}
+
+/**
+ * * Master Pengumuman
+ */
+export type ActionDataAdminMasterPengumumanCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdPengumuman?: Pengumuman
+    // * Error
+    oldFormData?: AdminMasterPengumumanCreateFormType
+  }
+}
+
+export type ActionDataAdminMasterPengumumanEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedPengumuman?: Pengumuman
+    // * Error
+    oldFormData?: AdminMasterPengumumanCreateFormType
+  }
+}
+
+export type ActionDataAdminMasterPengumumanDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedPengumuman?: Pengumuman
   }
 }
 

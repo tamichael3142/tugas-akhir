@@ -101,8 +101,22 @@ function masterJadwalPelajaran() {
 /*
  * Admin's master pengumuman level routes
  */
+const masterPengumumanUrl = '/master-pengumuman'
+
 function masterPengumuman() {
-  return `${baseUrl}/master-pengumuman`
+  return `${baseUrl}${masterPengumumanUrl}`
+}
+
+function masterPengumumanCreate() {
+  return `${baseUrl}${masterPengumumanUrl}/create`
+}
+
+function masterPengumumanDetail({ id }: { id: string }) {
+  return `${baseUrl}${masterPengumumanUrl}/${id}/detail`
+}
+
+function masterPengumumanEdit({ id }: { id: string }) {
+  return `${baseUrl}${masterPengumumanUrl}/${id}/edit`
 }
 
 /*
@@ -153,6 +167,9 @@ const admin = {
   masterEkstrakulikulerEdit,
   masterJadwalPelajaran,
   masterPengumuman,
+  masterPengumumanCreate,
+  masterPengumumanDetail,
+  masterPengumumanEdit,
   masterAccount,
   masterAccountCreate,
   masterAccountDetail,
