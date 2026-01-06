@@ -28,6 +28,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
     let nextUrl = AppNav.main.home()
 
     if (existingAkun.role === Role.ADMIN) nextUrl = AppNav.admin.dashboard()
+    // TODO: do for other roles also
 
     return await setAuthCookie(existingAkun.id, nextUrl)
   }

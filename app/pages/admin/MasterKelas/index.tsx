@@ -11,7 +11,7 @@ import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import { usePopup } from '~/hooks/usePopup'
-import { Kelas } from '@prisma/client'
+import { Kelas, SemesterAjaranUrutan } from '@prisma/client'
 import { Fragment } from 'react/jsx-runtime'
 import { ReactNode, useEffect } from 'react'
 import { ActionDataAdminMasterKelasDelete } from '~/types/actions-data/admin'
@@ -175,22 +175,51 @@ export default function AdminMasterKelasPage() {
           {
             field: 'actions',
             label: 'Aksi',
-            render: row => (
-              <DataGridActionButtonWrapper>
-                <Link to={AppNav.admin.masterKelasEdit({ id: row.id })}>
+            render: row => {
+              const semesterSatu = row.tahunAjaran.semesterAjaran.find(
+                item => item.urutan === SemesterAjaranUrutan.SATU,
+              )
+              const semesterDua = row.tahunAjaran.semesterAjaran.find(item => item.urutan === SemesterAjaranUrutan.DUA)
+
+              return (
+                <DataGridActionButtonWrapper>
+                  {semesterSatu ? (
+                    <Link to={AppNav.admin.masterKelasManageJadwal({ id: row.id, semesterAjaranId: semesterSatu.id })}>
+                      <DataGridActionButton
+                        icon={DataGridActionButtonHelper.getManageIcon()}
+                        color='success'
+                        label={'Jadwal Semester 1'}
+                        buttonProps={{ disabled: !!row.deletedAt }}
+                      />
+                    </Link>
+                  ) : null}
+                  {semesterDua ? (
+                    <Link to={AppNav.admin.masterKelasManageJadwal({ id: row.id, semesterAjaranId: semesterDua.id })}>
+                      <DataGridActionButton
+                        icon={DataGridActionButtonHelper.getManageIcon()}
+                        color='success'
+                        label={'Jadwal Semester 2'}
+                        buttonProps={{ disabled: !!row.deletedAt }}
+                      />
+                    </Link>
+                  ) : null}
+                  <Link to={AppNav.admin.masterKelasEdit({ id: row.id })}>
+                    <DataGridActionButton
+                      icon={DataGridActionButtonHelper.getEditIcon()}
+                      color='warning'
+                      label={'Edit'}
+                      buttonProps={{ disabled: !!row.deletedAt }}
+                    />
+                  </Link>
                   <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    buttonProps={{ disabled: !!row.deletedAt }}
+                    icon={DataGridActionButtonHelper.getDeleteIcon()}
+                    color='error'
+                    label={'Delete'}
+                    buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
                   />
-                </Link>
-                <DataGridActionButton
-                  icon={DataGridActionButtonHelper.getDeleteIcon()}
-                  color='error'
-                  buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
-                />
-              </DataGridActionButtonWrapper>
-            ),
+                </DataGridActionButtonWrapper>
+              )
+            },
           },
         ]}
         rows={loader.kelass.data}

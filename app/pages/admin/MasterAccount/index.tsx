@@ -174,12 +174,14 @@ export default function AdminMasterAccountPage() {
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}
                     color='warning'
+                    label={'Edit'}
                     buttonProps={{ disabled: !!row.deletedAt }}
                   />
                 </Link>
                 <DataGridActionButton
                   icon={DataGridActionButtonHelper.getDeleteIcon()}
                   color='error'
+                  label={'Delete'}
                   buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
                 />
               </DataGridActionButtonWrapper>

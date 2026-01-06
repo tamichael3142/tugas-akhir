@@ -29,7 +29,9 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     options: {
       defaultLimit: 10,
       include: {
-        tahunAjaran: true,
+        tahunAjaran: {
+          include: { semesterAjaran: true },
+        },
         wali: true,
       },
       mapQueryToWhere: query => {

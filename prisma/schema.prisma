@@ -133,6 +133,28 @@ model TempAkun {
   @@schema("public")
 }
 
+model Hour {
+  id               String            @id
+  // ? credentials
+  sequenceNumber   Int               @default(autoincrement())
+  label            String
+  // ? relations
+  jadwalPelajarans JadwalPelajaran[]
+
+  @@schema("public")
+}
+
+model Days {
+  id               String            @id
+  // ? credentials
+  sequenceNumber   Int               @default(autoincrement())
+  label            String
+  // ? relations
+  jadwalPelajarans JadwalPelajaran[]
+
+  @@schema("public")
+}
+
 model TahunAjaran {
   id              String            @id @default(cuid())
   // ? credentials
@@ -195,29 +217,32 @@ model Kelas {
   lastUpdateBy             Akun?                      @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
+  jadwalPelajarans         JadwalPelajaran[]
 
   @@schema("public")
 }
 
 model MataPelajaran {
-  id               String         @id @default(cuid())
+  id               String            @id @default(cuid())
   // ? credentials
   nama             String
   // ? general
-  jumlahSesi       Int            @default(1)
+  jumlahSesi       Int               @default(1)
   // ? foreign
   guruId           String?
-  guru             Akun?          @relation(fields: [guruId], references: [id])
+  guru             Akun?             @relation(fields: [guruId], references: [id])
   semesterAjaranId String
-  semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+  semesterAjaran   SemesterAjaran    @relation(fields: [semesterAjaranId], references: [id])
   // ? meta data
-  updatedAt        DateTime       @default(now())
-  createdAt        DateTime       @default(now())
+  updatedAt        DateTime          @default(now())
+  createdAt        DateTime          @default(now())
   deletedAt        DateTime?
   createdById      String?
-  createdBy        Akun?          @relation(fields: [createdById], references: [id], name: "createdBy")
+  createdBy        Akun?             @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById   String?
-  lastUpdateBy     Akun?          @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  lastUpdateBy     Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  jadwalPelajarans JadwalPelajaran[]
 
   @@schema("public")
 }
@@ -268,6 +293,22 @@ model Pengumuman {
 // ? ======
 
 // ? RELATIONS
+model JadwalPelajaran {
+  id              Int           @id @default(autoincrement())
+  // ? identifier
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  dayId           String
+  day             Days          @relation(fields: [dayId], references: [id])
+  hourId          String
+  hour            Hour          @relation(fields: [hourId], references: [id])
+  // ? foreign
+  kelasId         String
+  kelas           Kelas         @relation(fields: [kelasId], references: [id])
+
+  @@schema("public")
+}
+
 model SiswaPerKelasDanSemester {
   id               Int            @id @default(autoincrement())
   // ? foreign

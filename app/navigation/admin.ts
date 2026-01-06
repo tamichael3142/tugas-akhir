@@ -49,6 +49,10 @@ function masterKelasEdit({ id }: { id: string }) {
   return `${baseUrl}${masterKelasUrl}/${id}/edit`
 }
 
+function masterKelasManageJadwal({ id, semesterAjaranId }: { id: string; semesterAjaranId: string }) {
+  return `${baseUrl}${masterKelasUrl}/${id}/manage-jadwal/${semesterAjaranId}`
+}
+
 /*
  * Admin's master mata pelajaran level routes
  */
@@ -157,6 +161,7 @@ const admin = {
   masterKelasCreate,
   masterKelasDetail,
   masterKelasEdit,
+  masterKelasManageJadwal,
   masterMataPelajaran,
   masterMataPelajaranCreate,
   masterMataPelajaranDetail,

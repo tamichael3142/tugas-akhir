@@ -1,6 +1,9 @@
 import {
   Akun,
+  Days,
   Ekstrakulikuler,
+  Hour,
+  JadwalPelajaran,
   Kelas,
   MataPelajaran,
   Pengumuman,
@@ -38,7 +41,9 @@ export type LoaderDataAdminMasterTahunAjaranEdit = {
 export type LoaderDataAdminMasterKelas = {
   tahunAjarans: TahunAjaran[]
   waliKelass: Akun[]
-  kelass: PaginationReturns<Kelas & { tahunAjaran: TahunAjaran; wali: Akun | null }>
+  kelass: PaginationReturns<
+    Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }
+  >
 }
 
 export type LoaderDataAdminMasterKelasCreate = {
@@ -50,6 +55,19 @@ export type LoaderDataAdminMasterKelasEdit = {
   tahunAjarans: TahunAjaran[]
   gurus: Akun[]
   kelas: (Kelas & { tahunAjaran: TahunAjaran; wali: Akun | null }) | null
+}
+
+export type LoaderDataAdminMasterKelasManageJadwal = {
+  kelas:
+    | (Kelas & {
+        tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+        wali: Akun | null
+        jadwalPelajarans: JadwalPelajaran[]
+      })
+    | null
+  days: Days[]
+  hours: Hour[]
+  mataPelajarans: MataPelajaran[]
 }
 
 /**

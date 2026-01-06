@@ -1,21 +1,26 @@
-import { prisma } from '~/utils/db.server'
+import PrimaryAccountSeeder from './seeders/primary-account'
+import HourSeeder from './seeders/hour'
+import DaysSeeder from './seeders/days'
 
-async function seed() {
-  await prisma.akun.createMany({
-    data: [
-      { username: 'superadmin', password: 'superadmin', role: 'ADMIN' },
-      { username: 'admin001', password: 'admin001', role: 'ADMIN' },
-    ],
-  })
+const seedFlags = {
+  primaryAccount: false,
+  hour: false,
+  days: false,
 }
 
-seed()
-  .then(async () => {
-    await prisma.$disconnect()
-    process.exit(0)
-  })
-  .catch(async e => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+export async function seed() {
+  if (seedFlags.primaryAccount) await PrimaryAccountSeeder.seed()
+  if (seedFlags.hour) await HourSeeder.seed()
+  if (seedFlags.days) await DaysSeeder.seed()
+}
+
+// seed()
+//   .then(async () => {
+//     await prisma.$disconnect()
+//     process.exit(0)
+//   })
+//   .catch(async e => {
+//     console.error(e)
+//     await prisma.$disconnect()
+//     process.exit(1)
+//   })
