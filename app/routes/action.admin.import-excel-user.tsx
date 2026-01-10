@@ -13,7 +13,7 @@ import { Role } from '~/database/enums/prisma.enums'
 export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
-  if (currUser?.role !== Role.ADMIN) return redirect(AppNav.admin.dashboard())
+  if (currUser?.role !== Role.ADMIN) return redirect(AppNav.main.home())
 
   const formData = await request.formData()
   const file = formData.get('file') as File

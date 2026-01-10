@@ -152,6 +152,7 @@ function reporting() {
 }
 
 const admin = {
+  baseUrl,
   dashboard,
   masterTahunAjaran,
   masterTahunAjaranCreate,

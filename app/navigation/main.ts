@@ -1,8 +1,11 @@
+const baseUrl = '/'
+
 function home() {
-  return '/'
+  return baseUrl
 }
 
 const main = {
+  baseUrl,
   home,
 }
 

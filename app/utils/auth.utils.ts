@@ -44,7 +44,7 @@ export async function removeAuthCookie() {
   return redirect(AppNav.auth.login(), {
     headers: {
       'Set-Cookie': await authCookie.serialize('', {
-        maxAge: 0,
+        maxAge: -1,
       }),
     },
   })

@@ -28,7 +28,9 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
     let nextUrl = AppNav.main.home()
 
     if (existingAkun.role === Role.ADMIN) nextUrl = AppNav.admin.dashboard()
-    // TODO: do for other roles also
+    else if (existingAkun.role === Role.GURU) nextUrl = AppNav.guru.dashboard()
+    else if (existingAkun.role === Role.SISWA) nextUrl = AppNav.siswa.dashboard()
+    else if (existingAkun.role === Role.ORANGTUA) nextUrl = AppNav.ortu.dashboard()
 
     return await setAuthCookie(existingAkun.id, nextUrl)
   }

@@ -29,6 +29,7 @@ function masterAccountDelete({ akunId }: { akunId: string }) {
 }
 
 const adminAction = {
+  baseUrl,
   importExcelUser,
   masterTahunAjaranDelete,
   masterKelasDelete,

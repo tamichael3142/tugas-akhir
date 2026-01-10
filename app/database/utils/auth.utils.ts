@@ -47,6 +47,12 @@ function getGuardRedirectUrlBasedByRole(value: Role): string {
   switch (value) {
     case Role.ADMIN:
       return AppNav.admin.dashboard()
+    case Role.GURU:
+      return AppNav.guru.dashboard()
+    case Role.SISWA:
+      return AppNav.siswa.dashboard()
+    case Role.ORANGTUA:
+      return AppNav.ortu.dashboard()
     default:
       return AppNav.main.home()
   }

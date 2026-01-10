@@ -1,3 +1,4 @@
+import { Role } from '~/database/enums/prisma.enums'
 import { prisma } from '~/utils/db.server'
 import PasswordUtils from '~/utils/password.utils'
 
@@ -10,7 +11,21 @@ async function seed() {
           firstName: 'Super',
           lastName: 'Admin',
           password: await PasswordUtils.hashPassword('superadmin'),
-          role: 'ADMIN',
+          role: Role.ADMIN,
+        },
+        {
+          username: 'gurudummy',
+          firstName: 'Guru',
+          lastName: 'Dummy',
+          password: await PasswordUtils.hashPassword('gurudummy'),
+          role: Role.GURU,
+        },
+        {
+          username: 'ortudummy',
+          firstName: 'Ortu',
+          lastName: 'Dummy',
+          password: await PasswordUtils.hashPassword('ortudummy'),
+          role: Role.ORANGTUA,
         },
       ],
     })
