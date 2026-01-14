@@ -7,6 +7,10 @@ export const meta: MetaFunction = () => {
   return constants.pageMetas.default
 }
 
+export async function loader() {
+  return removeAuthCookie()
+}
+
 export async function action() {
   return removeAuthCookie()
 }

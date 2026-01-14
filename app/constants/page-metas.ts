@@ -42,6 +42,10 @@ const pageMetas = {
     { title: `Lupa Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Lupa password di SBBS' },
   ],
+  guruDefault: [
+    { title: `Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
 }
 
 export default pageMetas

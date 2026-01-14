@@ -1,26 +1,26 @@
 import { Link, Outlet, useLoaderData, useLocation, useNavigate } from '@remix-run/react'
 import classNames from 'classnames'
-import { adminNavs } from './navs'
+import { guruNavs } from './navs'
 import assets from '~/assets'
 import AppNav from '~/navigation'
-import useAdminPageStore from '~/store/adminPageStore'
 import { IoClose } from 'react-icons/io5'
-import { LoaderDataAdmin } from '~/types/loaders-data/admin'
 import { useEffect, useState } from 'react'
 import useAuthStore from '~/store/authStore'
 import DBHelpers from '~/database/helpers'
+import { LoaderDataGuru } from '~/types/loaders-data/guru'
+import useGuruPageStore from '~/store/guruPageStore'
 import { usePopup } from '~/hooks/usePopup'
 
-export default function AdminDashboardLayout() {
-  const loader = useLoaderData<LoaderDataAdmin>()
+export default function GuruDashboardLayout() {
+  const loader = useLoaderData<LoaderDataGuru>()
   const location = useLocation()
   const popup = usePopup()
   const navigate = useNavigate()
   const user = useAuthStore(state => state.user)
-  const openSidebar = useAdminPageStore(state => state.openSidebar)
+  const openSidebar = useGuruPageStore(state => state.openSidebar)
   const [timeoutId, setTimeoutId] = useState<number | null>(null)
 
-  const closeSidebar = () => useAdminPageStore.setState({ openSidebar: false })
+  const closeSidebar = () => useGuruPageStore.setState({ openSidebar: false })
 
   useEffect(() => {
     if (loader.user) useAuthStore.setState({ user: loader.user })
@@ -85,7 +85,7 @@ export default function AdminDashboardLayout() {
           </div>
 
           <div className='flex flex-col grow overflow-auto p-8 md:p-4 pt-0'>
-            {adminNavs.map((item, index) => (
+            {guruNavs.map((item, index) => (
               <Link
                 key={`adminDashboard-sidebar-${index}`}
                 to={item.href ?? ''}
