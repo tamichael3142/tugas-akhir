@@ -118,7 +118,7 @@ export type LoaderDataAdminMasterEkstrakulikulerEdit = {
  * * Master Pengumuman
  */
 export type LoaderDataAdminMasterPengumuman = {
-  pengumumans: PaginationReturns<Pengumuman>
+  pengumumans: PaginationReturns<Pengumuman & { createdBy: AKun | null }>
 }
 
 export type LoaderDataAdminMasterPengumumanEdit = {

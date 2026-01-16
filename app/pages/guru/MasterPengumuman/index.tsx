@@ -2,9 +2,9 @@ import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearch
 import { FaPlus } from 'react-icons/fa'
 import { Button } from '~/components/forms'
 import { DataGrid, LoadingFullScreen } from '~/components/ui'
-import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
+import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
-import { LoaderDataAdminMasterPengumuman } from '~/types/loaders-data/admin'
+import { LoaderDataGuruMasterPengumuman } from '~/types/loaders-data/guru'
 import * as dateFns from 'date-fns'
 import constants from '~/constants'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
@@ -14,26 +14,28 @@ import { usePopup } from '~/hooks/usePopup'
 import { Pengumuman } from '@prisma/client'
 import { Fragment } from 'react/jsx-runtime'
 import { useEffect } from 'react'
-import { ActionDataAdminMasterPengumumanDelete } from '~/types/actions-data/admin'
+import { ActionDataGuruMasterPengumumanDelete } from '~/types/actions-data/guru'
+import useAuthStore from '~/store/authStore'
 import DBHelpers from '~/database/helpers'
 
-const sectionPrefix = 'admin-master-pengumuman'
+const sectionPrefix = 'guru-master-pengumuman'
 const deleteFormId = `${sectionPrefix}-delete-form`
 
-export default function AdminMasterPengumumanPage() {
-  const loader = useLoaderData<LoaderDataAdminMasterPengumuman>()
+export default function GuruMasterPengumumanPage() {
+  const loader = useLoaderData<LoaderDataGuruMasterPengumuman>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const fetcher = useFetcher<ActionDataAdminMasterPengumumanDelete>({ key: deleteFormId })
+  const fetcher = useFetcher<ActionDataGuruMasterPengumumanDelete>({ key: deleteFormId })
   const revalidator = useRevalidator()
   const popup = usePopup()
+  const user = useAuthStore(state => state.user)
 
   const isDeleting = fetcher.state === 'submitting'
   const isSuccess = fetcher.data?.success
 
   useEffect(() => {
     if (isSuccess) {
-      fetcher.load(AppNav.admin.masterPengumuman())
+      fetcher.load(AppNav.guru.masterPengumuman())
       revalidator.revalidate() // refresh data loader parent
       popup.close()
     }
@@ -58,7 +60,7 @@ export default function AdminMasterPengumumanPage() {
           <fetcher.Form
             id={deleteFormId}
             method='delete'
-            action={AppNav.adminAction.masterPengumumanDelete({ pengumumanId: row.id })}
+            action={AppNav.guruAction.masterPengumumanDelete({ pengumumanId: row.id })}
           ></fetcher.Form>
         </Fragment>
       ),
@@ -81,10 +83,10 @@ export default function AdminMasterPengumumanPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <AdminPageContainer
+    <GuruPageContainer
       title='Master Pengumuman'
       actions={[
-        <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterPengumumanCreate()}>
+        <Link key={`${sectionPrefix}-add-button`} to={AppNav.guru.masterPengumumanCreate()}>
           <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
@@ -117,24 +119,28 @@ export default function AdminMasterPengumumanPage() {
           {
             field: 'actions',
             label: 'Aksi',
-            render: row => (
-              <DataGridActionButtonWrapper>
-                <Link to={AppNav.admin.masterPengumumanEdit({ id: row.id })}>
+            render: row => {
+              const mutable = user?.id === row.createdById
+
+              return (
+                <DataGridActionButtonWrapper>
+                  <Link to={AppNav.guru.masterPengumumanEdit({ id: row.id })}>
+                    <DataGridActionButton
+                      icon={DataGridActionButtonHelper.getEditIcon()}
+                      color='warning'
+                      label={'Edit'}
+                      buttonProps={{ disabled: !!row.deletedAt || !mutable }}
+                    />
+                  </Link>
                   <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                    buttonProps={{ disabled: !!row.deletedAt }}
+                    icon={DataGridActionButtonHelper.getDeleteIcon()}
+                    color='error'
+                    label={'Delete'}
+                    buttonProps={{ disabled: !!row.deletedAt || !mutable, onClick: () => openDeletePopup(row) }}
                   />
-                </Link>
-                <DataGridActionButton
-                  icon={DataGridActionButtonHelper.getDeleteIcon()}
-                  color='error'
-                  label={'Delete'}
-                  buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
-                />
-              </DataGridActionButtonWrapper>
-            ),
+                </DataGridActionButtonWrapper>
+              )
+            },
           },
         ]}
         rows={loader.pengumumans.data}
@@ -147,6 +153,6 @@ export default function AdminMasterPengumumanPage() {
         }}
         className='shadow-primary'
       />
-    </AdminPageContainer>
+    </GuruPageContainer>
   )
 }
