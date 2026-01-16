@@ -11,7 +11,10 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataAdminMasterEkstrakulikuler> {
-  const tahunAjarans = await prisma.tahunAjaran.findMany({ where: { deletedAt: null } })
+  const tahunAjarans = await prisma.tahunAjaran.findMany({
+    where: { deletedAt: null },
+    orderBy: [{ nama: 'desc' }, { createdAt: 'desc' }],
+  })
   const pengajars = await prisma.akun.findMany({
     where: {
       pengajarEkstrakulikuler: {
@@ -37,7 +40,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         if (search) {
           where.OR = [
             { nama: { contains: search, mode: 'insensitive' } },
-            // ? NOTE: kalau mau in depth search juga bisa sperti di bawah ini
+            // ? NOTE: kalau mau in depth search
             // {
             //   tahunAjaran: {
             //     nama: { contains: search, mode: 'insensitive' },

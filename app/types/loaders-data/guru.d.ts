@@ -1,4 +1,14 @@
-import { Akun, Pengumuman } from '@prisma/client'
+import {
+  Akun,
+  Days,
+  Hour,
+  JadwalPelajaran,
+  Kelas,
+  MataPelajaran,
+  Pengumuman,
+  SemesterAjaran,
+  TahunAjaran,
+} from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
 export type LoaderDataGuru = {
@@ -9,6 +19,16 @@ export type LoaderDataGuru = {
  * * Dashboard
  */
 // export type LoaderDataGuruIndex = {}
+
+/**
+ * * Jadwal Mengajar
+ */
+export type LoaderDataGuruJadwalMengajar = {
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
+  days?: Days[]
+  hours?: Hour[]
+  jadwalPelajarans?: (JadwalPelajaran & { mataPelajaran: MataPelajaran | null; kelas: Kelas | null })[]
+}
 
 /**
  * * Master Pengumuman

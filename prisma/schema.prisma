@@ -159,6 +159,8 @@ model TahunAjaran {
   id              String            @id @default(cuid())
   // ? credentials
   nama            String            @unique
+  tahunMulai      DateTime
+  tahunBerakhir   DateTime
   // ? meta data
   updatedAt       DateTime          @default(now())
   createdAt       DateTime          @default(now())
@@ -194,6 +196,7 @@ model SemesterAjaran {
   mataPelajaran                      MataPelajaran[]
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
+  jadwalPelajarans                   JadwalPelajaran[]
 
   @@schema("public")
 }
@@ -294,17 +297,19 @@ model Pengumuman {
 
 // ? RELATIONS
 model JadwalPelajaran {
-  id              Int           @id @default(autoincrement())
+  id               Int             @id @default(autoincrement())
   // ? identifier
-  mataPelajaranId String
-  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
-  dayId           String
-  day             Days          @relation(fields: [dayId], references: [id])
-  hourId          String
-  hour            Hour          @relation(fields: [hourId], references: [id])
+  mataPelajaranId  String
+  mataPelajaran    MataPelajaran   @relation(fields: [mataPelajaranId], references: [id])
+  dayId            String
+  day              Days            @relation(fields: [dayId], references: [id])
+  hourId           String
+  hour             Hour            @relation(fields: [hourId], references: [id])
+  semesterAjaranId String?
+  semesterAjaran   SemesterAjaran? @relation(fields: [semesterAjaranId], references: [id])
   // ? foreign
-  kelasId         String
-  kelas           Kelas         @relation(fields: [kelasId], references: [id])
+  kelasId          String
+  kelas            Kelas           @relation(fields: [kelasId], references: [id])
 
   @@schema("public")
 }
