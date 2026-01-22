@@ -87,6 +87,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
                 dayId: row.dayId,
                 hourId: row.hourId,
                 mataPelajaranId: row.mataPelajaranId,
+                semesterAjaranId: row.semesterAjaranId,
               },
             })
             continue
@@ -99,6 +100,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
               dayId: row.dayId,
               hourId: row.hourId,
               mataPelajaranId: row.mataPelajaranId,
+              semesterAjaranId: row.semesterAjaranId,
             },
           })
 

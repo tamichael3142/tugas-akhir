@@ -9,6 +9,7 @@ export const validaionSchema = z.object({
       id: z.number().nullable(),
       jadwalPelajaranId: z.string().optional(),
       mataPelajaranId: z.string(),
+      semesterAjaranId: z.string(),
       dayId: z.string(),
       hourId: z.string(),
     }),

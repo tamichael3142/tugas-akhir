@@ -51,7 +51,7 @@ export default function AdminMasterKelasManageJadwalPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData])
 
-  function setMapel(dayId: string, hourId: string, mapelId: string) {
+  function setMapel(dayId: string, hourId: string, mapelId: string, semesterAjaranId: string) {
     const jadwalPelajarans = [...formHook.getValues('jadwalPelajarans')]
     const existingIdx = jadwalPelajarans.findIndex(item => item.dayId === dayId && item.hourId === hourId)
 
@@ -62,6 +62,7 @@ export default function AdminMasterKelasManageJadwalPage() {
         id: existing.id,
         jadwalPelajaranId: existing.jadwalPelajaranId,
         mataPelajaranId: mapelId,
+        semesterAjaranId: existing.semesterAjaranId,
         dayId: existing.dayId,
         hourId: existing.hourId,
       }
@@ -73,6 +74,7 @@ export default function AdminMasterKelasManageJadwalPage() {
       const newData: AdminMasterKelasManageJadwalFormType['jadwalPelajarans'][0] = {
         id: null,
         mataPelajaranId: mapelId,
+        semesterAjaranId: semesterAjaranId,
         dayId: dayId,
         hourId: hourId,
       }
@@ -156,27 +158,31 @@ export default function AdminMasterKelasManageJadwalPage() {
                   >
                     <p className='font-semibold'>{hour.label}</p>
                   </div>
-                  {loader.days.map((day, dayIdx) => (
-                    <div
-                      key={`${hourIdx}-${dayIdx}`}
-                      className={classNames('col-span-1 border h-12 overflow-auto', {
-                        ['rounded-br-lg']: dayIdx === loader.days.length - 1 && hourIdx === loader.hours.length - 1,
-                      })}
-                    >
-                      <select
-                        className='w-full min-h-11 whitespace-pre-wrap'
-                        value={getMapel(day.id, hour.id)?.mataPelajaranId ?? ''}
-                        onChange={e => setMapel(day.id, hour.id, e.target.value)}
+                  {loader.days.map((day, dayIdx) => {
+                    const currMapel = getMapel(day.id, hour.id)
+
+                    return (
+                      <div
+                        key={`${hourIdx}-${dayIdx}`}
+                        className={classNames('col-span-1 border h-12 overflow-auto', {
+                          ['rounded-br-lg']: dayIdx === loader.days.length - 1 && hourIdx === loader.hours.length - 1,
+                        })}
                       >
-                        <option value=''></option>
-                        {loader.mataPelajarans.map((mapel, mapelIdx) => (
-                          <option key={mapelIdx} value={mapel.id}>
-                            {mapel.nama}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
+                        <select
+                          className='w-full min-h-11 whitespace-pre-wrap'
+                          value={currMapel?.mataPelajaranId ?? ''}
+                          onChange={e => setMapel(day.id, hour.id, e.target.value, params.semesterAjaranId ?? '')}
+                        >
+                          <option value=''></option>
+                          {loader.mataPelajarans.map((mapel, mapelIdx) => (
+                            <option key={mapelIdx} value={mapel.id}>
+                              {mapel.nama}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )
+                  })}
                 </Fragment>
               ))}
             </div>

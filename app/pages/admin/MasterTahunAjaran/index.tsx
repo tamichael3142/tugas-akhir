@@ -92,7 +92,17 @@ export default function AdminMasterTahunAjaranPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
+          {
+            field: 'tahunMulai',
+            label: 'Tahun Mulai',
+            render: row => dateFns.format(row.tahunMulai, constants.dateFormats.yearFull),
+          },
+          {
+            field: 'tahunBerakhir',
+            label: 'Tahun Berakhir',
+            render: row => dateFns.format(row.tahunBerakhir, constants.dateFormats.yearFull),
+          },
+          { field: 'nama', label: 'Label' },
           {
             field: 'createdAt',
             label: 'Created At',

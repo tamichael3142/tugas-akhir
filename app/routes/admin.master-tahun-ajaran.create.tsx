@@ -18,17 +18,21 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   const { errors, data } = await getValidatedFormData<AdminMasterTahunAjaranCreateFormType>(request, resolver)
   if (errors) {
     console.log(errors)
-    return { success: false, error: errors, data: { oldFormData: data } }
+    return { success: false, message: JSON.stringify(errors), error: errors, data: { oldFormData: data } }
   }
 
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
+
+  console.log(data)
 
   try {
     return await prisma.tahunAjaran
       .create({
         data: {
           ...data,
+          tahunMulai: new Date(data.tahunMulai),
+          tahunBerakhir: new Date(data.tahunBerakhir),
           createdById: currUser?.id,
           semesterAjaran: {
             create: [

@@ -41,6 +41,8 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         where: { id: tahunAjaranId ?? '' },
         data: {
           nama: data.nama,
+          tahunMulai: new Date(data.tahunMulai),
+          tahunBerakhir: new Date(data.tahunBerakhir),
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

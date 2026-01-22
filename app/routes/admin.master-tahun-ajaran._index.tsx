@@ -16,7 +16,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     model: prisma.tahunAjaran,
     options: {
       defaultLimit: 10,
-      orderBy: [{ nama: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [{ tahunMulai: 'desc' }, { tahunBerakhir: 'desc' }, { createdAt: 'desc' }],
     },
   })
 
