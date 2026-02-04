@@ -14,7 +14,13 @@ import EnumsTitleUtils from '~/utils/enums-title.utils'
 const sectionPrefix = 'guru-jadwal-mengajar'
 
 export default function GuruJadwalMengajarPage() {
-  const { tahunAjarans, days = [], hours = [], jadwalPelajarans = [] } = useLoaderData<LoaderDataGuruJadwalMengajar>()
+  const {
+    tahunAjarans,
+    days = [],
+    hours = [],
+    jadwalPelajarans = [],
+    currentTahunAjaran,
+  } = useLoaderData<LoaderDataGuruJadwalMengajar>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   // const fetcher = useFetcher<ActionDataGuruJadwalMengajarDelete>({ key: deleteFormId })
@@ -105,9 +111,10 @@ export default function GuruJadwalMengajarPage() {
 
   useEffect(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
-    const firstAvailableTahunAjaran = tahunAjarans[0]
+    const firstAvailableTahunAjaran = currentTahunAjaran ?? tahunAjarans[0]
+    const currentSemester = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
     const firstAvailableSemesterAjaran = firstAvailableTahunAjaran.semesterAjaran.find(
-      item => item.urutan === SemesterAjaranUrutan.SATU,
+      item => item.urutan === currentSemester,
     )
     if (!selectedTahunAjaranId && firstAvailableTahunAjaran && firstAvailableSemesterAjaran) {
       handlePageChange({

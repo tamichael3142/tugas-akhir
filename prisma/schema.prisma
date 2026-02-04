@@ -305,6 +305,7 @@ model JadwalPelajaran {
   day              Days           @relation(fields: [dayId], references: [id])
   hourId           String
   hour             Hour           @relation(fields: [hourId], references: [id])
+  // ? semester ajaran berguna untuk mempermudah validasi tabrakan jadwal
   semesterAjaranId String
   semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
   // ? foreign

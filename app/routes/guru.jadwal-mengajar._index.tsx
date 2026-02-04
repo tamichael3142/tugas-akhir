@@ -5,6 +5,7 @@ import GuruJadwalMengajarPage from '~/pages/guru/JadwalMengajar'
 import { LoaderDataGuruJadwalMengajar } from '~/types/loaders-data/guru'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
+import { differenceInDays } from 'date-fns'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.guruJadwalMengajar
@@ -24,8 +25,22 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     orderBy: [{ tahunMulai: 'desc' }, { tahunBerakhir: 'desc' }, { createdAt: 'desc' }],
   })
 
+  // ? untuk mencari tahun ajaran sekarang
+  const today = new Date()
+  let currentTahunAjaran = tahunAjarans.find(item => item.tahunMulai.getFullYear() === today.getFullYear())
+  if (!currentTahunAjaran)
+    currentTahunAjaran = tahunAjarans.find(item => item.tahunBerakhir.getFullYear() === today.getFullYear())
+  if (!currentTahunAjaran)
+    currentTahunAjaran = tahunAjarans
+      .filter(
+        item =>
+          item.tahunMulai.getFullYear() <= today.getFullYear() &&
+          item.tahunBerakhir.getFullYear() >= today.getFullYear(),
+      )
+      .sort((a, b) => differenceInDays(today, a.tahunMulai) - differenceInDays(today, b.tahunMulai))[0]
+
   if (!tahunAjaranId || !semesterAjaranId) {
-    return { tahunAjarans }
+    return { tahunAjarans, currentTahunAjaran } as LoaderDataGuruJadwalMengajar
   }
 
   const days = await prisma.days.findMany({ orderBy: { sequenceNumber: 'asc' } })
@@ -41,11 +56,9 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       },
     },
     where: {
+      semesterAjaranId: semesterAjaranId,
       mataPelajaran: {
         guruId: userId,
-        semesterAjaran: {
-          id: semesterAjaranId,
-        },
       },
     },
   })
@@ -55,6 +68,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     days,
     hours,
     jadwalPelajarans,
+    currentTahunAjaran,
   } as LoaderDataGuruJadwalMengajar
 }
 

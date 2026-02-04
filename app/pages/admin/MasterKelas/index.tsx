@@ -16,6 +16,7 @@ import { Fragment } from 'react/jsx-runtime'
 import { ReactNode, useEffect } from 'react'
 import { ActionDataAdminMasterKelasDelete } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
+import { PiStudent } from 'react-icons/pi'
 
 const sectionPrefix = 'admin-master-kelas'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -183,6 +184,11 @@ export default function AdminMasterKelasPage() {
 
               return (
                 <DataGridActionButtonWrapper>
+                  <Link
+                    to={`${AppNav.admin.masterKelasManageSiswa({ id: row.id })}?semesterAjaranId=${semesterSatu?.id}`}
+                  >
+                    <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Siswa'} />
+                  </Link>
                   {semesterSatu ? (
                     <Link to={AppNav.admin.masterKelasManageJadwal({ id: row.id, semesterAjaranId: semesterSatu.id })}>
                       <DataGridActionButton

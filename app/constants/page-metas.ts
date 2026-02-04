@@ -18,6 +18,14 @@ const pageMetas = {
     { title: `Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
+  adminMasterKelasManageSiswa: [
+    { title: `Manage Siswa - Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs admin SBBS' },
+  ],
+  adminMasterKelasAddSiswa: [
+    { title: `Tambah Siswa - Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs admin SBBS' },
+  ],
   adminMasterMataPelajaran: [
     { title: `Master Mata Pelajaran - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },

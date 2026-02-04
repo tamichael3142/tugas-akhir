@@ -13,6 +13,7 @@ export type DataGridProps<T> = {
     onPageChange: (page: number) => void
   }
   className?: string
+  leadingView?: ReactNode
 }
 
 export type DataGridColumnProps<T> = {

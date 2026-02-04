@@ -8,6 +8,7 @@ import {
   MataPelajaran,
   Pengumuman,
   SemesterAjaran,
+  SiswaPerKelasDanSemester,
   TahunAjaran,
   TempAkun,
 } from '@prisma/client'
@@ -68,6 +69,27 @@ export type LoaderDataAdminMasterKelasManageJadwal = {
   days: Days[]
   hours: Hour[]
   mataPelajarans: MataPelajaran[]
+}
+
+export type LoaderDataAdminMasterKelasManageSiswa = {
+  kelas:
+    | (Kelas & {
+        tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+        wali: Akun | null
+      })
+    | null
+  siswaPerKelasPerSemesters: PaginationReturns<SiswaPerKelasDanSemester & { siswa: Akun | null }>
+}
+
+export type LoaderDataAdminMasterKelasAddSiswa = {
+  kelas:
+    | (Kelas & {
+        tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+        wali: Akun | null
+      })
+    | null
+  siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { semesterAjaran: SemesterAjaran | null })[]
+  availableSiswas: PaginationReturns<Akun>
 }
 
 /**

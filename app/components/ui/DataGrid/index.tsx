@@ -9,6 +9,7 @@ export default function DataGrid<T>(props: DataGridProps<T>) {
 
   return (
     <Card className={classNames('w-full', props.className)}>
+      {props.leadingView}
       <div className='overflow-x-auto'>
         <table id={id} className='w-full border-collapse text-left'>
           <thead>

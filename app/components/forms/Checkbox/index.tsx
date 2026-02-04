@@ -10,7 +10,7 @@ export type CheckboxProps = {
 
 export default function Checkbox(props: CheckboxProps) {
   const { inputProps = {}, labelPosition = 'right' } = props
-  const { className, id = new Date().toString(), ...restInputProps } = inputProps
+  const { className, id = new Date().toString() + props.label, ...restInputProps } = inputProps
 
   return (
     <div
