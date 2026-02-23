@@ -99,7 +99,7 @@ export default function AdminMasterKelasManageJadwalPage() {
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelas()} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
-        <Card className=''>
+        <Card className='mt-4'>
           <div className='w-full mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
             <div className='col-span-1'>
               <TextInput

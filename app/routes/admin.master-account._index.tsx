@@ -16,6 +16,22 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     model: prisma.akun,
     options: {
       defaultLimit: 10,
+      mapQueryToWhere: query => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const where: any = {}
+
+        // const search = query.get('search')
+        // if (search) {
+        //   where.OR = [
+        //     { nama: { contains: search, mode: 'insensitive' } },
+        //   ]
+        // }
+
+        const role = query.get('role')
+        if (role) where.role = role
+
+        return where
+      },
       orderBy: [{ createdAt: 'desc' }, { tanggalLahir: 'asc' }],
     },
   })

@@ -36,6 +36,16 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const tahunAjaranId = params.tahunAjaranId as TahunAjaran['id'] | null
 
+    const existingTahunAjaran = await prisma.tahunAjaran.findFirst({
+      where: { tahunMulai: new Date(data.tahunMulai) },
+    })
+
+    if (existingTahunAjaran && existingTahunAjaran.id !== tahunAjaranId) {
+      throw {
+        message: 'Tahun ajaran sudah pernah dibuat.',
+      }
+    }
+
     return await prisma.tahunAjaran
       .update({
         where: { id: tahunAjaranId ?? '' },

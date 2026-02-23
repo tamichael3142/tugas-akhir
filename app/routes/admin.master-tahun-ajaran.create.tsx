@@ -24,9 +24,17 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
 
-  console.log(data)
-
   try {
+    const existingTahunAjaran = await prisma.tahunAjaran.findFirst({
+      where: { tahunMulai: new Date(data.tahunMulai) },
+    })
+
+    if (existingTahunAjaran) {
+      throw {
+        message: 'Tahun ajaran sudah pernah dibuat.',
+      }
+    }
+
     return await prisma.tahunAjaran
       .create({
         data: {

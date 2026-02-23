@@ -4,7 +4,7 @@ import { ComponentProps, ReactNode } from 'react'
 export type ButtonProps = {
   label?: ReactNode
   className?: string
-  color?: 'primary' | 'secondary'
+  color?: 'primary' | 'secondary' | 'danger'
   variant?: 'outlined' | 'contained' | 'text'
   size?: 'sm' | 'md' | 'lg'
   startIcon?: ReactNode
@@ -27,13 +27,16 @@ export default function Button(props: ButtonProps) {
           ['px-4 py-2 duration-200']: size === 'md',
           ['bg-primary text-white hover:opacity-80']: color === 'primary' && variant === 'contained',
           ['bg-secondary text-white hover:opacity-80']: color === 'secondary' && variant === 'contained',
+          ['bg-red-500 text-white hover:opacity-80']: color === 'danger' && variant === 'contained',
           ['disabled:bg-gray-400 disabled:opacity-80']: variant === 'contained',
           ['border-1 border-primary text-primary hover:bg-primary/10']: color === 'primary' && variant === 'outlined',
           ['border-1 border-secondary text-secondary hover:bg-secondary/10']:
             color === 'secondary' && variant === 'outlined',
+          ['border-1 border-red-500 text-red-500 hover:bg-red-500/10']: color === 'danger' && variant === 'outlined',
           ['disabled:border-gray-400 disabled:opacity-80']: variant === 'outlined',
           ['text-primary hover:bg-primary/10']: color === 'primary' && variant === 'text',
           ['text-secondary hover:bg-secondary/10']: color === 'secondary' && variant === 'text',
+          ['text-red-500 hover:bg-red-500/10']: color === 'danger' && variant === 'text',
           ['disabled:bg-gray-400']: variant === 'text',
         },
         props.className,

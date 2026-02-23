@@ -50,6 +50,7 @@ export async function loader({ request, params }: LoaderFunctionArgs): Promise<L
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const where: any = {}
 
+        // Ini searching dalam pagination
         const search = query.get('search')
         if (search) {
           where.OR = [
@@ -109,6 +110,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           include: { semesterAjaran: true },
         })
 
+        // Hapus data yang ada di DB tapi di form tidak ada
         for (const row of existing) {
           if (row.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU && !data.semester1Ids.includes(row.siswaId)) {
             await tx.siswaPerKelasDanSemester.delete({ where: { id: row.id } })
@@ -120,6 +122,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           }
         }
 
+        // Create data yang belum ada di semester 1
         for (const siswaId of data.semester1Ids) {
           const exists = existing.find(
             e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU,
@@ -131,6 +134,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           }
         }
 
+        // Create data yang belum ada di semester 2
         for (const siswaId of data.semester2Ids) {
           const exists = existing.find(
             e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.DUA,

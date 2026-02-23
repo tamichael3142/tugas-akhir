@@ -1,4 +1,5 @@
 import {
+  Form,
   useActionData,
   useFetcher,
   useLoaderData,
@@ -6,7 +7,7 @@ import {
   useRevalidator,
   useSearchParams,
 } from '@remix-run/react'
-import { ReactNode, useEffect, useState } from 'react'
+import { Fragment, ReactNode, useEffect, useRef, useState } from 'react'
 import { useRemixForm } from 'remix-hook-form'
 import { Button, Checkbox, TextInput } from '~/components/forms'
 import { BackButton, Card, DataGrid } from '~/components/ui'
@@ -15,11 +16,14 @@ import { ActionDataAdminMasterKelasManageJadwal } from '~/types/actions-data/adm
 import toast from 'react-hot-toast'
 import { LoaderDataAdminMasterKelasAddSiswa } from '~/types/loaders-data/admin'
 import { FaSave } from 'react-icons/fa'
+import { BiImport } from 'react-icons/bi'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import { AdminMasterKelasAddSiswaFormType, emptyValues, resolver } from './form'
+import AppNav from '~/navigation'
 
 const sectionPrefix = 'admin-master-kelas-add-siswa'
 const formId = `${sectionPrefix}-form`
+const importExcelFormId = `${sectionPrefix}-import-excel-siswa-form`
 
 export default function AdminMasterKelasAddSiswaPage() {
   const [searchParams] = useSearchParams()
@@ -28,6 +32,16 @@ export default function AdminMasterKelasAddSiswaPage() {
   const actionData = useActionData<ActionDataAdminMasterKelasManageJadwal>()
   const revalidator = useRevalidator()
   const fetcher = useFetcher({ key: formId })
+
+  const semester1 = loader.kelas?.tahunAjaran.semesterAjaran.find(item => item.urutan === SemesterAjaranUrutan.SATU)
+  const semester1ImportExcelFormId = `${importExcelFormId}-${semester1?.id}`
+  const semester1ImportExcelFormRef = useRef<HTMLFormElement>(null)
+  const semester1ImportExcelInputRef = useRef<HTMLInputElement>(null)
+
+  const semester2 = loader.kelas?.tahunAjaran.semesterAjaran.find(item => item.urutan === SemesterAjaranUrutan.DUA)
+  const semester2ImportExcelFormId = `${importExcelFormId}-${semester2?.id}`
+  const semester2ImportExcelFormRef = useRef<HTMLFormElement>(null)
+  const semester2ImportExcelInputRef = useRef<HTMLInputElement>(null)
 
   const formHook = useRemixForm<AdminMasterKelasAddSiswaFormType>({
     defaultValues: emptyValues,
@@ -87,6 +101,52 @@ export default function AdminMasterKelasAddSiswaPage() {
     return <div className='col-span-3 md:col-span-1'>{children}</div>
   }
 
+  function renderImportSiswaForms() {
+    return (
+      <Fragment>
+        <Form
+          id={semester1ImportExcelFormId}
+          method='post'
+          encType='multipart/form-data'
+          action={AppNav.adminAction.masterKelasImportExcelSiswa({
+            kelasId: loader.kelas?.id ?? '',
+            semesterAjaranId: semester1?.id ?? '',
+          })}
+          ref={semester1ImportExcelFormRef}
+        >
+          <input
+            type='file'
+            name='file'
+            hidden
+            ref={semester1ImportExcelInputRef}
+            accept='.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            onChange={() => semester1ImportExcelFormRef.current?.submit()}
+          />
+        </Form>
+
+        <Form
+          id={semester2ImportExcelFormId}
+          method='post'
+          encType='multipart/form-data'
+          action={AppNav.adminAction.masterKelasImportExcelSiswa({
+            kelasId: loader.kelas?.id ?? '',
+            semesterAjaranId: semester2?.id ?? '',
+          })}
+          ref={semester2ImportExcelFormRef}
+        >
+          <input
+            type='file'
+            name='file'
+            hidden
+            ref={semester2ImportExcelInputRef}
+            accept='.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            onChange={() => semester2ImportExcelFormRef.current?.submit()}
+          />
+        </Form>
+      </Fragment>
+    )
+  }
+
   return (
     <AdminPageContainer
       title='Tambah Siswa'
@@ -102,6 +162,7 @@ export default function AdminMasterKelasAddSiswaPage() {
         <BackButton key={`${sectionPrefix}-back-button`} />,
       ]}
     >
+      {renderImportSiswaForms()}
       <fetcher.Form id={formId} method='post' onSubmit={formHook.handleSubmit}>
         <Card className='mb-8 shadow-lg'>
           <div className='grid grid-cols-3 gap-4'>
@@ -129,7 +190,7 @@ export default function AdminMasterKelasAddSiswaPage() {
         <DataGrid
           id={`${sectionPrefix}-data-grid`}
           leadingView={
-            <div className='mb-2'>
+            <div className='mb-2 flex flex-row items-center gap-4 flex-wrap'>
               <TextInput
                 className='max-w-xs'
                 inputProps={{
@@ -138,6 +199,19 @@ export default function AdminMasterKelasAddSiswaPage() {
                   onChange: e => setSearchText(e.target.value),
                 }}
               />
+              <div className='grow'></div>
+              <div className='flex flex-row gap-4'>
+                <Button
+                  label='Import Smt 1'
+                  startIcon={<BiImport />}
+                  buttonProps={{ onClick: () => semester1ImportExcelInputRef.current?.click() }}
+                />
+                <Button
+                  label='Import Smt 2'
+                  startIcon={<BiImport />}
+                  buttonProps={{ onClick: () => semester2ImportExcelInputRef.current?.click() }}
+                />
+              </div>
             </div>
           }
           columns={[
@@ -194,7 +268,7 @@ export default function AdminMasterKelasAddSiswaPage() {
                       }}
                     />
                     <Checkbox
-                      label='Sem 1'
+                      label='Smt 1'
                       labelPosition='right'
                       inputProps={{
                         id: `${sectionPrefix}-cb-sem1-${row.id}`,
@@ -213,7 +287,7 @@ export default function AdminMasterKelasAddSiswaPage() {
                       }}
                     />
                     <Checkbox
-                      label='Sem 2'
+                      label='Smt 2'
                       labelPosition='right'
                       inputProps={{
                         id: `${sectionPrefix}-cb-sem2-${row.id}`,

@@ -6,6 +6,7 @@ import { AdminMasterTahunAjaranCreateFormType } from '~/pages/admin/MasterTahunA
 import { AdminMasterKelasCreateFormType } from '~/pages/admin/MasterKelas/Create/form'
 import { AdminMasterKelasManageJadwalFormType } from '~/pages/admin/MasterKelas/ManageJadwal/form'
 import { AdminMasterKelasAddSiswaFormType } from '~/pages/admin/MasterKelas/AddSiswa/form'
+import { AdminMasterKelasDeleteSiswaFormType } from '~/pages/admin/MasterKelas/ManageSiswa/form'
 
 /**
  * * Dashboard
@@ -80,6 +81,13 @@ export type ActionDataAdminMasterKelasAddSiswa = BaseActionData & {
   data: {
     // * Error
     oldFormData?: AdminMasterKelasAddSiswaFormType
+  }
+}
+
+export type ActionDataAdminMasterKelasDeleteSiswa = BaseActionData & {
+  data: {
+    // * Success
+    oldFormData?: AdminMasterKelasDeleteSiswaFormType
   }
 }
 

@@ -1,54 +1,62 @@
-import { useActionData, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { Button, Checkbox, StaticSelect, TextInput } from '~/components/forms'
 import { BackButton, Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
-import { ActionDataAdminMasterKelasManageJadwal } from '~/types/actions-data/admin'
+import { ActionDataAdminMasterKelasDeleteSiswa } from '~/types/actions-data/admin'
 import toast from 'react-hot-toast'
 import { LoaderDataAdminMasterKelasManageSiswa } from '~/types/loaders-data/admin'
-import { Akun } from '@prisma/client'
+import { SiswaPerKelasDanSemester } from '@prisma/client'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import { IoMdClose } from 'react-icons/io'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
 import { IoAdd } from 'react-icons/io5'
+import { FaTrash } from 'react-icons/fa'
+import { useRemixForm } from 'remix-hook-form'
+import { emptyValues, resolver } from './form'
 
 const sectionPrefix = 'admin-master-kelas-manage-siswa'
+const deleteFormId = `${sectionPrefix}-delete-form`
 
 export default function AdminMasterKelasManageSiswaPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const loader = useLoaderData<LoaderDataAdminMasterKelasManageSiswa>()
-  const actionData = useActionData<ActionDataAdminMasterKelasManageJadwal>()
   const revalidator = useRevalidator()
+  const fetcher = useFetcher<ActionDataAdminMasterKelasDeleteSiswa>({ key: deleteFormId })
 
-  const [selectedIds, setSelectedIds] = useState<Akun['id'][]>([])
   const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
 
-  useEffect(() => {
-    if (actionData?.success) {
-      toast.success(actionData.message ?? '')
-      revalidator.revalidate()
-    } else if (actionData?.error) {
-      toast.error(actionData.message ?? '')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actionData])
+  const formHook = useRemixForm({
+    defaultValues: emptyValues,
+    resolver: resolver,
+  })
+
+  const selectedIds = formHook.watch('siswaPerKelasDanSemesterIds')
 
   useEffect(() => {
-    if (
-      loader &&
-      loader.kelas?.tahunAjaran &&
-      loader.kelas.tahunAjaran.semesterAjaran &&
-      !searchParams.has('semesterAjaranId')
-    ) {
+    if (fetcher.data?.success) {
+      toast.success(fetcher.data.message ?? '')
+      revalidator.revalidate()
+      formHook.reset({ siswaPerKelasDanSemesterIds: [] })
+    } else if (fetcher.data?.error) {
+      toast.error(fetcher.data.message ?? '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetcher.data])
+
+  useEffect(() => {
+    if (loader && loader.kelas?.tahunAjaran && loader.kelas.tahunAjaran.semesterAjaran) {
       const currentSemester = loader.kelas.tahunAjaran.semesterAjaran.find(
         item => item.urutan === SemesterAjaranUrutan.SATU,
       )
-      if (currentSemester) {
-        handlePageChange({ newPage: 1, semesterAjaranId: currentSemester.id })
+      if (!searchParams.has('semesterAjaranId')) {
+        if (currentSemester) {
+          handlePageChange({ newPage: 1, semesterAjaranId: currentSemester.id })
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,8 +153,17 @@ export default function AdminMasterKelasManageSiswaPage() {
               }}
             />
             <div className='grow'></div>
+            <fetcher.Form id={deleteFormId} method='delete' onSubmit={formHook.handleSubmit}>
+              <Button
+                key={`${sectionPrefix}-delete-siswa-button`}
+                label='Hapus Siswa'
+                color='danger'
+                startIcon={<FaTrash />}
+                buttonProps={{ disabled: selectedIds.length === 0, type: 'submit', form: deleteFormId }}
+              />
+            </fetcher.Form>
             <Button
-              key={`${sectionPrefix}-add-button`}
+              key={`${sectionPrefix}-add-siswa-button`}
               color='secondary'
               label='Tambah Siswa'
               startIcon={<IoAdd />}
@@ -170,7 +187,10 @@ export default function AdminMasterKelasManageSiswaPage() {
               <div className='flex items-center justify-center'>
                 <DataGridActionButton
                   icon={<IoMdClose />}
-                  buttonProps={{ disabled: selectedIds.length <= 0, onClick: () => setSelectedIds([]) }}
+                  buttonProps={{
+                    disabled: selectedIds.length <= 0,
+                    onClick: () => formHook.reset({ siswaPerKelasDanSemesterIds: [] }),
+                  }}
                 />
               </div>
             ),
@@ -178,16 +198,15 @@ export default function AdminMasterKelasManageSiswaPage() {
               <div className='flex items-center justify-center'>
                 <Checkbox
                   inputProps={{
-                    checked: selectedIds.includes(row.siswaId),
-                    onChange: e =>
-                      setSelectedIds(oldValues => {
-                        let newValues: Akun['id'][] = []
-                        if (e.target.checked && !oldValues.includes(row.siswaId))
-                          newValues = [...oldValues, row.siswaId]
-                        else newValues = oldValues.filter(item => item !== row.siswaId)
+                    checked: selectedIds.includes(row.id),
+                    onChange: e => {
+                      const oldValues = formHook.getValues('siswaPerKelasDanSemesterIds')
+                      let newValues: SiswaPerKelasDanSemester['id'][] = []
+                      if (e.target.checked && !oldValues.includes(row.id)) newValues = [...oldValues, row.id]
+                      else newValues = oldValues.filter(item => item !== row.id)
 
-                        return newValues
-                      }),
+                      formHook.setValue('siswaPerKelasDanSemesterIds', newValues)
+                    },
                   }}
                 />
               </div>

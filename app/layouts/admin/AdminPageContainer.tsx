@@ -17,7 +17,7 @@ export default function AdminPageContainer(props: Props) {
   return (
     <Fragment>
       <div className={classNames(props.className)}>
-        <div className='p-4 md:px-8 sticky top-0 bg-grey-light'>
+        <div className='p-4 md:px-8 sticky top-0 bg-grey-light z-50'>
           <div className='pb-2 md:pb-4 border-b-2 border-neutral-200 flex flex-row items-center gap-2 md:gap-4'>
             <button className='md:hidden' onClick={() => useAdminPageStore.setState({ openSidebar: true })}>
               <IoMenuSharp className='text-2xl text-primary' />

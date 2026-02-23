@@ -1,3 +1,5 @@
+import { Kelas, SemesterAjaran } from '@prisma/client'
+
 const baseUrl = '/action/admin'
 
 function importExcelUser() {
@@ -10,6 +12,20 @@ function masterTahunAjaranDelete({ tahunAjaranId }: { tahunAjaranId: string }) {
 
 function masterKelasDelete({ kelasId }: { kelasId: string }) {
   return `${baseUrl}/master-kelas/${kelasId}/delete`
+}
+
+function masterKelasDeleteSiswa({ kelasId, semesterAjaranId }: { kelasId: string; semesterAjaranId: string }) {
+  return `${baseUrl}/master-kelas/${kelasId}/delete-bulk-siswa/${semesterAjaranId}`
+}
+
+function masterKelasImportExcelSiswa({
+  kelasId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  semesterAjaranId: SemesterAjaran['id']
+}) {
+  return `${baseUrl}/master-kelas/${kelasId}/import-siswa/${semesterAjaranId}`
 }
 
 function masterMataPelajaranDelete({ mataPelajaranId }: { mataPelajaranId: string }) {
@@ -36,6 +52,8 @@ const adminAction = {
   masterMataPelajaranDelete,
   masterEkstrakulikulerDelete,
   masterPengumumanDelete,
+  masterKelasDeleteSiswa,
+  masterKelasImportExcelSiswa,
   masterAccountDelete,
 }
 

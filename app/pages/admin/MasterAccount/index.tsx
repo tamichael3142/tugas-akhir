@@ -1,8 +1,8 @@
 import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { FaPlus } from 'react-icons/fa'
 import { CgExport } from 'react-icons/cg'
-import { Button, Checkbox } from '~/components/forms'
-import { DataGrid, LoadingFullScreen } from '~/components/ui'
+import { Button, Checkbox, StaticSelect } from '~/components/forms'
+import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import { Role } from '~/database/enums/prisma.enums'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
@@ -17,7 +17,7 @@ import { usePopup } from '~/hooks/usePopup'
 import { Akun } from '@prisma/client'
 import DBHelpers from '~/database/helpers'
 import { Fragment } from 'react/jsx-runtime'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { ActionDataAdminMasterAccountDelete } from '~/types/actions-data/admin'
 import XLSXUtils from '~/utils/xlsx.utils'
 import { IoMdClose } from 'react-icons/io'
@@ -36,12 +36,12 @@ export default function AdminMasterAccountPage() {
   const isDeleting = fetcher.state === 'submitting'
   const isSuccess = fetcher.data?.success
 
-  const [selectedIds, setSelectedIds] = useState<Akun['id'][]>([])
+  const [selectedAkuns, setSelectedAkuns] = useState<Akun[]>([])
 
   function downloadExportIds() {
-    if (selectedIds.length) {
-      XLSXUtils.downloadExcelFromIds({
-        ids: selectedIds,
+    if (selectedAkuns.length) {
+      XLSXUtils.downloadExcelFromAkun({
+        akuns: selectedAkuns,
         fileName: `export-account-id-${new Date().toTimeString()}.xlsx`,
       })
     }
@@ -56,9 +56,11 @@ export default function AdminMasterAccountPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, revalidator])
 
-  function handlePageChange(newPage: number) {
+  function handlePageChange({ newPage, role }: { newPage: number; role?: Role }) {
     const params = new URLSearchParams(searchParams)
     params.set('page', String(newPage))
+    if (role) params.set('role', role)
+    else params.delete('role')
     navigate(`?${params.toString()}`, { replace: false })
   }
 
@@ -96,6 +98,10 @@ export default function AdminMasterAccountPage() {
     })
   }
 
+  function FilterGridItem({ children }: { children?: ReactNode }) {
+    return <div className='col-span-3 md:col-span-1'>{children}</div>
+  }
+
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
@@ -103,17 +109,40 @@ export default function AdminMasterAccountPage() {
       actions={[
         <Button
           key={`${sectionPrefix}-export-button`}
-          label={`Export ID${selectedIds.length > 0 ? ` (${selectedIds.length})` : ''}`}
+          label={`Export ID${selectedAkuns.length > 0 ? ` (${selectedAkuns.length})` : ''}`}
           color='secondary'
           startIcon={<CgExport />}
           onlyIconOnSmallView
-          buttonProps={{ onClick: downloadExportIds, disabled: selectedIds.length <= 0 }}
+          buttonProps={{ onClick: downloadExportIds, disabled: selectedAkuns.length <= 0 }}
         />,
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterAccountCreate()}>
           <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
+      <Card className='mb-8 shadow-lg'>
+        <div className='grid grid-cols-3 gap-4'>
+          <FilterGridItem>
+            <StaticSelect
+              label='Role'
+              options={[
+                { value: '', label: 'Semua' },
+                ...Object.values(Role).map(item => ({ value: item, label: EnumsTitleUtils.getRole(item) })),
+              ]}
+              selectProps={{
+                value: searchParams.get('role') ?? '',
+                onChange: newValue => {
+                  handlePageChange({
+                    newPage: loader.akuns.pagination.page,
+                    role: (newValue.target.value ?? undefined) as Role,
+                  })
+                },
+              }}
+            />
+          </FilterGridItem>
+        </div>
+      </Card>
+
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
@@ -123,27 +152,31 @@ export default function AdminMasterAccountPage() {
               <div className='flex items-center justify-center'>
                 <DataGridActionButton
                   icon={<IoMdClose />}
-                  buttonProps={{ disabled: selectedIds.length <= 0, onClick: () => setSelectedIds([]) }}
+                  buttonProps={{ disabled: selectedAkuns.length <= 0, onClick: () => setSelectedAkuns([]) }}
                 />
               </div>
             ),
-            render: row => (
-              <div className='flex items-center justify-center'>
-                <Checkbox
-                  inputProps={{
-                    checked: selectedIds.includes(row.id),
-                    onChange: e =>
-                      setSelectedIds(oldValues => {
-                        let newValues: Akun['id'][] = []
-                        if (e.target.checked && !oldValues.includes(row.id)) newValues = [...oldValues, row.id]
-                        else newValues = oldValues.filter(item => item !== row.id)
+            render: row => {
+              const existing = !!selectedAkuns.find(item => item.id === row.id)
 
-                        return newValues
-                      }),
-                  }}
-                />
-              </div>
-            ),
+              return (
+                <div className='flex items-center justify-center'>
+                  <Checkbox
+                    inputProps={{
+                      checked: existing,
+                      onChange: e =>
+                        setSelectedAkuns(oldValues => {
+                          let newValues: Akun[] = []
+                          if (e.target.checked && !existing) newValues = [...oldValues, row]
+                          else newValues = oldValues.filter(item => item.id !== row.id)
+
+                          return newValues
+                        }),
+                    }}
+                  />
+                </div>
+              )
+            },
           },
           { field: 'username', label: 'Username' },
           { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.role as Role) },
@@ -194,7 +227,7 @@ export default function AdminMasterAccountPage() {
           pageSize: loader.akuns.pagination.limit,
           total: loader.akuns.pagination.total,
           totalPages: loader.akuns.pagination.totalPages,
-          onPageChange: handlePageChange,
+          onPageChange: page => handlePageChange({ newPage: page, role: searchParams.get('role') as Role }),
         }}
         className='shadow-primary'
       />

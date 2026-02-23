@@ -25,7 +25,7 @@ export default function AdminMasterTahunAjaranFormComponent() {
       formHook.trigger('nama')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formHook.watch('tahunMulai'), formHook.watch('tahunBerakhir')])
+  }, [formHook.watch('tahunMulai'), formHook.watch('tahunBerakhir'), autoGenerate])
 
   function calculateYearValue(newValue: string) {
     return format(
@@ -49,7 +49,11 @@ export default function AdminMasterTahunAjaranFormComponent() {
                 min: MIN_YEAR,
                 max: MAX_YEAR,
                 value: format(field.value, constants.dateFormats.yearFull),
-                onChange: e => field.onChange(calculateYearValue(e.target.value)),
+                onChange: e => {
+                  field.onChange(calculateYearValue(e.target.value))
+                  formHook.setValue('tahunBerakhir', calculateYearValue(String(Number(e.target.value) + 1)))
+                  formHook.trigger('tahunBerakhir')
+                },
               }}
             />
           )}
@@ -68,7 +72,7 @@ export default function AdminMasterTahunAjaranFormComponent() {
                 min: MIN_YEAR,
                 max: MAX_YEAR,
                 value: format(field.value, constants.dateFormats.yearFull),
-                onChange: e => field.onChange(calculateYearValue(e.target.value)),
+                readOnly: true,
               }}
             />
           )}
