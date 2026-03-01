@@ -1,4 +1,5 @@
 import dateFormats from './date-formats'
+import jadwal from './jadwal'
 import pageMetas from './page-metas'
 import pages from './pages'
 import sbbs from './sbbs'
@@ -14,6 +15,7 @@ const constants = {
   pageMetas,
   dateFormats,
   zodDefinitions,
+  jadwal,
 }
 
 export default constants

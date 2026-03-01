@@ -32,6 +32,18 @@ export type LoaderDataGuruJadwalMengajar = {
 }
 
 /**
+ * * Daftar Kelas
+ */
+export type LoaderDataGuruDaftarKelas = {
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
+  currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null
+  waliKelass?: Akun[]
+  kelass?: PaginationReturns<
+    Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }
+  >
+}
+
+/**
  * * Master Pengumuman
  */
 export type LoaderDataGuruMasterPengumuman = {

@@ -6,10 +6,12 @@ import { PiStudent } from 'react-icons/pi'
 import { IoBookSharp } from 'react-icons/io5'
 import { GrAnnounce } from 'react-icons/gr'
 import { FaBook } from 'react-icons/fa'
+import { FaPeopleRoof } from 'react-icons/fa6'
 
 export const guruNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.guru.dashboard() },
-  { icon: <MdSchedule />, label: 'Jadwal Mengajar', href: AppNav.guru.jadwalMengajar() },
+  { icon: <MdSchedule />, label: 'Jadwal Mengajar', href: AppNav.guru.jadwalMengajar({}) },
+  { icon: <FaPeopleRoof />, label: 'Daftar Kelas', href: AppNav.guru.daftarKelas() },
   { icon: <PiStudent />, label: 'Absensi Siswa', href: AppNav.guru.absensiSiswa() },
   { icon: <IoBookSharp />, label: 'Manage Mata Pelajaran', href: AppNav.guru.manageMataPelajaran() },
   { icon: <MdSportsSoccer />, label: 'Manage Ekstrakulikuler', href: AppNav.guru.manageEkstrakulikuler() },

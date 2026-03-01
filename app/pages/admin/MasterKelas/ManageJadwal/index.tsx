@@ -14,6 +14,7 @@ import classNames from 'classnames'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
+import constants from '~/constants'
 
 const sectionPrefix = 'admin-master-kelas-manage-jadwal'
 
@@ -156,32 +157,58 @@ export default function AdminMasterKelasManageJadwalPage() {
                       },
                     )}
                   >
-                    <p className='font-semibold'>{hour.label}</p>
+                    <p className='font-semibold'>{`${hour.label.split('-')[0]} - ${hour.label.split('-')[1]}`}</p>
                   </div>
                   {loader.days.map((day, dayIdx) => {
                     const currMapel = getMapel(day.id, hour.id)
+                    const containerKey = `${hourIdx}-${dayIdx}`
+                    const onlyFirst = dayIdx === 0
+                    const isMorningAssembly = hour.id === constants.jadwal.morningAssemblyHour
+                    const isSnackBreak = hour.id === constants.jadwal.snackBreakHour
+                    const isLunchBreak = hour.id === constants.jadwal.lunchBreakHour
+                    const isClosingClass = hour.id === constants.jadwal.closingClassHour
 
-                    return (
-                      <div
-                        key={`${hourIdx}-${dayIdx}`}
-                        className={classNames('col-span-1 border h-12 overflow-auto', {
-                          ['rounded-br-lg']: dayIdx === loader.days.length - 1 && hourIdx === loader.hours.length - 1,
-                        })}
-                      >
-                        <select
-                          className='w-full min-h-11 whitespace-pre-wrap'
-                          value={currMapel?.mataPelajaranId ?? ''}
-                          onChange={e => setMapel(day.id, hour.id, e.target.value, params.semesterAjaranId ?? '')}
+                    function getSpecialHourLabel() {
+                      if (isMorningAssembly) return constants.jadwal.morningAssemblyLabel
+                      if (isSnackBreak) return constants.jadwal.snackBreakLabel
+                      if (isLunchBreak) return constants.jadwal.lunchBreakLabel
+                      if (isClosingClass) return constants.jadwal.closingClassLabel
+                      return ''
+                    }
+
+                    if (isMorningAssembly || isSnackBreak || isLunchBreak || isClosingClass) {
+                      if (onlyFirst)
+                        return (
+                          <div
+                            key={containerKey}
+                            className='col-span-6 border h-12 overflow-auto flex flex-row items-center justify-start md:justify-center px-4'
+                          >
+                            <p className='text-center font-semibold'>{getSpecialHourLabel()}</p>
+                          </div>
+                        )
+                      else return null
+                    } else
+                      return (
+                        <div
+                          key={containerKey}
+                          className={classNames('col-span-1 border h-12 overflow-auto', {
+                            ['rounded-br-lg']: dayIdx === loader.days.length - 1 && hourIdx === loader.hours.length - 1,
+                          })}
                         >
-                          <option value=''></option>
-                          {loader.mataPelajarans.map((mapel, mapelIdx) => (
-                            <option key={mapelIdx} value={mapel.id}>
-                              {mapel.nama}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )
+                          <select
+                            className='w-full min-h-11 whitespace-pre-wrap'
+                            value={currMapel?.mataPelajaranId ?? ''}
+                            onChange={e => setMapel(day.id, hour.id, e.target.value, params.semesterAjaranId ?? '')}
+                          >
+                            <option value=''></option>
+                            {loader.mataPelajarans.map((mapel, mapelIdx) => (
+                              <option key={mapelIdx} value={mapel.id}>
+                                {mapel.nama}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )
                   })}
                 </Fragment>
               ))}

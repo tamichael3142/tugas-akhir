@@ -70,7 +70,7 @@ export default function GuruDashboardLayout() {
     <div className='w-screen min-h-screen relative'>
       <div
         className={classNames(
-          'fixed bg-white w-[300px] md:translate-x-0 h-screen z-20 rounded-r-2xl md:shadow-2xl duration-300',
+          'fixed bg-white w-[300px] md:translate-x-0 h-screen z-[100] rounded-r-2xl md:shadow-2xl duration-300',
           {
             ['translate-x-[-300px]']: !openSidebar,
             ['shadow-2xl']: openSidebar,
@@ -85,21 +85,25 @@ export default function GuruDashboardLayout() {
           </div>
 
           <div className='flex flex-col grow overflow-auto p-8 md:p-4 pt-0'>
-            {guruNavs.map((item, index) => (
-              <Link
-                key={`adminDashboard-sidebar-${index}`}
-                to={item.href ?? ''}
-                className={classNames('rounded-2xl text-left w-full py-2 px-4 cursor-pointer hover:bg-primary/10', {
-                  ['bg-primary text-white hover:!bg-primary/100']: item.href === location.pathname,
-                })}
-                onClick={closeSidebar}
-              >
-                <div className='flex flex-row items-center gap-2'>
-                  <div className='text-xl'>{item.icon}</div>
-                  <p>{item.label}</p>
-                </div>
-              </Link>
-            ))}
+            {guruNavs.map((item, index) => {
+              const itemClearPath = item.href?.replaceAll('?', '')
+
+              return (
+                <Link
+                  key={`adminDashboard-sidebar-${index}`}
+                  to={item.href ?? ''}
+                  className={classNames('rounded-2xl text-left w-full py-2 px-4 cursor-pointer hover:bg-primary/10', {
+                    ['bg-primary text-white hover:!bg-primary/100']: itemClearPath === location.pathname,
+                  })}
+                  onClick={closeSidebar}
+                >
+                  <div className='flex flex-row items-center gap-2'>
+                    <div className='text-xl'>{item.icon}</div>
+                    <p>{item.label}</p>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
 
           {user ? (

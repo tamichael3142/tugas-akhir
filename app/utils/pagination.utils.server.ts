@@ -47,9 +47,11 @@ export async function getPaginatedData<T>({
 
   // 🔍 Bangun `where` condition gabungan
   const dynamicWhere = options?.mapQueryToWhere ? await options.mapQueryToWhere(query) : {}
+  const mergedOR = [...(options?.where?.OR ?? []), ...(dynamicWhere?.OR ?? [])]
   const where = {
     ...options?.where,
     ...dynamicWhere,
+    OR: mergedOR.length > 0 ? mergedOR : undefined,
   }
 
   const [data, total] = await Promise.all([

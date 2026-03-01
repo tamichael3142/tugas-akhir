@@ -54,6 +54,10 @@ const pageMetas = {
     { title: `Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruDaftarKelas: [
+    { title: `Daftar Kelas - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   guruJadwalMengajar: [
     { title: `Jadwal Mengajar - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },

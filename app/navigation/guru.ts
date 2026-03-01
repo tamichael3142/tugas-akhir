@@ -1,3 +1,5 @@
+import { Kelas, SemesterAjaran, TahunAjaran } from '@prisma/client'
+
 const baseUrl = '/guru'
 
 /*
@@ -12,8 +14,30 @@ function dashboard() {
  */
 const jadwalMengajarUrl = '/jadwal-mengajar'
 
-function jadwalMengajar() {
-  return `${baseUrl}${jadwalMengajarUrl}`
+function jadwalMengajar({
+  tahunAjaranId,
+  semesterAjaranId,
+}: {
+  tahunAjaranId?: TahunAjaran['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (tahunAjaranId) params.set('tahunAjaranId', tahunAjaranId)
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${jadwalMengajarUrl}?${params.toString()}`
+}
+
+/*
+ * Guru's daftar kelas level routes
+ */
+const daftarKelasUrl = '/daftar-kelas'
+
+function daftarKelas() {
+  return `${baseUrl}${daftarKelasUrl}`
+}
+
+function daftarKelasDetail({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail`
 }
 
 /*
@@ -86,6 +110,8 @@ const guru = {
   baseUrl,
   dashboard,
   jadwalMengajar,
+  daftarKelas,
+  daftarKelasDetail,
   absensiSiswa,
   manageMataPelajaran,
   manageEkstrakulikuler,

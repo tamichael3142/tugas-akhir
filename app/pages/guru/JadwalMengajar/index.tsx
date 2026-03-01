@@ -1,13 +1,12 @@
-import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import classNames from 'classnames'
 import { ReactNode, useCallback, useEffect } from 'react'
-import { FaPlus } from 'react-icons/fa'
 import { Fragment } from 'react/jsx-runtime'
-import { Button, StaticSelect } from '~/components/forms'
-import { Card, LoadingFullScreen } from '~/components/ui'
+import { StaticSelect } from '~/components/forms'
+import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
+import constants from '~/constants'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
-import AppNav from '~/navigation'
 import { LoaderDataGuruJadwalMengajar } from '~/types/loaders-data/guru'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
@@ -23,13 +22,7 @@ export default function GuruJadwalMengajarPage() {
   } = useLoaderData<LoaderDataGuruJadwalMengajar>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  // const fetcher = useFetcher<ActionDataGuruJadwalMengajarDelete>({ key: deleteFormId })
   const revalidator = useRevalidator()
-  // const popup = usePopup()
-  // const user = useAuthStore(state => state.user)
-
-  // const isDeleting = fetcher.state === 'submitting'
-  // const isSuccess = fetcher.data?.success
 
   const selectedTahunAjaran = useCallback(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
@@ -42,15 +35,6 @@ export default function GuruJadwalMengajarPage() {
     else return []
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tahunAjaranId')])
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     fetcher.load(AppNav.guru.masterPengumuman())
-  //     revalidator.revalidate() // refresh data loader parent
-  //     popup.close()
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isSuccess, revalidator])
 
   function handlePageChange({
     tahunAjaranId,
@@ -66,39 +50,6 @@ export default function GuruJadwalMengajarPage() {
     else params.delete('semesterAjaranId')
     navigate(`?${params.toString()}`, { replace: false })
   }
-
-  // function openDeletePopup(row: Pengumuman) {
-  //   popup.open({
-  //     title: 'Hapus pengumuman?',
-  //     onClose: popup.close,
-  //     content: (
-  //       <Fragment>
-  //         <p>
-  //           Apakah anda yakin untuk menghapus pengumuman <span className='font-semibold text-red-500'>{row.nama}</span>?
-  //         </p>
-  //         <fetcher.Form
-  //           id={deleteFormId}
-  //           method='delete'
-  //           action={AppNav.guruAction.masterPengumumanDelete({ pengumumanId: row.id })}
-  //         ></fetcher.Form>
-  //       </Fragment>
-  //     ),
-  //     actionButtons: [
-  //       {
-  //         label: 'Cancel',
-  //         color: 'secondary',
-  //         variant: 'text',
-  //         buttonProps: { onClick: popup.close },
-  //       },
-  //       {
-  //         label: isDeleting ? 'Loading...' : 'Delete',
-  //         color: 'primary',
-  //         variant: 'contained',
-  //         buttonProps: { type: 'submit', form: deleteFormId, disabled: isDeleting },
-  //       },
-  //     ],
-  //   })
-  // }
 
   function getJadwalPelajaran(dayId: string, hourId: string) {
     const existing = jadwalPelajarans?.find(item => item.dayId === dayId && item.hourId === hourId)
@@ -127,14 +78,7 @@ export default function GuruJadwalMengajarPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer
-      title='Master Pengumuman'
-      actions={[
-        <Link key={`${sectionPrefix}-add-button`} to={AppNav.guru.masterPengumumanCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
-        </Link>,
-      ]}
-    >
+    <GuruPageContainer title='Jadwal Mengajar' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
       <Card>
         <div className='mb-8'>
           <div className='grid grid-cols-2 gap-4'>
@@ -204,26 +148,53 @@ export default function GuruJadwalMengajarPage() {
                       },
                     )}
                   >
-                    <p className='font-semibold'>{hour.label}</p>
+                    <p className='font-semibold'>{`${hour.label.split('-')[0]} - ${hour.label.split('-')[1]}`}</p>
                   </div>
                   {days.map((day, dayIdx) => {
                     const currJadwalPelajaran = getJadwalPelajaran(day.id, hour.id)
-                    return (
-                      <div
-                        key={`${hourIdx}-${dayIdx}`}
-                        className={classNames('col-span-1 border h-12 overflow-auto', {
-                          ['rounded-br-lg']: dayIdx === days.length - 1 && hourIdx === hours.length - 1,
-                        })}
-                      >
-                        <div className='w-full min-h-11 whitespace-pre-wrap flex flex-row items-center justify-center'>
-                          <p>
-                            {currJadwalPelajaran
-                              ? `[${currJadwalPelajaran?.kelas?.nama}] - ${currJadwalPelajaran?.mataPelajaran?.nama}`
-                              : '-'}
-                          </p>
+                    const containerKey = `${hourIdx}-${dayIdx}`
+                    const onlyFirst = dayIdx === 0
+                    const isMorningAssembly = hour.id === constants.jadwal.morningAssemblyHour
+                    const isSnackBreak = hour.id === constants.jadwal.snackBreakHour
+                    const isLunchBreak = hour.id === constants.jadwal.lunchBreakHour
+                    const isClosingClass = hour.id === constants.jadwal.closingClassHour
+
+                    function getSpecialHourLabel() {
+                      if (isMorningAssembly) return constants.jadwal.morningAssemblyLabel
+                      if (isSnackBreak) return constants.jadwal.snackBreakLabel
+                      if (isLunchBreak) return constants.jadwal.lunchBreakLabel
+                      if (isClosingClass) return constants.jadwal.closingClassLabel
+                      return ''
+                    }
+
+                    if (isMorningAssembly || isSnackBreak || isLunchBreak || isClosingClass) {
+                      if (onlyFirst)
+                        return (
+                          <div
+                            key={containerKey}
+                            className='col-span-6 border h-12 overflow-auto flex flex-row items-center justify-start md:justify-center px-4'
+                          >
+                            <p className='text-center font-semibold'>{getSpecialHourLabel()}</p>
+                          </div>
+                        )
+                      else return null
+                    } else
+                      return (
+                        <div
+                          key={containerKey}
+                          className={classNames('col-span-1 border h-12 overflow-auto', {
+                            ['rounded-br-lg']: dayIdx === days.length - 1 && hourIdx === hours.length - 1,
+                          })}
+                        >
+                          <div className='w-full min-h-11 whitespace-pre-wrap flex flex-row items-center justify-center'>
+                            <p>
+                              {currJadwalPelajaran
+                                ? `[${currJadwalPelajaran?.kelas?.nama}] - ${currJadwalPelajaran?.mataPelajaran?.nama}`
+                                : '-'}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )
+                      )
                   })}
                 </Fragment>
               ))}

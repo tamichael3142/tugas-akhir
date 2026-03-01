@@ -9,7 +9,7 @@ export type CardProps = {
 
 export default function Card(props: CardProps) {
   return (
-    <div id={props.id} className={classNames('shadow-2xl rounded-2xl p-4 md:p-8', props.className)}>
+    <div id={props.id} className={classNames('shadow-lg border rounded-2xl p-4 md:p-8', props.className)}>
       {props.children}
     </div>
   )
