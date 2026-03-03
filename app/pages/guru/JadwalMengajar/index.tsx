@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import classNames from 'classnames'
 import { ReactNode, useCallback, useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
@@ -7,6 +7,7 @@ import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
+import AppNav from '~/navigation'
 import { LoaderDataGuruJadwalMengajar } from '~/types/loaders-data/guru'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
@@ -188,9 +189,27 @@ export default function GuruJadwalMengajarPage() {
                         >
                           <div className='w-full min-h-11 whitespace-pre-wrap flex flex-row items-center justify-center'>
                             <p>
-                              {currJadwalPelajaran
-                                ? `[${currJadwalPelajaran?.kelas?.nama}] - ${currJadwalPelajaran?.mataPelajaran?.nama}`
-                                : '-'}
+                              {currJadwalPelajaran ? (
+                                <Fragment>
+                                  {'['}
+                                  {currJadwalPelajaran.kelas ? (
+                                    <Link
+                                      className='hover:text-primary'
+                                      to={AppNav.guru.daftarKelasDetail({ kelasId: currJadwalPelajaran.kelas.id })}
+                                      target='_blank'
+                                      rel='noreferrer'
+                                    >
+                                      {currJadwalPelajaran.kelas.nama}
+                                    </Link>
+                                  ) : null}
+                                  {'] - '}
+                                  {currJadwalPelajaran.mataPelajaran ? (
+                                    <span>{currJadwalPelajaran.mataPelajaran.nama}</span>
+                                  ) : null}
+                                </Fragment>
+                              ) : (
+                                '-'
+                              )}
                             </p>
                           </div>
                         </div>

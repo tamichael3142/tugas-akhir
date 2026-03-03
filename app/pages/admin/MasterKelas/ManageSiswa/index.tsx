@@ -143,7 +143,7 @@ export default function AdminMasterKelasManageSiswaPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         leadingView={
-          <div className='flex flex-col sm:flex-row items-center gap-4'>
+          <div className='flex flex-col sm:flex-row items-center gap-4 mb-4 lg:mb-8'>
             <TextInput
               className='max-w-xs'
               inputProps={{

@@ -37,7 +37,15 @@ function daftarKelas() {
 }
 
 function daftarKelasDetail({ kelasId }: { kelasId: Kelas['id'] }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail`
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa`
+}
+
+function daftarKelasDetailDaftarSiswa({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa`
+}
+
+function daftarKelasDetailMataPelajaran({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mata-pelajaran`
 }
 
 /*
@@ -112,6 +120,8 @@ const guru = {
   jadwalMengajar,
   daftarKelas,
   daftarKelasDetail,
+  daftarKelasDetailDaftarSiswa,
+  daftarKelasDetailMataPelajaran,
   absensiSiswa,
   manageMataPelajaran,
   manageEkstrakulikuler,

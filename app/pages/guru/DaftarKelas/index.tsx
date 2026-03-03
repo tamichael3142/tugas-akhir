@@ -5,7 +5,7 @@ import AppNav from '~/navigation'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
-import { ReactNode, useCallback, useEffect } from 'react'
+import { ReactNode, useCallback } from 'react'
 import DBHelpers from '~/database/helpers'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import { LoaderDataGuruDaftarKelas } from '~/types/loaders-data/guru'
@@ -66,10 +66,10 @@ export default function GuruDaftarKelasPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
-  useEffect(() => {
-    if (window.confirm('Apakah ingin load periode saat ini?')) loadCurrentPeriod()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loader.currentTahunAjaran])
+  // useEffect(() => {
+  //   if (window.confirm('Apakah ingin load periode saat ini?')) loadCurrentPeriod()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loader.currentTahunAjaran])
 
   const selectedTahunAjaran = useCallback(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''

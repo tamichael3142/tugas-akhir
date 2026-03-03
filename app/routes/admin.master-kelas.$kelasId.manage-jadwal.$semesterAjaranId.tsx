@@ -26,7 +26,9 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
         include: { semesterAjaran: true },
       },
       wali: true,
-      jadwalPelajarans: true,
+      jadwalPelajarans: {
+        where: { semesterAjaranId: semesterAjaranId ?? '' },
+      },
     },
   })
 

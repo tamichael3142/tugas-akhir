@@ -7,6 +7,7 @@ import {
   MataPelajaran,
   Pengumuman,
   SemesterAjaran,
+  SiswaPerKelasDanSemester,
   TahunAjaran,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
@@ -41,6 +42,20 @@ export type LoaderDataGuruDaftarKelas = {
   kelass?: PaginationReturns<
     Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }
   >
+}
+
+export type LoaderDataGuruDaftarKelasDetail = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+}
+
+export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  siswaPerKelasPerSemesters: PaginationReturns<SiswaPerKelasDanSemester & { siswa: Akun | null }>
+}
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  mataPelajarans: PaginationReturns<MataPelajaran & { guru: Akun | null }>
 }
 
 /**
