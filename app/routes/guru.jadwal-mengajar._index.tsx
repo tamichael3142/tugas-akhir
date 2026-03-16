@@ -18,6 +18,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
   const tahunAjaranId = query.get('tahunAjaranId')
   const semesterAjaranId = query.get('semesterAjaranId')
+  const kelasId = query.get('kelasId')
 
   const tahunAjarans = await prisma.tahunAjaran.findMany({
     where: { deletedAt: null },
@@ -46,6 +47,9 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   const days = await prisma.days.findMany({ orderBy: { sequenceNumber: 'asc' } })
   const hours = await prisma.hour.findMany({ orderBy: { sequenceNumber: 'asc' } })
 
+  let where = {}
+  if (kelasId) where = { ...where, kelasId }
+
   const jadwalPelajarans = await prisma.jadwalPelajaran.findMany({
     include: {
       kelas: true,
@@ -56,6 +60,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       },
     },
     where: {
+      ...where,
       semesterAjaranId: semesterAjaranId,
       mataPelajaran: {
         guruId: userId,

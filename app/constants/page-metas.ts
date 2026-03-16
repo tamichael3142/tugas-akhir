@@ -66,6 +66,10 @@ const pageMetas = {
     { title: `Master Pengumuman - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruManageAbsensi: [
+    { title: `Manage Absensi - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
 }
 
 export default pageMetas

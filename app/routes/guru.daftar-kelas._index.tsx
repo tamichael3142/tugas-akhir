@@ -103,6 +103,9 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
           else where.tahunAjaranId = tahunAjaranId
         }
 
+        const waliId = query.get('waliId')
+        if (waliId) where.waliId = waliId
+
         where.OR = OR
 
         return where

@@ -40,15 +40,19 @@ export default function GuruJadwalMengajarPage() {
   function handlePageChange({
     tahunAjaranId,
     semesterAjaranId,
+    kelasId,
   }: {
     tahunAjaranId?: string
     semesterAjaranId?: string
+    kelasId?: string
   }) {
     const params = new URLSearchParams(searchParams)
     if (tahunAjaranId) params.set('tahunAjaranId', String(tahunAjaranId))
     else params.delete('tahunAjaranId')
     if (semesterAjaranId) params.set('semesterAjaranId', String(semesterAjaranId))
     else params.delete('semesterAjaranId')
+    if (kelasId) params.set('kelasId', String(kelasId))
+    else params.delete('kelasId')
     navigate(`?${params.toString()}`, { replace: false })
   }
 

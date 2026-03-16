@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
-import { Button, StaticSelect } from '~/components/forms'
+import { Button, Checkbox, StaticSelect } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import AppNav from '~/navigation'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
@@ -12,16 +12,18 @@ import { LoaderDataGuruDaftarKelas } from '~/types/loaders-data/guru'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import { FaScrewdriverWrench } from 'react-icons/fa6'
-import { FaInfo } from 'react-icons/fa'
+import useAuthStore from '~/store/authStore'
 
 const sectionPrefix = 'guru-daftar-kelas'
-// const deleteFormId = `${sectionPrefix}-delete-form`
 
 export default function GuruDaftarKelasPage() {
   const loader = useLoaderData<LoaderDataGuruDaftarKelas>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const revalidator = useRevalidator()
+  const user = useAuthStore(state => state.user)
+
+  const currWaliId = searchParams.get('waliId')
 
   function handlePageChange({
     newPage,
@@ -61,6 +63,7 @@ export default function GuruDaftarKelasPage() {
         newPage: loader.kelass?.pagination.page ?? 1,
         tahunAjaranId: firstAvailableTahunAjaran.id,
         semesterAjaranId: firstAvailableSemesterAjaran.id,
+        waliId: searchParams.get('waliId') ?? undefined,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,6 +136,29 @@ export default function GuruDaftarKelasPage() {
                     newPage: loader.kelass?.pagination.page ?? 1,
                     tahunAjaranId: searchParams.get('tahunAjaranId') ?? '',
                     semesterAjaranId: newValue.target.value,
+                    waliId: searchParams.get('kelasId') ?? undefined,
+                  })
+                },
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <StaticSelect
+              label='Wali'
+              options={[
+                { value: '', label: 'Semua' },
+                ...(loader.waliKelass
+                  ? loader.waliKelass.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) }))
+                  : []),
+              ]}
+              selectProps={{
+                value: searchParams.get('waliId') ?? '',
+                onChange: newValue => {
+                  handlePageChange({
+                    newPage: loader.kelass?.pagination.page ?? 1,
+                    tahunAjaranId: searchParams.get('tahunAjaranId') ?? '',
+                    semesterAjaranId: searchParams.get('semesterAjaranId') ?? '',
+                    waliId: newValue.target.value,
                   })
                 },
               }}
@@ -143,6 +169,31 @@ export default function GuruDaftarKelasPage() {
       {loader.kelass && Array.isArray(loader.kelass.data) ? (
         <DataGrid
           id={`${sectionPrefix}-data-grid`}
+          leadingView={
+            <div className='flex flex-row items-center justify-end gap-4 pb-4'>
+              <Checkbox
+                label='Hanya wali?'
+                inputProps={{
+                  checked: !!currWaliId && currWaliId === user?.id,
+                  onChange: e => {
+                    if (e.target.checked)
+                      return handlePageChange({
+                        newPage: loader.kelass?.pagination.page ?? 1,
+                        semesterAjaranId: searchParams.get('semesterAjaranId') ?? undefined,
+                        tahunAjaranId: searchParams.get('tahunAjaranId') ?? undefined,
+                        waliId: user?.id,
+                      })
+                    else
+                      return handlePageChange({
+                        newPage: loader.kelass?.pagination.page ?? 1,
+                        semesterAjaranId: searchParams.get('semesterAjaranId') ?? undefined,
+                        tahunAjaranId: searchParams.get('tahunAjaranId') ?? undefined,
+                      })
+                  },
+                }}
+              />
+            </div>
+          }
           columns={[
             { field: 'nama', label: 'Nama' },
             { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
@@ -180,19 +231,24 @@ export default function GuruDaftarKelasPage() {
                 return (
                   <DataGridActionButtonWrapper>
                     <Link to={AppNav.guru.daftarKelasDetail({ kelasId: row.id })}>
-                      <DataGridActionButton icon={<FaInfo />} color='info' label={'Detail Kelas'} />
+                      <DataGridActionButton
+                        icon={DataGridActionButtonHelper.getDetailIcon()}
+                        color='info'
+                        label={'Detail Kelas'}
+                      />
                     </Link>
                     {semesterSatu ? (
                       <Link
                         to={AppNav.guru.jadwalMengajar({
                           tahunAjaranId: row.tahunAjaranId,
                           semesterAjaranId: semesterSatu.id,
+                          kelasId: row.id,
                         })}
                       >
                         <DataGridActionButton
                           icon={DataGridActionButtonHelper.getManageIcon()}
                           color='success'
-                          label={'Jadwal Semester 1'}
+                          label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)}`}
                           buttonProps={{ disabled: !!row.deletedAt }}
                         />
                       </Link>
@@ -202,12 +258,13 @@ export default function GuruDaftarKelasPage() {
                         to={AppNav.guru.jadwalMengajar({
                           tahunAjaranId: row.tahunAjaranId,
                           semesterAjaranId: semesterDua.id,
+                          kelasId: row.id,
                         })}
                       >
                         <DataGridActionButton
                           icon={DataGridActionButtonHelper.getManageIcon()}
                           color='success'
-                          label={'Jadwal Semester 2'}
+                          label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)}`}
                           buttonProps={{ disabled: !!row.deletedAt }}
                         />
                       </Link>
@@ -223,7 +280,13 @@ export default function GuruDaftarKelasPage() {
             pageSize: loader.kelass.pagination.limit,
             total: loader.kelass.pagination.total,
             totalPages: loader.kelass.pagination.totalPages,
-            onPageChange: newPage => handlePageChange({ newPage }),
+            onPageChange: newPage =>
+              handlePageChange({
+                newPage,
+                tahunAjaranId: searchParams.get('tahunAjaranId') ?? undefined,
+                semesterAjaranId: searchParams.get('semesterAjaranId') ?? undefined,
+                waliId: searchParams.get('waliId') ?? undefined,
+              }),
           }}
           className='shadow-primary'
         />

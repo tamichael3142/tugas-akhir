@@ -29,3 +29,11 @@ export enum SemesterAjaranUrutan {
   SATU = 'SATU',
   DUA = 'DUA',
 }
+
+export enum TipeAbsensi {
+  UNKNOWN = 'UNKNOWN',
+  HADIR = 'HADIR',
+  IZIN = 'IZIN',
+  SAKIT = 'SAKIT',
+  TANPA_KETERANGAN = 'TANPA_KETERANGAN',
+}

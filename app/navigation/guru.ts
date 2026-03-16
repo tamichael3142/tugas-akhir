@@ -1,4 +1,4 @@
-import { Kelas, SemesterAjaran, TahunAjaran } from '@prisma/client'
+import { Absensi, Kelas, MataPelajaran, SemesterAjaran, TahunAjaran } from '@prisma/client'
 
 const baseUrl = '/guru'
 
@@ -17,13 +17,16 @@ const jadwalMengajarUrl = '/jadwal-mengajar'
 function jadwalMengajar({
   tahunAjaranId,
   semesterAjaranId,
+  kelasId,
 }: {
   tahunAjaranId?: TahunAjaran['id']
   semesterAjaranId?: SemesterAjaran['id']
+  kelasId?: Kelas['id']
 }) {
   const params = new URLSearchParams()
   if (tahunAjaranId) params.set('tahunAjaranId', tahunAjaranId)
   if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  if (kelasId) params.set('kelasId', kelasId)
   return `${baseUrl}${jadwalMengajarUrl}?${params.toString()}`
 }
 
@@ -48,6 +51,22 @@ function daftarKelasDetailMataPelajaran({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mata-pelajaran`
 }
 
+function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/absensi`
+}
+
+function daftarKelasDetailAbsensiCreate({
+  kelasId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/absensi/create?${params.toString()}`
+}
+
 /*
  * Guru's absensi siswa level routes
  */
@@ -64,6 +83,10 @@ const manageMataPelajaranUrl = '/manage-mata-pelajaran'
 
 function manageMataPelajaran() {
   return `${baseUrl}${manageMataPelajaranUrl}`
+}
+
+function manageMataPelajaranDetail({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail`
 }
 
 /*
@@ -114,6 +137,18 @@ function manageAbsensi() {
   return `${baseUrl}${manageAbsensiUrl}`
 }
 
+function manageAbsensiCreate() {
+  return `${baseUrl}${manageAbsensiUrl}/create`
+}
+
+function manageAbsensiEdit({ absensiId }: { absensiId: Absensi['id'] }) {
+  return `${baseUrl}${manageAbsensiUrl}/${absensiId}/edit`
+}
+
+function manageAbsensiMutate({ absensiId }: { absensiId: Absensi['id'] }) {
+  return `${baseUrl}${manageAbsensiUrl}/${absensiId}/mutate`
+}
+
 const guru = {
   baseUrl,
   dashboard,
@@ -122,8 +157,11 @@ const guru = {
   daftarKelasDetail,
   daftarKelasDetailDaftarSiswa,
   daftarKelasDetailMataPelajaran,
+  daftarKelasDetailAbsensiList,
+  daftarKelasDetailAbsensiCreate,
   absensiSiswa,
   manageMataPelajaran,
+  manageMataPelajaranDetail,
   manageEkstrakulikuler,
   manageBeritaAcara,
   masterPengumuman,
@@ -131,6 +169,9 @@ const guru = {
   masterPengumumanDetail,
   masterPengumumanEdit,
   manageAbsensi,
+  manageAbsensiCreate,
+  manageAbsensiEdit,
+  manageAbsensiMutate,
 }
 
 export default guru

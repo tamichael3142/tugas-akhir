@@ -1,4 +1,6 @@
 import {
+  Absensi,
+  AbsensiXSiswa,
   Akun,
   Days,
   Hour,
@@ -56,6 +58,34 @@ export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
 export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
   mataPelajarans: PaginationReturns<MataPelajaran & { guru: Akun | null }>
+}
+
+export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  todayAbsensi: Absensi | null
+  absensis: PaginationReturns<Absensi>
+}
+
+export type LoaderDataGuruDaftarKelasDetailAbsensiCreate = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+}
+
+/**
+ * * Manage Absensi
+ */
+export type LoaderDataGuruManageAbsensi = {
+  absensis: PaginationReturns<Absensi>
+}
+
+export type LoaderDataGuruManageAbsensiEdit = {
+  absensi:
+    | (Absensi & { kelas: Kelas & { tahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null } })
+    | null
+}
+
+export type LoaderDataGuruManageAbsensiMutate = {
+  absensi: (Absensi & { siswaTerabsen: AbsensiXSiswa[] }) | null
+  siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
 }
 
 /**

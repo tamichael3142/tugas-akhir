@@ -61,9 +61,9 @@ function getKewarganegaraan(value: Kewarganegaraan) {
 function getSemesterAjaranUrutan(value: SemesterAjaranUrutan) {
   switch (value) {
     case SemesterAjaranUrutan.SATU:
-      return 'Ganjil'
-    case SemesterAjaranUrutan.DUA:
       return 'Genap'
+    case SemesterAjaranUrutan.DUA:
+      return 'Ganjil'
     default:
       return '-'
   }

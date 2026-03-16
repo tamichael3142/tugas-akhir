@@ -1,11 +1,17 @@
-import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import { LoaderDataGuruDaftarKelasDetailMataPelajaran } from '~/types/loaders-data/guru'
-import GuruDaftarKelasDetailTab, { TabKey } from '../components/Tab'
+import GuruDaftarKelasDetailTab, { TabKey } from '../_components/Tab'
 import DBHelpers from '~/database/helpers'
+import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
+import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
+import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
+import AppNav from '~/navigation'
+import { Kelas } from '@prisma/client'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran'
 
@@ -73,14 +79,14 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruDaftarKelasDetailTab kelasId={loader.kelas?.id} activeTabKey={TabKey.MATA_PELAJARAN} />
+      <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.MATA_PELAJARAN} />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         leadingView={
           <div className='flex flex-col sm:flex-row items-center gap-4 mb-5'>
             <Button
-              label={'Semester 1'}
+              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)}`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.SATU ? 'contained' : 'outlined'}
               buttonProps={{
@@ -90,7 +96,7 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
               }}
             />
             <Button
-              label={'Semester 2'}
+              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)}`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.DUA ? 'contained' : 'outlined'}
               buttonProps={{
@@ -116,6 +122,21 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
             field: 'guru',
             label: 'Guru',
             render: row => (row.guru ? DBHelpers.akun.getDisplayName(row.guru) : '-'),
+          },
+          {
+            field: 'actions',
+            label: 'Aksi',
+            render: row => (
+              <DataGridActionButtonWrapper>
+                <Link to={AppNav.guru.manageMataPelajaranDetail({ mataPelajaranId: row.id })}>
+                  <DataGridActionButton
+                    icon={DataGridActionButtonHelper.getDetailIcon()}
+                    color='info'
+                    label={'Detail'}
+                  />
+                </Link>
+              </DataGridActionButtonWrapper>
+            ),
           },
         ]}
         rows={loader.mataPelajarans.data}

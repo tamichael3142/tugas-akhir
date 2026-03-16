@@ -1,5 +1,19 @@
 import { Pengumuman } from '@prisma/client'
 import { BaseActionData } from './base-action'
+import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
+import { GuruManageAbsensiEditFormType } from '~/pages/guru/ManageAbsensi/form-types'
+
+/**
+ * * Manage Absensi
+ */
+export type ActionDataGuruManageAbsensiEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedAbsensi?: Absensi
+    // * Error
+    oldFormData?: GuruManageAbsensiEditFormType
+  }
+}
 
 /**
  * * Master Pengumuman

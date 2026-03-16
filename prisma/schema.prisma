@@ -52,6 +52,16 @@ enum SemesterAjaranUrutan {
   @@schema("public")
 }
 
+enum TipeAbsensi {
+  UNKNOWN
+  HADIR
+  IZIN
+  SAKIT
+  TANPA_KETERANGAN
+
+  @@schema("public")
+}
+
 // ? =====
 
 // ? TABLES
@@ -99,12 +109,15 @@ model Akun {
   ekstrakulikulerUpdator             Ekstrakulikuler[]                    @relation(name: "lastUpdateBy")
   pengumumanCreator                  Pengumuman[]                         @relation(name: "createdBy")
   pengumumanUpdator                  Pengumuman[]                         @relation(name: "lastUpdateBy")
+  absensiCreator                     Absensi[]                            @relation(name: "createdBy")
+  absensiUpdator                     Absensi[]                            @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   waliKelas                          Kelas[]                              @relation(name: "wali")
   guruMataPelajaran                  MataPelajaran[]
   pengajarEkstrakulikuler            Ekstrakulikuler[]                    @relation(name: "pengajar")
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
+  absensiSiswaPerKelas               AbsensiXSiswa[]
 
   @@schema("public")
 }
@@ -197,6 +210,7 @@ model SemesterAjaran {
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
   jadwalPelajarans                   JadwalPelajaran[]
+  absensis                           Absensi[]
 
   @@schema("public")
 }
@@ -221,6 +235,7 @@ model Kelas {
   // ? relations
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
   jadwalPelajarans         JadwalPelajaran[]
+  absensis                 Absensi[]
 
   @@schema("public")
 }
@@ -293,6 +308,30 @@ model Pengumuman {
   @@schema("public")
 }
 
+model Absensi {
+  id               String          @id @default(cuid())
+  // ? credentials
+  label            String
+  remarks          String?
+  tanggal          DateTime
+  tanggalText      String // Versi text dari tanggal
+  kelasId          String
+  kelas            Kelas           @relation(fields: [kelasId], references: [id])
+  semesterAjaranId String
+  semesterAjaran   SemesterAjaran  @relation(fields: [semesterAjaranId], references: [id])
+  // ? meta data
+  updatedAt        DateTime        @default(now())
+  createdAt        DateTime        @default(now())
+  createdById      String?
+  createdBy        Akun?           @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById   String?
+  lastUpdateBy     Akun?           @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  siswaTerabsen    AbsensiXSiswa[]
+
+  @@schema("public")
+}
+
 // ? ======
 
 // ? RELATIONS
@@ -337,6 +376,19 @@ model SiswaPerEkstrakulikulerDanSemester {
   ekstrakulikuler   Ekstrakulikuler @relation(fields: [ekstrakulikulerId], references: [id])
   semesterAjaranId  String
   semesterAjaran    SemesterAjaran  @relation(fields: [semesterAjaranId], references: [id])
+
+  @@schema("public")
+}
+
+model AbsensiXSiswa {
+  id        Int         @id @default(autoincrement())
+  // ? credentials
+  absensiId String
+  absensi   Absensi     @relation(fields: [absensiId], references: [id])
+  siswaId   String
+  siswa     Akun        @relation(fields: [siswaId], references: [id])
+  // ? general
+  tipe      TipeAbsensi @default(UNKNOWN)
 
   @@schema("public")
 }

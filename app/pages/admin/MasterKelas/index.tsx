@@ -11,12 +11,14 @@ import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import { usePopup } from '~/hooks/usePopup'
-import { Kelas, SemesterAjaranUrutan } from '@prisma/client'
+import { Kelas } from '@prisma/client'
 import { Fragment } from 'react/jsx-runtime'
 import { ReactNode, useEffect } from 'react'
 import { ActionDataAdminMasterKelasDelete } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
 import { PiStudent } from 'react-icons/pi'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
+import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'admin-master-kelas'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -194,7 +196,7 @@ export default function AdminMasterKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getManageIcon()}
                         color='success'
-                        label={'Jadwal Semester 1'}
+                        label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)}`}
                         buttonProps={{ disabled: !!row.deletedAt }}
                       />
                     </Link>
@@ -204,7 +206,7 @@ export default function AdminMasterKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getManageIcon()}
                         color='success'
-                        label={'Jadwal Semester 2'}
+                        label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)}`}
                         buttonProps={{ disabled: !!row.deletedAt }}
                       />
                     </Link>

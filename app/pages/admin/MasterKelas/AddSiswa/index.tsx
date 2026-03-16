@@ -20,6 +20,7 @@ import { BiImport } from 'react-icons/bi'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import { AdminMasterKelasAddSiswaFormType, emptyValues, resolver } from './form'
 import AppNav from '~/navigation'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 const sectionPrefix = 'admin-master-kelas-add-siswa'
 const formId = `${sectionPrefix}-form`
@@ -202,12 +203,12 @@ export default function AdminMasterKelasAddSiswaPage() {
               <div className='grow'></div>
               <div className='flex flex-row gap-4'>
                 <Button
-                  label='Import Smt 1'
+                  label={`Smt ${EnumsTitleUtils.getSemesterAjaranUrutan(SemesterAjaranUrutan.SATU)}`}
                   startIcon={<BiImport />}
                   buttonProps={{ onClick: () => semester1ImportExcelInputRef.current?.click() }}
                 />
                 <Button
-                  label='Import Smt 2'
+                  label={`Smt ${EnumsTitleUtils.getSemesterAjaranUrutan(SemesterAjaranUrutan.DUA)}`}
                   startIcon={<BiImport />}
                   buttonProps={{ onClick: () => semester2ImportExcelInputRef.current?.click() }}
                 />
@@ -268,7 +269,7 @@ export default function AdminMasterKelasAddSiswaPage() {
                       }}
                     />
                     <Checkbox
-                      label='Smt 1'
+                      label={`Smt ${EnumsTitleUtils.getSemesterAjaranUrutan(SemesterAjaranUrutan.SATU)}`}
                       labelPosition='right'
                       inputProps={{
                         id: `${sectionPrefix}-cb-sem1-${row.id}`,
@@ -287,7 +288,7 @@ export default function AdminMasterKelasAddSiswaPage() {
                       }}
                     />
                     <Checkbox
-                      label='Smt 2'
+                      label={`Smt ${EnumsTitleUtils.getSemesterAjaranUrutan(SemesterAjaranUrutan.DUA)}`}
                       labelPosition='right'
                       inputProps={{
                         id: `${sectionPrefix}-cb-sem2-${row.id}`,

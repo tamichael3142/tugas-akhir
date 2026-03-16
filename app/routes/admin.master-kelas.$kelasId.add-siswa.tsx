@@ -122,7 +122,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           }
         }
 
-        // Create data yang belum ada di semester 1
+        // Create data yang belum ada di semester SATU
         for (const siswaId of data.semester1Ids) {
           const exists = existing.find(
             e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU,
@@ -134,7 +134,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           }
         }
 
-        // Create data yang belum ada di semester 2
+        // Create data yang belum ada di semester DUA
         for (const siswaId of data.semester2Ids) {
           const exists = existing.find(
             e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.DUA,

@@ -30,9 +30,11 @@ export default function Tabs(props: TabsProps) {
               type='button'
               className={classNames('py-2 px-4 cursor-pointer font-semibold select-none duration-100', {
                 ['bg-primary hover:bg-primary/90 text-white']: isActive,
-                ['hover:bg-primary/90 hover:text-white']: !isActive,
+                ['hover:bg-primary/90 hover:text-white']: !isActive && !item.disabled,
+                ['!cursor-not-allowed']: item.disabled,
               })}
               onClick={() => props.onTabClick?.(item.key)}
+              disabled={item.disabled}
             >
               {item.label}
             </button>

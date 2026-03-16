@@ -29,10 +29,11 @@ export default function StaticSelect(props: StaticSelectProps) {
         className={classNames('border-2 border-gray-300 rounded-lg px-3 py-2 flex flex-row items-center', {
           ['mt-1']: typeof props.label === 'string',
           ['border-primary']: isFocused,
+          ['bg-gray-300 text-gray-600 cursor-not-allowed']: selectProps.disabled,
         })}
       >
         <select
-          className={classNames('outline-0 grow', className)}
+          className={classNames('outline-0 grow', { ['cursor-not-allowed']: selectProps.disabled }, className)}
           onFocus={e => {
             setIsFocused(true)
             if (onFocus) onFocus(e)

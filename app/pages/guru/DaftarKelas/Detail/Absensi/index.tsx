@@ -1,23 +1,22 @@
-import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
-import { LoaderDataGuruDaftarKelasDetailDaftarSiswa } from '~/types/loaders-data/guru'
+import { LoaderDataGuruDaftarKelasDetailAbsensiList } from '~/types/loaders-data/guru'
 import GuruDaftarKelasDetailTab, { TabKey } from '../_components/Tab'
-import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
-import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
-import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
-import AppNav from '~/navigation'
 import { Kelas } from '@prisma/client'
+import constants from '~/constants'
+import * as dateFns from 'date-fns'
+import AppNav from '~/navigation'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
-const sectionPrefix = 'guru-daftar-kelas-detail-daftar-siswa'
+const sectionPrefix = 'guru-daftar-kelas-detail-absensi-list'
 
-export default function GuruDaftarKelasDetailDaftarSiswaPage() {
+export default function GuruDaftarKelasDetailAbsensiListPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailDaftarSiswa>()
+  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailAbsensiList>()
   const revalidator = useRevalidator()
 
   const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
@@ -50,16 +49,24 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, activeSemester])
 
-  const resetDaftarSiswaView = () => {
+  const resetAbsensiListView = () => {
     const semesterAjaranId = new Date().getMonth() <= 5 ? semester2?.id : semester1?.id
     handlePageChange({ newPage: 1, semesterAjaranId })
     setActiveSemester(new Date().getMonth() <= 5 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU)
     setSearchText(searchParams.get('search') ?? '')
   }
+  console.log(loader.todayAbsensi)
+  const absenHariIniButtonClick = useCallback(() => {
+    const semesterAjaranId = searchParams.get('semesterAjaranId')
+    if (loader.todayAbsensi) navigate(AppNav.guru.manageAbsensiEdit({ absensiId: loader.todayAbsensi.id }))
+    else if (semesterAjaranId)
+      navigate(AppNav.guruAction.daftarKelasDetailAbsensiCreate({ kelasId: loader.kelas?.id ?? '', semesterAjaranId }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, loader.todayAbsensi])
 
   useEffect(() => {
     if (semester1 && semester2 && !hasSetedup) {
-      window.setTimeout(resetDaftarSiswaView, 400)
+      window.setTimeout(resetAbsensiListView, 400)
       setHasSetedup(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +75,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.DAFTAR_SISWA} />
+      <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.ABSENSI} />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
@@ -98,41 +105,41 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari siswa...',
+                placeholder: 'Cari...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
+              }}
+            />
+            <Button
+              label={'Absensi Hari Ini'}
+              color='primary'
+              buttonProps={{
+                disabled: !searchParams.get('semesterAjaranId'),
+                onClick: absenHariIniButtonClick,
               }}
             />
           </div>
         }
         columns={[
-          { field: 'username', label: 'Username', render: row => row.siswa?.username },
-          { field: 'firstName', label: 'Nama Depan', render: row => row.siswa?.firstName },
-          { field: 'lastName', label: 'Nama Belakang', render: row => row.siswa?.lastName },
-          { field: 'email', label: 'Email', render: row => row.siswa?.email },
+          { field: 'tanggalText', label: 'Tanggal', render: row => row.tanggalText },
+          { field: 'label', label: 'Label', render: row => row.label },
           {
-            field: 'actions',
-            label: 'Aksi',
-            render: row => (
-              <DataGridActionButtonWrapper>
-                <Link to={AppNav.admin.masterMataPelajaranEdit({ id: row.kelasId })}>
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                    // buttonProps={{ disabled: !!row.deletedAt }}
-                  />
-                </Link>
-              </DataGridActionButtonWrapper>
-            ),
+            field: 'createdAt',
+            label: 'Created At',
+            render: row => dateFns.format(row.createdAt, constants.dateFormats.dateColumn),
+          },
+          {
+            field: 'updatedAt',
+            label: 'Updated At',
+            render: row => dateFns.format(row.updatedAt, constants.dateFormats.dateColumn),
           },
         ]}
-        rows={loader.siswaPerKelasPerSemesters.data}
+        rows={loader.absensis.data}
         pagination={{
-          page: loader.siswaPerKelasPerSemesters.pagination.page,
-          pageSize: loader.siswaPerKelasPerSemesters.pagination.limit,
-          total: loader.siswaPerKelasPerSemesters.pagination.total,
-          totalPages: loader.siswaPerKelasPerSemesters.pagination.totalPages,
+          page: loader.absensis.pagination.page,
+          pageSize: loader.absensis.pagination.limit,
+          total: loader.absensis.pagination.total,
+          totalPages: loader.absensis.pagination.totalPages,
           onPageChange: newPage => handlePageChange({ newPage }),
         }}
         className='border-none'
