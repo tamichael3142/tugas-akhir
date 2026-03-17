@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Absensi, AbsensiXSiswa } from '@prisma/client'
+import { AbsensiXSiswa, Akun, SiswaPerKelasDanSemester } from '@prisma/client'
 import * as z from 'zod'
 import { TipeAbsensi } from '~/database/enums/prisma.enums'
 
@@ -21,14 +21,33 @@ export const emptyUserValue: GuruManageAbsensiMutateFormType = {
   siswaTerabsen: [],
 }
 
-export function translateRawToFormData(
-  data: Absensi & { siswaTerabsen: AbsensiXSiswa[] },
-): GuruManageAbsensiMutateFormType {
+export function translateRawToFormData(data: {
+  siswaTerabsen: AbsensiXSiswa[]
+  siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+}): GuruManageAbsensiMutateFormType {
+  const results: GuruManageAbsensiMutateFormType['siswaTerabsen'] = []
+
+  for (let i = 0; i < data.siswaPerKelasPerSemesters.length; i++) {
+    const siswaPerKelas = data.siswaPerKelasPerSemesters[i]
+    const existingTerabsen = data.siswaTerabsen.find(item => item.siswaId === siswaPerKelas.siswaId)
+    if (existingTerabsen) {
+      // * Sudah ada data di BE
+      results.push({
+        id: String(existingTerabsen.id),
+        siswaId: existingTerabsen.siswaId,
+        tipe: existingTerabsen.tipe as TipeAbsensi,
+      })
+    } else {
+      // * Belum ada data di BE
+      results.push({
+        id: null,
+        siswaId: siswaPerKelas.siswaId,
+        tipe: TipeAbsensi.UNKNOWN,
+      })
+    }
+  }
+
   return {
-    siswaTerabsen: data.siswaTerabsen.map(item => ({
-      id: String(item.id),
-      siswaId: item.siswaId,
-      tipe: item.tipe as TipeAbsensi,
-    })),
+    siswaTerabsen: results,
   }
 }

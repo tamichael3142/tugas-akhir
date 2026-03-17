@@ -60,7 +60,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
 
     if (!kelasId || !semesterAjaranId)
       throw {
-        code: 401,
+        code: 404,
         message: 'Kelas dan/atau Semester Ajaran tidak ditemukan!',
       }
 

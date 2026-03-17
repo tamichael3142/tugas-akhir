@@ -74,7 +74,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <Card className='!p-0 mt-4 lg:mt-8'>
+    <Card className='p-0! mt-4 lg:mt-8'>
       <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.ABSENSI} />
 
       <DataGrid

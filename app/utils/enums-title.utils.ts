@@ -1,4 +1,11 @@
-import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role, SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
+import {
+  GolonganDarah,
+  JenisKelamin,
+  Kewarganegaraan,
+  Role,
+  SemesterAjaranUrutan,
+  TipeAbsensi,
+} from '~/database/enums/prisma.enums'
 
 function getRole(value: Role) {
   switch (value) {
@@ -69,6 +76,28 @@ function getSemesterAjaranUrutan(value: SemesterAjaranUrutan) {
   }
 }
 
-const EnumsTitleUtils = { getRole, getJenisKelamin, getGolonganDarah, getKewarganegaraan, getSemesterAjaranUrutan }
+function getTipeAbsensi(value: TipeAbsensi) {
+  switch (value) {
+    case TipeAbsensi.HADIR:
+      return 'Hadir'
+    case TipeAbsensi.IZIN:
+      return 'Izin'
+    case TipeAbsensi.SAKIT:
+      return 'Sakit'
+    case TipeAbsensi.TANPA_KETERANGAN:
+      return 'Tanpa Keterangan'
+    default:
+      return '-'
+  }
+}
+
+const EnumsTitleUtils = {
+  getRole,
+  getJenisKelamin,
+  getGolonganDarah,
+  getKewarganegaraan,
+  getSemesterAjaranUrutan,
+  getTipeAbsensi,
+}
 
 export default EnumsTitleUtils

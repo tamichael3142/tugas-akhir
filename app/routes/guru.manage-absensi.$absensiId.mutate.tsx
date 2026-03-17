@@ -3,9 +3,9 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
 import constants from '~/constants'
-import { GuruManageAbsensiEditFormType } from '~/pages/guru/ManageAbsensi/form-types'
-import { resolver } from '~/pages/guru/ManageAbsensi/Edit/form'
-import { ActionDataGuruManageAbsensiEdit } from '~/types/actions-data/guru'
+import { GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
+import { resolver } from '~/pages/guru/ManageAbsensi/Mutate/form'
+import { ActionDataGuruManageAbsensiMutate } from '~/types/actions-data/guru'
 import { LoaderDataGuruManageAbsensiMutate } from '~/types/loaders-data/guru'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
@@ -31,18 +31,16 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
     },
     where: {
       kelasId: absensi?.kelasId ?? '',
-      // semesterAjaranId: absensi?.semesterAjaranId ?? '',
+      semesterAjaranId: absensi?.semesterAjaranId ?? '',
     },
     orderBy: [{ siswa: { firstName: 'asc' } }],
   })
 
-  console.log(siswaPerKelasPerSemesters)
-
   return { absensi, siswaPerKelasPerSemesters } as LoaderDataGuruManageAbsensiMutate
 }
 
-export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruManageAbsensiEdit> {
-  const { errors, data } = await getValidatedFormData<GuruManageAbsensiEditFormType>(request, resolver)
+export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruManageAbsensiMutate> {
+  const { errors, data } = await getValidatedFormData<GuruManageAbsensiMutateFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -54,23 +52,61 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const absensiId = params.absensiId as Absensi['id'] | null
 
-    return await prisma.absensi
-      .update({
-        where: { id: absensiId ?? '' },
-        data: {
-          label: data.label,
-          remarks: data.remarks,
-          updatedAt: new Date(),
-          lastUpdateById: currUser?.id,
-        },
+    if (!absensiId)
+      throw {
+        code: 404,
+        message: 'Absensi tidak ditemukan!',
+      }
+
+    return await prisma
+      .$transaction(async tx => {
+        for (const row of data.siswaTerabsen) {
+          // 1. DELETE jika siswaId null & id ada
+          if (!row.siswaId && row.id) {
+            await tx.absensiXSiswa.delete({
+              where: { id: Number(row.id) },
+            })
+            continue
+          }
+
+          // 2. SKIP jika siswaId null & id null
+          if (!row.siswaId && !row.id) {
+            continue
+          }
+
+          // 3. UPDATE jika id ada
+          if (row.id) {
+            await tx.absensiXSiswa.update({
+              where: { id: Number(row.id) },
+              data: {
+                absensiId,
+                siswaId: row.siswaId ?? '',
+                tipe: row.tipe,
+              },
+            })
+            continue
+          }
+
+          // 4. CREATE jika id null & siswaId ada
+          await tx.absensiXSiswa.create({
+            data: {
+              absensiId,
+              siswaId: row.siswaId ?? '',
+              tipe: row.tipe,
+            },
+          })
+
+          await tx.absensi.update({
+            where: { id: absensiId },
+            data: { lastUpdateById: currUser?.id, updatedAt: new Date() },
+          })
+        }
       })
-      .then(result => {
+      .then(() => {
         return {
           success: true,
           message: 'Absensi berhasil diupdate!',
-          data: {
-            updatedAbsensi: result,
-          },
+          data: {},
         }
       })
       .catch(error => {

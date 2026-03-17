@@ -4,7 +4,16 @@ import StaticSelect, { StaticSelectProps } from './StaticSelect'
 import DataSelect, { DataSelectProps } from './DataSelect'
 import Checkbox, { CheckboxProps } from './Checkbox'
 import TextAreaInput, { TextAreaInputProps } from './TextAreaInput'
+import Radio, { RadioProps } from './Radio'
 
-export { TextInput, Button, StaticSelect, DataSelect, Checkbox, TextAreaInput }
+export { TextInput, Button, StaticSelect, DataSelect, Checkbox, TextAreaInput, Radio }
 
-export type { TextInputProps, ButtonProps, StaticSelectProps, DataSelectProps, CheckboxProps, TextAreaInputProps }
+export type {
+  TextInputProps,
+  ButtonProps,
+  StaticSelectProps,
+  DataSelectProps,
+  CheckboxProps,
+  TextAreaInputProps,
+  RadioProps,
+}

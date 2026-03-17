@@ -25,6 +25,7 @@ export default function Button(props: ButtonProps) {
         'disabled:cursor-not-allowed',
         {
           ['px-4 py-2 duration-200']: size === 'md',
+          ['px-2 py-1 duration-200']: size === 'sm',
           ['bg-primary text-white hover:opacity-80']: color === 'primary' && variant === 'contained',
           ['bg-secondary text-white hover:opacity-80']: color === 'secondary' && variant === 'contained',
           ['bg-red-500 text-white hover:opacity-80']: color === 'danger' && variant === 'contained',
