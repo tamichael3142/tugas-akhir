@@ -62,6 +62,22 @@ enum TipeAbsensi {
   @@schema("public")
 }
 
+enum AssignmentSubmissionType {
+  LONG_TEXT
+  FILE_UPLOAD
+  TIME_STAMP
+
+  @@schema("public")
+}
+
+enum AssignmentSubmissionStatus {
+  ASSIGNED
+  ON_PROGRESS
+  SUBMITTED
+
+  @@schema("public")
+}
+
 // ? =====
 
 // ? TABLES
@@ -111,6 +127,8 @@ model Akun {
   pengumumanUpdator                  Pengumuman[]                         @relation(name: "lastUpdateBy")
   absensiCreator                     Absensi[]                            @relation(name: "createdBy")
   absensiUpdator                     Absensi[]                            @relation(name: "lastUpdateBy")
+  assignmentCreator                  Assignment[]                         @relation(name: "createdBy")
+  assignmentUpdator                  Assignment[]                         @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   waliKelas                          Kelas[]                              @relation(name: "wali")
@@ -118,6 +136,7 @@ model Akun {
   pengajarEkstrakulikuler            Ekstrakulikuler[]                    @relation(name: "pengajar")
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
   absensiSiswaPerKelas               AbsensiXSiswa[]
+  assignmentSubmissions              AssignmentSubmission[]
 
   @@schema("public")
 }
@@ -261,6 +280,7 @@ model MataPelajaran {
   lastUpdateBy     Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   jadwalPelajarans JadwalPelajaran[]
+  assignments      Assignment[]
 
   @@schema("public")
 }
@@ -332,6 +352,31 @@ model Absensi {
   @@schema("public")
 }
 
+model Assignment {
+  id              String                   @id @default(cuid())
+  // ? general
+  title           String
+  description     String?
+  tanggalMulai    DateTime
+  tanggalBerakhir DateTime
+  isSubmitable    Boolean                  @default(false)
+  submissionType  AssignmentSubmissionType @default(FILE_UPLOAD)
+  // ? credentials
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran            @relation(fields: [mataPelajaranId], references: [id])
+  // ? meta data
+  updatedAt       DateTime                 @default(now())
+  createdAt       DateTime                 @default(now())
+  createdById     String?
+  createdBy       Akun?                    @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById  String?
+  lastUpdateBy    Akun?                    @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? relations
+  submissions     AssignmentSubmission[]
+
+  @@schema("public")
+}
+
 // ? ======
 
 // ? RELATIONS
@@ -389,6 +434,27 @@ model AbsensiXSiswa {
   siswa     Akun        @relation(fields: [siswaId], references: [id])
   // ? general
   tipe      TipeAbsensi @default(UNKNOWN)
+
+  @@schema("public")
+}
+
+model AssignmentSubmission {
+  id               Int                        @id @default(autoincrement())
+  // ? credentials
+  assignmentId     String
+  assignment       Assignment                 @relation(fields: [assignmentId], references: [id])
+  siswaId          String
+  siswa            Akun                       @relation(fields: [siswaId], references: [id])
+  // ? general
+  submissionStatus AssignmentSubmissionStatus @default(ASSIGNED)
+  answer           String?
+  fileDownloadUrl  String?
+  fileObjectPath   String?
+  remarksSiswa     String?
+  remarksGuru      String?
+  // ? meta data
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @default(now())
 
   @@schema("public")
 }

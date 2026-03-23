@@ -2,7 +2,7 @@ import { LinkProps, useNavigate } from '@remix-run/react'
 import classNames from 'classnames'
 import { ReactNode } from 'react'
 import { IoCaretBackOutline } from 'react-icons/io5'
-import { Button } from '~/components/forms'
+import { Button, ButtonProps } from '~/components/forms'
 
 export type BackButtonProps = {
   id?: string
@@ -10,6 +10,7 @@ export type BackButtonProps = {
   icon?: ReactNode
   to?: LinkProps['to']
   className?: string
+  buttonProps?: ButtonProps
 }
 
 export default function BackButton(props: BackButtonProps) {
@@ -29,6 +30,7 @@ export default function BackButton(props: BackButtonProps) {
           else navigate(-1)
         },
       }}
+      {...props.buttonProps}
     />
   )
 }

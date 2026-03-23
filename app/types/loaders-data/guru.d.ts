@@ -11,6 +11,7 @@ import {
   SemesterAjaran,
   SiswaPerKelasDanSemester,
   TahunAjaran,
+  Assignment,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
@@ -68,6 +69,39 @@ export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
 
 export type LoaderDataGuruDaftarKelasDetailAbsensiCreate = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+}
+
+/**
+ * * Manage Mata Pelajaran
+ */
+export type LoaderDataGuruManageMataPelajaranDetail = {
+  mataPelajaran: MataPelajaran & {
+    guru: Akun | null
+    semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
+  }
+}
+
+export type LoaderDataGuruManageMataPelajaranDetailAssignment = {
+  mataPelajaran: MataPelajaran & {
+    guru: Akun | null
+    semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
+  }
+  assignments: PaginationReturns<Assignment>
+}
+
+export type LoaderDataGuruManageMataPelajaranDetailAssignmentCreate = {
+  mataPelajaran: MataPelajaran & {
+    guru: Akun | null
+    semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
+  }
+}
+
+export type LoaderDataGuruManageMataPelajaranDetailAssignmentEdit = {
+  mataPelajaran: MataPelajaran & {
+    guru: Akun | null
+    semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
+  }
+  assignment: Assignment
 }
 
 /**

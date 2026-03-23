@@ -32,9 +32,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const sheetName = workbook.SheetNames[0]
   const worksheet = workbook.Sheets[sheetName]
   const jsonDataRaw = XLSX.utils.sheet_to_json(worksheet)
-  console.log('jsonDataRaw', jsonDataRaw)
-  console.log('kelasId', kelasId)
-  console.log('semesterAjaranId', semesterAjaranId)
+
   const newSiswaIds: Akun['id'][] = []
 
   for (let i = 0; i < jsonDataRaw.length; i++) {
@@ -52,7 +50,6 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
       for (const siswaId of newSiswaIds) {
         const exists = existing.find(e => e.siswaId === siswaId)
-        console.log({ kelasId: kelasId, siswaId, semesterAjaranId: semesterAjaranId })
         if (!exists) {
           await tx.siswaPerKelasDanSemester.create({
             data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterAjaranId },

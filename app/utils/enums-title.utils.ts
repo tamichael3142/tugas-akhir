@@ -1,4 +1,6 @@
 import {
+  AssignmentSubmissionStatus,
+  AssignmentSubmissionType,
   GolonganDarah,
   JenisKelamin,
   Kewarganegaraan,
@@ -91,6 +93,32 @@ function getTipeAbsensi(value: TipeAbsensi) {
   }
 }
 
+function getAssignmentSubmissionType(value: AssignmentSubmissionType) {
+  switch (value) {
+    case AssignmentSubmissionType.LONG_TEXT:
+      return 'Long Text'
+    case AssignmentSubmissionType.FILE_UPLOAD:
+      return 'File Upload'
+    case AssignmentSubmissionType.TIME_STAMP:
+      return 'Timestamp'
+    default:
+      return '-'
+  }
+}
+
+function getAssignmentSubmissionStatus(value: AssignmentSubmissionStatus) {
+  switch (value) {
+    case AssignmentSubmissionStatus.ASSIGNED:
+      return 'Assigned'
+    case AssignmentSubmissionStatus.ON_PROGRESS:
+      return 'On Progress'
+    case AssignmentSubmissionStatus.SUBMITTED:
+      return 'Submitted'
+    default:
+      return '-'
+  }
+}
+
 const EnumsTitleUtils = {
   getRole,
   getJenisKelamin,
@@ -98,6 +126,8 @@ const EnumsTitleUtils = {
   getKewarganegaraan,
   getSemesterAjaranUrutan,
   getTipeAbsensi,
+  getAssignmentSubmissionType,
+  getAssignmentSubmissionStatus,
 }
 
 export default EnumsTitleUtils

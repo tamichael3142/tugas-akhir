@@ -34,11 +34,12 @@ export default function Button(props: ButtonProps) {
           ['border-1 border-secondary text-secondary hover:bg-secondary/10']:
             color === 'secondary' && variant === 'outlined',
           ['border-1 border-red-500 text-red-500 hover:bg-red-500/10']: color === 'danger' && variant === 'outlined',
-          ['disabled:border-gray-400 disabled:opacity-80']: variant === 'outlined',
+          ['disabled:border-gray-400 disabled:bg-gray-300 disabled:text-gray-400 disabled:opacity-80']:
+            variant === 'outlined',
           ['text-primary hover:bg-primary/10']: color === 'primary' && variant === 'text',
           ['text-secondary hover:bg-secondary/10']: color === 'secondary' && variant === 'text',
           ['text-red-500 hover:bg-red-500/10']: color === 'danger' && variant === 'text',
-          ['disabled:bg-gray-400']: variant === 'text',
+          ['disabled:bg-gray-400 disabled:text-gray-300 disabled:opacity-80']: variant === 'text',
         },
         props.className,
         className,

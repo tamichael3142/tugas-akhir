@@ -37,3 +37,15 @@ export enum TipeAbsensi {
   SAKIT = 'SAKIT',
   TANPA_KETERANGAN = 'TANPA_KETERANGAN',
 }
+
+export enum AssignmentSubmissionType {
+  LONG_TEXT = 'LONG_TEXT',
+  FILE_UPLOAD = 'FILE_UPLOAD',
+  TIME_STAMP = 'TIME_STAMP',
+}
+
+export enum AssignmentSubmissionStatus {
+  ASSIGNED = 'ASSIGNED',
+  ON_PROGRESS = 'ON_PROGRESS',
+  SUBMITTED = 'SUBMITTED',
+}

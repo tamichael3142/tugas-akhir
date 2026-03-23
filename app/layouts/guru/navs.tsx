@@ -3,7 +3,7 @@ import { SidebarItemProps } from '../types'
 
 import { MdDashboard, MdOutlineEmojiPeople, MdSchedule, MdSportsSoccer } from 'react-icons/md'
 // import { PiStudent } from 'react-icons/pi'
-import { IoBookSharp } from 'react-icons/io5'
+// import { IoBookSharp } from 'react-icons/io5'
 import { GrAnnounce } from 'react-icons/gr'
 import { FaBook } from 'react-icons/fa'
 import { FaPeopleRoof } from 'react-icons/fa6'
@@ -13,7 +13,7 @@ export const guruNavs: SidebarItemProps[] = [
   { icon: <MdSchedule />, label: 'Jadwal Mengajar', href: AppNav.guru.jadwalMengajar({}) },
   { icon: <FaPeopleRoof />, label: 'Daftar Kelas', href: AppNav.guru.daftarKelas() },
   // { icon: <PiStudent />, label: 'Absensi Siswa', href: AppNav.guru.absensiSiswa() },
-  { icon: <IoBookSharp />, label: 'Manage Mata Pelajaran', href: AppNav.guru.manageMataPelajaran() },
+  // { icon: <IoBookSharp />, label: 'Manage Mata Pelajaran', href: AppNav.guru.manageMataPelajaran() },
   { icon: <MdSportsSoccer />, label: 'Manage Ekstrakulikuler', href: AppNav.guru.manageEkstrakulikuler() },
   { icon: <FaBook />, label: 'Manage Berita Acara', href: AppNav.guru.manageBeritaAcara() },
   { icon: <GrAnnounce />, label: 'Master Pengumuman', href: AppNav.guru.masterPengumuman() },

@@ -72,7 +72,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     })
   }
 
-  console.log('new Absensi', absensi)
   return redirect(AppNav.guru.manageAbsensiEdit({ absensiId: absensi.id }))
 }
 

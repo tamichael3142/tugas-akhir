@@ -1,7 +1,8 @@
-import { Pengumuman } from '@prisma/client'
+import { Assignment, Pengumuman } from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
 import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
+import { GuruManageMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/ManageMataPelajaran/Detail/Assignment/Create/form'
 
 /**
  * * Manage Absensi
@@ -19,6 +20,27 @@ export type ActionDataGuruManageAbsensiMutate = BaseActionData & {
   data: {
     // * Error
     oldFormData?: GuruManageAbsensiMutateFormType
+  }
+}
+
+/**
+ * * Manage Mata Pelajaran
+ */
+export type ActionDataGuruManageMataPelajaranDetailAssignmentCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdAssignment?: Assignment
+    // * Error
+    oldFormData?: GuruManageMataPelajaranDetailAssignmentCreateFormType
+  }
+}
+
+export type ActionDataGuruManageMataPelajaranDetailAssignmentEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedAssignment?: Assignment
+    // * Error
+    oldFormData?: GuruManageMataPelajaranDetailAssignmentCreateFormType
   }
 }
 

@@ -55,7 +55,6 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
     setActiveSemester(new Date().getMonth() <= 5 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU)
     setSearchText(searchParams.get('search') ?? '')
   }
-  console.log(loader.todayAbsensi)
   const absenHariIniButtonClick = useCallback(() => {
     const semesterAjaranId = searchParams.get('semesterAjaranId')
     if (loader.todayAbsensi) navigate(AppNav.guru.manageAbsensiEdit({ absensiId: loader.todayAbsensi.id }))

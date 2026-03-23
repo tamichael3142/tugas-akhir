@@ -1,4 +1,4 @@
-import { Absensi, Kelas, MataPelajaran, SemesterAjaran, TahunAjaran } from '@prisma/client'
+import { Absensi, Assignment, Kelas, MataPelajaran, SemesterAjaran, TahunAjaran } from '@prisma/client'
 
 const baseUrl = '/guru'
 
@@ -89,6 +89,36 @@ function manageMataPelajaranDetail({ mataPelajaranId }: { mataPelajaranId: MataP
   return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail`
 }
 
+function manageMataPelajaranDetailAssignment({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/assignment`
+}
+
+function manageMataPelajaranDetailAssignmentCreate({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/assignment-create`
+}
+
+function manageMataPelajaranDetailAssignmentEdit({
+  mataPelajaranId,
+  assignmentId,
+}: {
+  mataPelajaranId: MataPelajaran['id']
+  assignmentId: Assignment['id']
+}) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/assignment-edit/${assignmentId}`
+}
+
+function manageMataPelajaranDetailAttachment({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/attachment`
+}
+
+function manageMataPelajaranDetailNilai({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/nilai`
+}
+
+function manageMataPelajaranDetailPelanggaran({ mataPelajaranId }: { mataPelajaranId: MataPelajaran['id'] }) {
+  return `${baseUrl}${manageMataPelajaranUrl}/${mataPelajaranId}/detail/pelanggaran`
+}
+
 /*
  * Guru's manage ekstrakulikuler level routes
  */
@@ -162,6 +192,12 @@ const guru = {
   absensiSiswa,
   manageMataPelajaran,
   manageMataPelajaranDetail,
+  manageMataPelajaranDetailAssignment,
+  manageMataPelajaranDetailAssignmentCreate,
+  manageMataPelajaranDetailAssignmentEdit,
+  manageMataPelajaranDetailAttachment,
+  manageMataPelajaranDetailNilai,
+  manageMataPelajaranDetailPelanggaran,
   manageEkstrakulikuler,
   manageBeritaAcara,
   masterPengumuman,
