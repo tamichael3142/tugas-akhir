@@ -128,7 +128,12 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
             label: 'Aksi',
             render: row => (
               <DataGridActionButtonWrapper>
-                <Link to={AppNav.guru.manageMataPelajaranDetailAssignment({ mataPelajaranId: row.id })}>
+                <Link
+                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignment({
+                    kelasId: loader.kelas?.id ?? '',
+                    mataPelajaranId: row.id,
+                  })}
+                >
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getDetailIcon()}
                     color='info'

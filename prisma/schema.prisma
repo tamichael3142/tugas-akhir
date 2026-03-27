@@ -255,6 +255,7 @@ model Kelas {
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
   jadwalPelajarans         JadwalPelajaran[]
   absensis                 Absensi[]
+  assignments              Assignment[]
 
   @@schema("public")
 }
@@ -354,6 +355,11 @@ model Absensi {
 
 model Assignment {
   id              String                   @id @default(cuid())
+  // ? credentials
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran            @relation(fields: [mataPelajaranId], references: [id])
+  kelasId         String
+  kelas           Kelas                    @relation(fields: [kelasId], references: [id])
   // ? general
   title           String
   description     String?
@@ -361,9 +367,6 @@ model Assignment {
   tanggalBerakhir DateTime
   isSubmitable    Boolean                  @default(false)
   submissionType  AssignmentSubmissionType @default(FILE_UPLOAD)
-  // ? credentials
-  mataPelajaranId String
-  mataPelajaran   MataPelajaran            @relation(fields: [mataPelajaranId], references: [id])
   // ? meta data
   updatedAt       DateTime                 @default(now())
   createdAt       DateTime                 @default(now())
@@ -373,6 +376,16 @@ model Assignment {
   lastUpdateBy    Akun?                    @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   submissions     AssignmentSubmission[]
+
+  @@schema("public")
+}
+
+model Kompetensi {
+  id             String @id
+  // ? credentials
+  sequenceNumber Int    @default(autoincrement())
+  label          String
+  // ? relations
 
   @@schema("public")
 }

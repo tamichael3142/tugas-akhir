@@ -51,6 +51,50 @@ function daftarKelasDetailMataPelajaran({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mata-pelajaran`
 }
 
+function daftarKelasDetailMataPelajaranDetailAssignment({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/assignment`
+}
+
+function daftarKelasDetailMataPelajaranDetailAssignmentCreate({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/assignment-create`
+}
+
+function daftarKelasDetailMataPelajaranDetailAssignmentEdit({
+  kelasId,
+  mataPelajaranId,
+  assignmentId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  assignmentId: Assignment['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/assignment-edit/${assignmentId}`
+}
+
+function daftarKelasDetailMataPelajaranDetailAssignmentDetail({
+  kelasId,
+  mataPelajaranId,
+  assignmentId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  assignmentId: Assignment['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/assignment-detail/${assignmentId}`
+}
+
 function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/absensi`
 }
@@ -129,6 +173,15 @@ function manageEkstrakulikuler() {
 }
 
 /*
+ * Guru's manage assignment level routes
+ */
+const manageAssignmentUrl = '/manage-assignment'
+
+function manageAssignmentDetail({ assignmentId }: { assignmentId: Assignment['id'] }) {
+  return `${baseUrl}${manageAssignmentUrl}/${assignmentId}/detail`
+}
+
+/*
  * Guru's manage berita acara level routes
  */
 const manageBeritaAcaraUrl = '/manage-mata-pelajaran'
@@ -187,6 +240,10 @@ const guru = {
   daftarKelasDetail,
   daftarKelasDetailDaftarSiswa,
   daftarKelasDetailMataPelajaran,
+  daftarKelasDetailMataPelajaranDetailAssignment,
+  daftarKelasDetailMataPelajaranDetailAssignmentCreate,
+  daftarKelasDetailMataPelajaranDetailAssignmentEdit,
+  daftarKelasDetailMataPelajaranDetailAssignmentDetail,
   daftarKelasDetailAbsensiList,
   daftarKelasDetailAbsensiCreate,
   absensiSiswa,
@@ -199,6 +256,7 @@ const guru = {
   manageMataPelajaranDetailNilai,
   manageMataPelajaranDetailPelanggaran,
   manageEkstrakulikuler,
+  manageAssignmentDetail,
   manageBeritaAcara,
   masterPengumuman,
   masterPengumumanCreate,

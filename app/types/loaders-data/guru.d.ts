@@ -61,6 +61,27 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {
   mataPelajarans: PaginationReturns<MataPelajaran & { guru: Akun | null }>
 }
 
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetail = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  mataPelajaran: MataPelajaran & {
+    guru: Akun | null
+    semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
+  }
+}
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    assignments: PaginationReturns<Assignment>
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    assignment: Assignment
+  }
+
 export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
   todayAbsensi: Absensi | null

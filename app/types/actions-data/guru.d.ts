@@ -24,6 +24,27 @@ export type ActionDataGuruManageAbsensiMutate = BaseActionData & {
 }
 
 /**
+ * * Daftar Kelas
+ */
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdAssignment?: Assignment
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedAssignment?: Assignment
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType
+  }
+}
+
+/**
  * * Manage Mata Pelajaran
  */
 export type ActionDataGuruManageMataPelajaranDetailAssignmentCreate = BaseActionData & {
