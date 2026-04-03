@@ -24,11 +24,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
 
   const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
 
-  function handlePageChange({ newPage, semesterAjaranId }: { newPage: number; semesterAjaranId?: string }) {
+  function handlePageChange({ newPage, search }: { newPage: number; search?: string }) {
     const params = new URLSearchParams(searchParams)
     params.set('page', String(newPage))
-    if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
-    else params.delete('semesterAjaranId')
+    if (search) params.set('search', search)
+    else params.delete('search')
     navigate(`?${params.toString()}`, { replace: false })
   }
 
@@ -47,7 +47,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruManageMataPelajaranDetailTab mataPelajaran={loader.mataPelajaran} activeTabKey={TabKey.ASSIGNMENT} />
+      <GuruManageMataPelajaranDetailTab
+        kelas={loader.kelas}
+        mataPelajaran={loader.mataPelajaran}
+        activeTabKey={TabKey.ASSIGNMENT}
+      />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}

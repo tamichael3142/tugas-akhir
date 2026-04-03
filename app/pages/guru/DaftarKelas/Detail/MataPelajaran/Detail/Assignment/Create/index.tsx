@@ -2,7 +2,7 @@ import { useActionData, useFetcher, useLoaderData, useNavigate, useRevalidator }
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate } from '~/types/loaders-data/guru'
 import GuruManageMataPelajaranDetailTab, { TabKey } from '../../_components/Tab'
-import { ActionDataGuruManageMataPelajaranDetailAssignmentCreate } from '~/types/actions-data/guru'
+import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate } from '~/types/actions-data/guru'
 import { RemixFormProvider, useRemixForm } from 'remix-hook-form'
 import { emptyValues, resolver, GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from './form'
 import { useEffect } from 'react'
@@ -17,7 +17,7 @@ const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-assignment
 export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreatePage() {
   const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate>()
   const revalidator = useRevalidator()
-  const actionData = useActionData<ActionDataGuruManageMataPelajaranDetailAssignmentCreate>()
+  const actionData = useActionData<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate>()
   const navigate = useNavigate()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
 
@@ -57,7 +57,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruManageMataPelajaranDetailTab mataPelajaran={loader.mataPelajaran} activeTabKey={TabKey.ASSIGNMENT} />
+      <GuruManageMataPelajaranDetailTab
+        kelas={loader.kelas}
+        mataPelajaran={loader.mataPelajaran}
+        activeTabKey={TabKey.ASSIGNMENT}
+      />
 
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <div className='p-4 lg:px-8'>

@@ -1,4 +1,12 @@
-import { Absensi, Assignment, Kelas, MataPelajaran, SemesterAjaran, TahunAjaran } from '@prisma/client'
+import {
+  Absensi,
+  Assignment,
+  Kelas,
+  MataPelajaran,
+  MataPelajaranAttachment,
+  SemesterAjaran,
+  TahunAjaran,
+} from '@prisma/client'
 
 const baseUrl = '/guru'
 
@@ -47,10 +55,16 @@ function daftarKelasDetailDaftarSiswa({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa`
 }
 
+/*
+ * Guru's daftar kelas detail mata pelajaran level routes
+ */
 function daftarKelasDetailMataPelajaran({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mata-pelajaran`
 }
 
+/*
+ * Guru's daftar kelas detail mata pelajaran detail assignment level routes
+ */
 function daftarKelasDetailMataPelajaranDetailAssignment({
   kelasId,
   mataPelajaranId,
@@ -93,6 +107,53 @@ function daftarKelasDetailMataPelajaranDetailAssignmentDetail({
   assignmentId: Assignment['id']
 }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/assignment-detail/${assignmentId}`
+}
+
+/*
+ * Guru's daftar kelas detail mata pelajaran detail attachment level routes
+ */
+function daftarKelasDetailMataPelajaranDetailAttachment({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment`
+}
+
+function daftarKelasDetailMataPelajaranDetailAttachmentCreate({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment-create`
+}
+
+function daftarKelasDetailMataPelajaranDetailAttachmentEdit({
+  kelasId,
+  mataPelajaranId,
+  attachmentId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  attachmentId: MataPelajaranAttachment['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment-edit/${attachmentId}`
+}
+
+function daftarKelasDetailMataPelajaranDetailAttachmentDetail({
+  kelasId,
+  mataPelajaranId,
+  attachmentId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  attachmentId: MataPelajaranAttachment['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment-detail/${attachmentId}`
 }
 
 function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {
@@ -244,6 +305,10 @@ const guru = {
   daftarKelasDetailMataPelajaranDetailAssignmentCreate,
   daftarKelasDetailMataPelajaranDetailAssignmentEdit,
   daftarKelasDetailMataPelajaranDetailAssignmentDetail,
+  daftarKelasDetailMataPelajaranDetailAttachment,
+  daftarKelasDetailMataPelajaranDetailAttachmentCreate,
+  daftarKelasDetailMataPelajaranDetailAttachmentEdit,
+  daftarKelasDetailMataPelajaranDetailAttachmentDetail,
   daftarKelasDetailAbsensiList,
   daftarKelasDetailAbsensiCreate,
   absensiSiswa,

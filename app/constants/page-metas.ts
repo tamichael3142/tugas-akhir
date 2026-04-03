@@ -66,6 +66,14 @@ const pageMetas = {
     { title: `Manage Mata Pelajaran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruManageAssignment: [
+    { title: `Manage Tugas - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruManageAttachment: [
+    { title: `Manage Lampiran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   guruMasterPengumuman: [
     { title: `Master Pengumuman - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },

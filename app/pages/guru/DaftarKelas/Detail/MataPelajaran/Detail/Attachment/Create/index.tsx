@@ -1,0 +1,72 @@
+import { useFetcher, useLoaderData, useNavigate, useRevalidator } from '@remix-run/react'
+import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
+import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate } from '~/types/loaders-data/guru'
+import GuruManageMataPelajaranDetailTab, { TabKey } from '../../_components/Tab'
+import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate } from '~/types/actions-data/guru'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
+import AppNav from '~/navigation'
+import { Button } from '~/components/forms'
+import { FaSave } from 'react-icons/fa'
+import AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent from '../form-component'
+
+const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-attachment-create'
+
+export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreatePage() {
+  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate>()
+  const revalidator = useRevalidator()
+  const navigate = useNavigate()
+  const fetcher = useFetcher<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate>({
+    key: `${sectionPrefix}-form`,
+  })
+
+  useEffect(() => {
+    if (fetcher.state === 'idle' && fetcher.data?.success) {
+      toast.success(fetcher.data.message ?? '')
+      navigate(
+        AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachment({
+          kelasId: loader.kelas?.id ?? '',
+          mataPelajaranId: loader.mataPelajaran.id,
+        }),
+      )
+    } else if (fetcher.data?.error) {
+      toast.error(fetcher.data.message ?? '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetcher.state, fetcher.data])
+
+  if (revalidator.state === 'loading') return <LoadingFullScreen />
+  return (
+    <Card className='!p-0 mt-4 lg:mt-8'>
+      <GuruManageMataPelajaranDetailTab
+        kelas={loader.kelas}
+        mataPelajaran={loader.mataPelajaran}
+        activeTabKey={TabKey.ATTACHMENT}
+      />
+
+      <fetcher.Form method='post' encType='multipart/form-data'>
+        <div className='p-4 lg:px-8'>
+          <div className='flex flex-row items-center gap-4'>
+            <h2 className='font-semibold text-xl'>Buat Lampiran</h2>
+            <div className='grow' />
+            <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'secondary' }} />
+          </div>
+          <hr className='my-4' />
+
+          <AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent />
+          <hr className='my-8' />
+          <div className='flex flex-row items-center justify-end gap-4'>
+            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ type: 'reset' }} />
+            <Button
+              variant='contained'
+              color='primary'
+              startIcon={<FaSave />}
+              label='Simpan'
+              buttonProps={{ type: 'submit' }}
+            />
+          </div>
+        </div>
+      </fetcher.Form>
+    </Card>
+  )
+}

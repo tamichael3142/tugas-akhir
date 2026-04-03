@@ -129,6 +129,8 @@ model Akun {
   absensiUpdator                     Absensi[]                            @relation(name: "lastUpdateBy")
   assignmentCreator                  Assignment[]                         @relation(name: "createdBy")
   assignmentUpdator                  Assignment[]                         @relation(name: "lastUpdateBy")
+  mataPelajaranAttachmentCreator     MataPelajaranAttachment[]            @relation(name: "createdBy")
+  mataPelajaranAttachmentUpdator     MataPelajaranAttachment[]            @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   waliKelas                          Kelas[]                              @relation(name: "wali")
@@ -137,6 +139,7 @@ model Akun {
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
   absensiSiswaPerKelas               AbsensiXSiswa[]
   assignmentSubmissions              AssignmentSubmission[]
+  penilaians                         Penilaian[]
 
   @@schema("public")
 }
@@ -256,32 +259,36 @@ model Kelas {
   jadwalPelajarans         JadwalPelajaran[]
   absensis                 Absensi[]
   assignments              Assignment[]
+  penilaians               Penilaian[]
+  mataPelajaranAttachments MataPelajaranAttachment[]
 
   @@schema("public")
 }
 
 model MataPelajaran {
-  id               String            @id @default(cuid())
+  id                       String                    @id @default(cuid())
   // ? credentials
-  nama             String
+  nama                     String
   // ? general
-  jumlahSesi       Int               @default(1)
+  jumlahSesi               Int                       @default(1)
   // ? foreign
-  guruId           String?
-  guru             Akun?             @relation(fields: [guruId], references: [id])
-  semesterAjaranId String
-  semesterAjaran   SemesterAjaran    @relation(fields: [semesterAjaranId], references: [id])
+  guruId                   String?
+  guru                     Akun?                     @relation(fields: [guruId], references: [id])
+  semesterAjaranId         String
+  semesterAjaran           SemesterAjaran            @relation(fields: [semesterAjaranId], references: [id])
   // ? meta data
-  updatedAt        DateTime          @default(now())
-  createdAt        DateTime          @default(now())
-  deletedAt        DateTime?
-  createdById      String?
-  createdBy        Akun?             @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById   String?
-  lastUpdateBy     Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt                DateTime                  @default(now())
+  createdAt                DateTime                  @default(now())
+  deletedAt                DateTime?
+  createdById              String?
+  createdBy                Akun?                     @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById           String?
+  lastUpdateBy             Akun?                     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
-  jadwalPelajarans JadwalPelajaran[]
-  assignments      Assignment[]
+  jadwalPelajarans         JadwalPelajaran[]
+  assignments              Assignment[]
+  penilaians               Penilaian[]
+  mataPelajaranAttachments MataPelajaranAttachment[]
 
   @@schema("public")
 }
@@ -380,12 +387,53 @@ model Assignment {
   @@schema("public")
 }
 
-model Kompetensi {
-  id             String @id
+model MataPelajaranAttachment {
+  id              String        @id @default(cuid())
   // ? credentials
-  sequenceNumber Int    @default(autoincrement())
+  kelasId         String
+  kelas           Kelas         @relation(fields: [kelasId], references: [id])
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  // ? general
+  title           String
+  description     String?
+  path            String
+  // ? meta data
+  updatedAt       DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+  createdById     String?
+  createdBy       Akun?         @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById  String?
+  lastUpdateBy    Akun?         @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+
+  @@schema("public")
+}
+
+model Kompetensi {
+  id             String      @id
+  // ? credentials
+  sequenceNumber Int         @default(autoincrement())
   label          String
   // ? relations
+  penilaians     Penilaian[]
+
+  @@schema("public")
+}
+
+model Penilaian {
+  id              Int           @id @default(autoincrement())
+  // ? credentials
+  kelasId         String
+  kelas           Kelas         @relation(fields: [kelasId], references: [id])
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  kompetensiId    String
+  kompetensi      Kompetensi    @relation(fields: [kompetensiId], references: [id])
+  siswaId         String
+  siswa           Akun          @relation(fields: [siswaId], references: [id])
+  // ? general
+  nilai           Decimal?      @default(0)
+  remark          String?
 
   @@schema("public")
 }

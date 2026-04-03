@@ -1,4 +1,4 @@
-import { MataPelajaran } from '@prisma/client'
+import { Kelas, MataPelajaran } from '@prisma/client'
 import { useNavigate } from '@remix-run/react'
 import { TabItem, Tabs } from '~/components/ui'
 import AppNav from '~/navigation'
@@ -13,11 +13,12 @@ export enum TabKey {
 
 export type GuruManageMataPelajaranDetailTabProps = {
   activeTabKey?: TabKey
+  kelas: Kelas
   mataPelajaran?: MataPelajaran
 }
 
 export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPelajaranDetailTabProps) {
-  const { activeTabKey = TabKey.ASSIGNMENT, mataPelajaran } = props
+  const { activeTabKey = TabKey.ASSIGNMENT, kelas, mataPelajaran } = props
   const navigate = useNavigate()
   const user = useAuthStore(state => state.user)
 
@@ -34,9 +35,19 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
       activeItemKey={activeTabKey}
       onTabClick={newTab => {
         if (newTab === TabKey.ASSIGNMENT)
-          navigate(AppNav.guru.manageMataPelajaranDetailAssignment({ mataPelajaranId: mataPelajaran.id }))
+          navigate(
+            AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignment({
+              kelasId: kelas.id,
+              mataPelajaranId: mataPelajaran.id,
+            }),
+          )
         else if (newTab === TabKey.ATTACHMENT)
-          navigate(AppNav.guru.manageMataPelajaranDetailAttachment({ mataPelajaranId: mataPelajaran.id }))
+          navigate(
+            AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachment({
+              kelasId: kelas.id,
+              mataPelajaranId: mataPelajaran.id,
+            }),
+          )
         else if (newTab === TabKey.NILAI)
           navigate(AppNav.guru.manageMataPelajaranDetailNilai({ mataPelajaranId: mataPelajaran.id }))
         else if (newTab === TabKey.PELANGGARAN)

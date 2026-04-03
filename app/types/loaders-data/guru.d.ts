@@ -12,6 +12,7 @@ import {
   SiswaPerKelasDanSemester,
   TahunAjaran,
   Assignment,
+  MataPelajaranAttachment,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
@@ -51,24 +52,33 @@ export type LoaderDataGuruDaftarKelasDetail = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
 }
 
+/**
+ * * Daftar Kelas Detail > Daftar Siswa
+ */
 export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
   siswaPerKelasPerSemesters: PaginationReturns<SiswaPerKelasDanSemester & { siswa: Akun | null }>
 }
 
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran
+ */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
   mataPelajarans: PaginationReturns<MataPelajaran & { guru: Akun | null }>
 }
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetail = {
-  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  kelas: Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }
   mataPelajaran: MataPelajaran & {
     guru: Akun | null
     semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
   }
 }
 
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Assignment
+ */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
     assignments: PaginationReturns<Assignment>
@@ -82,6 +92,37 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit =
     assignment: Assignment
   }
 
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Attachment
+ */
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachment =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    attachments: PaginationReturns<MataPelajaranAttachment & { downloadUrl?: string }>
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentEdit =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    attachment: MataPelajaranAttachment & { downloadUrl?: string }
+  }
+
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Nilai
+ */
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailNilai =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    nilais: PaginationReturns<Assignment>
+  }
+
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Pelanggaran
+ */
+
+/**
+ * * Daftar Kelas Detail > Absensi
+ */
 export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
   todayAbsensi: Absensi | null

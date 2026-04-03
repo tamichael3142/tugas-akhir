@@ -1,8 +1,10 @@
-import { Assignment, Pengumuman } from '@prisma/client'
+import { Assignment, MataPelajaranAttachment, Pengumuman } from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
 import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
 import { GuruManageMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/ManageMataPelajaran/Detail/Assignment/Create/form'
+import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
+import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 
 /**
  * * Manage Absensi
@@ -41,6 +43,31 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit = B
     updatedAssignment?: Assignment
     // * Error
     oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdAttachment?: MataPelajaranAttachment
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedAttachment?: MataPelajaranAttachment
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedAttachment?: MataPelajaranAttachment
   }
 }
 

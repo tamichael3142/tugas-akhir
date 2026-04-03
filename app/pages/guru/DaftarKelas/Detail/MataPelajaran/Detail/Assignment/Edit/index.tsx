@@ -59,7 +59,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPa
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruManageMataPelajaranDetailTab mataPelajaran={loader.mataPelajaran} activeTabKey={TabKey.ASSIGNMENT} />
+      <GuruManageMataPelajaranDetailTab
+        kelas={loader.kelas}
+        mataPelajaran={loader.mataPelajaran}
+        activeTabKey={TabKey.ASSIGNMENT}
+      />
 
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <div className='p-4 lg:px-8'>

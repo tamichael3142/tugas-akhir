@@ -116,6 +116,6 @@ export async function action({
   }
 }
 
-export default function GuruManageMataPelajaranDetailAssignmentEditRoute() {
+export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditRoute() {
   return <GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPage />
 }
