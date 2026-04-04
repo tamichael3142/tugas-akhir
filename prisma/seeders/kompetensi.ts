@@ -26,8 +26,8 @@ async function seed() {
   }
 }
 
-const DaysSeeder = {
+const KompetensisSeeder = {
   seed,
 }
 
-export default DaysSeeder
+export default KompetensisSeeder

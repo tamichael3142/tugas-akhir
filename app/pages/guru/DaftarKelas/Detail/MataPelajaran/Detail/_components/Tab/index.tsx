@@ -7,7 +7,7 @@ import useAuthStore from '~/store/authStore'
 export enum TabKey {
   ASSIGNMENT = 'assignment',
   ATTACHMENT = 'attachment',
-  NILAI = 'nilai',
+  PENILAIAN = 'penilaian',
   PELANGGARAN = 'pelanggaran',
 }
 
@@ -25,7 +25,7 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
   const items: TabItem[] = [
     { key: TabKey.ASSIGNMENT, label: 'Tugas' },
     { key: TabKey.ATTACHMENT, label: 'Lampiran' },
-    { key: TabKey.NILAI, label: 'Nilai', disabled: mataPelajaran?.guruId !== user?.id },
+    { key: TabKey.PENILAIAN, label: 'Penilaian', disabled: mataPelajaran?.guruId !== user?.id },
     { key: TabKey.PELANGGARAN, label: 'Pelanggaran' },
   ]
 
@@ -48,8 +48,13 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
               mataPelajaranId: mataPelajaran.id,
             }),
           )
-        else if (newTab === TabKey.NILAI)
-          navigate(AppNav.guru.manageMataPelajaranDetailNilai({ mataPelajaranId: mataPelajaran.id }))
+        else if (newTab === TabKey.PENILAIAN)
+          navigate(
+            AppNav.guru.daftarKelasDetailMataPelajaranDetailPenilaian({
+              kelasId: kelas.id,
+              mataPelajaranId: mataPelajaran.id,
+            }),
+          )
         else if (newTab === TabKey.PELANGGARAN)
           navigate(AppNav.guru.manageMataPelajaranDetailPelanggaran({ mataPelajaranId: mataPelajaran.id }))
       }}

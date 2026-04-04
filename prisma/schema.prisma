@@ -131,6 +131,8 @@ model Akun {
   assignmentUpdator                  Assignment[]                         @relation(name: "lastUpdateBy")
   mataPelajaranAttachmentCreator     MataPelajaranAttachment[]            @relation(name: "createdBy")
   mataPelajaranAttachmentUpdator     MataPelajaranAttachment[]            @relation(name: "lastUpdateBy")
+  pelanggaranCreator                 PelanggaranPerMapel[]                @relation(name: "createdBy")
+  pelanggaranUpdator                 PelanggaranPerMapel[]                @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester           SiswaPerKelasDanSemester[]
   waliKelas                          Kelas[]                              @relation(name: "wali")
@@ -140,6 +142,7 @@ model Akun {
   absensiSiswaPerKelas               AbsensiXSiswa[]
   assignmentSubmissions              AssignmentSubmission[]
   penilaians                         Penilaian[]
+  pelanggaransPerMapel               PelanggaranPerMapel[]
 
   @@schema("public")
 }
@@ -261,6 +264,7 @@ model Kelas {
   assignments              Assignment[]
   penilaians               Penilaian[]
   mataPelajaranAttachments MataPelajaranAttachment[]
+  pelanggaransPerMapel     PelanggaranPerMapel[]
 
   @@schema("public")
 }
@@ -289,6 +293,7 @@ model MataPelajaran {
   assignments              Assignment[]
   penilaians               Penilaian[]
   mataPelajaranAttachments MataPelajaranAttachment[]
+  pelanggarans             PelanggaranPerMapel[]
 
   @@schema("public")
 }
@@ -434,6 +439,29 @@ model Penilaian {
   // ? general
   nilai           Decimal?      @default(0)
   remark          String?
+
+  @@schema("public")
+}
+
+model PelanggaranPerMapel {
+  id              String        @id @default(cuid())
+  // ? credentials
+  kelasId         String
+  kelas           Kelas         @relation(fields: [kelasId], references: [id])
+  mataPelajaranId String
+  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  siswaId         String
+  siswa           Akun          @relation(fields: [siswaId], references: [id])
+  // ? general
+  poin            Int           @default(0)
+  remark          String?
+  // ? meta data
+  updatedAt       DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+  createdById     String?
+  createdBy       Akun?         @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById  String?
+  lastUpdateBy    Akun?         @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
 
   @@schema("public")
 }

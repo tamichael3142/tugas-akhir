@@ -13,6 +13,9 @@ import {
   TahunAjaran,
   Assignment,
   MataPelajaranAttachment,
+  Kompetensi,
+  Penilaian,
+  PelanggaranPerMapel,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
@@ -109,16 +112,33 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentEdit =
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Nilai
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Penilaian
  */
-export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailNilai =
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    nilais: PaginationReturns<Assignment>
+    kompetensis: Kompetensi[]
+    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+    penilaians: Penilaian[]
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Pelanggaran
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Pelanggaram
  */
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    pelanggarans: PaginationReturns<PelanggaranPerMapel & { siswa: Akun }>
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreate =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+    pelanggaran: PelanggaranPerMapel & { siswa: Akun }
+  }
 
 /**
  * * Daftar Kelas Detail > Absensi

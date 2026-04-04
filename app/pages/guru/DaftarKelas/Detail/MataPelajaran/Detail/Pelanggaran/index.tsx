@@ -2,25 +2,24 @@ import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } fro
 import { useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment } from '~/types/loaders-data/guru'
+import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran } from '~/types/loaders-data/guru'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import AppNav from '~/navigation'
-import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { format } from 'date-fns'
 import { MdAdd } from 'react-icons/md'
 import constants from '~/constants'
 import GuruManageMataPelajaranDetailTab, { TabKey } from '../_components/Tab'
 import useAuthStore from '~/store/authStore'
+import DBHelpers from '~/database/helpers'
 
-const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-assignment'
+const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-pelanggaran'
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage() {
+export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment>()
+  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran>()
   const revalidator = useRevalidator()
   const user = useAuthStore(state => state.user)
 
@@ -52,7 +51,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
       <GuruManageMataPelajaranDetailTab
         kelas={loader.kelas}
         mataPelajaran={loader.mataPelajaran}
-        activeTabKey={TabKey.ASSIGNMENT}
+        activeTabKey={TabKey.PELANGGARAN}
       />
 
       <DataGrid
@@ -62,7 +61,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari tugas...',
+                placeholder: 'Cari pelanggaran...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -70,13 +69,13 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             <div className='grow'></div>
             <Button
               color='secondary'
-              label={'Buat Tugas'}
+              label={'Tambah'}
               startIcon={<MdAdd />}
               buttonProps={{
                 disabled: loader.mataPelajaran.guruId !== user?.id,
                 onClick: () =>
                   navigate(
-                    AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentCreate({
+                    AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranCreate({
                       kelasId: loader.kelas?.id ?? '',
                       mataPelajaranId: loader.mataPelajaran.id,
                     }),
@@ -86,22 +85,16 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
+          { field: 'title', label: 'Judul', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
           {
-            field: 'tanggalMulai',
-            label: 'Mulai',
-            render: row => format(new Date(row.tanggalMulai), constants.dateFormats.rawDateTimeInput),
+            field: 'createdAt',
+            label: 'Created At',
+            render: row => format(new Date(row.createdAt), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'tanggalBerakhir',
-            label: 'Berakhir',
-            render: row => format(new Date(row.tanggalBerakhir), constants.dateFormats.rawDateTimeInput),
-          },
-          { field: 'isSubmitable', label: 'Submission', render: row => (row.isSubmitable ? 'Open' : 'Close') },
-          {
-            field: 'submissionType',
-            label: 'Tipe',
-            render: row => EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType),
+            label: 'Updated At',
+            render: row => format(new Date(row.updatedAt), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'actions',
@@ -138,12 +131,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             ),
           },
         ]}
-        rows={loader.assignments.data}
+        rows={loader.pelanggarans.data}
         pagination={{
-          page: loader.assignments.pagination.page,
-          pageSize: loader.assignments.pagination.limit,
-          total: loader.assignments.pagination.total,
-          totalPages: loader.assignments.pagination.totalPages,
+          page: loader.pelanggarans.pagination.page,
+          pageSize: loader.pelanggarans.pagination.limit,
+          total: loader.pelanggarans.pagination.total,
+          totalPages: loader.pelanggarans.pagination.totalPages,
           onPageChange: newPage => handlePageChange({ newPage }),
         }}
         className='border-none'

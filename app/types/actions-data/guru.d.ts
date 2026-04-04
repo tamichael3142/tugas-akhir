@@ -5,6 +5,7 @@ import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '
 import { GuruManageMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/ManageMataPelajaran/Detail/Assignment/Create/form'
 import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
+import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
 
 /**
  * * Manage Absensi
@@ -68,6 +69,13 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentDelete =
   data: {
     // * Success
     deletedAttachment?: MataPelajaranAttachment
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType
   }
 }
 

@@ -14,6 +14,7 @@ import GuruManageMataPelajaranDetailTab, { TabKey } from '../_components/Tab'
 import { MataPelajaranAttachment } from '@prisma/client'
 import { usePopup } from '~/hooks/usePopup'
 import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentDelete } from '~/types/actions-data/guru'
+import useAuthStore from '~/store/authStore'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-attachment'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -25,6 +26,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
   const revalidator = useRevalidator()
   const fetcher = useFetcher<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentDelete>({ key: deleteFormId })
   const popup = usePopup()
+  const user = useAuthStore(state => state.user)
 
   const isDeleting = fetcher.state === 'submitting'
   const isSuccess = fetcher.data?.success
@@ -125,14 +127,21 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
               }}
             />
             <div className='grow'></div>
-            <Link
-              to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachmentCreate({
-                kelasId: loader.kelas.id,
-                mataPelajaranId: loader.mataPelajaran.id,
-              })}
-            >
-              <Button color='secondary' label={'Buat Lampiran'} startIcon={<MdAdd />} />
-            </Link>
+            <Button
+              color='secondary'
+              label={'Buat Lampiran'}
+              startIcon={<MdAdd />}
+              buttonProps={{
+                disabled: loader.mataPelajaran.guruId !== user?.id,
+                onClick: () =>
+                  navigate(
+                    AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachmentCreate({
+                      kelasId: loader.kelas.id,
+                      mataPelajaranId: loader.mataPelajaran.id,
+                    }),
+                  ),
+              }}
+            />
           </div>
         }
         columns={[
@@ -175,24 +184,30 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
                     label={'Detail'}
                   />
                 </Link>
-                <Link
-                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachmentEdit({
-                    kelasId: loader.kelas?.id ?? '',
-                    mataPelajaranId: loader.mataPelajaran.id,
-                    attachmentId: row.id,
-                  })}
-                >
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                  />
-                </Link>
+                <DataGridActionButton
+                  icon={DataGridActionButtonHelper.getEditIcon()}
+                  color='warning'
+                  label={'Edit'}
+                  buttonProps={{
+                    disabled: loader.mataPelajaran.guruId !== user?.id,
+                    onClick: () =>
+                      navigate(
+                        AppNav.guru.daftarKelasDetailMataPelajaranDetailAttachmentEdit({
+                          kelasId: loader.kelas?.id ?? '',
+                          mataPelajaranId: loader.mataPelajaran.id,
+                          attachmentId: row.id,
+                        }),
+                      ),
+                  }}
+                />
                 <DataGridActionButton
                   icon={DataGridActionButtonHelper.getDeleteIcon()}
                   color='error'
                   label={'Delete'}
-                  buttonProps={{ onClick: () => openDeletePopup(row) }}
+                  buttonProps={{
+                    disabled: loader.mataPelajaran.guruId !== user?.id,
+                    onClick: () => openDeletePopup(row),
+                  }}
                 />
               </DataGridActionButtonWrapper>
             ),

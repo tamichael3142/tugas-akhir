@@ -1,4 +1,4 @@
-import { Kelas } from '@prisma/client'
+import { Kelas, SemesterAjaran, TahunAjaran } from '@prisma/client'
 import { useNavigate } from '@remix-run/react'
 import { TabItem, Tabs } from '~/components/ui'
 import AppNav from '~/navigation'
@@ -12,7 +12,7 @@ export enum TabKey {
 
 export type GuruDaftarKelasDetailTabProps = {
   activeTabKey?: TabKey
-  kelas?: Kelas
+  kelas?: Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] } }
 }
 
 export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTabProps) {
@@ -31,7 +31,13 @@ export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTab
     <Tabs
       activeItemKey={activeTabKey}
       onTabClick={newTab => {
-        if (newTab === TabKey.DAFTAR_SISWA) navigate(AppNav.guru.daftarKelasDetailDaftarSiswa({ kelasId: kelas.id }))
+        if (newTab === TabKey.DAFTAR_SISWA)
+          navigate(
+            AppNav.guru.daftarKelasDetailDaftarSiswa({
+              kelasId: kelas.id,
+              semesterAjaranId: kelas.tahunAjaran.semesterAjaran[0].id,
+            }),
+          )
         else if (newTab === TabKey.MATA_PELAJARAN)
           navigate(AppNav.guru.daftarKelasDetailMataPelajaran({ kelasId: kelas.id }))
         else if (newTab === TabKey.ABSENSI) navigate(AppNav.guru.daftarKelasDetailAbsensiList({ kelasId: kelas.id }))

@@ -5,7 +5,6 @@ import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
-import AppNav from '~/navigation'
 import { LoaderDataGuruDaftarKelasDetail } from '~/types/loaders-data/guru'
 
 const sectionPrefix = 'guru-daftar-kelas-detail'
@@ -27,7 +26,7 @@ export default function GuruDaftarKelasDetailPage() {
   return (
     <GuruPageContainer
       title={`Kelas: ${loader.kelas?.nama}`}
-      actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.guru.daftarKelas()} />]}
+      actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}
     >
       <Card className='!p-0'>
         <div className='grid grid-cols-3 gap-4 lg:gap-8 p-4 lg:p-8'>
