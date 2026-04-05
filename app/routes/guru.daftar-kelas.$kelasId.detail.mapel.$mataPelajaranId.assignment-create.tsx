@@ -85,7 +85,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Assignment berhasil dibuat!',
+          message: 'Tugas berhasil dibuat!',
           data: {
             createdAssignment: result,
           },

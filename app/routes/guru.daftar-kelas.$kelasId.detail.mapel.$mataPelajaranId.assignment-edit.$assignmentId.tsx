@@ -13,7 +13,7 @@ import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from
 import { resolver } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/Create/form'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.guruManageMataPelajaran
+  return constants.pageMetas.guruManageAssignment
 }
 export async function loader({
   params,
@@ -74,7 +74,7 @@ export async function action({
   try {
     if (!assignmentId)
       throw {
-        message: 'Assignment tidak ditemukan!',
+        message: 'Tugas tidak ditemukan!',
       }
 
     return await prisma.assignment
@@ -94,7 +94,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Assignment berhasil update!',
+          message: 'Tugas berhasil update!',
           data: {
             updatedAssignment: result,
           },

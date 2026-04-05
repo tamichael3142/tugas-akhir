@@ -4,6 +4,7 @@ import {
   Kelas,
   MataPelajaran,
   MataPelajaranAttachment,
+  PelanggaranPerMapel,
   SemesterAjaran,
   TahunAjaran,
 } from '@prisma/client'
@@ -178,7 +179,7 @@ function daftarKelasDetailMataPelajaranDetailPenilaian({
 }
 
 /*
- * Guru's daftar kelas detail mata pelajaran detail assignment level routes
+ * Guru's daftar kelas detail mata pelajaran detail pelanggaran level routes
  */
 function daftarKelasDetailMataPelajaranDetailPelanggaran({
   kelasId,
@@ -203,25 +204,25 @@ function daftarKelasDetailMataPelajaranDetailPelanggaranCreate({
 function daftarKelasDetailMataPelajaranDetailPelanggaranEdit({
   kelasId,
   mataPelajaranId,
-  assignmentId,
+  pelanggaranId,
 }: {
   kelasId: Kelas['id']
   mataPelajaranId: MataPelajaran['id']
-  assignmentId: Assignment['id']
+  pelanggaranId: PelanggaranPerMapel['id']
 }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-edit/${assignmentId}`
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-edit/${pelanggaranId}`
 }
 
 function daftarKelasDetailMataPelajaranDetailPelanggaranDetail({
   kelasId,
   mataPelajaranId,
-  assignmentId,
+  pelanggaranId,
 }: {
   kelasId: Kelas['id']
   mataPelajaranId: MataPelajaran['id']
-  assignmentId: Assignment['id']
+  pelanggaranId: PelanggaranPerMapel['id']
 }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-detail/${assignmentId}`
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-detail/${pelanggaranId}`
 }
 
 function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {

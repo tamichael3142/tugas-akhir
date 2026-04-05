@@ -1,13 +1,13 @@
 import { useActionData, useFetcher, useLoaderData, useNavigate, useRevalidator } from '@remix-run/react'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit } from '~/types/loaders-data/guru'
+import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit } from '~/types/loaders-data/guru'
 import GuruManageMataPelajaranDetailTab, { TabKey } from '../../_components/Tab'
-import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit } from '~/types/actions-data/guru'
+import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit } from '~/types/actions-data/guru'
 import { RemixFormProvider, useRemixForm } from 'remix-hook-form'
 import {
   emptyValues,
   resolver,
-  GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType,
+  GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType,
   translateRawToFormData,
 } from '../Create/form'
 import { useEffect } from 'react'
@@ -15,31 +15,31 @@ import toast from 'react-hot-toast'
 import AppNav from '~/navigation'
 import { Button } from '~/components/forms'
 import { FaSave } from 'react-icons/fa'
-import AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent from '../form-component'
+import AdminDaftarKelasDetailMataPelajaranDetailPelanggaranFormComponent from '../form-component'
 import useAuthStore from '~/store/authStore'
 
-const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-assignment-edit'
+const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-pelanggaran-edit'
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPage() {
-  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit>()
+export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranEditPage() {
+  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit>()
   const revalidator = useRevalidator()
-  const actionData = useActionData<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit>()
+  const actionData = useActionData<ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit>()
   const navigate = useNavigate()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
   const user = useAuthStore(state => state.user)
 
-  const formHook = useRemixForm<GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType>({
+  const formHook = useRemixForm<GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType>({
     defaultValues: emptyValues,
     mode: 'onChange',
     resolver,
   })
 
   function resetForm() {
-    formHook.reset(translateRawToFormData(loader.assignment))
+    formHook.reset(translateRawToFormData(loader.pelanggaran))
   }
 
   useEffect(() => {
-    if (loader.mataPelajaran && loader.assignment) resetForm()
+    if (loader.mataPelajaran && loader.pelanggaran) resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader.mataPelajaran])
 
@@ -47,7 +47,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPa
     if (actionData?.success) {
       toast.success(actionData.message ?? '')
       navigate(
-        AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignment({
+        AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaran({
           kelasId: loader.kelas?.id ?? '',
           mataPelajaranId: loader.mataPelajaran.id,
         }),
@@ -64,7 +64,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPa
       <GuruManageMataPelajaranDetailTab
         kelas={loader.kelas}
         mataPelajaran={loader.mataPelajaran}
-        activeTabKey={TabKey.ASSIGNMENT}
+        activeTabKey={TabKey.PELANGGARAN}
       />
 
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
@@ -77,7 +77,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPa
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
-            <AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent />
+            <AdminDaftarKelasDetailMataPelajaranDetailPelanggaranFormComponent siswas={loader.siswas} />
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>

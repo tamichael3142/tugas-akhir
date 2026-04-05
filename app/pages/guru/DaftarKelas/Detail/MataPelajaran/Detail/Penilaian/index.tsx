@@ -15,6 +15,7 @@ import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian } from '~/t
 import toast from 'react-hot-toast'
 import { Button } from '~/components/forms'
 import { FaSave } from 'react-icons/fa'
+import useAuthStore from '~/store/authStore'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-penilaian'
 
@@ -24,6 +25,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPenilaianPage() 
   const actionData = useActionData<ActionDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian>()
   const revalidator = useRevalidator()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
+  const user = useAuthStore(state => state.user)
 
   const formHook = useRemixForm<GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType>({
     defaultValues: emptyValues,
@@ -214,7 +216,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPenilaianPage() 
             color='primary'
             startIcon={<FaSave />}
             label='Simpan'
-            buttonProps={{ type: 'submit' }}
+            buttonProps={{ disabled: loader.mataPelajaran.guruId !== user?.id, type: 'submit' }}
           />
         </div>
       </fetcher.Form>

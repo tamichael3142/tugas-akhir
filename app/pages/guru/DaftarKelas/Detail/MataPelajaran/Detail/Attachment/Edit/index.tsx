@@ -9,6 +9,7 @@ import AppNav from '~/navigation'
 import { Button } from '~/components/forms'
 import { FaSave } from 'react-icons/fa'
 import AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent from '../form-component'
+import useAuthStore from '~/store/authStore'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-attachment-edit'
 
@@ -19,6 +20,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
   const fetcher = useFetcher<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentEdit>({
     key: `${sectionPrefix}-form`,
   })
+  const user = useAuthStore(state => state.user)
 
   useEffect(() => {
     if (fetcher.state === 'idle' && fetcher.data) {
@@ -66,7 +68,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
               color='primary'
               startIcon={<FaSave />}
               label='Simpan'
-              buttonProps={{ type: 'submit' }}
+              buttonProps={{ disabled: loader.mataPelajaran.guruId !== user?.id, type: 'submit' }}
             />
           </div>
         </div>

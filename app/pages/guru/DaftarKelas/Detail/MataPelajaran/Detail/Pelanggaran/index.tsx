@@ -85,7 +85,9 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
+          { field: 'siswa', label: 'Siswa', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
+          { field: 'poin', label: 'Poin' },
+          { field: 'remark', label: 'Keterangan' },
           {
             field: 'createdAt',
             label: 'Created At',
@@ -102,10 +104,10 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link
-                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentDetail({
+                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranDetail({
                     kelasId: loader.kelas?.id ?? '',
                     mataPelajaranId: loader.mataPelajaran.id,
-                    assignmentId: row.id,
+                    pelanggaranId: row.id,
                   })}
                 >
                   <DataGridActionButton
@@ -114,19 +116,22 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
                     label={'Detail'}
                   />
                 </Link>
-                <Link
-                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentEdit({
-                    kelasId: loader.kelas?.id ?? '',
-                    mataPelajaranId: loader.mataPelajaran.id,
-                    assignmentId: row.id,
-                  })}
-                >
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                  />
-                </Link>
+                <DataGridActionButton
+                  icon={DataGridActionButtonHelper.getEditIcon()}
+                  color='warning'
+                  label={'Edit'}
+                  buttonProps={{
+                    disabled: loader.mataPelajaran.guruId !== user?.id,
+                    onClick: () =>
+                      navigate(
+                        AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranEdit({
+                          kelasId: loader.kelas?.id ?? '',
+                          mataPelajaranId: loader.mataPelajaran.id,
+                          pelanggaranId: row.id,
+                        }),
+                      ),
+                  }}
+                />
               </DataGridActionButtonWrapper>
             ),
           },

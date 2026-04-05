@@ -56,7 +56,12 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
             }),
           )
         else if (newTab === TabKey.PELANGGARAN)
-          navigate(AppNav.guru.manageMataPelajaranDetailPelanggaran({ mataPelajaranId: mataPelajaran.id }))
+          navigate(
+            AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaran({
+              kelasId: kelas.id,
+              mataPelajaranId: mataPelajaran.id,
+            }),
+          )
       }}
       items={items}
     />

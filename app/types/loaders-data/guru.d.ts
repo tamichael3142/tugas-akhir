@@ -131,12 +131,12 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran =
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreate =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+    siswas: Akun[]
   }
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun | null })[]
+    siswas: Akun[]
     pelanggaran: PelanggaranPerMapel & { siswa: Akun }
   }
 

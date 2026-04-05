@@ -1,4 +1,4 @@
-import { Assignment, MataPelajaranAttachment, Pengumuman } from '@prisma/client'
+import { Assignment, MataPelajaranAttachment, PelanggaranPerMapel, Pengumuman } from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
 import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
@@ -6,6 +6,7 @@ import { GuruManageMataPelajaranDetailAssignmentCreateFormType } from '~/pages/g
 import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
+import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran/form-types'
 
 /**
  * * Manage Absensi
@@ -76,6 +77,24 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian = BaseAc
   data: {
     // * Error
     oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdPelanggaran?: PelanggaranPerMapel
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedPelanggaran?: PelanggaranPerMapel
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType
   }
 }
 

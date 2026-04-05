@@ -78,6 +78,10 @@ const pageMetas = {
     { title: `Manage Penilaian - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruManagePelanggaran: [
+    { title: `Manage Pelanggaran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   guruMasterPengumuman: [
     { title: `Master Pengumuman - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
