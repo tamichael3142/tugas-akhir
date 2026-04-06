@@ -16,6 +16,7 @@ import {
   Kompetensi,
   Penilaian,
   PelanggaranPerMapel,
+  MataPelajaranBeritaAcara,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
@@ -78,6 +79,27 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetail = {
     semesterAjaran: (SemesterAjaran & { tahunAjaran: TahunAjaran | null }) | null
   }
 }
+
+/**
+ * * Daftar Kelas Detail > Mata Pelajaran Detail > Berita Acara
+ */
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcara =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    beritaAcaras: PaginationReturns<MataPelajaranBeritaAcara & { day: Days; hourStart: Hour; hourEnd: Hour }>
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    hours: Hour[]
+    days: Days[]
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraEdit =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    hours: Hour[]
+    days: Days[]
+    beritaAcara: MataPelajaranBeritaAcara & { day: Days; hourStart: Hour; hourEnd: Hour }
+  }
 
 /**
  * * Daftar Kelas Detail > Mata Pelajaran Detail > Assignment

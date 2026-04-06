@@ -4,6 +4,7 @@ import {
   Kelas,
   MataPelajaran,
   MataPelajaranAttachment,
+  MataPelajaranBeritaAcara,
   PelanggaranPerMapel,
   SemesterAjaran,
   TahunAjaran,
@@ -225,6 +226,56 @@ function daftarKelasDetailMataPelajaranDetailPelanggaranDetail({
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-detail/${pelanggaranId}`
 }
 
+/*
+ * Guru's daftar kelas detail mata pelajaran detail berita acara level routes
+ */
+function daftarKelasDetailMataPelajaranDetailBeritaAcara({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/berita-acara`
+}
+
+function daftarKelasDetailMataPelajaranDetailBeritaAcaraCreate({
+  kelasId,
+  mataPelajaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/berita-acara-create`
+}
+
+function daftarKelasDetailMataPelajaranDetailBeritaAcaraEdit({
+  kelasId,
+  mataPelajaranId,
+  beritaAcaraId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  beritaAcaraId: MataPelajaranBeritaAcara['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/berita-acara-edit/${beritaAcaraId}`
+}
+
+function daftarKelasDetailMataPelajaranDetailBeritaAcaraDetail({
+  kelasId,
+  mataPelajaranId,
+  beritaAcaraId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  beritaAcaraId: MataPelajaranBeritaAcara['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/berita-acara-detail/${beritaAcaraId}`
+}
+
+/*
+ * Guru's daftar kelas detail absensi level routes
+ */
 function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/absensi`
 }
@@ -312,15 +363,6 @@ function manageAssignmentDetail({ assignmentId }: { assignmentId: Assignment['id
 }
 
 /*
- * Guru's manage berita acara level routes
- */
-const manageBeritaAcaraUrl = '/manage-mata-pelajaran'
-
-function manageBeritaAcara() {
-  return `${baseUrl}${manageBeritaAcaraUrl}`
-}
-
-/*
  * Guru's master pengumuman level routes
  */
 const masterPengumumanUrl = '/master-pengumuman'
@@ -383,6 +425,10 @@ const guru = {
   daftarKelasDetailMataPelajaranDetailPelanggaranCreate,
   daftarKelasDetailMataPelajaranDetailPelanggaranEdit,
   daftarKelasDetailMataPelajaranDetailPelanggaranDetail,
+  daftarKelasDetailMataPelajaranDetailBeritaAcara,
+  daftarKelasDetailMataPelajaranDetailBeritaAcaraCreate,
+  daftarKelasDetailMataPelajaranDetailBeritaAcaraEdit,
+  daftarKelasDetailMataPelajaranDetailBeritaAcaraDetail,
   daftarKelasDetailAbsensiList,
   daftarKelasDetailAbsensiCreate,
   absensiSiswa,
@@ -396,7 +442,6 @@ const guru = {
   manageMataPelajaranDetailPelanggaran,
   manageEkstrakulikuler,
   manageAssignmentDetail,
-  manageBeritaAcara,
   masterPengumuman,
   masterPengumumanCreate,
   masterPengumumanDetail,

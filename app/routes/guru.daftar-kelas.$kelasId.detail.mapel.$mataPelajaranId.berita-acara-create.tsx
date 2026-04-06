@@ -3,21 +3,21 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
 import constants from '~/constants'
-import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
-import { resolver } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/Create/form'
-import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate } from '~/types/actions-data/guru'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate } from '~/types/loaders-data/guru'
+import { GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/BeritaAcara/form-types'
+import { resolver } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/BeritaAcara/Create/form'
+import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate } from '~/types/actions-data/guru'
+import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate } from '~/types/loaders-data/guru'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
-import GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreatePage from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/Create'
+import GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreatePage from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/BeritaAcara/Create'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.guruManageAssignment
+  return constants.pageMetas.guruManageBeritaAcara
 }
 export async function loader({
   params,
-}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate> {
+}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate> {
   const kelasId = params.kelasId as Kelas['id'] | null
   const mataPelajaranId = params.mataPelajaranId as MataPelajaran['id'] | null
 
@@ -45,17 +45,18 @@ export async function loader({
     },
   })
 
-  return { kelas, mataPelajaran } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate
+  const days = await prisma.days.findMany({ orderBy: { sequenceNumber: 'asc' } })
+  const hours = await prisma.hour.findMany({ orderBy: { sequenceNumber: 'asc' } })
+
+  return { kelas, mataPelajaran, days, hours } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate
 }
 
 export async function action({
   request,
   params,
-}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate> {
-  const { errors, data } = await getValidatedFormData<GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType>(
-    request,
-    resolver,
-  )
+}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate> {
+  const { errors, data } =
+    await getValidatedFormData<GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -68,26 +69,25 @@ export async function action({
     const kelasId = params.kelasId as Kelas['id'] | null
     const mataPelajaranId = params.mataPelajaranId as MataPelajaran['id'] | null
 
-    return await prisma.assignment
+    return await prisma.mataPelajaranBeritaAcara
       .create({
         data: {
           mataPelajaranId: mataPelajaranId ?? '',
           kelasId: kelasId ?? '',
           title: data.title,
-          description: data.description,
-          tanggalMulai: new Date(data.tanggalMulai),
-          tanggalBerakhir: new Date(data.tanggalBerakhir),
-          isSubmitable: data.isSubmitable,
-          submissionType: data.submissionType,
+          remark: data.remark,
+          dayId: data.dayId,
+          hourStartId: data.hourStartId,
+          hourEndId: data.hourEndId,
           createdById: currUser?.id,
         },
       })
       .then(result => {
         return {
           success: true,
-          message: 'Tugas berhasil dibuat!',
+          message: 'Berita Acara berhasil dibuat!',
           data: {
-            createdAssignment: result,
+            createdBeritaAcara: result,
           },
         }
       })
@@ -107,6 +107,6 @@ export async function action({
   }
 }
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateRoute() {
-  return <GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreatePage />
+export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateRoute() {
+  return <GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreatePage />
 }

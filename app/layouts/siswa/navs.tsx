@@ -5,7 +5,7 @@ import { MdDashboard, MdSchedule, MdSportsSoccer } from 'react-icons/md'
 import { GrAnnounce } from 'react-icons/gr'
 import { FaPeopleRoof } from 'react-icons/fa6'
 
-export const guruNavs: SidebarItemProps[] = [
+export const siswaNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.guru.dashboard() },
   { icon: <MdSchedule />, label: 'Jadwal Mengajar', href: AppNav.guru.jadwalMengajar({}) },
   { icon: <FaPeopleRoof />, label: 'Daftar Kelas', href: AppNav.guru.daftarKelas() },

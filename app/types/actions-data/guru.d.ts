@@ -1,4 +1,10 @@
-import { Assignment, MataPelajaranAttachment, PelanggaranPerMapel, Pengumuman } from '@prisma/client'
+import {
+  Assignment,
+  MataPelajaranAttachment,
+  MataPelajaranBeritaAcara,
+  PelanggaranPerMapel,
+  Pengumuman,
+} from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
 import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
@@ -30,6 +36,24 @@ export type ActionDataGuruManageAbsensiMutate = BaseActionData & {
 /**
  * * Daftar Kelas
  */
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdBeritaAcara?: MataPelajaranBeritaAcara
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType
+  }
+}
+
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedBeritaAcara?: MataPelajaranBeritaAcara
+    // * Error
+    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType
+  }
+}
+
 export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate = BaseActionData & {
   data: {
     // * Success
