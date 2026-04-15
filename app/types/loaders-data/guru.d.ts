@@ -17,6 +17,7 @@ import {
   Penilaian,
   PelanggaranPerMapel,
   MataPelajaranBeritaAcara,
+  AssignmentSubmission,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
 
@@ -115,6 +116,13 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate =
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
     assignment: Assignment
+  }
+
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    assignment: Assignment
+    siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun })[]
+    assignmentSubmissions: (AssignmentSubmission & { siswa: Akun })[]
   }
 
 /**
