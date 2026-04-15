@@ -1,28 +1,25 @@
 import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Button, TextInput } from '~/components/forms'
+import { TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment } from '~/types/loaders-data/guru'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import AppNav from '~/navigation'
-import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { format } from 'date-fns'
-import { MdAdd } from 'react-icons/md'
 import constants from '~/constants'
-import GuruManageMataPelajaranDetailTab, { TabKey } from '../_components/Tab'
-import useAuthStore from '~/store/authStore'
+import SiswaKelasDetailMataPelajaranDetailTab, { TabKey } from '../_components/Tab'
+import { LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment } from '~/types/loaders-data/siswa'
+import classNames from 'classnames'
+import DBHelpers from '~/database/helpers'
 
-const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-assignment'
+const sectionPrefix = 'siswa-kelas-detail-mata-pelajaran-detail-assignment'
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage() {
+export default function SiswaKelasDetailMataPelajaranDetailAssignmentPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment>()
+  const loader = useLoaderData<LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment>()
   const revalidator = useRevalidator()
-  const user = useAuthStore(state => state.user)
 
   const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
 
@@ -46,10 +43,25 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText])
 
+  const renderSubmittableIndicator = (isOpen: boolean) => {
+    return (
+      <div className='flex items-center justify-center'>
+        <div
+          className={classNames('rounded-full w-5 h-5 text-xs flex items-center justify-center text-center', {
+            ['bg-secondary']: isOpen,
+            ['border border-primary text-primary font-bold']: !isOpen,
+          })}
+        >
+          {!isOpen ? 'X' : null}
+        </div>
+      </div>
+    )
+  }
+
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruManageMataPelajaranDetailTab
+      <SiswaKelasDetailMataPelajaranDetailTab
         kelas={loader.kelas}
         mataPelajaran={loader.mataPelajaran}
         activeTabKey={TabKey.ASSIGNMENT}
@@ -68,24 +80,14 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
               }}
             />
             <div className='grow'></div>
-            <Button
-              color='secondary'
-              label={'Buat Tugas'}
-              startIcon={<MdAdd />}
-              buttonProps={{
-                disabled: loader.mataPelajaran.guruId !== user?.id,
-                onClick: () =>
-                  navigate(
-                    AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentCreate({
-                      kelasId: loader.kelas?.id ?? '',
-                      mataPelajaranId: loader.mataPelajaran.id,
-                    }),
-                  ),
-              }}
-            />
           </div>
         }
         columns={[
+          {
+            field: 'isSubmitable',
+            label: <div className='text-center'>{'Open'}</div>,
+            render: row => renderSubmittableIndicator(DBHelpers.mapelAssignment.getIsSubmittable(row)),
+          },
           { field: 'title', label: 'Judul', render: row => row.title },
           {
             field: 'tanggalMulai',
@@ -98,53 +100,27 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             render: row => format(new Date(row.tanggalBerakhir), constants.dateFormats.rawDateTimeInput),
           },
           {
-            field: 'isSubmitable',
-            label: 'Time Restriction',
-            render: row =>
-              row.isSubmitable ? (
-                <span className='text-primary'>{'No Restriction'}</span>
-              ) : (
-                <span className='text-secondary'>{'Restricted'}</span>
-              ),
-          },
-          {
-            field: 'submissionType',
-            label: 'Tipe',
-            render: row => EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType),
-          },
-          {
             field: 'actions',
             label: 'Aksi',
-            render: row => (
-              <DataGridActionButtonWrapper>
-                <Link
-                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentDetail({
-                    kelasId: loader.kelas?.id ?? '',
-                    mataPelajaranId: loader.mataPelajaran.id,
-                    assignmentId: row.id,
-                  })}
-                >
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getDetailIcon()}
-                    color='info'
-                    label={'Detail'}
-                  />
-                </Link>
-                <Link
-                  to={AppNav.guru.daftarKelasDetailMataPelajaranDetailAssignmentEdit({
-                    kelasId: loader.kelas?.id ?? '',
-                    mataPelajaranId: loader.mataPelajaran.id,
-                    assignmentId: row.id,
-                  })}
-                >
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                  />
-                </Link>
-              </DataGridActionButtonWrapper>
-            ),
+            render: row => {
+              return (
+                <DataGridActionButtonWrapper>
+                  <Link
+                    to={AppNav.siswa.kelasDetailMataPelajaranDetailAssignmentDetail({
+                      kelasId: loader.kelas?.id ?? '',
+                      mataPelajaranId: loader.mataPelajaran.id,
+                      assignmentId: row.id,
+                    })}
+                  >
+                    <DataGridActionButton
+                      icon={DataGridActionButtonHelper.getDetailIcon()}
+                      color='info'
+                      label={'Detail'}
+                    />
+                  </Link>
+                </DataGridActionButtonWrapper>
+              )
+            },
           },
         ]}
         rows={loader.assignments.data}

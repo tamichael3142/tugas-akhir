@@ -104,7 +104,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
           render={({ field }) => (
             <div className='flex flex-row items-center h-full'>
               <Checkbox
-                label='Set submitable'
+                label='Bypass Submission Time'
                 inputProps={{
                   id: 'isSubmitable',
                   checked: field.value,

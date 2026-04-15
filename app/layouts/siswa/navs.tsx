@@ -1,14 +1,16 @@
 import AppNav from '~/navigation'
 import { SidebarItemProps } from '../types'
 
-import { MdDashboard, MdSchedule, MdSportsSoccer } from 'react-icons/md'
+import { MdDashboard, MdSportsSoccer, MdChecklistRtl } from 'react-icons/md'
 import { GrAnnounce } from 'react-icons/gr'
-import { FaPeopleRoof } from 'react-icons/fa6'
+import { PiStudentFill } from 'react-icons/pi'
+import { FaUser } from 'react-icons/fa'
 
 export const siswaNavs: SidebarItemProps[] = [
-  { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.guru.dashboard() },
-  { icon: <MdSchedule />, label: 'Jadwal Mengajar', href: AppNav.guru.jadwalMengajar({}) },
-  { icon: <FaPeopleRoof />, label: 'Daftar Kelas', href: AppNav.guru.daftarKelas() },
-  { icon: <MdSportsSoccer />, label: 'Manage Ekstrakulikuler', href: AppNav.guru.manageEkstrakulikuler() },
-  { icon: <GrAnnounce />, label: 'Master Pengumuman', href: AppNav.guru.masterPengumuman() },
+  { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.siswa.dashboard() },
+  { icon: <PiStudentFill />, label: 'Kelas', href: AppNav.siswa.kelas() },
+  { icon: <MdSportsSoccer />, label: 'Ekstrakulikuler', href: AppNav.siswa.ekstrakulikuler() },
+  { icon: <MdChecklistRtl />, label: 'Absensi', href: AppNav.siswa.absensi() },
+  { icon: <GrAnnounce />, label: 'Pengumuman', href: AppNav.siswa.pengumuman() },
+  { icon: <FaUser />, label: 'Account', href: AppNav.siswa.account() },
 ]

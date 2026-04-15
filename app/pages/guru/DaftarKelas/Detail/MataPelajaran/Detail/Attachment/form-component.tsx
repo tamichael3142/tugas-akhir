@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import { MataPelajaranAttachment } from '@prisma/client'
 
 type Props = {
-  mataPelajaranAttaachment?: MataPelajaranAttachment & { downloadUrl?: string }
+  mataPelajaranAttachment?: MataPelajaranAttachment & { downloadUrl?: string }
 }
 
-export default function AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent(props: Props) {
+export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent(props: Props) {
   function InputWrapper({ children, cutting = 'full' }: { children?: ReactNode; cutting?: 'full' | 'half' }) {
     return (
       <div
@@ -26,13 +26,13 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormC
       <InputWrapper>
         <TextInput
           label='Title'
-          inputProps={{ type: 'text', name: 'title', defaultValue: props.mataPelajaranAttaachment?.title }}
+          inputProps={{ type: 'text', name: 'title', defaultValue: props.mataPelajaranAttachment?.title }}
         />
       </InputWrapper>
       <InputWrapper>
         <TextInput label='File' inputProps={{ type: 'file', name: 'file' }} />
-        {props.mataPelajaranAttaachment?.path && props.mataPelajaranAttaachment.downloadUrl ? (
-          <a target='_blank' rel='noreferrer' href={props.mataPelajaranAttaachment.downloadUrl}>
+        {props.mataPelajaranAttachment?.path && props.mataPelajaranAttachment.downloadUrl ? (
+          <a target='_blank' rel='noreferrer' href={props.mataPelajaranAttachment.downloadUrl}>
             <Button label='Preview' size='sm' color='secondary' className='mt-2 ml-auto' />
           </a>
         ) : null}
@@ -40,7 +40,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormC
       <InputWrapper>
         <TextAreaInput
           label='Description'
-          inputProps={{ name: 'description', defaultValue: props.mataPelajaranAttaachment?.description ?? '' }}
+          inputProps={{ name: 'description', defaultValue: props.mataPelajaranAttachment?.description ?? '' }}
         />
       </InputWrapper>
     </div>

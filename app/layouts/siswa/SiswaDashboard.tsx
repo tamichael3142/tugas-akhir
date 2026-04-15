@@ -92,8 +92,8 @@ export default function SiswaDashboardLayout() {
                 <Link
                   key={`adminDashboard-sidebar-${index}`}
                   to={item.href ?? ''}
-                  className={classNames('rounded-2xl text-left w-full py-2 px-4 cursor-pointer hover:bg-primary/10', {
-                    ['bg-primary text-white hover:!bg-primary/100']: itemClearPath === location.pathname,
+                  className={classNames('rounded-2xl text-left w-full py-2 px-4 cursor-pointer hover:bg-secondary/10', {
+                    ['bg-secondary text-white hover:!bg-secondary/100']: itemClearPath === location.pathname,
                   })}
                   onClick={closeSidebar}
                 >
@@ -111,9 +111,9 @@ export default function SiswaDashboardLayout() {
               onMouseEnter={onAccountHover}
               onMouseLeave={onAccountHoverOut}
               onClick={openPopup}
-              className='p-8 md:p-4 flex flex-row items-center gap-2 cursor-pointer hover:bg-primary/10 duration-300'
+              className='p-8 md:p-4 flex flex-row items-center gap-2 cursor-pointer hover:bg-secondary/10 duration-300'
             >
-              <div className='rounded-full w-10 h-10 bg-primary'></div>
+              <div className='rounded-full w-10 h-10 bg-secondary'></div>
               <div className='flex flex-col justify-center grow'>
                 <p className='line-clamp-1 text-start font-semibold text-xl md:text-lg'>
                   {DBHelpers.akun.getDisplayName(user)}
@@ -126,7 +126,7 @@ export default function SiswaDashboardLayout() {
       </div>
       <button
         className={classNames(
-          'z-20 text-2xl text-white font-semibold absolute top-4 left-[320px] p-4 rounded-full bg-primary flex items-center justify-center md:hidden',
+          'z-20 text-2xl text-white font-semibold absolute top-4 left-[320px] p-4 rounded-full bg-secondary flex items-center justify-center md:hidden',
           {
             ['hidden -z-20']: !openSidebar,
           },

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import AppNav from '~/navigation'
 import { Button } from '~/components/forms'
 import { FaSave } from 'react-icons/fa'
-import AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent from '../form-component'
+import GuruDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent from '../form-component'
 import useAuthStore from '~/store/authStore'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-attachment-edit'
@@ -57,8 +57,8 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
           </div>
           <hr className='my-4' />
 
-          <AdminDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent
-            mataPelajaranAttaachment={loader.attachment}
+          <GuruDaftarKelasDetailMataPelajaranDetailAttachmentFormComponent
+            mataPelajaranAttachment={loader.attachment}
           />
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>

@@ -27,6 +27,13 @@ async function seed() {
           password: await PasswordUtils.hashPassword('ortudummy'),
           role: Role.ORANGTUA,
         },
+        {
+          username: 'siswadummy',
+          firstName: 'Siswa',
+          lastName: 'Dummy',
+          password: await PasswordUtils.hashPassword('siswadummy'),
+          role: Role.ORANGTUA,
+        },
       ],
     })
   } catch (e) {

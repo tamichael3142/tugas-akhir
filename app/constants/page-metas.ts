@@ -94,6 +94,30 @@ const pageMetas = {
     { title: `Manage Absensi - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  siswaDashboard: [
+    { title: `Dashboard - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaKelas: [
+    { title: `Kelas - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaMapelAssignment: [
+    { title: `Assignment - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaMapelAttachment: [
+    { title: `Attachment - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaMapelPenilaian: [
+    { title: `Penilaian - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaMapelPelanggaran: [
+    { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
 }
 
 export default pageMetas

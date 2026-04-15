@@ -12,10 +12,11 @@ async function uploadFile({
   bucket: string
   path: string
   file: File | Blob
-  options?: { upsert?: boolean }
+  options?: { upsert?: boolean; cacheControl?: string }
 }) {
   const { data, error } = await supabase.storage.from(bucket).upload(path, file, {
     upsert: options?.upsert ?? true,
+    cacheControl: options?.cacheControl,
   })
 
   if (error) throw new Error(error.message)
@@ -40,6 +41,27 @@ function getPublicUrl({ bucket, path }: { bucket: string; path: string }) {
 }
 
 /**
+ * Get private URL
+ */
+async function getPrivateUrl({
+  bucket,
+  path,
+  expiresIn = 60, // detik (default 1 menit)
+}: {
+  bucket: string
+  path: string
+  expiresIn?: number
+}) {
+  const { data, error } = await supabase.storage.from(bucket).createSignedUrl(path, expiresIn)
+
+  if (error) {
+    throw error
+  }
+
+  return data.signedUrl
+}
+
+/**
  * List files dalam folder
  */
 async function listFiles({ bucket, folder }: { bucket: string; folder?: string }) {
@@ -55,6 +77,7 @@ const SupabaseStorageUtils = {
   uploadFile,
   deleteFile,
   getPublicUrl,
+  getPrivateUrl,
   listFiles,
 }
 

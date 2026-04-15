@@ -135,7 +135,7 @@ export default function AdminMasterKelasManageJadwalPage() {
           </div>
 
           <div className='overflow-x-auto relative mb-4'>
-            <div className='w-full min-w-xl grid grid-cols-7 mb-1'>
+            <div className='w-full min-w-xl grid grid-cols-6 mb-1'>
               <div className='col-span-1 rounded-tl-lg border h-12 sticky left-0 bg-grey-light/90'></div>
               {loader.days.map((day, dayIdx) => (
                 <div
@@ -181,7 +181,7 @@ export default function AdminMasterKelasManageJadwalPage() {
                         return (
                           <div
                             key={containerKey}
-                            className='col-span-6 border h-12 overflow-auto flex flex-row items-center justify-start md:justify-center px-4'
+                            className='col-span-5 border h-12 overflow-auto flex flex-row items-center justify-start md:justify-center px-4'
                           >
                             <p className='text-center font-semibold'>{getSpecialHourLabel()}</p>
                           </div>

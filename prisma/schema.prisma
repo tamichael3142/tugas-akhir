@@ -146,6 +146,7 @@ model Akun {
   penilaians                         Penilaian[]
   pelanggaransPerMapel               PelanggaranPerMapel[]
 
+  @@index([role])
   @@schema("public")
 }
 
@@ -272,6 +273,7 @@ model Kelas {
   pelanggaransPerMapel      PelanggaranPerMapel[]
   mataPelajaranBeritaAcaras MataPelajaranBeritaAcara[]
 
+  @@index([tahunAjaranId])
   @@schema("public")
 }
 
@@ -369,6 +371,10 @@ model Absensi {
   // ? relations
   siswaTerabsen    AbsensiXSiswa[]
 
+  @@index([kelasId])
+  @@index([semesterAjaranId])
+  @@index([tanggal])
+  @@index([kelasId, tanggal])
   @@schema("public")
 }
 
@@ -396,6 +402,8 @@ model Assignment {
   // ? relations
   submissions     AssignmentSubmission[]
 
+  @@index([kelasId])
+  @@index([mataPelajaranId])
   @@schema("public")
 }
 
@@ -447,6 +455,13 @@ model Penilaian {
   nilai           Decimal?      @default(0)
   remark          String?
 
+  @@unique([kelasId, mataPelajaranId, kompetensiId, siswaId])
+  @@index([kelasId])
+  @@index([mataPelajaranId])
+  @@index([siswaId])
+  @@index([kompetensiId])
+  @@index([kelasId, mataPelajaranId])
+  @@index([siswaId, kelasId])
   @@schema("public")
 }
 
@@ -519,6 +534,12 @@ model JadwalPelajaran {
   kelasId          String
   kelas            Kelas          @relation(fields: [kelasId], references: [id])
 
+  @@unique([dayId, hourId, kelasId, semesterAjaranId])
+  @@index([kelasId])
+  @@index([semesterAjaranId])
+  @@index([dayId])
+  @@index([hourId])
+  @@index([kelasId, semesterAjaranId])
   @@schema("public")
 }
 
@@ -532,6 +553,10 @@ model SiswaPerKelasDanSemester {
   semesterAjaranId String
   semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
 
+  @@unique([siswaId, kelasId, semesterAjaranId])
+  @@index([siswaId])
+  @@index([kelasId])
+  @@index([semesterAjaranId])
   @@schema("public")
 }
 
@@ -558,6 +583,8 @@ model AbsensiXSiswa {
   // ? general
   tipe      TipeAbsensi @default(UNKNOWN)
 
+  @@index([absensiId])
+  @@index([siswaId])
   @@schema("public")
 }
 
@@ -579,6 +606,9 @@ model AssignmentSubmission {
   createdAt        DateTime                   @default(now())
   updatedAt        DateTime                   @default(now())
 
+  @@unique([assignmentId, siswaId])
+  @@index([assignmentId])
+  @@index([siswaId])
   @@schema("public")
 }
 

@@ -42,6 +42,6 @@ export async function loader({
   return { kelas, mataPelajaran } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetail
 }
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentRoute() {
+export default function GuruDaftarKelasDetailMataPelajaranDetailRoute() {
   return <GuruDaftarKelasDetailMataPelajaranDetail />
 }

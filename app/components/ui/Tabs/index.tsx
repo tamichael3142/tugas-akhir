@@ -12,10 +12,11 @@ export type TabsProps = {
   activeItemKey?: TabItem['key']
   onTabClick?: (tabKey: TabItem['key']) => void
   items?: TabItem[]
+  variant?: 'primary' | 'secondary'
 }
 
 export default function Tabs(props: TabsProps) {
-  const { items = [] } = props
+  const { items = [], variant = 'primary' } = props
 
   if (items.length <= 0) return null
   else
@@ -29,8 +30,10 @@ export default function Tabs(props: TabsProps) {
               key={item.key}
               type='button'
               className={classNames('py-2 px-4 cursor-pointer font-semibold select-none duration-100', {
-                ['bg-primary hover:bg-primary/90 text-white']: isActive,
-                ['hover:bg-primary/90 hover:text-white']: !isActive && !item.disabled,
+                ['bg-primary hover:bg-primary/90 text-white']: isActive && variant === 'primary',
+                ['bg-secondary hover:bg-secondary/90 text-white']: isActive && variant === 'secondary',
+                ['hover:bg-primary/90 hover:text-white']: !isActive && !item.disabled && variant === 'primary',
+                ['hover:bg-secondary/90 hover:text-white']: !isActive && !item.disabled && variant === 'secondary',
                 ['!cursor-not-allowed']: item.disabled,
                 ['flex flex-row items-center gap-2']: !!item.icon,
               })}
