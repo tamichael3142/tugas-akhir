@@ -94,7 +94,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
             render: row => format(new Date(row.createdAt), constants.dateFormats.rawDateTimeInput),
           },
           {
-            field: 'tanggalBerakhir',
+            field: 'updatedAt',
             label: 'Updated At',
             render: row => format(new Date(row.updatedAt), constants.dateFormats.rawDateTimeInput),
           },

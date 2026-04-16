@@ -9,6 +9,7 @@ import {
   Kompetensi,
   MataPelajaran,
   MataPelajaranAttachment,
+  PelanggaranPerMapel,
   Penilaian,
   SemesterAjaran,
   TahunAjaran,
@@ -90,4 +91,11 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
   kompetensis: Kompetensi[]
   penilaians: Penilaian[]
   siswa: Akun
+}
+
+/**
+ * * Kelas > Mata Pelajaran > Pelanggaran
+ */
+export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
+  pelanggarans: PaginationReturns<PelanggaranPerMapel>
 }
