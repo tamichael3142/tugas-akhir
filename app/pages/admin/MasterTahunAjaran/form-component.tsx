@@ -29,7 +29,7 @@ export default function AdminMasterTahunAjaranFormComponent() {
 
   function calculateYearValue(newValue: string) {
     return format(
-      new Date(`${Number(newValue) < MIN_YEAR ? MIN_YEAR : Number(newValue) > MAX_YEAR ? MAX_YEAR : newValue}/01/01`),
+      new Date(`${Number(newValue) < MIN_YEAR ? MIN_YEAR : Number(newValue) > MAX_YEAR ? MAX_YEAR : newValue}/06/01`),
       constants.dateFormats.rawDateInput,
     )
   }

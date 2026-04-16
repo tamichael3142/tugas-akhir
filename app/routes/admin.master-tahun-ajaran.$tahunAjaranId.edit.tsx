@@ -36,8 +36,13 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const tahunAjaranId = params.tahunAjaranId as TahunAjaran['id'] | null
 
+    const tahunMulaiDate = new Date(data.tahunMulai)
+    const tepatTahunMulai = new Date(Date.UTC(tahunMulaiDate.getFullYear(), 5, 1, 0, 0, 0, 0))
+    const tahunBerakhirDate = new Date(data.tahunBerakhir)
+    const tepatTahunBerakhir = new Date(Date.UTC(tahunBerakhirDate.getFullYear(), 5, 1, 0, 0, 0, 0))
+
     const existingTahunAjaran = await prisma.tahunAjaran.findFirst({
-      where: { tahunMulai: new Date(data.tahunMulai) },
+      where: { tahunMulai: tepatTahunMulai, tahunBerakhir: tepatTahunBerakhir },
     })
 
     if (existingTahunAjaran && existingTahunAjaran.id !== tahunAjaranId) {
@@ -51,8 +56,8 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         where: { id: tahunAjaranId ?? '' },
         data: {
           nama: data.nama,
-          tahunMulai: new Date(data.tahunMulai),
-          tahunBerakhir: new Date(data.tahunBerakhir),
+          tahunMulai: tepatTahunMulai,
+          tahunBerakhir: tepatTahunBerakhir,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

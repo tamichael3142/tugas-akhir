@@ -25,8 +25,13 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
 
   try {
+    const tahunMulaiDate = new Date(data.tahunMulai)
+    const tepatTahunMulai = new Date(Date.UTC(tahunMulaiDate.getFullYear(), 5, 1, 0, 0, 0, 0))
+    const tahunBerakhirDate = new Date(data.tahunBerakhir)
+    const tepatTahunBerakhir = new Date(Date.UTC(tahunBerakhirDate.getFullYear(), 5, 1, 0, 0, 0, 0))
+
     const existingTahunAjaran = await prisma.tahunAjaran.findFirst({
-      where: { tahunMulai: new Date(data.tahunMulai) },
+      where: { tahunMulai: tepatTahunMulai, tahunBerakhir: tepatTahunBerakhir },
     })
 
     if (existingTahunAjaran) {
@@ -39,8 +44,8 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .create({
         data: {
           ...data,
-          tahunMulai: new Date(data.tahunMulai),
-          tahunBerakhir: new Date(data.tahunBerakhir),
+          tahunMulai: tepatTahunMulai,
+          tahunBerakhir: tepatTahunBerakhir,
           createdById: currUser?.id,
           semesterAjaran: {
             create: [
