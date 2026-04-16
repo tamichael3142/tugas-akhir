@@ -40,7 +40,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
           ...data,
           username: newUsername,
           tanggalLahir: data.tanggalLahir ? new Date(data.tanggalLahir) : null,
-          password: await PasswordUtils.hashPassword(data.password),
+          password: await PasswordUtils.hashPassword(newUsername),
           createdById: currUser?.id,
         },
       })
