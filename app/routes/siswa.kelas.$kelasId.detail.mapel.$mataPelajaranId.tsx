@@ -1,7 +1,8 @@
-import { Kelas, SemesterAjaran, SemesterAjaranUrutan } from '@prisma/client'
+import { Kelas } from '@prisma/client'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
+import DBHelpers from '~/database/helpers'
 import SiswaKelasDetailMataPelajaranDetail from '~/pages/siswa/Kelas/Detail/MataPelajaran/Detail'
 import { LoaderDataSiswaKelasDetailMataPelajaranDetail } from '~/types/loaders-data/siswa'
 import { prisma } from '~/utils/db.server'
@@ -27,12 +28,11 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
 
   const currentTahunAjaran = kelas?.tahunAjaran
 
-  const currentSemesterUrutan = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
-  let currentSemester: SemesterAjaran | null = null
-
-  if (currentTahunAjaran) {
-    currentSemester = currentTahunAjaran.semesterAjaran.find(item => item.urutan === currentSemesterUrutan) ?? null
-  }
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+  const currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+    currentSemesterUrutan,
+    semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+  })
 
   const mataPelajaran = await prisma.mataPelajaran.findUnique({
     where: { id: mataPelajaranId ?? '' },

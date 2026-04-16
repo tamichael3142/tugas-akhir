@@ -6,6 +6,7 @@ import { StaticSelect } from '~/components/forms'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
+import DBHelpers from '~/database/helpers'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
 import { LoaderDataGuruJadwalMengajar } from '~/types/loaders-data/guru'
@@ -68,7 +69,7 @@ export default function GuruJadwalMengajarPage() {
   useEffect(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
     const firstAvailableTahunAjaran = currentTahunAjaran ?? tahunAjarans[0]
-    const currentSemester = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
+    const currentSemester = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
     const firstAvailableSemesterAjaran = firstAvailableTahunAjaran.semesterAjaran.find(
       item => item.urutan === currentSemester,
     )

@@ -3,18 +3,19 @@ import { LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
-import SiswaKelasDetailMataPelajaranDetailAssignmentPage from '~/pages/siswa/Kelas/Detail/MataPelajaran/Detail/Assignment'
-import { LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment } from '~/types/loaders-data/siswa'
+import SiswaKelasDetailMataPelajaranDetailAttachmentPage from '~/pages/siswa/Kelas/Detail/MataPelajaran/Detail/Attachment'
+import mapelAttachmentStorageManager from '~/storage-manager/mapelAttachment.storageManager.server'
+import { LoaderDataSiswaKelasDetailMataPelajaranDetailAttachment } from '~/types/loaders-data/siswa'
 import { prisma } from '~/utils/db.server'
 import { getPaginatedData } from '~/utils/pagination.utils.server'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.siswaMapelAssignment
+  return constants.pageMetas.siswaMapelAttachment
 }
 export async function loader({
   request,
   params,
-}: LoaderFunctionArgs): Promise<LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment> {
+}: LoaderFunctionArgs): Promise<LoaderDataSiswaKelasDetailMataPelajaranDetailAttachment> {
   const kelasId = params.kelasId as Kelas['id'] | null
   const mataPelajaranId = params.mataPelajaranId as MataPelajaran['id'] | null
 
@@ -50,9 +51,11 @@ export async function loader({
     },
   })
 
-  const assignments = await getPaginatedData({
+  const storageManager = mapelAttachmentStorageManager()
+
+  const attachments = await getPaginatedData({
     request,
-    model: prisma.assignment,
+    model: prisma.mataPelajaranAttachment,
     options: {
       defaultLimit: 10,
       where: {
@@ -73,7 +76,7 @@ export async function loader({
 
         return where
       },
-      orderBy: [{ tanggalMulai: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [{ createdAt: 'desc' }],
     },
   })
 
@@ -82,10 +85,16 @@ export async function loader({
     currentTahunAjaran,
     currentSemester,
     mataPelajaran,
-    assignments,
-  } as LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment
+    attachments: {
+      ...attachments,
+      data: attachments.data.map(item => ({
+        ...item,
+        downloadUrl: storageManager.getDownloadUrl({ fullPath: item.path }),
+      })),
+    },
+  } as LoaderDataSiswaKelasDetailMataPelajaranDetailAttachment
 }
 
-export default function SiswaKelasDetailMataPelajaranDetailAssignmentRoute() {
-  return <SiswaKelasDetailMataPelajaranDetailAssignmentPage />
+export default function SiswaKelasDetailMataPelajaranDetailAttachmentRoute() {
+  return <SiswaKelasDetailMataPelajaranDetailAttachmentPage />
 }

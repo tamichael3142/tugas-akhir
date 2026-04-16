@@ -5,8 +5,6 @@ import {
   AssignmentSubmissionType,
   Kelas,
   MataPelajaran,
-  SemesterAjaran,
-  SemesterAjaranUrutan,
 } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
@@ -18,6 +16,7 @@ import { LoaderDataSiswaKelasDetailMataPelajaranDetailAssignmentDetail } from '~
 import SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage from '~/pages/siswa/Kelas/Detail/MataPelajaran/Detail/Assignment/Detail'
 import assignmentSubmissionStorageManager from '~/storage-manager/assignmentSubmission.storageManager.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
+import DBHelpers from '~/database/helpers'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.siswaMapelAssignment
@@ -45,12 +44,11 @@ export async function loader({
 
   const currentTahunAjaran = kelas?.tahunAjaran
 
-  const currentSemesterUrutan = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
-  let currentSemester: SemesterAjaran | null = null
-
-  if (currentTahunAjaran) {
-    currentSemester = currentTahunAjaran.semesterAjaran.find(item => item.urutan === currentSemesterUrutan) ?? null
-  }
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+  const currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+    currentSemesterUrutan,
+    semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+  })
 
   const mataPelajaran = await prisma.mataPelajaran.findUnique({
     where: { id: mataPelajaranId ?? '' },

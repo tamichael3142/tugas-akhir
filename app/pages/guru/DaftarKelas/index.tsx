@@ -54,7 +54,7 @@ export default function GuruDaftarKelasPage() {
   const loadCurrentPeriod = useCallback(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
     const firstAvailableTahunAjaran = loader.currentTahunAjaran ?? loader.tahunAjarans[0]
-    const currentSemester = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
+    const currentSemester = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
     const firstAvailableSemesterAjaran = firstAvailableTahunAjaran.semesterAjaran.find(
       item => item.urutan === currentSemester,
     )

@@ -1,7 +1,7 @@
-import { SemesterAjaran, SemesterAjaranUrutan } from '@prisma/client'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
+import DBHelpers from '~/database/helpers'
 import SiswaKelasPage from '~/pages/siswa/Kelas'
 import { LoaderDataSiswaKelas } from '~/types/loaders-data/siswa'
 import { requireAuthCookie } from '~/utils/auth.utils'
@@ -23,18 +23,17 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     include: { semesterAjaran: true },
   })
 
-  const currentSemesterUrutan = new Date().getMonth() < 6 ? SemesterAjaranUrutan.DUA : SemesterAjaranUrutan.SATU
-  let currentSemester: SemesterAjaran | null = null
-
   if (!currentTahunAjaran)
     currentTahunAjaran = await prisma.tahunAjaran.findFirst({
       include: { semesterAjaran: true },
       orderBy: { createdAt: 'desc' },
     })
 
-  if (currentTahunAjaran) {
-    currentSemester = currentTahunAjaran.semesterAjaran.find(item => item.urutan === currentSemesterUrutan) ?? null
-  }
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+  const currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+    currentSemesterUrutan,
+    semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+  })
 
   const where = {
     deletedAt: null,
