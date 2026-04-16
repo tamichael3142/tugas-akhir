@@ -6,8 +6,10 @@ import {
   Hour,
   JadwalPelajaran,
   Kelas,
+  Kompetensi,
   MataPelajaran,
   MataPelajaranAttachment,
+  Penilaian,
   SemesterAjaran,
   TahunAjaran,
 } from '@prisma/client'
@@ -81,7 +83,11 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailAttachment = LoaderData
   attachments: PaginationReturns<MataPelajaranAttachment & { downloadUrl?: string }>
 }
 
-export type LoaderDataSiswaKelasDetailMataPelajaranDetailAttachmentDetail =
-  LoaderDataSiswaKelasDetailMataPelajaranDetail & {
-    attachment: MataPelajaranAttachment
-  }
+/**
+ * * Kelas > Mata Pelajaran > Penilaian
+ */
+export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
+  kompetensis: Kompetensi[]
+  penilaians: Penilaian[]
+  siswa: Akun
+}
