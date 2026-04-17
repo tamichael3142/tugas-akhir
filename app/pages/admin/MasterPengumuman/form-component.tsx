@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form'
 import { AdminMasterPengumumanCreateFormType } from './form-types'
 import { useRemixFormContext } from 'remix-hook-form'
-import { TextAreaInput, TextInput } from '~/components/forms'
+import { QuillEditor, TextInput } from '~/components/forms'
 import { ReactNode } from 'react'
 
 export default function AdminMasterPengumumanFormComponent() {
@@ -24,7 +24,9 @@ export default function AdminMasterPengumumanFormComponent() {
         <Controller
           control={formHook.control}
           name={'content'}
-          render={({ field }) => <TextAreaInput label='Content' inputProps={{ ...field }} />}
+          render={({ field }) => (
+            <QuillEditor label='Content' name='content' value={field.value} onChange={field.onChange} />
+          )}
         />
       </InputWrapper>
     </div>

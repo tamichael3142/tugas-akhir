@@ -16,6 +16,7 @@ import { Fragment } from 'react/jsx-runtime'
 import { useEffect } from 'react'
 import { ActionDataAdminMasterPengumumanDelete } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
+import HtmlUtils from '~/utils/html.utils'
 
 const sectionPrefix = 'admin-master-pengumuman'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -93,7 +94,16 @@ export default function AdminMasterPengumumanPage() {
         id={`${sectionPrefix}-data-grid`}
         columns={[
           { field: 'nama', label: 'Nama' },
-          { field: 'content', label: 'Konten' },
+          {
+            field: 'content',
+            label: 'Konten',
+            render: row => (
+              <div
+                className='line-clamp-2'
+                dangerouslySetInnerHTML={{ __html: HtmlUtils.sanitizeHtml(row.content) }}
+              ></div>
+            ),
+          },
           {
             field: 'createdBy',
             label: 'Pembuat',

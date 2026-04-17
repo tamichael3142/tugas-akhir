@@ -145,6 +145,15 @@ function absensi() {
 }
 
 /*
+ * Siswa's nilai level routes
+ */
+const nilaiUrl = '/nilai'
+
+function nilai() {
+  return `${baseUrl}${nilaiUrl}`
+}
+
+/*
  * Siswa's pengumuman level routes
  */
 const pengumumanUrl = '/pengumuman'
@@ -180,6 +189,7 @@ const siswa = {
   ekstrakulikuler,
   ekstrakulikulerDetail,
   absensi,
+  nilai,
   pengumuman,
   account,
 }

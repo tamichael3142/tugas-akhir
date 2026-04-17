@@ -28,6 +28,8 @@
     "date-fns": "^4.1.0",
     "express": "^4.21.2",
     "isbot": "^4.1.0",
+    "isomorphic-dompurify": "^3.9.0",
+    "quill": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.52.1",

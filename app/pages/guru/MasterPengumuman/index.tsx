@@ -17,6 +17,7 @@ import { useEffect } from 'react'
 import { ActionDataGuruMasterPengumumanDelete } from '~/types/actions-data/guru'
 import useAuthStore from '~/store/authStore'
 import DBHelpers from '~/database/helpers'
+import HtmlUtils from '~/utils/html.utils'
 
 const sectionPrefix = 'guru-master-pengumuman'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -95,7 +96,16 @@ export default function GuruMasterPengumumanPage() {
         id={`${sectionPrefix}-data-grid`}
         columns={[
           { field: 'nama', label: 'Nama' },
-          { field: 'content', label: 'Konten' },
+          {
+            field: 'content',
+            label: 'Konten',
+            render: row => (
+              <div
+                className='line-clamp-2'
+                dangerouslySetInnerHTML={{ __html: HtmlUtils.sanitizeHtml(row.content) }}
+              ></div>
+            ),
+          },
           {
             field: 'createdBy',
             label: 'Pembuat',
