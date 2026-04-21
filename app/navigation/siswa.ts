@@ -175,6 +175,14 @@ function account() {
   return `${baseUrl}${accountUrl}`
 }
 
+function accountChangePassword() {
+  return `${baseUrl}${accountUrl}/change-password`
+}
+
+function accountPelanggaran() {
+  return `${baseUrl}${accountUrl}/pelanggaran`
+}
+
 const siswa = {
   baseUrl,
   dashboard,
@@ -197,6 +205,8 @@ const siswa = {
   pengumuman,
   pengumumanDetail,
   account,
+  accountChangePassword,
+  accountPelanggaran,
 }
 
 export default siswa

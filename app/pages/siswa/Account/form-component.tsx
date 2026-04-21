@@ -6,12 +6,16 @@ import { GolonganDarah, Kewarganegaraan } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SiswaAccountSelfUpdateFormType } from './form'
 import { Akun } from '@prisma/client'
+import { useNavigate } from '@remix-run/react'
+import AppNav from '~/navigation'
 
 type Props = {
   account: Akun & { profileImageObjectUrl?: string }
 }
 
 export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
+  const navigate = useNavigate()
+
   const formHook = useRemixFormContext<SiswaAccountSelfUpdateFormType>()
 
   function InputWrapper({ children }: { children?: ReactNode }) {
@@ -20,6 +24,43 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
 
   return (
     <div className='grid grid-cols-2 gap-x-8 gap-y-2'>
+      <div className='flex flex-row items-center flex-wrap gap-4 col-span-2'>
+        <div>
+          {props.account.profileImageObjectUrl ? (
+            <img
+              src={props.account.profileImageObjectUrl}
+              alt={`${props.account.firstName.charAt(0)}${props.account.lastName.charAt(0)}`}
+              className='w-12 h-12 rounded-full aspect-square bg-secondary'
+            />
+          ) : (
+            <div className='w-12 h-12 rounded-full aspect-square bg-secondary flex flex-row items-center justify-center text-white'>
+              {`${props.account.firstName.charAt(0)}${props.account.lastName.charAt(0)}`}
+            </div>
+          )}
+        </div>
+        <div>
+          <Button label='Ubah Profile Image' size='sm' color='secondary' variant='text' />
+        </div>
+        <div>
+          <Button
+            label='Ubah Password'
+            size='sm'
+            variant='outlined'
+            color='secondary'
+            buttonProps={{ onClick: () => navigate(AppNav.siswa.accountChangePassword()) }}
+          />
+        </div>
+        <div>
+          <Button
+            label='Pelanggaran'
+            size='sm'
+            color='primary'
+            variant='outlined'
+            buttonProps={{ onClick: () => navigate(AppNav.siswa.accountPelanggaran()) }}
+          />
+        </div>
+      </div>
+
       <InputWrapper>
         <Controller
           control={formHook.control}
@@ -80,13 +121,6 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
           )}
         />
       </InputWrapper>
-
-      <div className='flex flex-row flex-wrap gap-4 mt-4'>
-        <div>
-          <img src={props.account.profileImageObjectUrl} alt='' />
-        </div>
-        <Button label='Ubah Password' size='sm' />
-      </div>
     </div>
   )
 }

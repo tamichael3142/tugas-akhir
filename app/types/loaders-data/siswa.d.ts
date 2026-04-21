@@ -119,3 +119,8 @@ export type LoaderDataSiswaPengumumanDetail = {
 export type LoaderDataSiswaAccount = CurrentTahunAndSemesterAjaran & {
   account: Akun & { profileImageObjectUrl?: string }
 }
+
+export type LoaderDataSiswaAccountPelanggaran = CurrentTahunAndSemesterAjaran & {
+  totalPoint: number
+  pelanggarans: PaginationReturns<PelanggaranPerMapel & { kelas: Kelas; mataPelajaran: MataPelajaran }>
+}

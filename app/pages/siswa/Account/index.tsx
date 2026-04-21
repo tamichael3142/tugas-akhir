@@ -66,10 +66,10 @@ export default function SiswaAccountPage() {
 
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Reset form' buttonProps={{ onClick: resetForm }} />
+            <Button variant='text' color='primary' label='Reset form' buttonProps={{ onClick: resetForm }} />
             <Button
               variant='contained'
-              color='primary'
+              color='secondary'
               startIcon={<FaSave />}
               label='Simpan'
               buttonProps={{ type: 'submit' }}
