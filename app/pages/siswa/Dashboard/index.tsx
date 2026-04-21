@@ -90,7 +90,9 @@ export default function SiswaDashboardPage() {
                                   {currJadwalPelajaran.kelas ? (
                                     <Link
                                       className='hover:text-secondary'
-                                      to={AppNav.siswa.kelasDetail({ kelasId: currJadwalPelajaran.kelas.id })}
+                                      to={AppNav.siswa.kelasDetailMataPelajaran({
+                                        kelasId: currJadwalPelajaran.kelas.id,
+                                      })}
                                       target='_blank'
                                       rel='noreferrer'
                                     >

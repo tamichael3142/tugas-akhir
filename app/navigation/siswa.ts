@@ -1,4 +1,4 @@
-import { Assignment, Ekstrakulikuler, Kelas, MataPelajaran, MataPelajaranAttachment } from '@prisma/client'
+import { Assignment, Ekstrakulikuler, Kelas, MataPelajaran, MataPelajaranAttachment, Pengumuman } from '@prisma/client'
 
 const baseUrl = '/siswa'
 
@@ -162,6 +162,10 @@ function pengumuman() {
   return `${baseUrl}${pengumumanUrl}`
 }
 
+function pengumumanDetail({ pengumumanId }: { pengumumanId: Pengumuman['id'] }) {
+  return `${baseUrl}${pengumumanUrl}/${pengumumanId}/detail`
+}
+
 /*
  * Siswa's account level routes
  */
@@ -191,6 +195,7 @@ const siswa = {
   absensi,
   nilai,
   pengumuman,
+  pengumumanDetail,
   account,
 }
 

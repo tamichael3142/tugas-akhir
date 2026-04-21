@@ -10,6 +10,7 @@ import {
   MataPelajaran,
   MataPelajaranAttachment,
   PelanggaranPerMapel,
+  Pengumuman,
   Penilaian,
   SemesterAjaran,
   TahunAjaran,
@@ -98,4 +99,15 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   pelanggarans: PaginationReturns<PelanggaranPerMapel>
+}
+
+/**
+ * * Pengumuman
+ */
+export type LoaderDataSiswaPengumuman = CurrentTahunAndSemesterAjaran & {
+  pengumumans?: PaginationReturns<Pengumuman>
+}
+
+export type LoaderDataSiswaPengumumanDetail = {
+  pengumuman: Pengumuman
 }
