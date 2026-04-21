@@ -21,6 +21,11 @@ export type LoaderDataSiswa = {
   user: Akun | null
 }
 
+type CurrentTahunAndSemesterAjaran = {
+  currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null
+  currentSemester: SemesterAjaran | null
+}
+
 /**
  * * Dashboard
  */
@@ -34,10 +39,6 @@ export type LoaderDataSiswaIndex = {
 /**
  * * Kelas
  */
-type CurrentTahunAndSemesterAjaran = {
-  currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null
-  currentSemester: SemesterAjaran | null
-}
 
 export type LoaderDataSiswaKelas = CurrentTahunAndSemesterAjaran & {
   kelass?: PaginationReturns<
@@ -104,10 +105,17 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDat
 /**
  * * Pengumuman
  */
-export type LoaderDataSiswaPengumuman = CurrentTahunAndSemesterAjaran & {
+export type LoaderDataSiswaPengumuman = {
   pengumumans?: PaginationReturns<Pengumuman>
 }
 
 export type LoaderDataSiswaPengumumanDetail = {
   pengumuman: Pengumuman
+}
+
+/**
+ * * Account
+ */
+export type LoaderDataSiswaAccount = CurrentTahunAndSemesterAjaran & {
+  account: Akun & { profileImageObjectUrl?: string }
 }

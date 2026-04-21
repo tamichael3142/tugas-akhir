@@ -101,6 +101,7 @@ model Akun {
   golonganDarah                      GolonganDarah                        @default(UNKNOWN)
   kewarganegaraan                    Kewarganegaraan                      @default(UNKNOWN)
   point                              Int                                  @default(0)
+  profileImageObjectPath             String?
   // ? meta data
   updatedAt                          DateTime                             @default(now())
   createdAt                          DateTime                             @default(now())

@@ -18,7 +18,6 @@ export default function SiswaPengumumanDetailPage() {
     >
       <Card>
         <div
-          // className='ql-editor p-0'
           className='prose prose-sm md:prose-base max-w-none'
           dangerouslySetInnerHTML={{ __html: HtmlUtils.sanitizeHtml(loader.pengumuman.content) }}
         ></div>

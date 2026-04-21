@@ -122,6 +122,10 @@ const pageMetas = {
     { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
+  siswaAccount: [
+    { title: `Akun - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
 }
 
 export default pageMetas
