@@ -2,21 +2,22 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
-import SiswaAccountPage from '~/pages/siswa/Account'
 import akunProfileStorageManager from '~/storage-manager/akunProfile.storageManager.server'
-import { ActionDataSiswaAccountSelfUpdate } from '~/types/actions-data/siswa'
-import { LoaderDataSiswaAccount } from '~/types/loaders-data/siswa'
+import { ActionDataSiswaAccountChangePassword } from '~/types/actions-data/siswa'
+import { LoaderDataSiswaAccountChangePassword } from '~/types/loaders-data/siswa'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
-import { resolver, SiswaAccountSelfUpdateFormType } from '~/pages/siswa/Account/form'
 import { getValidatedFormData } from 'remix-hook-form'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
+import { SiswaAccountChangePasswordFormType, resolver } from '~/pages/siswa/Account/ChangePassword/form'
+import PasswordUtils from '~/utils/password.utils'
+import SiswaAccountChangePasswordPage from '~/pages/siswa/Account/ChangePassword'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.siswaAccount
 }
 
-export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataSiswaAccount> {
+export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataSiswaAccountChangePassword> {
   const userId = await requireAuthCookie(request)
 
   const storageManager = akunProfileStorageManager()
@@ -52,11 +53,11 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         ? await storageManager.getDownloadUrl({ fullPath: account.profileImageObjectPath })
         : undefined,
     },
-  } as LoaderDataSiswaAccount
+  } as LoaderDataSiswaAccountChangePassword
 }
 
-export async function action({ request }: ActionFunctionArgs): Promise<ActionDataSiswaAccountSelfUpdate> {
-  const { errors, data } = await getValidatedFormData<SiswaAccountSelfUpdateFormType>(request, resolver)
+export async function action({ request }: ActionFunctionArgs): Promise<ActionDataSiswaAccountChangePassword> {
+  const { errors, data } = await getValidatedFormData<SiswaAccountChangePasswordFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -66,16 +67,16 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
 
   try {
+    if (data.password !== data.passwordVerification)
+      throw {
+        message: 'Verifikasi password tidak sama!',
+      }
+
     return await prisma.akun
       .update({
         where: { id: userId ?? '' },
         data: {
-          email: data.email,
-          tempatLahir: data.tempatLahir,
-          alamat: data.alamat,
-          agama: data.agama,
-          golonganDarah: data.golonganDarah,
-          kewarganegaraan: data.kewarganegaraan,
+          password: await PasswordUtils.hashPassword(data.password),
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },
@@ -83,7 +84,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(() => {
         return {
           success: true,
-          message: 'Akun berhasil diupdate!',
+          message: 'Password akun berhasil diupdate!',
           data: {},
         }
       })
@@ -103,6 +104,6 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   }
 }
 
-export default function SiswaDaftarAccountRoute() {
-  return <SiswaAccountPage />
+export default function SiswaDaftarAccountChangePasswordRoute() {
+  return <SiswaAccountChangePasswordPage />
 }

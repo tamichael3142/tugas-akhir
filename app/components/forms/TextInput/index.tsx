@@ -5,6 +5,9 @@ export type TextInputProps = {
   label?: ReactNode
   className?: string
   inputProps?: ComponentProps<'input'>
+  endIcon?: ReactNode
+  isError?: boolean
+  helperText?: string
 }
 
 export default function TextInput(props: TextInputProps) {
@@ -44,7 +47,18 @@ export default function TextInput(props: TextInputProps) {
           }}
           {...restInputProps}
         />
+        {props.endIcon}
       </div>
+      {props.helperText ? (
+        <p
+          className={classNames('text-xs', {
+            ['text-neutral-500']: !props.isError,
+            ['text-red-500']: props.isError,
+          })}
+        >
+          {props.helperText}
+        </p>
+      ) : null}
     </div>
   )
 }
