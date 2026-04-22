@@ -1,20 +1,25 @@
 import { Controller } from 'react-hook-form'
 import { useRemixFormContext } from 'remix-hook-form'
 import { Button, StaticSelect, TextInput } from '~/components/forms'
-import { ReactNode } from 'react'
+import { ReactNode, useRef } from 'react'
 import { GolonganDarah, Kewarganegaraan } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SiswaAccountSelfUpdateFormType } from './form'
 import { Akun } from '@prisma/client'
-import { useNavigate } from '@remix-run/react'
+import { Form, useNavigate } from '@remix-run/react'
 import AppNav from '~/navigation'
 
 type Props = {
   account: Akun & { profileImageObjectUrl?: string }
 }
 
+const importExcelFormId = 'siswa-account-change-profile-image-form'
+
 export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
   const navigate = useNavigate()
+
+  const importExcelFormRef = useRef<HTMLFormElement>(null)
+  const importExcelInputRef = useRef<HTMLInputElement>(null)
 
   const formHook = useRemixFormContext<SiswaAccountSelfUpdateFormType>()
 
@@ -25,12 +30,30 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
   return (
     <div className='grid grid-cols-2 gap-x-8 gap-y-2'>
       <div className='flex flex-row items-center flex-wrap gap-4 col-span-2'>
+        <Form
+          id={importExcelFormId}
+          method='post'
+          encType='multipart/form-data'
+          action={AppNav.siswaAction.accountUploadProfileImage()}
+          ref={importExcelFormRef}
+        >
+          <input
+            type='file'
+            name='file'
+            hidden
+            ref={importExcelInputRef}
+            accept='image/*'
+            onChange={() => importExcelFormRef.current?.submit()}
+          />
+        </Form>
+
         <div>
           {props.account.profileImageObjectUrl ? (
             <img
               src={props.account.profileImageObjectUrl}
               alt={`${props.account.firstName.charAt(0)}${props.account.lastName.charAt(0)}`}
-              className='w-12 h-12 rounded-full aspect-square bg-secondary'
+              loading='lazy'
+              className='w-12 h-12 rounded-full aspect-square bg-secondary border border-secondary'
             />
           ) : (
             <div className='w-12 h-12 rounded-full aspect-square bg-secondary flex flex-row items-center justify-center text-white'>
@@ -39,7 +62,14 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
           )}
         </div>
         <div>
-          <Button label='Ubah Profile Image' size='sm' color='secondary' variant='text' />
+          <Button
+            key={importExcelFormId}
+            label='Ubah Profile Image'
+            size='sm'
+            color='secondary'
+            variant='outlined'
+            buttonProps={{ onClick: () => importExcelInputRef.current?.click() }}
+          />
         </div>
         <div>
           <Button

@@ -51,10 +51,13 @@ export default function assignmentSubmissionStorageManager() {
   }
 
   const getDownloadUrl = async (params: { fullPath: string }) => {
-    return await storage.getPrivateUrl({
-      bucket: BUCKETS.ASSIGNMENT_SUBMISSION,
-      path: params.fullPath,
-    })
+    return await storage
+      .getPrivateUrl({
+        bucket: BUCKETS.ASSIGNMENT_SUBMISSION,
+        path: params.fullPath,
+      })
+      .then(res => res)
+      .catch(() => null)
   }
 
   const deleteFile = async (params: { fullPath: string }) => {

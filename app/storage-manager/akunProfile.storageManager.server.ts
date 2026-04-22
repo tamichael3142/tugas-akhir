@@ -12,7 +12,7 @@ type AkunProfileUploadType = {
 
 export default function akunProfileStorageManager() {
   const getFilePath = ({ akunId, extension }: { akunId: string; extension?: string }) => {
-    let result = `${akunId}/profile`
+    let result = `profile/${akunId}`
     if (extension) result += `.${extension}`
     return result
   }
@@ -32,10 +32,13 @@ export default function akunProfileStorageManager() {
   }
 
   const getDownloadUrl = async (params: { fullPath: string }) => {
-    return await storage.getPrivateUrl({
-      bucket: BUCKETS.AKUN_PROFILE,
-      path: params.fullPath,
-    })
+    return await storage
+      .getPrivateUrl({
+        bucket: BUCKETS.AKUN_PROFILE,
+        path: params.fullPath,
+      })
+      .then(res => res)
+      .catch(() => null)
   }
 
   const deleteFile = async (params: { fullPath: string }) => {

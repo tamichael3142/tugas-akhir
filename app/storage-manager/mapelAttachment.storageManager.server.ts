@@ -47,10 +47,12 @@ export default function mapelAttachmentStorageManager() {
   }
 
   const getDownloadUrl = (params: { fullPath: string }) => {
-    return storage.getPublicUrl({
-      bucket: BUCKETS.MAPEL_ATTACHMENT,
-      path: params.fullPath,
-    })
+    return (
+      storage.getPublicUrl({
+        bucket: BUCKETS.MAPEL_ATTACHMENT,
+        path: params.fullPath,
+      }) ?? ''
+    )
   }
 
   const deleteFile = async (params: { fullPath: string }) => {
