@@ -28,7 +28,13 @@ export type LoaderDataGuru = {
 /**
  * * Dashboard
  */
-// export type LoaderDataGuruIndex = {}
+export type LoaderDataGuruDashboard = {
+  currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null
+  currentSemester: SemesterAjaran | null
+  days?: Days[]
+  hours?: Hour[]
+  jadwalPelajarans?: (JadwalPelajaran & { mataPelajaran: MataPelajaran | null; kelas: Kelas | null })[]
+}
 
 /**
  * * Jadwal Mengajar

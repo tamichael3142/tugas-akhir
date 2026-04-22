@@ -3,7 +3,7 @@ import * as z from 'zod'
 
 export const validaionSchema = z
   .object({
-    password: z.string().min(2),
+    password: z.string().min(8, 'Password minimal 8 karakter').regex(/\d/, 'Password harus mengandung angka'),
     passwordVerification: z.string(),
   })
   .refine(data => data.password === data.passwordVerification, {

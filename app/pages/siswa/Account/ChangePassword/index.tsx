@@ -22,6 +22,7 @@ export default function SiswaAccountChangePasswordPage() {
   const formHook = useRemixForm<SiswaAccountChangePasswordFormType>({
     defaultValues,
     resolver,
+    mode: 'onChange',
   })
 
   function resetForm() {

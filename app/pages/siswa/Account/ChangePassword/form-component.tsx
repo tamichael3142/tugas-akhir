@@ -21,13 +21,15 @@ export default function SiswaAccountSelfUpdateFormComponent() {
         <Controller
           control={formHook.control}
           name={'password'}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <TextInput
               label='Password'
               inputProps={{
                 ...field,
                 type: passwordVisible ? 'text' : 'password',
               }}
+              isError={!!fieldState.error}
+              helperText={fieldState.error?.message}
               endIcon={
                 <Button
                   label={passwordVisible ? <FaEye /> : <FaEyeSlash />}

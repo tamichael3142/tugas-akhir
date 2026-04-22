@@ -49,3 +49,11 @@ export enum AssignmentSubmissionStatus {
   ON_PROGRESS = 'ON_PROGRESS',
   SUBMITTED = 'SUBMITTED',
 }
+
+export enum DayID {
+  MON = 'SENIN',
+  TUE = 'SELASA',
+  WED = 'RABU',
+  THU = 'KAMIS',
+  FRI = 'JUMAT',
+}
