@@ -30,7 +30,6 @@ type CurrentTahunAndSemesterAjaran = {
  * * Dashboard
  */
 export type LoaderDataSiswaIndex = {
-  // currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null
   days?: Days[]
   hours?: Hour[]
   jadwalPelajarans?: (JadwalPelajaran & { mataPelajaran: MataPelajaran | null; kelas: Kelas | null })[]

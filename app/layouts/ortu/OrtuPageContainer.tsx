@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { Fragment, ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { IoMenuSharp } from 'react-icons/io5'
-import useSiswaPageStore from '~/store/siswaPageStore'
+import useOrtuPageStore from '~/store/ortuPageStore'
 
 interface Props {
   title?: string
@@ -11,15 +11,15 @@ interface Props {
   className?: string
 }
 
-export default function SiswaPageContainer(props: Props) {
-  const title = useSiswaPageStore(state => state.title)
+export default function OrtuPageContainer(props: Props) {
+  const title = useOrtuPageStore(state => state.title)
 
   return (
     <Fragment>
       <div className={classNames(props.className)}>
         <div className='p-4 md:px-8 sticky top-0 bg-grey-light z-50'>
           <div className='pb-2 md:pb-4 border-b-2 border-neutral-200 flex flex-row items-center gap-2 md:gap-4'>
-            <button className='md:hidden' onClick={() => useSiswaPageStore.setState({ openSidebar: true })}>
+            <button className='md:hidden' onClick={() => useOrtuPageStore.setState({ openSidebar: true })}>
               <IoMenuSharp className='text-2xl text-secondary' />
             </button>
             <h1 className='text-2xl font-semibold grow line-clamp-1' title={title ?? props.title}>

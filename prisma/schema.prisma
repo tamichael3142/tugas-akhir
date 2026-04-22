@@ -146,6 +146,8 @@ model Akun {
   assignmentSubmissions              AssignmentSubmission[]
   penilaians                         Penilaian[]
   pelanggaransPerMapel               PelanggaranPerMapel[]
+  children                           AkunChildren[]                       @relation(name: "children")
+  parents                            AkunChildren[]                       @relation(name: "parents")
 
   @@index([role])
   @@schema("public")
@@ -609,6 +611,22 @@ model AssignmentSubmission {
 
   @@unique([assignmentId, siswaId])
   @@index([assignmentId])
+  @@index([siswaId])
+  @@schema("public")
+}
+
+model AkunChildren {
+  id        String   @id @default(cuid())
+  // ? credentials
+  parentId  String
+  parent    Akun     @relation(fields: [parentId], references: [id], name: "children")
+  siswaId   String
+  siswa     Akun     @relation(fields: [siswaId], references: [id], name: "parents")
+  // ? meta data
+  createdAt DateTime @default(now())
+
+  @@unique([parentId, siswaId])
+  @@index([parentId])
   @@index([siswaId])
   @@schema("public")
 }

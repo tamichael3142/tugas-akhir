@@ -126,6 +126,10 @@ const pageMetas = {
     { title: `Akun - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
+  ortuDashboard: [
+    { title: `Dashboard - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs orang tua SBBS' },
+  ],
 }
 
 export default pageMetas

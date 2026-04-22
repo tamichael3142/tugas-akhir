@@ -404,6 +404,19 @@ function manageAbsensiMutate({ absensiId }: { absensiId: Absensi['id'] }) {
   return `${baseUrl}${manageAbsensiUrl}/${absensiId}/mutate`
 }
 
+/*
+ * Guru's account level routes
+ */
+const accountUrl = '/account'
+
+function account() {
+  return `${baseUrl}${accountUrl}`
+}
+
+function accountChangePassword() {
+  return `${baseUrl}${accountUrl}/change-password`
+}
+
 const guru = {
   baseUrl,
   dashboard,
@@ -450,6 +463,8 @@ const guru = {
   manageAbsensiCreate,
   manageAbsensiEdit,
   manageAbsensiMutate,
+  account,
+  accountChangePassword,
 }
 
 export default guru
