@@ -3,7 +3,7 @@ import * as z from 'zod'
 import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   deletedTempAkunIds: z.array(z.string()),
   newUsers: z.array(
     z.object({
@@ -25,9 +25,9 @@ export const validaionSchema = z.object({
   ),
 })
 
-export type AdminDashboardInsertBulkAkunFormType = z.infer<typeof validaionSchema>
+export type AdminDashboardInsertBulkAkunFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: AdminDashboardInsertBulkAkunFormType['newUsers'][0] = {
   tempAkunId: null,

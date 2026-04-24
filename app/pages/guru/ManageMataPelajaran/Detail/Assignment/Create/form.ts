@@ -5,7 +5,7 @@ import * as z from 'zod'
 import constants from '~/constants'
 import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   title: z.string().min(2),
   description: z.string(),
   tanggalMulai: z.string(),
@@ -15,9 +15,9 @@ export const validaionSchema = z.object({
   mataPelajaranId: z.string().min(2),
 })
 
-export type GuruManageMataPelajaranDetailAssignmentCreateFormType = z.infer<typeof validaionSchema>
+export type GuruManageMataPelajaranDetailAssignmentCreateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyValues: GuruManageMataPelajaranDetailAssignmentCreateFormType = {
   title: '',

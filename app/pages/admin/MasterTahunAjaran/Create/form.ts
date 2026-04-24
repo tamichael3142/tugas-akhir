@@ -4,15 +4,15 @@ import { addYears, format } from 'date-fns'
 import * as z from 'zod'
 import constants from '~/constants'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   tahunMulai: z.string(),
   tahunBerakhir: z.string(),
   nama: z.string().min(2),
 })
 
-export type AdminMasterTahunAjaranCreateFormType = z.infer<typeof validaionSchema>
+export type AdminMasterTahunAjaranCreateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 const thisYear = new Date()
 const nextYear = addYears(new Date(), 1)

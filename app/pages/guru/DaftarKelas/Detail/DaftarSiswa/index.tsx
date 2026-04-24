@@ -9,7 +9,6 @@ import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/W
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import AppNav from '~/navigation'
-import { Kelas } from '@prisma/client'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-daftar-siswa'
@@ -68,7 +67,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='!p-0 mt-4 lg:mt-8'>
-      <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.DAFTAR_SISWA} />
+      <GuruDaftarKelasDetailTab kelas={loader.kelas} activeTabKey={TabKey.DAFTAR_SISWA} />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}

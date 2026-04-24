@@ -152,6 +152,10 @@ function masterAccountEdit({ id }: { id: string }) {
   return `${baseUrl}${masterAccountUrl}/${id}/edit`
 }
 
+function masterAccountManageChildren({ id }: { id: string }) {
+  return `${baseUrl}${masterAccountUrl}/${id}/manage-children`
+}
+
 /*
  * Admin's reporting level routes
  */
@@ -190,6 +194,7 @@ const admin = {
   masterAccountCreate,
   masterAccountDetail,
   masterAccountEdit,
+  masterAccountManageChildren,
   reporting,
 }
 

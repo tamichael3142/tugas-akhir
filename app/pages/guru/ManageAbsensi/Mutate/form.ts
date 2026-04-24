@@ -3,7 +3,7 @@ import { AbsensiXSiswa, Akun, SiswaPerKelasDanSemester } from '@prisma/client'
 import * as z from 'zod'
 import { TipeAbsensi } from '~/database/enums/prisma.enums'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   siswaTerabsen: z.array(
     z.object({
       id: z.string().nullish(),
@@ -13,9 +13,9 @@ export const validaionSchema = z.object({
   ),
 })
 
-export type GuruManageAbsensiMutateFormType = z.infer<typeof validaionSchema>
+export type GuruManageAbsensiMutateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: GuruManageAbsensiMutateFormType = {
   siswaTerabsen: [],

@@ -2,16 +2,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { MataPelajaran, SemesterAjaran } from '@prisma/client'
 import * as z from 'zod'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   nama: z.string().min(2),
   tahunAjaranId: z.string().min(2),
   semesterAjaranId: z.string().min(2),
   guruId: z.string(),
 })
 
-export type AdminMasterMataPelajaranCreateFormType = z.infer<typeof validaionSchema>
+export type AdminMasterMataPelajaranCreateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: AdminMasterMataPelajaranCreateFormType = {
   nama: '',

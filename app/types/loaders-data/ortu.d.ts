@@ -8,5 +8,5 @@ export type LoaderDataOrtu = {
  * * Dashboard
  */
 export type LoaderDataOrtuIndex = {
-  user: (Akun & { children?: AkunChildren[] }) | null
+  user: (Akun & { children?: (AkunChildren & { siswa: Akun })[] }) | null
 }

@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import * as z from 'zod'
 import constants from '~/constants'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   label: z.string().min(2),
   tanggal: z.string(),
   tanggalText: z.string(),
@@ -13,9 +13,9 @@ export const validaionSchema = z.object({
   semesterAjaranId: z.string(),
 })
 
-export type GuruManageAbsensiEditFormType = z.infer<typeof validaionSchema>
+export type GuruManageAbsensiEditFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: GuruManageAbsensiEditFormType = {
   label: '',

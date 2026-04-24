@@ -1,8 +1,8 @@
-import { Kelas, SemesterAjaran, TahunAjaran } from '@prisma/client'
 import { useNavigate } from '@remix-run/react'
 import { TabItem, Tabs } from '~/components/ui'
 import AppNav from '~/navigation'
 import useAuthStore from '~/store/authStore'
+import { LoaderDataGuruDaftarKelasDetailDaftarSiswa } from '~/types/loaders-data/guru'
 
 export enum TabKey {
   DAFTAR_SISWA = 'daftar-siswa',
@@ -12,7 +12,7 @@ export enum TabKey {
 
 export type GuruDaftarKelasDetailTabProps = {
   activeTabKey?: TabKey
-  kelas?: Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] } }
+  kelas?: LoaderDataGuruDaftarKelasDetailDaftarSiswa['kelas']
 }
 
 export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTabProps) {

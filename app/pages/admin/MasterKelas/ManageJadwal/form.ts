@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Kelas } from '@prisma/client'
 import * as z from 'zod'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   kelasId: z.string(),
   jadwalPelajarans: z.array(
     z.object({
@@ -16,9 +16,9 @@ export const validaionSchema = z.object({
   ),
 })
 
-export type AdminMasterKelasManageJadwalFormType = z.infer<typeof validaionSchema>
+export type AdminMasterKelasManageJadwalFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyValues: AdminMasterKelasManageJadwalFormType = {
   kelasId: '',

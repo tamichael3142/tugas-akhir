@@ -15,7 +15,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   const currUser = await prisma.akun.findUnique({
     where: { id: userId },
     include: {
-      children: true,
+      children: { include: { siswa: true } },
     },
   })
 

@@ -21,6 +21,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { ActionDataAdminMasterAccountDelete } from '~/types/actions-data/admin'
 import XLSXUtils from '~/utils/xlsx.utils'
 import { IoMdClose } from 'react-icons/io'
+import { FaHandsHoldingChild } from 'react-icons/fa6'
 
 const sectionPrefix = 'admin-master-account'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -203,6 +204,22 @@ export default function AdminMasterAccountPage() {
             label: 'Aksi',
             render: row => (
               <DataGridActionButtonWrapper>
+                {row.role === Role.ORANGTUA ? (
+                  <DataGridActionButton
+                    icon={<FaHandsHoldingChild />}
+                    color='primary'
+                    label={'Manage Children'}
+                    buttonProps={{
+                      disabled: row.role !== Role.ORANGTUA,
+                      onClick: () =>
+                        navigate(
+                          AppNav.admin.masterAccountManageChildren({
+                            id: row.id,
+                          }),
+                        ),
+                    }}
+                  />
+                ) : null}
                 <Link to={AppNav.admin.masterAccountEdit({ id: row.id })}>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}

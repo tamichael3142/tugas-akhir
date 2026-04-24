@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import * as z from 'zod'
 import constants from '~/constants'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   title: z.string().min(2),
   remark: z.string(),
   dayId: z.string(),
@@ -12,9 +12,9 @@ export const validaionSchema = z.object({
   hourEndId: z.string(),
 })
 
-export type GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType = z.infer<typeof validaionSchema>
+export type GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export function generateTitle({ date, kelasName, mapelName }: { date: Date; kelasName: string; mapelName: string }) {
   return `Berita Acara (${format(date, constants.dateFormats.dateMonthYearSimple)}) ${kelasName} - ${mapelName}`

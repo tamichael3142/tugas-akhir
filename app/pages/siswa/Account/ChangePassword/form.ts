@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-export const validaionSchema = z
+export const validationSchema = z
   .object({
     password: z.string().min(8, 'Password minimal 8 karakter').regex(/\d/, 'Password harus mengandung angka'),
     passwordVerification: z.string(),
@@ -11,9 +11,9 @@ export const validaionSchema = z
     path: ['passwordVerification'],
   })
 
-export type SiswaAccountChangePasswordFormType = z.infer<typeof validaionSchema>
+export type SiswaAccountChangePasswordFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: SiswaAccountChangePasswordFormType = {
   password: '',

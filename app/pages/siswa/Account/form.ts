@@ -3,7 +3,7 @@ import { Akun } from '@prisma/client'
 import * as z from 'zod'
 import { GolonganDarah, Kewarganegaraan } from '~/database/enums/prisma.enums'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   tempatLahir: z.string(),
   email: z.email(),
   agama: z.string(),
@@ -12,9 +12,9 @@ export const validaionSchema = z.object({
   kewarganegaraan: z.enum(Object.values(Kewarganegaraan)),
 })
 
-export type SiswaAccountSelfUpdateFormType = z.infer<typeof validaionSchema>
+export type SiswaAccountSelfUpdateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: SiswaAccountSelfUpdateFormType = {
   tempatLahir: '',

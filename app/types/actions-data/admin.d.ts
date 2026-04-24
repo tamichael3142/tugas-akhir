@@ -7,6 +7,7 @@ import { AdminMasterKelasCreateFormType } from '~/pages/admin/MasterKelas/Create
 import { AdminMasterKelasManageJadwalFormType } from '~/pages/admin/MasterKelas/ManageJadwal/form'
 import { AdminMasterKelasAddSiswaFormType } from '~/pages/admin/MasterKelas/AddSiswa/form'
 import { AdminMasterKelasDeleteSiswaFormType } from '~/pages/admin/MasterKelas/ManageSiswa/form'
+import { AdminMasterAccountManageChildrenFormType } from '~/pages/admin/MasterAccount/ManageChildren/form'
 
 /**
  * * Dashboard
@@ -207,5 +208,19 @@ export type ActionDataAdminMasterAccountDelete = BaseActionData & {
   data: {
     // * Success
     deletedAkun?: Akun
+  }
+}
+
+export type ActionDataAdminMasterAccountSaveChildren = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: AdminMasterAccountManageChildrenFormType
+  }
+}
+
+export type ActionDataAdminMasterAccountDeleteChildren = BaseActionData & {
+  data: {
+    // * Success
+    deletedChild?: Akun
   }
 }

@@ -157,3 +157,8 @@ export type LoaderDataAdminMasterAkun = {
 export type LoaderDataAdminMasterAkunEdit = {
   akun: Akun | null
 }
+
+export type LoaderDataAdminMasterAkunManageChildren = {
+  children: Akun[]
+  akuns: PaginationReturns<Akun>
+}

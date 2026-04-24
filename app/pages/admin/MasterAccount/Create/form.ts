@@ -6,7 +6,7 @@ import { GolonganDarah, JenisKelamin, Kewarganegaraan, Role } from '~/database/e
 import DBHelpers from '~/database/helpers'
 import * as dateFns from 'date-fns'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   nip: z.string(),
   firstName: z.string().min(2),
   lastName: z.string().min(2),
@@ -23,9 +23,9 @@ export const validaionSchema = z.object({
   kewarganegaraan: z.enum(Object.values(Kewarganegaraan)),
 })
 
-export type AdminMasterAccountInsertAkunFormType = z.infer<typeof validaionSchema>
+export type AdminMasterAccountInsertAkunFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyUserValue: AdminMasterAccountInsertAkunFormType = {
   nip: '',

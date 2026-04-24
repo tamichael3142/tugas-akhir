@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { PelanggaranPerMapel } from '@prisma/client'
 import * as z from 'zod'
 
-export const validaionSchema = z.object({
+export const validationSchema = z.object({
   siswaId: z.string().min(2),
   poin: z.preprocess(val => {
     if (val === '') return undefined
@@ -11,9 +11,9 @@ export const validaionSchema = z.object({
   remark: z.string().optional().nullish(),
 })
 
-export type GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType = z.infer<typeof validaionSchema>
+export type GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType = z.infer<typeof validationSchema>
 
-export const resolver = zodResolver(validaionSchema)
+export const resolver = zodResolver(validationSchema)
 
 export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType = {
   siswaId: '',
