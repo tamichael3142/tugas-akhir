@@ -5,7 +5,6 @@ import GuruJadwalMengajarPage from '~/pages/guru/JadwalMengajar'
 import { LoaderDataGuruJadwalMengajar } from '~/types/loaders-data/guru'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
-import { differenceInDays } from 'date-fns'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.guruJadwalMengajar
@@ -27,18 +26,19 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   })
 
   // ? untuk mencari tahun ajaran sekarang
-  const today = new Date()
-  let currentTahunAjaran = tahunAjarans.find(item => item.tahunMulai.getFullYear() === today.getFullYear())
+  let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+    where: {
+      tahunMulai: { lte: new Date() },
+      tahunBerakhir: { gte: new Date() },
+    },
+    include: { semesterAjaran: true },
+  })
+
   if (!currentTahunAjaran)
-    currentTahunAjaran = tahunAjarans.find(item => item.tahunBerakhir.getFullYear() === today.getFullYear())
-  if (!currentTahunAjaran)
-    currentTahunAjaran = tahunAjarans
-      .filter(
-        item =>
-          item.tahunMulai.getFullYear() <= today.getFullYear() &&
-          item.tahunBerakhir.getFullYear() >= today.getFullYear(),
-      )
-      .sort((a, b) => differenceInDays(today, a.tahunMulai) - differenceInDays(today, b.tahunMulai))[0]
+    currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+      include: { semesterAjaran: true },
+      orderBy: { createdAt: 'desc' },
+    })
 
   if (!tahunAjaranId || !semesterAjaranId) {
     return { tahunAjarans, currentTahunAjaran } as LoaderDataGuruJadwalMengajar

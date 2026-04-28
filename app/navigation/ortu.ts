@@ -21,7 +21,7 @@ function nilaiSiswa() {
 /*
  * Ortu's absensi siswa level routes
  */
-const absensiSiswaUrl = '/nilai'
+const absensiSiswaUrl = '/absensi'
 
 function absensiSiswa() {
   return `${baseUrl}${absensiSiswaUrl}`

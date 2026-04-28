@@ -457,6 +457,9 @@ model Penilaian {
   // ? general
   nilai           Decimal?      @default(0)
   remark          String?
+  // ? meta data
+  updatedAt       DateTime      @default(now())
+  createdAt       DateTime      @default(now())
 
   @@unique([kelasId, mataPelajaranId, kompetensiId, siswaId])
   @@index([kelasId])

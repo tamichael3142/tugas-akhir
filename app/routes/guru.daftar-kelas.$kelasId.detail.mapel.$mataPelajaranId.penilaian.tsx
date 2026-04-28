@@ -141,6 +141,7 @@ export async function action({
                 kompetensiId: row.kompetensiId,
                 siswaId: row.siswaId,
                 nilai: row.nilai,
+                updatedAt: new Date(),
               },
             })
             continue
@@ -154,6 +155,7 @@ export async function action({
               kompetensiId: row.kompetensiId,
               siswaId: row.siswaId,
               nilai: row.nilai,
+              createdAt: new Date(),
             },
           })
         }
