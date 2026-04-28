@@ -20,7 +20,9 @@ export default function TahunDanSemesterAjaranCard(props: Props) {
   }
 
   return (
-    <Card className={classNames('grid grid-cols-2 gap-4 lg:gap-8', props.className)}>
+    <Card
+      className={classNames('grid grid-cols-2 gap-4 lg:gap-8 print:shadow-none print:rounded-none', props.className)}
+    >
       <DetailItem label='Tahun Ajaran'>{props.currentTahunAjaran?.nama}</DetailItem>
       <DetailItem label='Semester Ajaran'>
         {EnumsTitleUtils.getSemesterAjaranUrutan(props.currentSemester?.urutan as SemesterAjaranUrutan)}

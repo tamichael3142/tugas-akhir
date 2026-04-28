@@ -10,7 +10,7 @@ import DBHelpers from '~/database/helpers'
 import DBUtils from '~/database/utils'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.ortuDashboard
+  return constants.pageMetas.ortuNilai
 }
 
 export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataOrtuNilai> {

@@ -46,3 +46,14 @@ body {
     color-scheme: dark;
   }
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}

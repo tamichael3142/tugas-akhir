@@ -1,12 +1,15 @@
 import { Akun } from '@prisma/client'
 import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
-import { StaticSelect } from '~/components/forms'
+import { Button, StaticSelect } from '~/components/forms'
 import { LoadingFullScreen } from '~/components/ui'
 import DBHelpers from '~/database/helpers'
 import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
 import { LoaderDataOrtuNilai } from '~/types/loaders-data/ortu'
 import TahunDanSemesterAjaranCard from '../_components/TahunDanSemesterAjaranCard'
 import KelasCard from './_components/KelasCard'
+import { FaPrint } from 'react-icons/fa6'
+
+const sectionPrefix = 'ortu-nilai'
 
 export default function OrtuNilaiPage() {
   const navigate = useNavigate()
@@ -25,33 +28,52 @@ export default function OrtuNilaiPage() {
 
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
-    <OrtuPageContainer title='Nilai Siswa'>
-      <StaticSelect
-        className='max-w-md'
-        options={[
-          { value: '', label: 'Pilih siswa...' },
-          ...(loader.user.children
-            ? loader.user.children.map(item => ({
-                value: item.siswaId,
-                label: DBHelpers.akun.getDisplayName(item.siswa),
-              }))
-            : []),
-        ]}
-        selectProps={{
-          value: currentSiswaId,
-          onChange: e => handlePageChange({ siswaId: e.target.value }),
-        }}
-      />
+    <OrtuPageContainer
+      title='Nilai Siswa'
+      actions={[
+        <Button
+          key={`${sectionPrefix}-print-button`}
+          label='Print'
+          color='secondary'
+          startIcon={<FaPrint />}
+          onlyIconOnSmallView
+          buttonProps={{ onClick: () => window.print() }}
+        />,
+      ]}
+    >
+      <div id='print-area'>
+        <StaticSelect
+          className='max-w-md'
+          options={[
+            { value: '', label: 'Pilih siswa...' },
+            ...(loader.user.children
+              ? loader.user.children.map(item => ({
+                  value: item.siswaId,
+                  label: DBHelpers.akun.getDisplayName(item.siswa),
+                }))
+              : []),
+          ]}
+          selectProps={{
+            value: currentSiswaId,
+            onChange: e => handlePageChange({ siswaId: e.target.value }),
+          }}
+        />
 
-      <TahunDanSemesterAjaranCard
-        className='mt-6'
-        currentTahunAjaran={loader.currentTahunAjaran}
-        currentSemester={loader.currentSemester}
-      />
+        <TahunDanSemesterAjaranCard
+          className='mt-6'
+          currentTahunAjaran={loader.currentTahunAjaran}
+          currentSemester={loader.currentSemester}
+        />
 
-      {loader.dataSiswa?.siswaPerKelasDanSemester.map(item => (
-        <KelasCard key={`kelas-card-${item.id}`} kelas={item.kelas} kompetensis={loader.kompetensis} className='mt-8' />
-      ))}
+        {loader.dataSiswa?.siswaPerKelasDanSemester.map(item => (
+          <KelasCard
+            key={`kelas-card-${item.id}`}
+            kelas={item.kelas}
+            kompetensis={loader.kompetensis}
+            className='mt-8'
+          />
+        ))}
+      </div>
     </OrtuPageContainer>
   )
 }

@@ -18,7 +18,7 @@ type Props = {
 
 export default function KelasCard(props: Props) {
   return (
-    <Card className={classNames('', props.className)}>
+    <Card className={classNames('print:shadow-none print:rounded-none', props.className)}>
       <h2 className='font-semibold text-lg mb-4 text-secondary'>{props.kelas.nama} Class</h2>
 
       <div className='space-y-4'>
