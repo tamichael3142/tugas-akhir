@@ -126,6 +126,10 @@ const pageMetas = {
     { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
+  siswaPengumuman: [
+    { title: `Pengumuman - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
   siswaAccount: [
     { title: `Akun - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
@@ -136,6 +140,10 @@ const pageMetas = {
   ],
   ortuNilai: [
     { title: `Nilai Siswa - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs orang tua SBBS' },
+  ],
+  ortuPengumuman: [
+    { title: `Pengumuman - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
 }

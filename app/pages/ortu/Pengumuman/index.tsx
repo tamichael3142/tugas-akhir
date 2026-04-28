@@ -1,7 +1,5 @@
 import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { LoadingFullScreen } from '~/components/ui'
-import { LoaderDataSiswaPengumuman } from '~/types/loaders-data/siswa'
-import SiswaPageContainer from '~/layouts/siswa/SiswaPageContainer'
 import DataCardGrid from '~/components/ui/DataCardGrid'
 import HtmlUtils from '~/utils/html.utils'
 import { format } from 'date-fns'
@@ -9,11 +7,13 @@ import constants from '~/constants'
 import { Button } from '~/components/forms'
 import { FaInfo } from 'react-icons/fa'
 import AppNav from '~/navigation'
+import { LoaderDataOrtuPengumuman } from '~/types/loaders-data/ortu'
+import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
 
-const sectionPrefix = 'siswa-pengumuman'
+const sectionPrefix = 'ortu-pengumuman'
 
-export default function SiswaPengumumanPage() {
-  const loader = useLoaderData<LoaderDataSiswaPengumuman>()
+export default function OrtuPengumumanPage() {
+  const loader = useLoaderData<LoaderDataOrtuPengumuman>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const revalidator = useRevalidator()
@@ -26,7 +26,7 @@ export default function SiswaPengumumanPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <SiswaPageContainer title='Pengumuman'>
+    <OrtuPageContainer title='Pengumuman'>
       {loader.pengumumans && Array.isArray(loader.pengumumans.data) ? (
         <DataCardGrid
           id={`${sectionPrefix}-data-grid`}
@@ -46,7 +46,7 @@ export default function SiswaPengumumanPage() {
                 color='secondary'
                 buttonProps={{
                   disabled: !!row.deletedAt,
-                  onClick: () => navigate(AppNav.siswa.pengumumanDetail({ pengumumanId: row.id })),
+                  onClick: () => navigate(AppNav.ortu.pengumumanDetail({ pengumumanId: row.id })),
                 }}
               />
             ),
@@ -65,6 +65,6 @@ export default function SiswaPengumumanPage() {
           className='shadow-secondary'
         />
       ) : null}
-    </SiswaPageContainer>
+    </OrtuPageContainer>
   )
 }

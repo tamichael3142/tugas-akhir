@@ -3,15 +3,15 @@ import { LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
-import SiswaPengumumanDetailPage from '~/pages/siswa/Pengumuman/Detail'
-import { LoaderDataSiswaPengumumanDetail } from '~/types/loaders-data/siswa'
+import OrtuPengumumanDetailPage from '~/pages/ortu/Pengumuman/Detail'
+import { LoaderDataOrtuPengumumanDetail } from '~/types/loaders-data/ortu'
 import { prisma } from '~/utils/db.server'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.siswaPengumuman
+  return constants.pageMetas.ortuPengumuman
 }
 
-export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderDataSiswaPengumumanDetail> {
+export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderDataOrtuPengumumanDetail> {
   const pengumumanId = params.pengumumanId as Pengumuman['id'] | null
 
   let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
@@ -42,9 +42,9 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
     currentTahunAjaran,
     currentSemester,
     pengumuman,
-  } as LoaderDataSiswaPengumumanDetail
+  } as LoaderDataOrtuPengumumanDetail
 }
 
-export default function SiswaDaftarPengumumanDetailRoute() {
-  return <SiswaPengumumanDetailPage />
+export default function OrtuPengumumanDetailRoute() {
+  return <OrtuPengumumanDetailPage />
 }

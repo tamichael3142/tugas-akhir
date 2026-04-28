@@ -5,11 +5,13 @@ import {
   Kelas,
   Kompetensi,
   MataPelajaran,
+  Pengumuman,
   Penilaian,
   SemesterAjaran,
   SiswaPerKelasDanSemester,
   TahunAjaran,
 } from '@prisma/client'
+import { PaginationReturns } from '~/utils/pagination.utils.server'
 
 export type LoaderDataOrtu = {
   user: Akun | null
@@ -50,3 +52,14 @@ export type LoaderDataOrtuNilai = OrtuWithChildren &
         })
       | null
   }
+
+/**
+ * * Pengumuman
+ */
+export type LoaderDataOrtuPengumuman = {
+  pengumumans?: PaginationReturns<Pengumuman>
+}
+
+export type LoaderDataOrtuPengumumanDetail = {
+  pengumuman: Pengumuman
+}
