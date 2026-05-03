@@ -13,11 +13,21 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const tahunAjaranId = params.tahunAjaranId as TahunAjaran['id'] | null
 
+    const currTahunAjaran = await prisma.tahunAjaran.findUnique({
+      where: { id: tahunAjaranId ?? '' },
+    })
+
+    if (!currTahunAjaran)
+      throw {
+        message: 'Data tahun ajaran ini tidak ditemukan!',
+      }
+
     const deletedAt = new Date()
     return await prisma.tahunAjaran
       .update({
         where: { id: tahunAjaranId ?? '' },
         data: {
+          nama: `${currTahunAjaran.nama} (deleted-${deletedAt.getTime()})`,
           deletedAt,
           lastUpdateById: currUser?.id,
           semesterAjaran: {
