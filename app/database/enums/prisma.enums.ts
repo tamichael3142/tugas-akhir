@@ -48,6 +48,7 @@ export enum AssignmentSubmissionStatus {
   ASSIGNED = 'ASSIGNED',
   ON_PROGRESS = 'ON_PROGRESS',
   SUBMITTED = 'SUBMITTED',
+  SCORED = 'SCORED',
 }
 
 export enum DayID {

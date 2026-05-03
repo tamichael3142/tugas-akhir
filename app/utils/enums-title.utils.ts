@@ -89,7 +89,7 @@ function getTipeAbsensi(value: TipeAbsensi) {
     case TipeAbsensi.TANPA_KETERANGAN:
       return 'Tanpa Keterangan'
     default:
-      return '-'
+      return 'X'
   }
 }
 
@@ -114,6 +114,8 @@ function getAssignmentSubmissionStatus(value: AssignmentSubmissionStatus) {
       return 'On Progress'
     case AssignmentSubmissionStatus.SUBMITTED:
       return 'Submitted'
+    case AssignmentSubmissionStatus.SCORED:
+      return 'Scored'
     default:
       return '-'
   }

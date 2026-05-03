@@ -43,14 +43,28 @@ export default function AbsensiTable(props: Props) {
   }
 
   return (
-    <Card className='mt-8 max-w-full overflow-x-auto'>
+    <Card className='mt-8 max-w-full overflow-x-auto print:shadow-none print:rounded-none'>
       <table className='box-border'>
         <thead>
           <tr>
             <th className='p-2 min-w-32 border'>Date</th>
             {props.kelass?.map(kelas => (
-              <th key={`${props.sectionPrefix}-absensi-table-th-kelas-${kelas.id}`} className='p-2 min-w-32 border'>
-                {kelas.nama}
+              <th key={`${props.sectionPrefix}-absensi-table-th-kelas-${kelas.id}`} className='p-2 min-w-44 border'>
+                <p className='text-secondary'>{kelas.nama}</p>
+                <div className='flex flex-row flex-wrap gap-2 items-center justify-center text-xs'>
+                  <p className='text-green-500'>H:{kelas.stats.totalHadir}</p>
+                  <p className='text-blue-500'>S:{kelas.stats.totalSakit}</p>
+                  <p className='text-gray-500'>I:{kelas.stats.totalIzin}</p>
+                  <p className='text-red-500'>TK:{kelas.stats.totalTanpaKeterangan}</p>
+                  <p className='text-black'>
+                    X:
+                    {mergedDates.length -
+                      (kelas.stats.totalHadir +
+                        kelas.stats.totalSakit +
+                        kelas.stats.totalIzin +
+                        kelas.stats.totalTanpaKeterangan)}
+                  </p>
+                </div>
               </th>
             ))}
           </tr>
@@ -68,7 +82,7 @@ export default function AbsensiTable(props: Props) {
                 return (
                   <td
                     key={`${props.sectionPrefix}-absensi-table-tr-dates-${item.getTime()}-td-${kelas.id}`}
-                    className='p-2 min-w-32 border text-center'
+                    className='p-2 min-w-44 border text-center'
                   >
                     {EnumsTitleUtils.getTipeAbsensi(currStatus?.tipe as TipeAbsensi)}
                   </td>

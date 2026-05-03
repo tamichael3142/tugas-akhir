@@ -1,4 +1,6 @@
 import {
+  Absensi,
+  AbsensiXSiswa,
   Akun,
   AkunChildren,
   JadwalPelajaran,
@@ -50,6 +52,28 @@ export type LoaderDataOrtuNilai = OrtuWithChildren &
             }
           })[]
         })
+      | null
+  }
+
+/**
+ * * Absensi
+ */
+type KelasAbsensiStats = {
+  totalHadir: number
+  totalIzin: number
+  totalSakit: number
+  totalTanpaKeterangan: number
+}
+
+export type LoaderDataOrtuAbsensi = OrtuWithChildren &
+  CurrentTahunAndSemesterAjaran & {
+    kelass:
+      | (Kelas & {
+          absensis: (Absensi & {
+            siswaTerabsen: AbsensiXSiswa[]
+          })[]
+          stats: KelasAbsensiStats
+        })[]
       | null
   }
 

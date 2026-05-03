@@ -4,17 +4,17 @@ import { Button, StaticSelect } from '~/components/forms'
 import { LoadingFullScreen } from '~/components/ui'
 import DBHelpers from '~/database/helpers'
 import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
-import { LoaderDataOrtuNilai } from '~/types/loaders-data/ortu'
+import { LoaderDataOrtuAbsensi } from '~/types/loaders-data/ortu'
 import TahunDanSemesterAjaranCard from '../_components/TahunDanSemesterAjaranCard'
-import KelasCard from './_components/KelasCard'
 import { FaPrint } from 'react-icons/fa6'
+import AbsensiTable from './_components/AbsensiTable'
 
-const sectionPrefix = 'ortu-nilai'
+const sectionPrefix = 'ortu-absensi'
 
-export default function OrtuNilaiPage() {
+export default function OrtuAbsensiPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const loader = useLoaderData<LoaderDataOrtuNilai>()
+  const loader = useLoaderData<LoaderDataOrtuAbsensi>()
   const revalidator = useRevalidator()
 
   const currentSiswaId = searchParams.get('siswaId') ?? ''
@@ -29,7 +29,7 @@ export default function OrtuNilaiPage() {
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
     <OrtuPageContainer
-      title='Nilai Siswa'
+      title='Absensi Siswa'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}
@@ -64,29 +64,22 @@ export default function OrtuNilaiPage() {
           currentTahunAjaran={loader.currentTahunAjaran}
           currentSemester={loader.currentSemester}
         />
-
-        {loader.dataSiswa &&
-        loader.dataSiswa.siswaPerKelasDanSemester &&
-        loader.dataSiswa.siswaPerKelasDanSemester.length > 0 ? (
-          loader.dataSiswa?.siswaPerKelasDanSemester.map(item => (
-            <KelasCard
-              key={`kelas-card-${item.id}`}
-              kelas={item.kelas}
-              kompetensis={loader.kompetensis}
-              className='mt-8'
-            />
-          ))
-        ) : (
-          <div className='bg-neutral-100 rounded-xl p-4 mt-8 shadow'>
-            <p className='font-semibold mb-2'>Oops!</p>
-            <p className='text-sm'>
-              {currentSiswaId
-                ? 'Belum ada nilai tercatat pada semester ini.'
-                : 'Mohon memilih siswa yang akan diakses.'}
-            </p>
-          </div>
-        )}
       </div>
+
+      {!currentSiswaId ? (
+        <div className='bg-neutral-100 rounded-xl p-4 mt-8 shadow'>
+          <p className='font-semibold mb-2'>Oops!</p>
+          <p className='text-sm'>Mohon memilih siswa yang akan diakses.</p>
+        </div>
+      ) : loader.kelass && loader.kelass.length > 0 ? (
+        <AbsensiTable
+          siswaId={currentSiswaId}
+          sectionPrefix={sectionPrefix}
+          currentTahunAjaran={loader.currentTahunAjaran}
+          currentSemester={loader.currentSemester}
+          kelass={loader.kelass}
+        />
+      ) : null}
     </OrtuPageContainer>
   )
 }

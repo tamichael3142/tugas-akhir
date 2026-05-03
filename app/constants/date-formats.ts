@@ -8,6 +8,7 @@ const dateFormats = {
   dateMonthYearSimple: 'dd/MM/yyyy',
   dateColumn: 'dd/MM/yyyy H:mm',
   displayFullDate: 'dd MMM yyyy',
+  displayCompactDate1: 'dd/MM/yyyy',
 }
 
 export default dateFormats

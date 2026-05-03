@@ -142,6 +142,10 @@ const pageMetas = {
     { title: `Nilai Siswa - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
+  ortuAbsensi: [
+    { title: `Absensi Siswa - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs orang tua SBBS' },
+  ],
   ortuPengumuman: [
     { title: `Pengumuman - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },

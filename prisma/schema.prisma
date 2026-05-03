@@ -74,6 +74,7 @@ enum AssignmentSubmissionStatus {
   ASSIGNED
   ON_PROGRESS
   SUBMITTED
+  SCORED
 
   @@schema("public")
 }
@@ -205,7 +206,7 @@ model Days {
 model TahunAjaran {
   id              String            @id @default(cuid())
   // ? credentials
-  nama            String            @unique
+  nama            String
   tahunMulai      DateTime
   tahunBerakhir   DateTime
   // ? meta data
