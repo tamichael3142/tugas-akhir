@@ -34,7 +34,6 @@ const headers: { label: string }[] = [
   { label: 'Tanggal Lahir' },
   { label: 'Role' },
   { label: 'Username' },
-  { label: 'Password' },
   { label: 'Email' },
   { label: 'Jenis Kelamin' },
   { label: 'Agama' },
@@ -72,7 +71,7 @@ export default function AdminDashboardPage() {
             : null,
           role: item.role as Role,
           username: item.username,
-          password: item.password,
+          password: item.username,
           email: item.email,
           jenisKelamin: item.jenisKelamin as JenisKelamin,
           agama: item.agama,
@@ -209,9 +208,6 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className='border'>
                     <input required readOnly {...formHook.register(`newUsers.${index}.username`)} />
-                  </td>
-                  <td className='border'>
-                    <input required {...formHook.register(`newUsers.${index}.password`)} />
                   </td>
                   <td className='border'>
                     <input type='email' {...formHook.register(`newUsers.${index}.email`)} />
