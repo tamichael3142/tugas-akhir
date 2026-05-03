@@ -1,6 +1,6 @@
 import { Link, useLoaderData, useRevalidator } from '@remix-run/react'
 import classNames from 'classnames'
-import { Fragment } from 'react/jsx-runtime'
+import { Fragment } from 'react'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'

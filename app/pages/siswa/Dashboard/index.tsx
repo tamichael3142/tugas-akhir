@@ -1,6 +1,6 @@
 import { Link, useLoaderData, useRevalidator } from '@remix-run/react'
 import classNames from 'classnames'
-import { Fragment } from 'react/jsx-runtime'
+import { Fragment } from 'react'
 import { Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
@@ -19,7 +19,7 @@ export default function SiswaDashboardPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer title='Dashboard'>
-      <Card className='!p-0 !rounded-lg'>
+      <Card className='p-0! rounded-lg!'>
         {days.length && hours.length ? (
           <div className='overflow-x-auto relative'>
             <div className='w-full min-w-xl grid grid-cols-6'>

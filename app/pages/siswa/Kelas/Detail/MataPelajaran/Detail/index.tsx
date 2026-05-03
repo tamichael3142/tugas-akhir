@@ -1,6 +1,5 @@
 import { Outlet, useLoaderData } from '@remix-run/react'
-import { ReactNode } from 'react'
-import { Fragment } from 'react/jsx-runtime'
+import { ReactNode, Fragment } from 'react'
 import { Card } from '~/components/ui'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'

@@ -1,7 +1,6 @@
 import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import classNames from 'classnames'
-import { ReactNode, useCallback, useEffect } from 'react'
-import { Fragment } from 'react/jsx-runtime'
+import { ReactNode, Fragment, useCallback, useEffect } from 'react'
 import { StaticSelect } from '~/components/forms'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'

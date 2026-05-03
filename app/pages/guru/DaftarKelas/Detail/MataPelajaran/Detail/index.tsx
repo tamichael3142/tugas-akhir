@@ -1,7 +1,6 @@
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
-import { ReactNode } from 'react'
-import { Fragment } from 'react/jsx-runtime'
+import { Fragment, ReactNode } from 'react'
 import { Card } from '~/components/ui'
 import constants from '~/constants'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
