@@ -31,7 +31,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
     const tepatTahunBerakhir = new Date(Date.UTC(tahunBerakhirDate.getFullYear(), 5, 1, 0, 0, 0, 0))
 
     const existingTahunAjaran = await prisma.tahunAjaran.findFirst({
-      where: { tahunMulai: tepatTahunMulai, tahunBerakhir: tepatTahunBerakhir, deletedAt: { not: null } },
+      where: { tahunMulai: tepatTahunMulai, tahunBerakhir: tepatTahunBerakhir, deletedAt: null },
     })
 
     if (existingTahunAjaran) {
