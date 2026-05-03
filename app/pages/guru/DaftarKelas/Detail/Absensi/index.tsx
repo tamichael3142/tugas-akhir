@@ -5,7 +5,6 @@ import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import { LoaderDataGuruDaftarKelasDetailAbsensiList } from '~/types/loaders-data/guru'
 import GuruDaftarKelasDetailTab, { TabKey } from '../_components/Tab'
-import { Kelas } from '@prisma/client'
 import constants from '~/constants'
 import * as dateFns from 'date-fns'
 import AppNav from '~/navigation'
@@ -74,7 +73,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='p-0! mt-4 lg:mt-8'>
-      <GuruDaftarKelasDetailTab kelas={loader.kelas as Kelas} activeTabKey={TabKey.ABSENSI} />
+      <GuruDaftarKelasDetailTab kelas={loader.kelas} activeTabKey={TabKey.ABSENSI} />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
