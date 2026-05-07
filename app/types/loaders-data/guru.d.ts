@@ -250,3 +250,12 @@ export type LoaderDataGuruMasterPengumuman = {
 export type LoaderDataGuruMasterPengumumanEdit = {
   pengumuman: Pengumuman | null
 }
+
+/**
+ * * Account
+ */
+export type LoaderDataGuruAccount = {
+  account: Akun & { profileImageObjectUrl?: string }
+}
+
+export type LoaderDataGuruAccountChangePassword = LoaderDataGuruAccount

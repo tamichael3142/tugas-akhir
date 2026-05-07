@@ -13,6 +13,8 @@ import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
 import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran/form-types'
+import { GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
+import { GuruAccountChangePasswordFormType } from '~/pages/guru/Account/ChangePassword/form'
 
 /**
  * * Manage Absensi
@@ -168,5 +170,22 @@ export type ActionDataGuruMasterPengumumanDelete = BaseActionData & {
   data: {
     // * Success
     deletedPengumuman?: Pengumuman
+  }
+}
+
+/**
+ * * Account
+ */
+export type ActionDataGuruAccountSelfUpdate = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: GuruAccountSelfUpdateFormType
+  }
+}
+
+export type ActionDataGuruAccountChangePassword = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: GuruAccountChangePasswordFormType
   }
 }

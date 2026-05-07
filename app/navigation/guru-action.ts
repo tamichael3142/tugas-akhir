@@ -32,11 +32,16 @@ function daftarKelasDetailMataPelajaranDetailAttachmentDelete({
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment/${attachmentId}/delete`
 }
 
+function accountUploadProfileImage() {
+  return `${baseUrl}/account/upload-profile-image`
+}
+
 const guruAction = {
   baseUrl,
   masterPengumumanDelete,
   daftarKelasDetailAbsensiCreate,
   daftarKelasDetailMataPelajaranDetailAttachmentDelete,
+  accountUploadProfileImage,
 }
 
 export default guruAction

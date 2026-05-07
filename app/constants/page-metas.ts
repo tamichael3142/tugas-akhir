@@ -98,6 +98,10 @@ const pageMetas = {
     { title: `Manage Absensi - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruAccount: [
+    { title: `Akun - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   siswaDashboard: [
     { title: `Dashboard - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },

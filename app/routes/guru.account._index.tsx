@@ -1,21 +1,21 @@
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
-import SiswaAccountPage from '~/pages/siswa/Account'
+import GuruAccountPage from '~/pages/guru/Account'
 import akunProfileStorageManager from '~/storage-manager/akunProfile.storageManager.server'
-import { ActionDataSiswaAccountSelfUpdate } from '~/types/actions-data/siswa'
-import { LoaderDataSiswaAccount } from '~/types/loaders-data/siswa'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
-import { resolver, SiswaAccountSelfUpdateFormType } from '~/pages/siswa/Account/form'
+import { resolver, GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
 import { getValidatedFormData } from 'remix-hook-form'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
+import { LoaderDataGuruAccount } from '~/types/loaders-data/guru'
+import { ActionDataGuruAccountSelfUpdate } from '~/types/actions-data/guru'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.siswaAccount
+  return constants.pageMetas.guruAccount
 }
 
-export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataSiswaAccount> {
+export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataGuruAccount> {
   const userId = await requireAuthCookie(request)
 
   const storageManager = akunProfileStorageManager()
@@ -29,11 +29,11 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         ? await storageManager.getDownloadUrl({ fullPath: account.profileImageObjectPath })
         : undefined,
     },
-  } as LoaderDataSiswaAccount
+  } as LoaderDataGuruAccount
 }
 
-export async function action({ request }: ActionFunctionArgs): Promise<ActionDataSiswaAccountSelfUpdate> {
-  const { errors, data } = await getValidatedFormData<SiswaAccountSelfUpdateFormType>(request, resolver)
+export async function action({ request }: ActionFunctionArgs): Promise<ActionDataGuruAccountSelfUpdate> {
+  const { errors, data } = await getValidatedFormData<GuruAccountSelfUpdateFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -80,6 +80,6 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   }
 }
 
-export default function SiswaAccountDetailRoute() {
-  return <SiswaAccountPage />
+export default function GuruAccountDetailRoute() {
+  return <GuruAccountPage />
 }
