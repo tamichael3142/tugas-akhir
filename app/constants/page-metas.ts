@@ -122,6 +122,14 @@ const pageMetas = {
     { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
+  siswaNilai: [
+    { title: `Nilai - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaAbsensi: [
+    { title: `Absensi - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
   siswaPelanggaran: [
     { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },

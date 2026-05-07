@@ -1,4 +1,6 @@
 import {
+  Absensi,
+  AbsensiXSiswa,
   Akun,
   Assignment,
   AssignmentSubmission,
@@ -13,6 +15,7 @@ import {
   Pengumuman,
   Penilaian,
   SemesterAjaran,
+  SiswaPerKelasDanSemester,
   TahunAjaran,
 } from '@prisma/client'
 import { PaginationReturns } from '~/utils/pagination.utils.server'
@@ -99,6 +102,46 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   pelanggarans: PaginationReturns<PelanggaranPerMapel>
+}
+
+/**
+ * * Nilai
+ */
+export type LoaderDataSiswaNilai = CurrentTahunAndSemesterAjaran & {
+  kompetensis: Kompetensi[]
+  dataSiswa:
+    | (Akun & {
+        siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & {
+          kelas: Kelas & {
+            jadwalPelajarans: (JadwalPelajaran & {
+              mataPelajaran: MataPelajaran
+            })[]
+            penilaians: (Penilaian & { nilai: number })[]
+          }
+        })[]
+      })
+    | null
+}
+
+/**
+ * * Absensi
+ */
+type KelasAbsensiStats = {
+  totalHadir: number
+  totalIzin: number
+  totalSakit: number
+  totalTanpaKeterangan: number
+}
+
+export type LoaderDataSiswaAbsensi = CurrentTahunAndSemesterAjaran & {
+  kelass:
+    | (Kelas & {
+        absensis: (Absensi & {
+          siswaTerabsen: AbsensiXSiswa[]
+        })[]
+        stats: KelasAbsensiStats
+      })[]
+    | null
 }
 
 /**
