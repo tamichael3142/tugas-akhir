@@ -134,6 +134,7 @@ type KelasAbsensiStats = {
 }
 
 export type LoaderDataSiswaAbsensi = CurrentTahunAndSemesterAjaran & {
+  user: Akun | null
   kelass:
     | (Kelas & {
         absensis: (Absensi & {
