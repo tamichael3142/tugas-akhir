@@ -122,7 +122,6 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
           if (terabsen.tipe === TipeAbsensi.HADIR) stats.totalHadir++
           else if (terabsen.tipe === TipeAbsensi.IZIN) stats.totalIzin++
           else if (terabsen.tipe === TipeAbsensi.SAKIT) stats.totalSakit++
-          else if (terabsen.tipe === TipeAbsensi.TANPA_KETERANGAN) stats.totalTanpaKeterangan++
         })
       })
 

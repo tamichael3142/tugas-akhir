@@ -86,8 +86,6 @@ function getTipeAbsensi(value: TipeAbsensi) {
       return 'Izin'
     case TipeAbsensi.SAKIT:
       return 'Sakit'
-    case TipeAbsensi.TANPA_KETERANGAN:
-      return 'Tanpa Keterangan'
     default:
       return 'X'
   }

@@ -18,7 +18,7 @@ import DateUtils from '~/utils/date.utils'
 
 const sectionPrefix = 'guru-manage-absensi-mutate'
 
-const absenOptions = [TipeAbsensi.HADIR, TipeAbsensi.IZIN, TipeAbsensi.SAKIT, TipeAbsensi.TANPA_KETERANGAN]
+const absenOptions = [TipeAbsensi.HADIR, TipeAbsensi.IZIN, TipeAbsensi.SAKIT]
 
 export default function GuruManageAbsensiMutatePage() {
   const loader = useLoaderData<LoaderDataGuruManageAbsensiMutate>()

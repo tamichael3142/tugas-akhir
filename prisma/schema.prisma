@@ -57,7 +57,6 @@ enum TipeAbsensi {
   HADIR
   IZIN
   SAKIT
-  TANPA_KETERANGAN
 
   @@schema("public")
 }

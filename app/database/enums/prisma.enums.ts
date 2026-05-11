@@ -35,7 +35,6 @@ export enum TipeAbsensi {
   HADIR = 'HADIR',
   IZIN = 'IZIN',
   SAKIT = 'SAKIT',
-  TANPA_KETERANGAN = 'TANPA_KETERANGAN',
 }
 
 export enum AssignmentSubmissionType {
