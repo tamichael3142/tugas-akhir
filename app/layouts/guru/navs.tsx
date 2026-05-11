@@ -12,5 +12,5 @@ export const guruNavs: SidebarItemProps[] = [
   { icon: <FaPeopleRoof />, label: 'Daftar Kelas', href: AppNav.guru.daftarKelas() },
   { icon: <MdSportsSoccer />, label: 'Manage Ekstrakulikuler', href: AppNav.guru.manageEkstrakulikuler() },
   { icon: <GrAnnounce />, label: 'Master Pengumuman', href: AppNav.guru.masterPengumuman() },
-  { icon: <FaUser />, label: 'Account', href: AppNav.guru.account() },
+  { icon: <FaUser />, label: 'My Account', href: AppNav.guru.account() },
 ]

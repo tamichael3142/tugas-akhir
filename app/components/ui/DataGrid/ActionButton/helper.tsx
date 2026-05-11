@@ -1,5 +1,5 @@
 import { FaInfo, FaRegEdit, FaTrashAlt } from 'react-icons/fa'
-import { MdManageHistory } from 'react-icons/md'
+import { MdManageHistory, MdPassword } from 'react-icons/md'
 
 function getDeleteIcon() {
   return <FaTrashAlt />
@@ -17,11 +17,16 @@ function getManageIcon() {
   return <MdManageHistory />
 }
 
+function getPasswordIcon() {
+  return <MdPassword />
+}
+
 const DataGridActionButtonHelper = {
   getDeleteIcon,
   getEditIcon,
   getDetailIcon,
   getManageIcon,
+  getPasswordIcon,
 }
 
 export default DataGridActionButtonHelper

@@ -8,6 +8,8 @@ import { AdminMasterKelasManageJadwalFormType } from '~/pages/admin/MasterKelas/
 import { AdminMasterKelasAddSiswaFormType } from '~/pages/admin/MasterKelas/AddSiswa/form'
 import { AdminMasterKelasDeleteSiswaFormType } from '~/pages/admin/MasterKelas/ManageSiswa/form'
 import { AdminMasterAccountManageChildrenFormType } from '~/pages/admin/MasterAccount/ManageChildren/form'
+import { AdminAccountSelfUpdateFormType } from '~/pages/admin/Account/form'
+import { AdminAccountChangePasswordFormType } from '~/pages/admin/Account/ChangePassword/form'
 
 /**
  * * Dashboard
@@ -211,6 +213,13 @@ export type ActionDataAdminMasterAccountDelete = BaseActionData & {
   }
 }
 
+export type ActionDataAdminMasterAccountResetPassword = BaseActionData & {
+  data: {
+    // * Success
+    updatedAkun?: Akun
+  }
+}
+
 export type ActionDataAdminMasterAccountSaveChildren = BaseActionData & {
   data: {
     // * Error
@@ -222,5 +231,22 @@ export type ActionDataAdminMasterAccountDeleteChildren = BaseActionData & {
   data: {
     // * Success
     deletedChild?: Akun
+  }
+}
+
+/**
+ * * Account
+ */
+export type ActionDataAdminAccountSelfUpdate = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: AdminAccountSelfUpdateFormType
+  }
+}
+
+export type ActionDataAdminAccountChangePassword = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: AdminAccountChangePasswordFormType
   }
 }

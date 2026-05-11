@@ -17,24 +17,32 @@ import { usePopup } from '~/hooks/usePopup'
 import { Akun } from '@prisma/client'
 import DBHelpers from '~/database/helpers'
 import { Fragment, ReactNode, useEffect, useState } from 'react'
-import { ActionDataAdminMasterAccountDelete } from '~/types/actions-data/admin'
+import {
+  ActionDataAdminMasterAccountDelete,
+  ActionDataAdminMasterAccountResetPassword,
+} from '~/types/actions-data/admin'
 import XLSXUtils from '~/utils/xlsx.utils'
 import { IoMdClose } from 'react-icons/io'
 import { FaHandsHoldingChild } from 'react-icons/fa6'
 
 const sectionPrefix = 'admin-master-account'
 const deleteFormId = `${sectionPrefix}-delete-form`
+const resetPasswordFormId = `${sectionPrefix}-reset-password-form`
 
 export default function AdminMasterAccountPage() {
   const loader = useLoaderData<LoaderDataAdminMasterAkun>()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const fetcher = useFetcher<ActionDataAdminMasterAccountDelete>({ key: deleteFormId })
+  const deleteFetcher = useFetcher<ActionDataAdminMasterAccountDelete>({ key: deleteFormId })
+  const resetPasswordFetcher = useFetcher<ActionDataAdminMasterAccountResetPassword>({ key: resetPasswordFormId })
   const revalidator = useRevalidator()
   const popup = usePopup()
 
-  const isDeleting = fetcher.state === 'submitting'
-  const isSuccess = fetcher.data?.success
+  const isDeleting = deleteFetcher.state === 'submitting'
+  const isSuccessDelete = deleteFetcher.data?.success
+
+  const isResetPasswordLoading = resetPasswordFetcher.state === 'submitting'
+  const isSuccessResetPassword = resetPasswordFetcher.data?.success
 
   const [selectedAkuns, setSelectedAkuns] = useState<Akun[]>([])
 
@@ -48,13 +56,22 @@ export default function AdminMasterAccountPage() {
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      fetcher.load(AppNav.admin.masterAccount())
+    if (isSuccessDelete) {
+      deleteFetcher.load(AppNav.admin.masterAccount())
       revalidator.revalidate() // refresh data loader parent
       popup.close()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, revalidator])
+  }, [isSuccessDelete, revalidator])
+
+  useEffect(() => {
+    if (isSuccessResetPassword) {
+      resetPasswordFetcher.load(AppNav.admin.masterAccount())
+      revalidator.revalidate() // refresh data loader parent
+      popup.close()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessResetPassword, revalidator])
 
   function handlePageChange({ newPage, role }: { newPage: number; role?: Role }) {
     const params = new URLSearchParams(searchParams)
@@ -74,11 +91,11 @@ export default function AdminMasterAccountPage() {
             Apakah anda yakin untuk menghapus akun{' '}
             <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span>?
           </p>
-          <fetcher.Form
+          <deleteFetcher.Form
             id={deleteFormId}
             method='delete'
             action={AppNav.adminAction.masterAccountDelete({ akunId: row.id })}
-          ></fetcher.Form>
+          ></deleteFetcher.Form>
         </Fragment>
       ),
       actionButtons: [
@@ -93,6 +110,41 @@ export default function AdminMasterAccountPage() {
           color: 'primary',
           variant: 'contained',
           buttonProps: { type: 'submit', form: deleteFormId, disabled: isDeleting },
+        },
+      ],
+    })
+  }
+
+  function openResetPasswordPopup(row: Akun) {
+    popup.open({
+      title: 'Reset password akun?',
+      onClose: popup.close,
+      content: (
+        <Fragment>
+          <p>
+            Akun atas nama <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span>
+            dengan username <span className='font-semibold text-red-500'>{row.username}</span> akan direset password
+            menjadi sama dengan username terlampir.
+          </p>
+          <deleteFetcher.Form
+            id={resetPasswordFormId}
+            method='POST'
+            action={AppNav.adminAction.masterAccountResetPassword({ akunId: row.id })}
+          ></deleteFetcher.Form>
+        </Fragment>
+      ),
+      actionButtons: [
+        {
+          label: 'Cancel',
+          color: 'secondary',
+          variant: 'text',
+          buttonProps: { onClick: popup.close },
+        },
+        {
+          label: isResetPasswordLoading ? 'Loading...' : 'Reset',
+          color: 'primary',
+          variant: 'contained',
+          buttonProps: { type: 'submit', form: resetPasswordFormId, disabled: isResetPasswordLoading },
         },
       ],
     })
@@ -203,6 +255,26 @@ export default function AdminMasterAccountPage() {
             label: 'Aksi',
             render: row => (
               <DataGridActionButtonWrapper>
+                <DataGridActionButton
+                  icon={DataGridActionButtonHelper.getPasswordIcon()}
+                  color='info'
+                  label={'Reset Password'}
+                  buttonProps={{ disabled: !!row.deletedAt, onClick: () => openResetPasswordPopup(row) }}
+                />
+                <Link to={AppNav.admin.masterAccountEdit({ id: row.id })}>
+                  <DataGridActionButton
+                    icon={DataGridActionButtonHelper.getEditIcon()}
+                    color='warning'
+                    label={'Edit'}
+                    buttonProps={{ disabled: !!row.deletedAt }}
+                  />
+                </Link>
+                <DataGridActionButton
+                  icon={DataGridActionButtonHelper.getDeleteIcon()}
+                  color='error'
+                  label={'Delete'}
+                  buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
+                />
                 {row.role === Role.ORANGTUA ? (
                   <DataGridActionButton
                     icon={<FaHandsHoldingChild />}
@@ -219,20 +291,6 @@ export default function AdminMasterAccountPage() {
                     }}
                   />
                 ) : null}
-                <Link to={AppNav.admin.masterAccountEdit({ id: row.id })}>
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                    buttonProps={{ disabled: !!row.deletedAt }}
-                  />
-                </Link>
-                <DataGridActionButton
-                  icon={DataGridActionButtonHelper.getDeleteIcon()}
-                  color='error'
-                  label={'Delete'}
-                  buttonProps={{ disabled: !!row.deletedAt, onClick: () => openDeletePopup(row) }}
-                />
               </DataGridActionButtonWrapper>
             ),
           },

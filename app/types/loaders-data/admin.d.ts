@@ -162,3 +162,12 @@ export type LoaderDataAdminMasterAkunManageChildren = {
   children: Akun[]
   akuns: PaginationReturns<Akun>
 }
+
+/**
+ * * Account
+ */
+export type LoaderDataAdminAccount = {
+  account: Akun & { profileImageObjectUrl?: string }
+}
+
+export type LoaderDataAdminAccountChangePassword = LoaderDataAdminAccount

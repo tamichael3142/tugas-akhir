@@ -10,5 +10,5 @@ export const ortuNavs: SidebarItemProps[] = [
   { icon: <MdFactCheck />, label: 'Nilai Siswa', href: AppNav.ortu.nilaiSiswa() },
   { icon: <MdChecklistRtl />, label: 'Absensi Siswa', href: AppNav.ortu.absensiSiswa() },
   { icon: <GrAnnounce />, label: 'Pengumuman', href: AppNav.ortu.pengumuman() },
-  { icon: <FaUser />, label: 'Account', href: AppNav.ortu.account() },
+  { icon: <FaUser />, label: 'My Account', href: AppNav.ortu.account() },
 ]

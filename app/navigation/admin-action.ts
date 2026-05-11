@@ -44,6 +44,14 @@ function masterAccountDelete({ akunId }: { akunId: string }) {
   return `${baseUrl}/master-account/${akunId}/delete`
 }
 
+function masterAccountResetPassword({ akunId }: { akunId: string }) {
+  return `${baseUrl}/master-account/${akunId}/reset-password`
+}
+
+function accountUploadProfileImage() {
+  return `${baseUrl}/account/upload-profile-image`
+}
+
 const adminAction = {
   baseUrl,
   importExcelUser,
@@ -55,6 +63,8 @@ const adminAction = {
   masterKelasDeleteSiswa,
   masterKelasImportExcelSiswa,
   masterAccountDelete,
+  masterAccountResetPassword,
+  accountUploadProfileImage,
 }
 
 export default adminAction

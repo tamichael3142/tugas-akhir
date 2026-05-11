@@ -1,19 +1,24 @@
 import { Akun } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { LoadingFullScreen } from '~/components/ui'
-import { ActionDataAdminMasterAccountDelete } from '~/types/actions-data/admin'
+import { ActionDataAdminMasterAccountResetPassword } from '~/types/actions-data/admin'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
+import PasswordUtils from '~/utils/password.utils'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 
-export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataAdminMasterAccountDelete> {
+export async function action({
+  request,
+  params,
+}: ActionFunctionArgs): Promise<ActionDataAdminMasterAccountResetPassword> {
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
 
   try {
     const akunId = params.akunId as Akun['id'] | null
+    const currAkun = await prisma.akun.findUnique({ where: { id: akunId ?? '' } })
 
-    if (!akunId)
+    if (!akunId || !currAkun)
       throw {
         message: 'Akun tidak ditemukan!',
       }
@@ -22,17 +27,17 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .update({
         where: { id: akunId },
         data: {
-          // ? NOTES: bisa update username juga
-          deletedAt: new Date(),
+          password: await PasswordUtils.hashPassword(currAkun.username),
+          updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },
       })
       .then(result => {
         return {
           success: true,
-          message: 'Akun berhasil dihapus!',
+          message: 'Password berhasil di reset!',
           data: {
-            deletedAkun: result,
+            updatedAkun: result,
           },
         }
       })
@@ -50,6 +55,6 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   }
 }
 
-export default function AdminMasterAccountDeleteRoute() {
+export default function AdminMasterAccountResetPasswordRoute() {
   return <LoadingFullScreen />
 }

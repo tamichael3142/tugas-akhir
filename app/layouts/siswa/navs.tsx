@@ -13,5 +13,5 @@ export const siswaNavs: SidebarItemProps[] = [
   { icon: <MdChecklistRtl />, label: 'Absensi', href: AppNav.siswa.absensi() },
   { icon: <MdFactCheck />, label: 'Nilai', href: AppNav.siswa.nilai() },
   { icon: <GrAnnounce />, label: 'Pengumuman', href: AppNav.siswa.pengumuman() },
-  { icon: <FaUser />, label: 'Account', href: AppNav.siswa.account() },
+  { icon: <FaUser />, label: 'My Account', href: AppNav.siswa.account() },
 ]

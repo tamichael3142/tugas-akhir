@@ -163,6 +163,18 @@ function reporting() {
   return `${baseUrl}/reporting`
 }
 
+/*
+ * Admin's account level routes
+ */
+const accountUrl = '/account'
+function account() {
+  return `${baseUrl}${accountUrl}`
+}
+
+function accountChangePassword() {
+  return `${baseUrl}${accountUrl}/change-password`
+}
+
 const admin = {
   baseUrl,
   dashboard,
@@ -196,6 +208,8 @@ const admin = {
   masterAccountEdit,
   masterAccountManageChildren,
   reporting,
+  account,
+  accountChangePassword,
 }
 
 export default admin
