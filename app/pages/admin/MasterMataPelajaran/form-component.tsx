@@ -39,9 +39,9 @@ export default function AdminMasterMataPelajaranFormComponent(props: Props) {
           name={'tahunAjaranId'}
           render={({ field }) => (
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Pilih tahun ajaran...' },
+                { value: '', label: 'Choose academic year...' },
                 ...props.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{
@@ -62,9 +62,9 @@ export default function AdminMasterMataPelajaranFormComponent(props: Props) {
           name={'semesterAjaranId'}
           render={({ field }) => (
             <StaticSelect
-              label='Semester Ajaran'
+              label='Academic Semester'
               options={[
-                { value: '', label: 'Pilih semester ajaran...' },
+                { value: '', label: 'Choose academic semester...' },
                 ...getSemesterAjaranOptions().map(item => ({
                   value: item.id,
                   label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
@@ -81,9 +81,9 @@ export default function AdminMasterMataPelajaranFormComponent(props: Props) {
           name={'guruId'}
           render={({ field }) => (
             <StaticSelect
-              label='Guru'
+              label='Teacher'
               options={[
-                { value: '', label: 'Pilih guru...' },
+                { value: '', label: 'Choose a teacher...' },
                 ...props.gurus.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{ ...field }}
@@ -95,7 +95,7 @@ export default function AdminMasterMataPelajaranFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'nama'}
-          render={({ field }) => <TextInput label='Nama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Name' inputProps={{ ...field }} />}
         />
       </InputWrapper>
     </div>

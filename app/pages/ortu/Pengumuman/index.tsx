@@ -26,7 +26,7 @@ export default function OrtuPengumumanPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <OrtuPageContainer title='Pengumuman'>
+    <OrtuPageContainer title='Announcement'>
       {loader.pengumumans && Array.isArray(loader.pengumumans.data) ? (
         <DataCardGrid
           id={`${sectionPrefix}-data-grid`}

@@ -90,7 +90,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
       .then(() => {
         return {
           success: true,
-          message: 'Siswa berhasil dihapus dari kelas!',
+          message: 'Student removed from the list!',
           data: {},
         }
       })

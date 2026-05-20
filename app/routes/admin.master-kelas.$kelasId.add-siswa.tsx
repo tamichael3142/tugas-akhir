@@ -87,7 +87,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
     if (!kelasId)
       throw {
         code: 401,
-        message: 'Kelas tidak ditemukan!',
+        message: 'Class not found!',
       }
 
     return await prisma

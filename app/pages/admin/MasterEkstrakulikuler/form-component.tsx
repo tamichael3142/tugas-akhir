@@ -26,9 +26,9 @@ export default function AdminMasterEkstrakulikulerFormComponent(props: Props) {
           name={'tahunAjaranId'}
           render={({ field }) => (
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Pilih tahun ajaran...' },
+                { value: '', label: 'Choose academic year...' },
                 ...props.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{ ...field }}
@@ -42,9 +42,9 @@ export default function AdminMasterEkstrakulikulerFormComponent(props: Props) {
           name={'pengajarId'}
           render={({ field }) => (
             <StaticSelect
-              label='Pengajar'
+              label='Teacher'
               options={[
-                { value: '', label: 'Pilih guru pengajar...' },
+                { value: '', label: 'Choose teacher...' },
                 ...props.pengajars.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{ ...field }}
@@ -56,14 +56,14 @@ export default function AdminMasterEkstrakulikulerFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'nama'}
-          render={({ field }) => <TextInput label='Nama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Name' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
         <Controller
           control={formHook.control}
           name={'ruangan'}
-          render={({ field }) => <TextInput label='Ruangan' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Room' inputProps={{ ...field }} />}
         />
       </InputWrapper>
     </div>

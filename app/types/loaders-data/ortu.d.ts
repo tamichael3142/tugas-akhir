@@ -78,7 +78,7 @@ export type LoaderDataOrtuAbsensi = OrtuWithChildren &
   }
 
 /**
- * * Pengumuman
+ * * Announcement
  */
 export type LoaderDataOrtuPengumuman = {
   pengumumans?: PaginationReturns<Pengumuman>

@@ -28,7 +28,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Ekstrakulikuler berhasil dihapus!',
+          message: 'Extracurricular deleted!',
           data: {
             deletedEkstrakulikuler: result,
           },

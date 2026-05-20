@@ -65,7 +65,7 @@ export default function SiswaKelasDetailMataPelajaranPage() {
         leadingView={
           <div className='flex flex-col sm:flex-row items-center gap-4 mb-5'>
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(loader.currentSemester?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(loader.currentSemester?.urutan as SemesterAjaranUrutan)} Semester`}
               color='primary'
               variant={'contained'}
             />
@@ -73,7 +73,7 @@ export default function SiswaKelasDetailMataPelajaranPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari mata pelajaran...',
+                placeholder: 'Search subject...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -81,15 +81,15 @@ export default function SiswaKelasDetailMataPelajaranPage() {
           </div>
         }
         columns={[
-          { field: 'nama', label: 'Nama' },
+          { field: 'nama', label: 'Name' },
           {
             field: 'guru',
-            label: 'Guru',
+            label: 'Teacher',
             render: row => (row.guru ? DBHelpers.akun.getDisplayName(row.guru) : '-'),
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

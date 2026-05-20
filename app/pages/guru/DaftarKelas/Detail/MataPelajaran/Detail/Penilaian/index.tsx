@@ -215,7 +215,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPenilaianPage() 
             variant='contained'
             color='primary'
             startIcon={<FaSave />}
-            label='Simpan'
+            label='Save'
             buttonProps={{ disabled: loader.mataPelajaran.guruId !== user?.id, type: 'submit' }}
           />
         </div>

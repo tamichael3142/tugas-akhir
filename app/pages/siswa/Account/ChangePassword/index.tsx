@@ -64,7 +64,7 @@ export default function SiswaAccountChangePasswordPage() {
               variant='contained'
               color='secondary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ disabled: !formHook.formState.isValid, type: 'submit' }}
             />
           </div>

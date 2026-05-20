@@ -11,31 +11,31 @@ const pageMetas = {
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterTahunAjaran: [
-    { title: `Master Tahun Ajaran - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Academic Year - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterKelas: [
-    { title: `Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterKelasManageSiswa: [
-    { title: `Manage Siswa - Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Siswa - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterKelasAddSiswa: [
-    { title: `Tambah Siswa - Master Kelas - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Add Student - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterMataPelajaran: [
-    { title: `Master Mata Pelajaran - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Subject - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterEkstrakulikuler: [
-    { title: `Master Ekstrakulikuler - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Extracurricular - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterPengumuman: [
-    { title: `Master Pengumuman - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Announcement - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterAccount: [
@@ -47,7 +47,7 @@ const pageMetas = {
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminAccount: [
-    { title: `Akun - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   authLogin: [
@@ -55,115 +55,115 @@ const pageMetas = {
     { name: 'description', content: 'Masuk ke SBBS' },
   ],
   authForgotPassword: [
-    { title: `Lupa Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Forgot Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Lupa password di SBBS' },
   ],
   guruDefault: [
-    { title: `Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruDaftarKelas: [
-    { title: `Daftar Kelas - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Classes - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruJadwalMengajar: [
-    { title: `Jadwal Mengajar - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Lesson Timetable - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageMataPelajaran: [
-    { title: `Manage Mata Pelajaran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Subject - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageBeritaAcara: [
-    { title: `Manage Berita Acara - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Berita Acara - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageAssignment: [
-    { title: `Manage Tugas - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Assignment - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageAttachment: [
-    { title: `Manage Lampiran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Attachment - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManagePenilaian: [
-    { title: `Manage Penilaian - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Assessment - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManagePelanggaran: [
-    { title: `Manage Pelanggaran - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Violation - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruMasterPengumuman: [
-    { title: `Master Pengumuman - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Master Announcement - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageAbsensi: [
-    { title: `Manage Absensi - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Abnsence - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruAccount: [
-    { title: `Akun - Guru | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Account - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   siswaDashboard: [
-    { title: `Dashboard - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Dashboard - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaKelas: [
-    { title: `Kelas - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Class - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaMapelAssignment: [
-    { title: `Assignment - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Assignment - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaMapelAttachment: [
-    { title: `Attachment - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Attachment - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaMapelPenilaian: [
-    { title: `Penilaian - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Assessment - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaMapelPelanggaran: [
-    { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Violation - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaNilai: [
-    { title: `Nilai - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Score - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaAbsensi: [
-    { title: `Absensi - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Absence - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaPelanggaran: [
-    { title: `Pelanggaran - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Violation - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaPengumuman: [
-    { title: `Pengumuman - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Announcement - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaAccount: [
-    { title: `Akun - Siswa | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Account - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   ortuDashboard: [
-    { title: `Dashboard - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Dashboard - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
   ortuNilai: [
-    { title: `Nilai Siswa - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Student Score - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
   ortuAbsensi: [
-    { title: `Absensi Siswa - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Student Absence - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
   ortuPengumuman: [
-    { title: `Pengumuman - Ortu | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Announcement - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs orang tua SBBS' },
   ],
 }

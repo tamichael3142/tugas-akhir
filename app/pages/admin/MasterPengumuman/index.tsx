@@ -48,12 +48,12 @@ export default function AdminMasterPengumumanPage() {
 
   function openDeletePopup(row: Pengumuman) {
     popup.open({
-      title: 'Hapus pengumuman?',
+      title: 'Delete announcement?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus pengumuman <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you sure to delete <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -82,20 +82,20 @@ export default function AdminMasterPengumumanPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Master Pengumuman'
+      title='Master Announcement'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterPengumumanCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
+          { field: 'nama', label: 'Name' },
           {
             field: 'content',
-            label: 'Konten',
+            label: 'Content',
             render: row => (
               <div
                 className='line-clamp-2'
@@ -105,7 +105,7 @@ export default function AdminMasterPengumumanPage() {
           },
           {
             field: 'createdBy',
-            label: 'Pembuat',
+            label: 'Creator',
             render: row => (row.createdBy ? DBHelpers.akun.getDisplayName(row.createdBy) : '-'),
           },
           {
@@ -125,7 +125,7 @@ export default function AdminMasterPengumumanPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link to={AppNav.admin.masterPengumumanEdit({ id: row.id })}>

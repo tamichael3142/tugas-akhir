@@ -41,11 +41,11 @@ export default function GuruManageAbsensiPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer
-      title='Manage Absensi'
+      title='Manage Absence'
       actions={[
-        <Tooltip key={`${sectionPrefix}-add-button`} label='Buat absensi dari halaman kelas detail' placement='left'>
+        <Tooltip key={`${sectionPrefix}-add-button`} label='Create absence from class detail page' placement='left'>
           <Link to={AppNav.guru.daftarKelas()}>
-            <Button label='Buat Baru' startIcon={<FaPlus />} onlyIconOnSmallView />
+            <Button label='Create New' startIcon={<FaPlus />} onlyIconOnSmallView />
           </Link>
         </Tooltip>,
       ]}
@@ -53,7 +53,7 @@ export default function GuruManageAbsensiPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'tanggalText', label: 'Tanggal', render: row => row.tanggalText },
+          { field: 'tanggalText', label: 'Date', render: row => row.tanggalText },
           { field: 'label', label: 'Label', render: row => row.label },
           {
             field: 'createdAt',
@@ -67,7 +67,7 @@ export default function GuruManageAbsensiPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => {
               const now = new Date()
               const mutable =

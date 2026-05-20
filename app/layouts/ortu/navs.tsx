@@ -7,8 +7,8 @@ import { FaUser } from 'react-icons/fa'
 
 export const ortuNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.ortu.dashboard() },
-  { icon: <MdFactCheck />, label: 'Nilai Siswa', href: AppNav.ortu.nilaiSiswa() },
-  { icon: <MdChecklistRtl />, label: 'Absensi Siswa', href: AppNav.ortu.absensiSiswa() },
-  { icon: <GrAnnounce />, label: 'Pengumuman', href: AppNav.ortu.pengumuman() },
+  { icon: <MdFactCheck />, label: 'Student Score', href: AppNav.ortu.nilaiSiswa() },
+  { icon: <MdChecklistRtl />, label: 'Student Absence', href: AppNav.ortu.absensiSiswa() },
+  { icon: <GrAnnounce />, label: 'Announcement', href: AppNav.ortu.pengumuman() },
   { icon: <FaUser />, label: 'My Account', href: AppNav.ortu.account() },
 ]

@@ -51,7 +51,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
       <fetcher.Form method='post' encType='multipart/form-data'>
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Edit Tugas</h2>
+            <h2 className='font-semibold text-xl'>Edit Assignment</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'secondary' }} />
           </div>
@@ -62,12 +62,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
           />
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ type: 'reset' }} />
+            <Button variant='text' color='secondary' label='Empty form' buttonProps={{ type: 'reset' }} />
             <Button
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ disabled: loader.mataPelajaran.guruId !== user?.id, type: 'submit' }}
             />
           </div>

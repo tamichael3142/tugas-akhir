@@ -51,7 +51,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAttachmentPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari tugas...',
+                placeholder: 'Search assignment...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -60,8 +60,8 @@ export default function SiswaKelasDetailMataPelajaranDetailAttachmentPage() {
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
-          { field: 'description', label: 'Deskripsi', render: row => row.description },
+          { field: 'title', label: 'Title', render: row => row.title },
+          { field: 'description', label: 'Description', render: row => row.description },
           {
             field: 'downloadUrl',
             label: 'File',

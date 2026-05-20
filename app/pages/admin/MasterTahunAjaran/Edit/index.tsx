@@ -50,13 +50,13 @@ export default function AdminMasterTahunAjaranEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Edit Tahun Ajaran'
+      title='Edit Academic Year'
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterTahunAjaran()} />]}
     >
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.tahunAjaran?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Tahun Ajaran</p>
+            <p className='font-semibold text-lg'>Edit Academic Year</p>
             <hr className='my-4' />
 
             <AdminMasterTahunAjaranFormComponent />
@@ -67,7 +67,7 @@ export default function AdminMasterTahunAjaranEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

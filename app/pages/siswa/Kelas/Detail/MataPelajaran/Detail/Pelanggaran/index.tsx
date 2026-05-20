@@ -53,7 +53,7 @@ export default function SiswaKelasDetailMataPelajaranDetailPelanggaranPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari pelanggaran...',
+                placeholder: 'Search violation...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -62,8 +62,8 @@ export default function SiswaKelasDetailMataPelajaranDetailPelanggaranPage() {
           </div>
         }
         columns={[
-          { field: 'remark', label: 'Keterangan' },
-          { field: 'poin', label: 'Poin Pengurangan' },
+          { field: 'remark', label: 'Remark' },
+          { field: 'poin', label: 'Minus Point' },
           {
             field: 'createdAt',
             label: 'Created At',

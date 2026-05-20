@@ -84,12 +84,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreat
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ onClick: resetForm }} />
+            <Button variant='text' color='secondary' label='Empty form' buttonProps={{ onClick: resetForm }} />
             <Button
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ disabled: loader.mataPelajaran.guruId !== user?.id, type: 'submit' }}
             />
           </div>

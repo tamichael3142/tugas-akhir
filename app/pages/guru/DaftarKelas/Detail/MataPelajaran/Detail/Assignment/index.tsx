@@ -62,7 +62,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari tugas...',
+                placeholder: 'Search assignment...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -70,7 +70,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
             <div className='grow'></div>
             <Button
               color='secondary'
-              label={'Buat Tugas'}
+              label={'Create Assignment'}
               startIcon={<MdAdd />}
               buttonProps={{
                 disabled: loader.mataPelajaran.guruId !== user?.id,
@@ -86,15 +86,15 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
+          { field: 'title', label: 'Title', render: row => row.title },
           {
             field: 'tanggalMulai',
-            label: 'Mulai',
+            label: 'Start',
             render: row => format(new Date(row.tanggalMulai), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'tanggalBerakhir',
-            label: 'Berakhir',
+            label: 'End',
             render: row => format(new Date(row.tanggalBerakhir), constants.dateFormats.rawDateTimeInput),
           },
           {
@@ -109,12 +109,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
           },
           {
             field: 'submissionType',
-            label: 'Tipe',
+            label: 'Type',
             render: row => EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType),
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

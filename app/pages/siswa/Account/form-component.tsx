@@ -64,7 +64,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
         <div>
           <Button
             key={importExcelFormId}
-            label='Ubah Profile Image'
+            label='Upload New Image'
             size='sm'
             color='secondary'
             variant='outlined'
@@ -73,7 +73,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
         </div>
         <div>
           <Button
-            label='Ubah Password'
+            label='Change Password'
             size='sm'
             variant='outlined'
             color='secondary'
@@ -82,7 +82,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
         </div>
         <div>
           <Button
-            label='Pelanggaran'
+            label='Violation'
             size='sm'
             color='primary'
             variant='outlined'
@@ -102,21 +102,21 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'tempatLahir'}
-          render={({ field }) => <TextInput label='Tempat Lahir' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Birth Place' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
         <Controller
           control={formHook.control}
           name={'alamat'}
-          render={({ field }) => <TextInput label='Alamat' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Address' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
         <Controller
           control={formHook.control}
           name={'agama'}
-          render={({ field }) => <TextInput label='Agama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Religion' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
@@ -125,7 +125,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
           name={'golonganDarah'}
           render={({ field }) => (
             <StaticSelect
-              label='Golongan Darah'
+              label='Blood Type'
               options={Object.values(GolonganDarah).map(opt => ({
                 value: opt,
                 label: EnumsTitleUtils.getGolonganDarah(opt),
@@ -141,7 +141,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
           name={'kewarganegaraan'}
           render={({ field }) => (
             <StaticSelect
-              label='Kewarganegaraan'
+              label='Nationality'
               options={Object.values(Kewarganegaraan).map(opt => ({
                 value: opt,
                 label: EnumsTitleUtils.getKewarganegaraan(opt),

@@ -8,10 +8,10 @@ import { FaUser } from 'react-icons/fa'
 
 export const siswaNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.siswa.dashboard() },
-  { icon: <PiStudentFill />, label: 'Kelas', href: AppNav.siswa.kelas() },
-  { icon: <MdSportsSoccer />, label: 'Ekstrakulikuler', href: AppNav.siswa.ekstrakulikuler() },
-  { icon: <MdChecklistRtl />, label: 'Absensi', href: AppNav.siswa.absensi() },
-  { icon: <MdFactCheck />, label: 'Nilai', href: AppNav.siswa.nilai() },
-  { icon: <GrAnnounce />, label: 'Pengumuman', href: AppNav.siswa.pengumuman() },
+  { icon: <PiStudentFill />, label: 'Class', href: AppNav.siswa.kelas() },
+  { icon: <MdSportsSoccer />, label: 'Extracurricular', href: AppNav.siswa.ekstrakulikuler() },
+  { icon: <MdChecklistRtl />, label: 'Absence', href: AppNav.siswa.absensi() },
+  { icon: <MdFactCheck />, label: 'Score', href: AppNav.siswa.nilai() },
+  { icon: <GrAnnounce />, label: 'Announcement', href: AppNav.siswa.pengumuman() },
   { icon: <FaUser />, label: 'My Account', href: AppNav.siswa.account() },
 ]

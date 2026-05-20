@@ -49,15 +49,15 @@ export default function GuruManageAbsensiEditPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Edit Absensi' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+    <GuruPageContainer title='Edit Absence' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.absensi?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
             <div className='flex flex-row items-center gap-4'>
-              <p className='font-semibold text-lg'>Edit Absensi</p>
+              <p className='font-semibold text-lg'>Edit Absence</p>
               <div className='grow' />
               <Link to={AppNav.guru.manageAbsensiMutate({ absensiId: loader.absensi?.id ?? '' })}>
-                <Button color='secondary' label='Mutate Absensi' startIcon={<FaUserEdit />} />
+                <Button color='secondary' label='Mutate Absence' startIcon={<FaUserEdit />} />
               </Link>
             </div>
             <hr className='my-4' />
@@ -70,7 +70,7 @@ export default function GuruManageAbsensiEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

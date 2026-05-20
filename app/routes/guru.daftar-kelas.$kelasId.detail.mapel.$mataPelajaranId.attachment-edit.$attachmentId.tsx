@@ -78,7 +78,7 @@ export async function action({
 
     if (!attachmentId || !currAttachment)
       throw {
-        message: 'Lampiran tidak ditemukan!',
+        message: 'Attachment not found!',
       }
 
     let uploadedFileInfo
@@ -110,7 +110,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Lampiran berhasil update!',
+          message: 'Attachment not found!',
           data: {
             updatedAttachment: result,
           },

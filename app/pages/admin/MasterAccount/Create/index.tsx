@@ -46,7 +46,7 @@ export default function AdminMasterAccountCreatePage() {
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <Card className=''>
-          <p className='font-semibold text-lg'>Tambah Akun</p>
+          <p className='font-semibold text-lg'>Add Account</p>
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
@@ -54,12 +54,12 @@ export default function AdminMasterAccountCreatePage() {
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ onClick: resetForm }} />
+            <Button variant='text' color='secondary' label='Empty form' buttonProps={{ onClick: resetForm }} />
             <Button
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

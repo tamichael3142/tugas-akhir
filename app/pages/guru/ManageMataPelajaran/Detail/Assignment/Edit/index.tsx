@@ -59,7 +59,7 @@ export default function GuruManageMataPelajaranDetailAssignmentEditPage() {
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Edit Tugas</h2>
+            <h2 className='font-semibold text-xl'>Edit Assignment</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'secondary' }} />
           </div>
@@ -70,12 +70,12 @@ export default function GuruManageMataPelajaranDetailAssignmentEditPage() {
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ onClick: resetForm }} />
+            <Button variant='text' color='secondary' label='Empty form' buttonProps={{ onClick: resetForm }} />
             <Button
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

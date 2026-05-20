@@ -48,7 +48,7 @@ export type LoaderDataGuruJadwalMengajar = {
 }
 
 /**
- * * Daftar Kelas
+ * * Class List
  */
 export type LoaderDataGuruDaftarKelas = {
   tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
@@ -64,7 +64,7 @@ export type LoaderDataGuruDaftarKelasDetail = {
 }
 
 /**
- * * Daftar Kelas Detail > Daftar Siswa
+ * * Class list Detail > Daftar Siswa
  */
 export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
@@ -72,7 +72,7 @@ export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
 }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran
+ * * Class list Detail > Subject
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
@@ -88,7 +88,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetail = {
 }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Berita Acara
+ * * Class list Detail > Subject Detail > Berita Acara
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcara =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
@@ -109,7 +109,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraEdit =
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Assignment
+ * * Class list Detail > Subject Detail > Assignment
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
@@ -132,7 +132,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail =
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Attachment
+ * * Class list Detail > Subject Detail > Attachment
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachment =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
@@ -148,7 +148,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentEdit =
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Penilaian
+ * * Class list Detail > Subject Detail > Penilaian
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
@@ -158,7 +158,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian =
   }
 
 /**
- * * Daftar Kelas Detail > Mata Pelajaran Detail > Pelanggaram
+ * * Class list Detail > Subject Detail > Pelanggaram
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
@@ -177,7 +177,7 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit =
   }
 
 /**
- * * Daftar Kelas Detail > Absensi
+ * * Class list Detail > Absensi
  */
 export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
@@ -190,7 +190,7 @@ export type LoaderDataGuruDaftarKelasDetailAbsensiCreate = {
 }
 
 /**
- * * Manage Mata Pelajaran
+ * * Manage Subject
  */
 export type LoaderDataGuruManageMataPelajaranDetail = {
   mataPelajaran: MataPelajaran & {
@@ -241,7 +241,7 @@ export type LoaderDataGuruManageAbsensiMutate = {
 }
 
 /**
- * * Master Pengumuman
+ * * Master Announcement
  */
 export type LoaderDataGuruMasterPengumuman = {
   pengumumans: PaginationReturns<Pengumuman & { createdBy: Akun | null }>

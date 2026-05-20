@@ -150,14 +150,14 @@ export default function AdminMasterKelasAddSiswaPage() {
 
   return (
     <AdminPageContainer
-      title='Tambah Siswa'
+      title='Add Student'
       actions={[
         <Button
           key={`${formId}-submit-button`}
           variant='contained'
           color='secondary'
           startIcon={<FaSave />}
-          label='Simpan'
+          label='Save'
           buttonProps={{ type: 'submit', form: formId, disabled: isLoading }}
         />,
         <BackButton key={`${sectionPrefix}-back-button`} />,
@@ -169,7 +169,7 @@ export default function AdminMasterKelasAddSiswaPage() {
           <div className='grid grid-cols-3 gap-4'>
             <FilterGridItem>
               <TextInput
-                label='Kelas'
+                label='Class'
                 inputProps={{
                   value: loader.kelas?.nama,
                   readOnly: true,
@@ -178,7 +178,7 @@ export default function AdminMasterKelasAddSiswaPage() {
             </FilterGridItem>
             <FilterGridItem>
               <TextInput
-                label='Tahun Ajaran'
+                label='Academic Year'
                 inputProps={{
                   value: loader.kelas?.tahunAjaran.nama,
                   readOnly: true,
@@ -195,7 +195,7 @@ export default function AdminMasterKelasAddSiswaPage() {
               <TextInput
                 className='max-w-xs'
                 inputProps={{
-                  placeholder: 'Cari siswa...',
+                  placeholder: 'Search student...',
                   value: searchText,
                   onChange: e => setSearchText(e.target.value),
                 }}
@@ -311,8 +311,8 @@ export default function AdminMasterKelasAddSiswaPage() {
               },
             },
             { field: 'username', label: 'Username', render: row => row?.username },
-            { field: 'firstName', label: 'Nama Depan', render: row => row?.firstName },
-            { field: 'lastName', label: 'Nama Belakang', render: row => row?.lastName },
+            { field: 'firstName', label: 'First Name', render: row => row?.firstName },
+            { field: 'lastName', label: 'Last Name', render: row => row?.lastName },
             { field: 'email', label: 'Email', render: row => row?.email },
           ]}
           rows={loader.availableSiswas.data}

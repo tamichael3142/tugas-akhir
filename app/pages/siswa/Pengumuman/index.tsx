@@ -26,7 +26,7 @@ export default function SiswaPengumumanPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <SiswaPageContainer title='Pengumuman'>
+    <SiswaPageContainer title='Announcement'>
       {loader.pengumumans && Array.isArray(loader.pengumumans.data) ? (
         <DataCardGrid
           id={`${sectionPrefix}-data-grid`}

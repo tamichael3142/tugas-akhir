@@ -49,7 +49,7 @@ export default function AdminAccountPage() {
   if (revalidator.state === 'loading' || !loader.account) return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Atur Akun'
+      title='Manage Account'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} label='Back' buttonProps={{ color: 'primary' }} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
@@ -71,7 +71,7 @@ export default function AdminAccountPage() {
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

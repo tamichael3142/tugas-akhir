@@ -74,7 +74,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
         leadingView={
           <div className='flex flex-col sm:flex-row items-center gap-4 mb-5'>
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.SATU ? 'contained' : 'outlined'}
               buttonProps={{
@@ -84,7 +84,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
               }}
             />
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.DUA ? 'contained' : 'outlined'}
               buttonProps={{
@@ -97,7 +97,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari siswa...',
+                placeholder: 'Search student...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -106,12 +106,12 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
         }
         columns={[
           { field: 'username', label: 'Username', render: row => row.siswa?.username },
-          { field: 'firstName', label: 'Nama Depan', render: row => row.siswa?.firstName },
-          { field: 'lastName', label: 'Nama Belakang', render: row => row.siswa?.lastName },
+          { field: 'firstName', label: 'First Name', render: row => row.siswa?.firstName },
+          { field: 'lastName', label: 'Last Name', render: row => row.siswa?.lastName },
           { field: 'email', label: 'Email', render: row => row.siswa?.email },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link to={AppNav.admin.masterMataPelajaranEdit({ id: row.kelasId })}>

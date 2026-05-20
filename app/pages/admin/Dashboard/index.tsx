@@ -28,18 +28,18 @@ const importExcelFormId = 'admin-import-excel-user-form'
 const tableSectionId = `${sectionPrefix}-user-table`
 
 const headers: { label: string }[] = [
-  { label: 'Nama Depan' },
-  { label: 'Nama Belakang' },
-  { label: 'Tempat Lahir' },
-  { label: 'Tanggal Lahir' },
+  { label: 'First Name' },
+  { label: 'Last Name' },
+  { label: 'Birth Place' },
+  { label: 'Birth Date' },
   { label: 'Role' },
   { label: 'Username' },
   { label: 'Email' },
-  { label: 'Jenis Kelamin' },
-  { label: 'Agama' },
-  { label: 'Alamat' },
-  { label: 'Gol Darah' },
-  { label: 'Kewarganegaraan' },
+  { label: 'Gender' },
+  { label: 'Religion' },
+  { label: 'Address' },
+  { label: 'Blood Type' },
+  { label: 'Nationality' },
 ]
 
 export default function AdminDashboardPage() {
@@ -104,7 +104,7 @@ export default function AdminDashboardPage() {
         />,
         <Button
           key={formId}
-          label='Simpan'
+          label='Save'
           startIcon={<FaSave />}
           onlyIconOnSmallView
           buttonProps={{ type: 'submit', form: formId }}
@@ -137,7 +137,7 @@ export default function AdminDashboardPage() {
                     {hdr.label}
                   </th>
                 ))}
-                <th className='border min-w-20'>Aksi</th>
+                <th className='border min-w-20'>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -274,7 +274,7 @@ export default function AdminDashboardPage() {
         </div>
       </Form>
       <Button
-        label='Tambah'
+        label='Add'
         className='w-full mt-4'
         buttonProps={{
           onClick: () =>

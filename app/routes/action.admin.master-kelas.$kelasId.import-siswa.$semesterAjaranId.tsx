@@ -12,7 +12,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const semesterAjaranId = params.semesterAjaranId as SemesterAjaran['id'] | null
 
   if (!kelasId || !semesterAjaranId)
-    return json({ error: 'Kelas Id or Semester Ajaran Id not found!' }, { status: 400 })
+    return json({ error: 'Class Id or Academic Semester Id not found!' }, { status: 400 })
 
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })

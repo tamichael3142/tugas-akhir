@@ -23,17 +23,17 @@ export default function GuruDaftarKelasDetailMataPelajaranDetail() {
   return (
     <Fragment>
       <Card className='mt-4 lg:mt-8 p-4 lg:p-8'>
-        <h2 className='text-lg font-bold'>Mata Pelajaran: {loader.mataPelajaran.nama}</h2>
+        <h2 className='text-lg font-bold'>Subject: {loader.mataPelajaran.nama}</h2>
         <hr className='my-4 lg:mb-8' />
 
         <div className='grid grid-cols-3 gap-4 lg:gap-8'>
-          <DetailItem label={'Semester Ajaran'}>
+          <DetailItem label={'Academic Semester'}>
             {EnumsTitleUtils.getSemesterAjaranUrutan(
               loader.mataPelajaran?.semesterAjaran?.urutan as SemesterAjaranUrutan,
             )}
           </DetailItem>
           {loader.mataPelajaran?.guru ? (
-            <DetailItem label={'Guru'}>{DBHelpers.akun.getDisplayName(loader.mataPelajaran.guru)}</DetailItem>
+            <DetailItem label={'Teacher'}>{DBHelpers.akun.getDisplayName(loader.mataPelajaran.guru)}</DetailItem>
           ) : null}
           <DetailItem label={'Status'}>{loader.mataPelajaran?.deletedAt ? 'Deleted' : 'Active'}</DetailItem>
           {loader.mataPelajaran?.createdAt ? (

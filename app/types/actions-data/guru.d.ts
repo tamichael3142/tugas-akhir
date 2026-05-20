@@ -36,7 +36,7 @@ export type ActionDataGuruManageAbsensiMutate = BaseActionData & {
 }
 
 /**
- * * Daftar Kelas
+ * * Daftar Class
  */
 export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreate = BaseActionData & {
   data: {
@@ -125,7 +125,7 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = 
 }
 
 /**
- * * Manage Mata Pelajaran
+ * * Manage Subject
  */
 export type ActionDataGuruManageMataPelajaranDetailAssignmentCreate = BaseActionData & {
   data: {
@@ -146,7 +146,7 @@ export type ActionDataGuruManageMataPelajaranDetailAssignmentEdit = BaseActionDa
 }
 
 /**
- * * Master Pengumuman
+ * * Master Announcement
  */
 export type ActionDataGuruMasterPengumumanCreate = BaseActionData & {
   data: {

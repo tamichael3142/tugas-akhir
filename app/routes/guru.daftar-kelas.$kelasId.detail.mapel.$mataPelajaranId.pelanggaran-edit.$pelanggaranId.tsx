@@ -114,7 +114,7 @@ export async function action({
   try {
     if (!pelanggaranId)
       throw {
-        message: 'Pelanggaran tidak ditemukan!',
+        message: 'Violation not found!',
       }
 
     return await prisma.pelanggaranPerMapel
@@ -131,7 +131,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Pelanggaran berhasil update!',
+          message: 'Violation updated!',
           data: {
             updatedPelanggaran: result,
           },

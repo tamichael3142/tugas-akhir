@@ -53,7 +53,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(result => {
         return {
           success: true,
-          message: 'Ekstrakulikuler berhasil dibuat!',
+          message: 'Extracurricular created!',
           data: {
             createdEkstrakulikuler: result,
           },

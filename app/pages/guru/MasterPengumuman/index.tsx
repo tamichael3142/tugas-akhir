@@ -50,12 +50,12 @@ export default function GuruMasterPengumumanPage() {
 
   function openDeletePopup(row: Pengumuman) {
     popup.open({
-      title: 'Hapus pengumuman?',
+      title: 'Delete Announcement?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus pengumuman <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you ure to delete announcement <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -84,20 +84,20 @@ export default function GuruMasterPengumumanPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer
-      title='Master Pengumuman'
+      title='Master Announcement'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.guru.masterPengumumanCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
+          { field: 'nama', label: 'Name' },
           {
             field: 'content',
-            label: 'Konten',
+            label: 'Content',
             render: row => (
               <div
                 className='line-clamp-2'
@@ -107,7 +107,7 @@ export default function GuruMasterPengumumanPage() {
           },
           {
             field: 'createdBy',
-            label: 'Pembuat',
+            label: 'Creator',
             render: row => (row.createdBy ? DBHelpers.akun.getDisplayName(row.createdBy) : '-'),
           },
           {
@@ -127,7 +127,7 @@ export default function GuruMasterPengumumanPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => {
               const mutable = user?.id === row.createdById
 

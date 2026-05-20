@@ -117,7 +117,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Pelanggaran berhasil dibuat!',
+          message: 'Violation created!',
           data: {
             createdPelanggaran: result,
           },

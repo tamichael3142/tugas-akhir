@@ -61,7 +61,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari pelanggaran...',
+                placeholder: 'Search violation...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -69,7 +69,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
             <div className='grow'></div>
             <Button
               color='secondary'
-              label={'Tambah'}
+              label={'Add'}
               startIcon={<MdAdd />}
               buttonProps={{
                 disabled: loader.mataPelajaran.guruId !== user?.id,
@@ -85,9 +85,9 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
           </div>
         }
         columns={[
-          { field: 'siswa', label: 'Siswa', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
-          { field: 'poin', label: 'Poin' },
-          { field: 'remark', label: 'Keterangan' },
+          { field: 'siswa', label: 'Student', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
+          { field: 'poin', label: 'Point' },
+          { field: 'remark', label: 'Remark' },
           {
             field: 'createdAt',
             label: 'Created At',
@@ -100,7 +100,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

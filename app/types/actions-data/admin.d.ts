@@ -25,7 +25,7 @@ export type ActionDataAdminIndex = BaseActionData & {
 }
 
 /**
- * * Master Tahun Ajaran
+ * * Master Academic Year
  */
 export type ActionDataAdminMasterTahunAjaranCreate = BaseActionData & {
   data: {
@@ -53,7 +53,7 @@ export type ActionDataAdminMasterTahunAjaranDelete = BaseActionData & {
 }
 
 /**
- * * Master Kelas
+ * * Master Class
  */
 export type ActionDataAdminMasterKelasCreate = BaseActionData & {
   data: {
@@ -102,7 +102,7 @@ export type ActionDataAdminMasterKelasDelete = BaseActionData & {
 }
 
 /**
- * * Master Mata Pelajaran
+ * * Master Subject
  */
 export type ActionDataAdminMasterMataPelajaranCreate = BaseActionData & {
   data: {
@@ -158,7 +158,7 @@ export type ActionDataAdminMasterEkstrakulikulerDelete = BaseActionData & {
 }
 
 /**
- * * Master Pengumuman
+ * * Master Announcement
  */
 export type ActionDataAdminMasterPengumumanCreate = BaseActionData & {
   data: {

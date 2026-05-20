@@ -53,7 +53,7 @@ export type LoaderDataSiswaKelasDetail = {
 }
 
 /**
- * * Kelas > Mata Pelajaran
+ * * Kelas > Subject
  */
 export type LoaderDataSiswaKelasDetailMataPelajaran = CurrentTahunAndSemesterAjaran & {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
@@ -69,7 +69,7 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetail = CurrentTahunAndSemes
 }
 
 /**
- * * Kelas > Mata Pelajaran > Assignment
+ * * Kelas > Subject > Assignment
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   assignments: PaginationReturns<Assignment>
@@ -82,14 +82,14 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailAssignmentDetail =
   }
 
 /**
- * * Kelas > Mata Pelajaran > Attachment
+ * * Kelas > Subject > Attachment
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailAttachment = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   attachments: PaginationReturns<MataPelajaranAttachment & { downloadUrl?: string }>
 }
 
 /**
- * * Kelas > Mata Pelajaran > Penilaian
+ * * Kelas > Subject > Penilaian
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   kompetensis: Kompetensi[]
@@ -98,7 +98,7 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
 }
 
 /**
- * * Kelas > Mata Pelajaran > Pelanggaran
+ * * Kelas > Subject > Pelanggaran
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   pelanggarans: PaginationReturns<PelanggaranPerMapel>
@@ -146,7 +146,7 @@ export type LoaderDataSiswaAbsensi = CurrentTahunAndSemesterAjaran & {
 }
 
 /**
- * * Pengumuman
+ * * Announcement
  */
 export type LoaderDataSiswaPengumuman = {
   pengumumans?: PaginationReturns<Pengumuman>

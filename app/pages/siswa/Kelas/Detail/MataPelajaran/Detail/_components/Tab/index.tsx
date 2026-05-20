@@ -24,10 +24,10 @@ export default function SiswaKelasDetailMataPelajaranDetailTab(props: SiswaKelas
   const navigate = useNavigate()
 
   const items: TabItem[] = [
-    { key: TabKey.ASSIGNMENT, label: 'Tugas', icon: <MdAssignment /> },
-    { key: TabKey.ATTACHMENT, label: 'Lampiran', icon: <GrAttachment /> },
-    { key: TabKey.PENILAIAN, label: 'Penilaian', icon: <MdFactCheck /> },
-    { key: TabKey.PELANGGARAN, label: 'Pelanggaran', icon: <BiSolidErrorAlt /> },
+    { key: TabKey.ASSIGNMENT, label: 'Assignment', icon: <MdAssignment /> },
+    { key: TabKey.ATTACHMENT, label: 'Attachment', icon: <GrAttachment /> },
+    { key: TabKey.PENILAIAN, label: 'Assessment', icon: <MdFactCheck /> },
+    { key: TabKey.PELANGGARAN, label: 'Violation', icon: <BiSolidErrorAlt /> },
   ]
 
   if (!mataPelajaran) return null

@@ -83,15 +83,15 @@ export default function GuruJadwalMengajarPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Jadwal Mengajar' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+    <GuruPageContainer title='Lesson Timetable' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
       <Card>
         <div className='mb-8'>
           <div className='grid grid-cols-2 gap-4'>
             <FilterGridItem>
               <StaticSelect
-                label='Tahun Ajaran'
+                label='Academic Year'
                 options={[
-                  { value: '', label: 'Pilih tahun ajaran' },
+                  { value: '', label: 'Choose academic year' },
                   ...tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
                 ]}
                 selectProps={{
@@ -107,9 +107,9 @@ export default function GuruJadwalMengajarPage() {
             </FilterGridItem>
             <FilterGridItem>
               <StaticSelect
-                label='Semester Ajaran'
+                label='Academic Semester'
                 options={[
-                  { value: '', label: 'Pilih semester ajaran' },
+                  { value: '', label: 'Choose academic semester' },
                   ...getSemesterAjaranOptions().map(item => ({
                     value: item.id,
                     label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
@@ -236,7 +236,7 @@ export default function GuruJadwalMengajarPage() {
         ) : (
           <div className='p-4 rounded-lg bg-grey-dark'>
             <p className='font-bold text-lg'>Info!</p>
-            <p className='font-semibold'>Pilih tahun ajaran dan semester ajaran untuk melihat jadwal!</p>
+            <p className='font-semibold'>Choose academic year and semester to check on the schedules!</p>
           </div>
         )}
       </Card>

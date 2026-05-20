@@ -104,18 +104,18 @@ export default function AdminMasterKelasManageJadwalPage() {
           <div className='w-full mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
             <div className='col-span-1'>
               <TextInput
-                label='Kelas'
+                label='Class'
                 inputProps={{
                   value: loader.kelas?.nama,
                 }}
               />
             </div>
             <div className='col-span-1'>
-              <TextInput label='Tahun Ajaran' inputProps={{ value: loader.kelas?.tahunAjaran.nama }} />
+              <TextInput label='Academic Year' inputProps={{ value: loader.kelas?.tahunAjaran.nama }} />
             </div>
             <div className='col-span-1'>
               <TextInput
-                label='Semester Ajaran'
+                label='Academic Semester'
                 inputProps={{
                   value: EnumsTitleUtils.getSemesterAjaranUrutan(
                     loader.kelas?.tahunAjaran.semesterAjaran.find(item => item.id === params.semesterAjaranId)
@@ -126,7 +126,7 @@ export default function AdminMasterKelasManageJadwalPage() {
             </div>
             <div className='col-span-1'>
               <TextInput
-                label='Wali Kelas'
+                label='Homeroom Teacher'
                 inputProps={{
                   value: loader.kelas?.wali ? DBHelpers.akun.getDisplayName(loader.kelas.wali) : '-',
                 }}
@@ -221,7 +221,7 @@ export default function AdminMasterKelasManageJadwalPage() {
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

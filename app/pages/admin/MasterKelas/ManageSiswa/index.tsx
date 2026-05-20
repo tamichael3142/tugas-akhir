@@ -103,7 +103,7 @@ export default function AdminMasterKelasManageSiswaPage() {
         <div className='grid grid-cols-3 gap-4'>
           <FilterGridItem>
             <TextInput
-              label='Kelas - Wali'
+              label='Class - Homeroom Teacher'
               inputProps={{
                 value: `${loader.kelas?.nama}${loader.kelas?.wali ? ` - ${DBHelpers.akun.getDisplayName(loader.kelas?.wali)}` : ''}`,
               }}
@@ -111,7 +111,7 @@ export default function AdminMasterKelasManageSiswaPage() {
           </FilterGridItem>
           <FilterGridItem>
             <TextInput
-              label='Tahun Ajaran'
+              label='Academic Year'
               inputProps={{
                 value: loader.kelas?.tahunAjaran.nama,
               }}
@@ -119,7 +119,7 @@ export default function AdminMasterKelasManageSiswaPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Semester Ajaran'
+              label='Academic Semester'
               options={[
                 ...getSemesterAjaranOptions().map(item => ({
                   value: item.id,
@@ -147,7 +147,7 @@ export default function AdminMasterKelasManageSiswaPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari siswa...',
+                placeholder: 'Search student...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -156,7 +156,7 @@ export default function AdminMasterKelasManageSiswaPage() {
             <fetcher.Form id={deleteFormId} method='delete' onSubmit={formHook.handleSubmit}>
               <Button
                 key={`${sectionPrefix}-delete-siswa-button`}
-                label='Hapus Siswa'
+                label='Remove Student'
                 color='danger'
                 startIcon={<FaTrash />}
                 buttonProps={{ disabled: selectedIds.length === 0, type: 'submit', form: deleteFormId }}
@@ -165,7 +165,7 @@ export default function AdminMasterKelasManageSiswaPage() {
             <Button
               key={`${sectionPrefix}-add-siswa-button`}
               color='secondary'
-              label='Tambah Siswa'
+              label='Add Student'
               startIcon={<IoAdd />}
               buttonProps={{
                 onClick: () => {
@@ -214,8 +214,8 @@ export default function AdminMasterKelasManageSiswaPage() {
           },
           { field: 'username', label: 'Username', render: row => row.siswa?.username },
           // { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.siswa?.role as Role) },
-          { field: 'firstName', label: 'Nama Depan', render: row => row.siswa?.firstName },
-          { field: 'lastName', label: 'Nama Belakang', render: row => row.siswa?.lastName },
+          { field: 'firstName', label: 'First Name', render: row => row.siswa?.firstName },
+          { field: 'lastName', label: 'Last Name', render: row => row.siswa?.lastName },
           { field: 'email', label: 'Email', render: row => row.siswa?.email },
           // {
           //   field: 'createdAt',

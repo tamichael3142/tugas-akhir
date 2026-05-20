@@ -112,7 +112,7 @@ export async function action({
 
     if (!assignmentId || !currAssignment)
       throw {
-        message: 'Tugas tidak ditemukan!',
+        message: 'Assignment not found!',
       }
 
     let currSubmission
@@ -173,7 +173,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Submission berhasil tersimpan!',
+          message: 'Submission saved!',
           data: {
             updatedAssignmentSubmission: result,
           },

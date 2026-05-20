@@ -93,7 +93,7 @@ export default function AdminMasterAccountManageChildrenPage() {
       actions={[
         <Button
           key={`${sectionPrefix}-export-button`}
-          label={'Simpan'}
+          label={'Save'}
           color='secondary'
           startIcon={<FaSave />}
           onlyIconOnSmallView
@@ -121,7 +121,7 @@ export default function AdminMasterAccountManageChildrenPage() {
               <TextInput
                 className='max-w-xs'
                 inputProps={{
-                  placeholder: 'Cari siswa...',
+                  placeholder: 'Search student...',
                   value: searchText,
                   onChange: e => setSearchText(e.target.value),
                 }}
@@ -159,8 +159,8 @@ export default function AdminMasterAccountManageChildrenPage() {
               },
             },
             { field: 'username', label: 'Username' },
-            { field: 'firstName', label: 'Nama Depan' },
-            { field: 'lastName', label: 'Nama Belakang' },
+            { field: 'firstName', label: 'First Name' },
+            { field: 'lastName', label: 'Last Name' },
             { field: 'email', label: 'Email' },
             {
               field: 'createdAt',

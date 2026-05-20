@@ -40,21 +40,21 @@ export default function SiswaKelasPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <SiswaPageContainer title='Kelas'>
+    <SiswaPageContainer title='Class'>
       {loader.kelass && Array.isArray(loader.kelass.data) ? (
         <DataGrid
           id={`${sectionPrefix}-data-grid`}
           columns={[
-            { field: 'nama', label: 'Nama' },
-            { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
+            { field: 'nama', label: 'Name' },
+            { field: 'tahunAjaran', label: 'Academic Year', render: row => row.tahunAjaran.nama },
             {
               field: 'wali',
-              label: 'Wali Kelas',
+              label: 'Homeroom Teacher',
               render: row => (row.wali ? DBHelpers.akun.getDisplayName(row.wali) : '-'),
             },
             {
               field: 'actions',
-              label: 'Aksi',
+              label: 'Action',
               render: row => {
                 return (
                   <DataGridActionButtonWrapper>
@@ -62,7 +62,7 @@ export default function SiswaKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getDetailIcon()}
                         color='info'
-                        label={'Detail Kelas'}
+                        label={'Class Detail'}
                       />
                     </Link>
                   </DataGridActionButtonWrapper>

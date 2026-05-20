@@ -28,13 +28,13 @@ export default function AdminAccountSelfUpdateDetailComponent(props: Props) {
 
   return (
     <div className='pb-8 grid grid-cols-3 gap-4 lg:gap-8'>
-      <DetailItem label='Nama Depan' colSpan={1}>
+      <DetailItem label='First Name' colSpan={1}>
         {props.account.firstName}
       </DetailItem>
-      <DetailItem label='Nama Belakang' colSpan={1}>
+      <DetailItem label='Last Name' colSpan={1}>
         {props.account.lastName}
       </DetailItem>
-      <DetailItem label='Tanggal Lahir' colSpan={1}>
+      <DetailItem label='Birth Date' colSpan={1}>
         {props.account.tanggalLahir ? format(props.account.tanggalLahir, constants.dateFormats.displayFullDate) : '-'}
       </DetailItem>
       <DetailItem label='NIP' colSpan={2}>
@@ -46,7 +46,7 @@ export default function AdminAccountSelfUpdateDetailComponent(props: Props) {
       <DetailItem label='Username' colSpan={2}>
         {props.account.username}
       </DetailItem>
-      <DetailItem label='Jenis Kelamin' colSpan={1}>
+      <DetailItem label='Gender' colSpan={1}>
         {EnumsTitleUtils.getJenisKelamin(props.account.jenisKelamin as JenisKelamin)}
       </DetailItem>
     </div>

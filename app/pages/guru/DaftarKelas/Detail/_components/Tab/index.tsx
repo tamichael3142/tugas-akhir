@@ -21,9 +21,9 @@ export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTab
   const user = useAuthStore(state => state.user)
 
   const items: TabItem[] = [
-    { key: TabKey.DAFTAR_SISWA, label: 'Daftar Siswa' },
-    { key: TabKey.MATA_PELAJARAN, label: 'Mata Pelajaran' },
-    { key: TabKey.ABSENSI, label: 'Absensi', disabled: kelas?.waliId !== user?.id },
+    { key: TabKey.DAFTAR_SISWA, label: 'Student List' },
+    { key: TabKey.MATA_PELAJARAN, label: 'Subject' },
+    { key: TabKey.ABSENSI, label: 'Absence', disabled: kelas?.waliId !== user?.id },
   ]
 
   if (!kelas) return null

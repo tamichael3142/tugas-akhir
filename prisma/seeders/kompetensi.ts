@@ -7,8 +7,8 @@ const data = [
   { id: 'UJIAN_3', label: 'Ujian 3' },
   { id: 'UJIAN_4', label: 'Ujian 4' },
   { id: 'UAS', label: 'UAS' },
-  { id: 'TUGAS_1', label: 'Tugas 1' },
-  { id: 'TUGAS_2', label: 'Tugas 2' },
+  { id: 'TUGAS_1', label: 'Assignment 1' },
+  { id: 'TUGAS_2', label: 'Assignment 2' },
   { id: 'TES_1', label: 'Tes 1' },
   { id: 'TES_2', label: 'Tes 2' },
 ]

@@ -14,11 +14,11 @@ function getRole(value: Role) {
     case Role.ADMIN:
       return 'Admin'
     case Role.GURU:
-      return 'Guru'
+      return 'Teacher'
     case Role.ORANGTUA:
-      return 'Orang Tua'
+      return 'Parent'
     case Role.SISWA:
-      return 'Siswa'
+      return 'Student'
     default:
       return '-'
   }
@@ -27,11 +27,11 @@ function getRole(value: Role) {
 function getJenisKelamin(value: JenisKelamin) {
   switch (value) {
     case JenisKelamin.MALE:
-      return 'Laki-Laki'
+      return 'Male'
     case JenisKelamin.FEMALE:
-      return 'Perempuan'
+      return 'Female'
     case JenisKelamin.UNKNOWN:
-      return 'Tidak Diketahui'
+      return 'Other'
     default:
       return '-'
   }
@@ -48,7 +48,7 @@ function getGolonganDarah(value: GolonganDarah) {
     case GolonganDarah.O:
       return 'O'
     case GolonganDarah.UNKNOWN:
-      return 'Tidak Diketahui'
+      return 'Unknown'
     default:
       return '-'
   }
@@ -59,9 +59,9 @@ function getKewarganegaraan(value: Kewarganegaraan) {
     case Kewarganegaraan.INDONESIA:
       return 'Indonesia'
     case Kewarganegaraan.FOREIGN:
-      return 'Asing'
+      return 'Foreign'
     case Kewarganegaraan.UNKNOWN:
-      return 'Tidak Diketahui'
+      return 'Unknown'
     default:
       return '-'
   }
@@ -70,9 +70,9 @@ function getKewarganegaraan(value: Kewarganegaraan) {
 function getSemesterAjaranUrutan(value: SemesterAjaranUrutan) {
   switch (value) {
     case SemesterAjaranUrutan.SATU:
-      return 'Ganjil'
+      return 'Odd'
     case SemesterAjaranUrutan.DUA:
-      return 'Genap'
+      return 'Even'
     default:
       return '-'
   }
@@ -81,11 +81,11 @@ function getSemesterAjaranUrutan(value: SemesterAjaranUrutan) {
 function getTipeAbsensi(value: TipeAbsensi) {
   switch (value) {
     case TipeAbsensi.HADIR:
-      return 'Hadir'
+      return 'Presence'
     case TipeAbsensi.IZIN:
-      return 'Izin'
+      return 'Excused'
     case TipeAbsensi.SAKIT:
-      return 'Sakit'
+      return 'Sick'
     default:
       return 'X'
   }

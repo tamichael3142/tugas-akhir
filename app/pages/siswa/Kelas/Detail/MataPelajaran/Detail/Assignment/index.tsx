@@ -74,7 +74,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari tugas...',
+                placeholder: 'Search assignment...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -88,20 +88,20 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentPage() {
             label: <div className='text-center'>{'Open'}</div>,
             render: row => renderSubmittableIndicator(DBHelpers.mapelAssignment.getIsSubmittable(row)),
           },
-          { field: 'title', label: 'Judul', render: row => row.title },
+          { field: 'title', label: 'Title', render: row => row.title },
           {
             field: 'tanggalMulai',
-            label: 'Mulai',
+            label: 'Start',
             render: row => format(new Date(row.tanggalMulai), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'tanggalBerakhir',
-            label: 'Berakhir',
+            label: 'End',
             render: row => format(new Date(row.tanggalBerakhir), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => {
               return (
                 <DataGridActionButtonWrapper>

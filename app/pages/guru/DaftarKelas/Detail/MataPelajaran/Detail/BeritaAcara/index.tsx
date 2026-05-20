@@ -60,7 +60,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraPage(
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari berita acara...',
+                placeholder: 'Search daily report...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -68,7 +68,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraPage(
             <div className='grow'></div>
             <Button
               color='secondary'
-              label={'Buat Berita Acara'}
+              label={'Create Daily Report'}
               startIcon={<MdAdd />}
               buttonProps={{
                 disabled: loader.mataPelajaran.guruId !== user?.id,
@@ -84,10 +84,10 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraPage(
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
-          { field: 'dayId', label: 'Hari', render: row => row.day.label },
-          { field: 'hourStartId', label: 'Jam Mulai', render: row => row.hourStart.label.split('-')[0] },
-          { field: 'hourEndId', label: 'Jam Berakhir', render: row => row.hourEnd.label.split('-')[1] },
+          { field: 'title', label: 'Title', render: row => row.title },
+          { field: 'dayId', label: 'Day', render: row => row.day.label },
+          { field: 'hourStartId', label: 'Start Hour', render: row => row.hourStart.label.split('-')[0] },
+          { field: 'hourEndId', label: 'End Hour', render: row => row.hourEnd.label.split('-')[1] },
           {
             field: 'createdAt',
             label: 'Created At',
@@ -100,7 +100,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraPage(
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

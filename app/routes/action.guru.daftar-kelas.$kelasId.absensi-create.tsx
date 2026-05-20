@@ -56,7 +56,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     const newTanggalText = format(selectedDate, constants.dateFormats.displayFullDate)
     absensi = await prisma.absensi.create({
       data: {
-        label: `Absensi Harian Kelas: ${kelas?.nama} (${format(selectedDate, constants.dateFormats.dateMonthYearSimple)})`,
+        label: `Daily Class Absence: ${kelas?.nama} (${format(selectedDate, constants.dateFormats.dateMonthYearSimple)})`,
         tanggal: selectedDate,
         tanggalText: newTanggalText,
         kelasId: kelasId ?? '',

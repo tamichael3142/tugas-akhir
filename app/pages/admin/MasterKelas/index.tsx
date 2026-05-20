@@ -62,12 +62,12 @@ export default function AdminMasterKelasPage() {
 
   function openDeletePopup(row: Kelas) {
     popup.open({
-      title: 'Hapus kelas?',
+      title: 'Delete class?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus kelas <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you sure to delete class <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -100,10 +100,10 @@ export default function AdminMasterKelasPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Master Kelas'
+      title='Master Class'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelasCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
@@ -111,9 +111,9 @@ export default function AdminMasterKelasPage() {
         <div className='grid grid-cols-2 gap-4'>
           <FilterGridItem>
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{
@@ -130,9 +130,9 @@ export default function AdminMasterKelasPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Wali Kelas'
+              label='Homeroom Teacher'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.waliKelass.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{
@@ -152,11 +152,11 @@ export default function AdminMasterKelasPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
-          { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
+          { field: 'nama', label: 'Name' },
+          { field: 'tahunAjaran', label: 'Academic Year', render: row => row.tahunAjaran.nama },
           {
             field: 'wali',
-            label: 'Wali Kelas',
+            label: 'Homeroom Teacher',
             render: row => (row.wali ? DBHelpers.akun.getDisplayName(row.wali) : '-'),
           },
           {
@@ -176,7 +176,7 @@ export default function AdminMasterKelasPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => {
               const semesterSatu = row.tahunAjaran.semesterAjaran.find(
                 item => item.urutan === SemesterAjaranUrutan.SATU,
@@ -195,7 +195,7 @@ export default function AdminMasterKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getManageIcon()}
                         color='success'
-                        label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)}`}
+                        label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)} Semester Schedule}`}
                         buttonProps={{ disabled: !!row.deletedAt }}
                       />
                     </Link>
@@ -205,7 +205,7 @@ export default function AdminMasterKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getManageIcon()}
                         color='success'
-                        label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)}`}
+                        label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)} Semester Schedule`}
                         buttonProps={{ disabled: !!row.deletedAt }}
                       />
                     </Link>

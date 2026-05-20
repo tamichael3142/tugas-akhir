@@ -59,13 +59,12 @@ export default function AdminMasterEkstrakulikulerPage() {
 
   function openDeletePopup(row: Ekstrakulikuler) {
     popup.open({
-      title: 'Hapus ekstrakulikuler?',
+      title: 'Delete extracurricular?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus ekstrakulikuler{' '}
-            <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you sure want to delete <span className='font-semibold text-red-500'>{row.nama}</span> extracurricular?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -101,7 +100,7 @@ export default function AdminMasterEkstrakulikulerPage() {
       title='Master Ekstrakulikuler'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterEkstrakulikulerCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
@@ -109,9 +108,9 @@ export default function AdminMasterEkstrakulikulerPage() {
         <div className='grid grid-cols-2 gap-4'>
           <FilterGridItem>
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{
@@ -127,9 +126,9 @@ export default function AdminMasterEkstrakulikulerPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Pengajar'
+              label='Teacher'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.pengajars.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{
@@ -149,12 +148,12 @@ export default function AdminMasterEkstrakulikulerPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
-          { field: 'ruangan', label: 'Ruangan' },
-          { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
+          { field: 'nama', label: 'Name' },
+          { field: 'ruangan', label: 'Room' },
+          { field: 'tahunAjaran', label: 'Academic Year', render: row => row.tahunAjaran.nama },
           {
             field: 'pengajar',
-            label: 'Pengajar',
+            label: 'Teacher',
             render: row => (row.pengajar ? DBHelpers.akun.getDisplayName(row.pengajar) : '-'),
           },
           {
@@ -174,7 +173,7 @@ export default function AdminMasterEkstrakulikulerPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link to={AppNav.admin.masterEkstrakulikulerEdit({ id: row.id })}>

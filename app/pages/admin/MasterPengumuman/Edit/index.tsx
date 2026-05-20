@@ -13,7 +13,7 @@ import { LoaderDataAdminMasterPengumumanEdit } from '~/types/loaders-data/admin'
 import { AdminMasterPengumumanCreateFormType } from '../form-types'
 import { emptyUserValue, resolver, translateRawToFormData } from '../Create/form'
 
-const sectionPrefix = 'admin-master-Pengumuman-edit'
+const sectionPrefix = 'admin-master-pengumuman-edit'
 
 export default function AdminMasterPengumumanEditPage() {
   const loader = useLoaderData<LoaderDataAdminMasterPengumumanEdit>()
@@ -50,13 +50,13 @@ export default function AdminMasterPengumumanEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Edit Pengumuman'
+      title='Edit Announcement'
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterPengumuman()} />]}
     >
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.pengumuman?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Pengumuman</p>
+            <p className='font-semibold text-lg'>Edit Announcement</p>
             <hr className='my-4' />
 
             <AdminMasterPengumumanFormComponent />
@@ -67,7 +67,7 @@ export default function AdminMasterPengumumanEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

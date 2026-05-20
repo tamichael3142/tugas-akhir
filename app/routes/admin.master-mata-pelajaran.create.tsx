@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(result => {
         return {
           success: true,
-          message: 'Mata pelajaran berhasil dibuat!',
+          message: 'Subject created!',
           data: {
             createdMataPelajaran: result,
           },

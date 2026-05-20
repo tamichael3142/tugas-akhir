@@ -15,7 +15,7 @@ export async function action({
     const userId = await requireAuthCookie(request)
     if (!userId)
       throw {
-        message: 'User belum login!',
+        message: 'Unauthorized! User not logged in!',
       }
 
     const attachmentId = params.attachmentId as MataPelajaranAttachment['id'] | null
@@ -26,7 +26,7 @@ export async function action({
 
     if (!currAttachment)
       throw {
-        message: 'Lampiran tidak ditemukan!',
+        message: 'Attachment not found!',
       }
 
     await storageManager.deleteFile({ fullPath: currAttachment.path })
@@ -38,7 +38,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Lampiran berhasil dihapus!',
+          message: 'Attachment saved!',
           data: {
             deletedAttachment: result,
           },

@@ -16,7 +16,7 @@ export default function SiswaAbsensiPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <SiswaPageContainer
-      title='Absensi'
+      title='Absence'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}

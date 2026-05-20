@@ -80,7 +80,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
         leadingView={
           <div className='flex flex-col sm:flex-row items-center gap-4 mb-5'>
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.SATU ? 'contained' : 'outlined'}
               buttonProps={{
@@ -90,7 +90,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
               }}
             />
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.DUA ? 'contained' : 'outlined'}
               buttonProps={{
@@ -103,13 +103,13 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari...',
+                placeholder: 'Search...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
             />
             <Button
-              label={'Absensi Hari Ini'}
+              label={'Today Absence'}
               color='primary'
               buttonProps={{
                 disabled: !searchParams.get('semesterAjaranId'),
@@ -119,7 +119,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
           </div>
         }
         columns={[
-          { field: 'tanggalText', label: 'Tanggal', render: row => row.tanggalText },
+          { field: 'tanggalText', label: 'Date', render: row => row.tanggalText },
           { field: 'label', label: 'Label', render: row => row.label },
           {
             field: 'createdAt',

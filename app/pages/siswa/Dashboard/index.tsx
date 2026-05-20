@@ -129,7 +129,7 @@ export default function SiswaDashboardPage() {
         ) : (
           <div className='p-4 rounded-lg bg-grey-dark'>
             <p className='font-bold text-lg'>Info!</p>
-            <p className='font-semibold'>Pilih tahun ajaran dan semester ajaran untuk melihat jadwal!</p>
+            <p className='font-semibold'>Choose academic year and semester to check on the schedules!</p>
           </div>
         )}
       </Card>

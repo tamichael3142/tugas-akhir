@@ -26,9 +26,9 @@ export default function AdminMasterKelasFormComponent(props: Props) {
           name={'tahunAjaranId'}
           render={({ field }) => (
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Pilih tahun ajaran...' },
+                { value: '', label: 'Choose academic year...' },
                 ...props.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{ ...field }}
@@ -42,9 +42,9 @@ export default function AdminMasterKelasFormComponent(props: Props) {
           name={'waliId'}
           render={({ field }) => (
             <StaticSelect
-              label='Wali'
+              label='Homeroom Teacher'
               options={[
-                { value: '', label: 'Pilih guru...' },
+                { value: '', label: 'Choose a homeroom teacher...' },
                 ...props.gurus.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{ ...field }}
@@ -56,7 +56,7 @@ export default function AdminMasterKelasFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'nama'}
-          render={({ field }) => <TextInput label='Nama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Name' inputProps={{ ...field }} />}
         />
       </InputWrapper>
     </div>

@@ -88,7 +88,7 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
         leadingView={
           <div className='flex flex-col sm:flex-row items-center gap-4 mb-5'>
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester1?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.SATU ? 'contained' : 'outlined'}
               buttonProps={{
@@ -98,7 +98,7 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
               }}
             />
             <Button
-              label={`Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)}`}
+              label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semester2?.urutan as SemesterAjaranUrutan)} Semester`}
               color='secondary'
               variant={activeSemester === SemesterAjaranUrutan.DUA ? 'contained' : 'outlined'}
               buttonProps={{
@@ -111,7 +111,7 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari mata pelajaran...',
+                placeholder: 'Search subject...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -119,15 +119,15 @@ export default function GuruDaftarKelasDetailMataPelajaranPage() {
           </div>
         }
         columns={[
-          { field: 'nama', label: 'Nama' },
+          { field: 'nama', label: 'Name' },
           {
             field: 'guru',
-            label: 'Guru',
+            label: 'Teacher',
             render: row => (row.guru ? DBHelpers.akun.getDisplayName(row.guru) : '-'),
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

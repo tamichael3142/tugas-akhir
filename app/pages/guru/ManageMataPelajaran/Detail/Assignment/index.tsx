@@ -56,7 +56,7 @@ export default function GuruManageMataPelajaranDetailAssignmentPage() {
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari tugas...',
+                placeholder: 'Search assignment...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -65,31 +65,31 @@ export default function GuruManageMataPelajaranDetailAssignmentPage() {
             <Link
               to={AppNav.guru.manageMataPelajaranDetailAssignmentCreate({ mataPelajaranId: loader.mataPelajaran.id })}
             >
-              <Button color='secondary' label={'Buat Tugas'} startIcon={<MdAdd />} />
+              <Button color='secondary' label={'Create Assignment'} startIcon={<MdAdd />} />
             </Link>
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
+          { field: 'title', label: 'Title', render: row => row.title },
           {
             field: 'tanggalMulai',
-            label: 'Mulai',
+            label: 'Start',
             render: row => format(new Date(row.tanggalMulai), constants.dateFormats.rawDateTimeInput),
           },
           {
             field: 'tanggalBerakhir',
-            label: 'Berakhir',
+            label: 'End',
             render: row => format(new Date(row.tanggalBerakhir), constants.dateFormats.rawDateTimeInput),
           },
           { field: 'isSubmitable', label: 'Submission', render: row => (row.isSubmitable ? 'Open' : 'Close') },
           {
             field: 'submissionType',
-            label: 'Tipe',
+            label: 'Type',
             render: row => EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType),
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

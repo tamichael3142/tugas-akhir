@@ -35,9 +35,9 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailPelanggaranForm
           name={'siswaId'}
           render={({ field }) => (
             <StaticSelect
-              label='Siswa'
+              label='Student'
               options={[
-                { value: '', label: 'Pilih siswa...' },
+                { value: '', label: 'Choose a student...' },
                 ...props.siswas.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{ ...field }}
@@ -49,16 +49,14 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailPelanggaranForm
         <Controller
           control={formHook.control}
           name={'poin'}
-          render={({ field }) => <TextInput label='Poin Pengurangan' inputProps={{ ...field, type: 'number' }} />}
+          render={({ field }) => <TextInput label='Minus Points' inputProps={{ ...field, type: 'number' }} />}
         />
       </InputWrapper>
       <InputWrapper>
         <Controller
           control={formHook.control}
           name={'remark'}
-          render={({ field }) => (
-            <TextAreaInput label='Keterangan ' inputProps={{ ...field, value: field.value ?? '' }} />
-          )}
+          render={({ field }) => <TextAreaInput label='Remark ' inputProps={{ ...field, value: field.value ?? '' }} />}
         />
       </InputWrapper>
     </div>

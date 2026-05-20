@@ -46,13 +46,12 @@ export default function AdminMasterTahunAjaranPage() {
 
   function openDeletePopup(row: TahunAjaran) {
     popup.open({
-      title: 'Hapus tahun ajaran?',
+      title: 'Delete academic year?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus tahun ajaran{' '}
-            <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you sure to delete this academic year: <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -81,10 +80,10 @@ export default function AdminMasterTahunAjaranPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Master Tahun Ajaran'
+      title='Master Academic Year'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterTahunAjaranCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
@@ -93,12 +92,12 @@ export default function AdminMasterTahunAjaranPage() {
         columns={[
           {
             field: 'tahunMulai',
-            label: 'Tahun Mulai',
+            label: 'Start Year',
             render: row => dateFns.format(row.tahunMulai, constants.dateFormats.yearFull),
           },
           {
             field: 'tahunBerakhir',
-            label: 'Tahun Berakhir',
+            label: 'End Year',
             render: row => dateFns.format(row.tahunBerakhir, constants.dateFormats.yearFull),
           },
           { field: 'nama', label: 'Label' },
@@ -119,7 +118,7 @@ export default function AdminMasterTahunAjaranPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link to={AppNav.admin.masterTahunAjaranEdit({ id: row.id })}>

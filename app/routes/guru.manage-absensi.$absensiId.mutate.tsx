@@ -56,14 +56,14 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
     if (!absensiId)
       throw {
         code: 404,
-        message: 'Absensi tidak ditemukan!',
+        message: 'Absence not found!',
       }
 
     const currAbsensi = await prisma.absensi.findUnique({ where: { id: absensiId }, include: { kelas: true } })
     if (userId !== currAbsensi?.kelas.waliId)
       throw {
         code: 401,
-        message: 'Anda bukan wali kelas absensi ini!',
+        message: 'You are not the homeroom teacher!',
       }
 
     const dateTreshold = DateUtils.getADateTreshold(currAbsensi.tanggal)
@@ -71,7 +71,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
     if (!(dateTreshold.start <= today && today < dateTreshold.end))
       throw {
         code: 404,
-        message: 'Data absensi ini sudah dibekukan!',
+        message: 'This absence data has been froze!',
       }
 
     return await prisma
@@ -121,7 +121,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(() => {
         return {
           success: true,
-          message: 'Absensi berhasil diupdate!',
+          message: 'Absence updated!',
           data: {},
         }
       })

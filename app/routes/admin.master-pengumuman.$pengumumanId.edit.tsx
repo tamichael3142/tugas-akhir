@@ -49,7 +49,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(result => {
         return {
           success: true,
-          message: 'Pengumuman berhasil diupdate!',
+          message: 'Announcement updated!',
           data: {
             updatedPengumuman: result,
           },

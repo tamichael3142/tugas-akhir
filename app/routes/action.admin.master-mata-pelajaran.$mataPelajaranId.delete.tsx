@@ -28,7 +28,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Mata pelajaran berhasil dihapus!',
+          message: 'Subject deleted!',
           data: {
             deletedMataPelajaran: result,
           },

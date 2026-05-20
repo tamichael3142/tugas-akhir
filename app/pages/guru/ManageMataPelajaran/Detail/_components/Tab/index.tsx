@@ -22,10 +22,10 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
   const user = useAuthStore(state => state.user)
 
   const items: TabItem[] = [
-    { key: TabKey.ASSIGNMENT, label: 'Tugas' },
-    { key: TabKey.ATTACHMENT, label: 'Lampiran' },
-    { key: TabKey.NILAI, label: 'Nilai', disabled: mataPelajaran?.guruId !== user?.id },
-    { key: TabKey.PELANGGARAN, label: 'Pelanggaran' },
+    { key: TabKey.ASSIGNMENT, label: 'Assignment' },
+    { key: TabKey.ATTACHMENT, label: 'Attachment' },
+    { key: TabKey.NILAI, label: 'Score', disabled: mataPelajaran?.guruId !== user?.id },
+    { key: TabKey.PELANGGARAN, label: 'Violation' },
   ]
 
   if (!mataPelajaran) return null

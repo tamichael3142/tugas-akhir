@@ -52,7 +52,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(result => {
         return {
           success: true,
-          message: 'Kelas berhasil dibuat!',
+          message: 'Class created!',
           data: {
             createdKelas: result,
           },

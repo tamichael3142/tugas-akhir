@@ -74,7 +74,7 @@ export async function action({
   try {
     if (!assignmentId)
       throw {
-        message: 'Tugas tidak ditemukan!',
+        message: 'Assignment not found!',
       }
 
     return await prisma.assignment
@@ -94,7 +94,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Tugas berhasil update!',
+          message: 'Assignment updated!',
           data: {
             updatedAssignment: result,
           },

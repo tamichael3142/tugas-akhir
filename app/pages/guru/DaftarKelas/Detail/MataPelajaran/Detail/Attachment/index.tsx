@@ -69,13 +69,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
 
   function openDeletePopup(row: MataPelajaranAttachment) {
     popup.open({
-      title: 'Hapus akun?',
+      title: 'Delete attachment?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus attachment <span className='font-semibold text-red-500'>{row.title}</span>
-            ?
+            Are you sure to delete attachment <span className='font-semibold text-red-500'>{row.title}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -121,7 +120,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
             <TextInput
               className='max-w-xs'
               inputProps={{
-                placeholder: 'Cari lampiran...',
+                placeholder: 'Search attachment...',
                 value: searchText,
                 onChange: e => setSearchText(e.target.value),
               }}
@@ -129,7 +128,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
             <div className='grow'></div>
             <Button
               color='secondary'
-              label={'Buat Lampiran'}
+              label={'Create Attachment'}
               startIcon={<MdAdd />}
               buttonProps={{
                 disabled: loader.mataPelajaran.guruId !== user?.id,
@@ -145,8 +144,8 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
           </div>
         }
         columns={[
-          { field: 'title', label: 'Judul', render: row => row.title },
-          { field: 'description', label: 'Deskripsi', render: row => row.description },
+          { field: 'title', label: 'Title', render: row => row.title },
+          { field: 'description', label: 'Description', render: row => row.description },
           {
             field: 'downloadUrl',
             label: 'File',
@@ -168,7 +167,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link

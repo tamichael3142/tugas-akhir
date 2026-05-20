@@ -29,26 +29,26 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail
 
   return (
     <div className='grid grid-cols-3 gap-4 lg:gap-8'>
-      <DetailItem label='Judul' colSpan={2}>
+      <DetailItem label='Title' colSpan={2}>
         {props.assignment.title}
       </DetailItem>
-      <DetailItem label='Tipe' colSpan={1}>
+      <DetailItem label='Type' colSpan={1}>
         {EnumsTitleUtils.getAssignmentSubmissionType(props.assignment.submissionType as AssignmentSubmissionType)}
       </DetailItem>
-      <DetailItem label='Tanggal Mulai'>
+      <DetailItem label='Start Date'>
         {format(new Date(props.assignment.tanggalMulai), constants.dateFormats.rawDateTimeInput)}
       </DetailItem>
-      <DetailItem label='Tanggal Berakhir'>
+      <DetailItem label='End Date'>
         {format(new Date(props.assignment.tanggalBerakhir), constants.dateFormats.rawDateTimeInput)}
       </DetailItem>
       <DetailItem label='Submission'>
         {DBHelpers.mapelAssignment.getIsSubmittable(props.assignment) ? (
-          <span className='text-secondary'>{'Terbuka'}</span>
+          <span className='text-secondary'>{'Open'}</span>
         ) : (
-          <span className='text-primary'>{'Sudah ditutup'}</span>
+          <span className='text-primary'>{'Closed'}</span>
         )}
       </DetailItem>
-      <DetailItem label='Deskripsi' colSpan={3}>
+      <DetailItem label='Description' colSpan={3}>
         {props.assignment.description}
       </DetailItem>
     </div>

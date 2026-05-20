@@ -40,7 +40,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
           name={'tanggalMulai'}
           render={({ field }) => (
             <TextInput
-              label='Tanggal Mulai'
+              label='Start Date'
               inputProps={{
                 type: 'datetime-local',
                 value: format(field.value, constants.dateFormats.rawDateTimeInput),
@@ -60,7 +60,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
           name={'tanggalBerakhir'}
           render={({ field }) => (
             <TextInput
-              label='Tanggal Berakhir'
+              label='End Date'
               inputProps={{
                 type: 'datetime-local',
                 value: format(field.value, constants.dateFormats.rawDateTimeInput),

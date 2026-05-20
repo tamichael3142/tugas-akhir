@@ -65,7 +65,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailBeritaAcaraForm
         <Controller
           control={formHook.control}
           name={'title'}
-          render={({ field }) => <TextInput label='Judul' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Title' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper cutting='one-third'>

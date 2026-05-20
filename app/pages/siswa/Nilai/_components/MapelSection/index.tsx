@@ -13,8 +13,8 @@ export default function MapelSection(props: Props) {
       <table className='box-border w-full'>
         <thead>
           <tr className='w-full'>
-            <th className='border p-2 print:text-xs w-1/2'>Kompetensi</th>
-            <th className='border p-2 print:text-xs w-1/2'>Nilai</th>
+            <th className='border p-2 print:text-xs w-1/2'>Competence</th>
+            <th className='border p-2 print:text-xs w-1/2'>Score</th>
           </tr>
         </thead>
         <tbody>

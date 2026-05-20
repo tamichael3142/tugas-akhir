@@ -43,12 +43,12 @@ export default function AdminMasterKelasCreatePage() {
 
   return (
     <AdminPageContainer
-      title='Create Kelas'
+      title='Create Class'
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelas()} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <Card className=''>
-          <p className='font-semibold text-lg'>Tambah Kelas</p>
+          <p className='font-semibold text-lg'>Create Class</p>
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
@@ -56,12 +56,12 @@ export default function AdminMasterKelasCreatePage() {
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ onClick: resetForm }} />
+            <Button variant='text' color='secondary' label='Empty form' buttonProps={{ onClick: resetForm }} />
             <Button
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

@@ -88,11 +88,11 @@ export default function GuruDaftarKelasPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Daftar Kelas'>
+    <GuruPageContainer title='Class List'>
       <Card className='mb-8 shadow-lg'>
-        <div className='flex flex-row items-center justify-end gap-4'>
+        <div className='flex flex-row items-center justify-end gap-4 mb-2'>
           <Button
-            label='Muat Periode Sekarang'
+            label='Load Current Periode'
             color='secondary'
             startIcon={<FaScrewdriverWrench />}
             onlyIconOnSmallView
@@ -102,9 +102,9 @@ export default function GuruDaftarKelasPage() {
         <div className='grid grid-cols-3 gap-4'>
           <FilterGridItem>
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{
@@ -121,9 +121,9 @@ export default function GuruDaftarKelasPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Semester Ajaran'
+              label='Academic Semester'
               options={[
-                { value: '', label: 'Pilih semester ajaran' },
+                { value: '', label: 'Choose academic semester' },
                 ...getSemesterAjaranOptions().map(item => ({
                   value: item.id,
                   label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
@@ -144,9 +144,9 @@ export default function GuruDaftarKelasPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Wali'
+              label='Homeroom Teacher'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...(loader.waliKelass
                   ? loader.waliKelass.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) }))
                   : []),
@@ -172,7 +172,7 @@ export default function GuruDaftarKelasPage() {
           leadingView={
             <div className='flex flex-row items-center justify-end gap-4 pb-4'>
               <Checkbox
-                label='Hanya wali?'
+                label='Only homeroom?'
                 inputProps={{
                   checked: !!currWaliId && currWaliId === user?.id,
                   onChange: e => {
@@ -195,11 +195,11 @@ export default function GuruDaftarKelasPage() {
             </div>
           }
           columns={[
-            { field: 'nama', label: 'Nama' },
-            { field: 'tahunAjaran', label: 'Tahun Ajaran', render: row => row.tahunAjaran.nama },
+            { field: 'nama', label: 'Name' },
+            { field: 'tahunAjaran', label: 'Academic Year', render: row => row.tahunAjaran.nama },
             {
               field: 'wali',
-              label: 'Wali Kelas',
+              label: 'Homeroom Teacher',
               render: row => (row.wali ? DBHelpers.akun.getDisplayName(row.wali) : '-'),
             },
             // {
@@ -219,7 +219,7 @@ export default function GuruDaftarKelasPage() {
             // },
             {
               field: 'actions',
-              label: 'Aksi',
+              label: 'Action',
               render: row => {
                 const semesterSatu = row.tahunAjaran.semesterAjaran.find(
                   item => item.urutan === SemesterAjaranUrutan.SATU,
@@ -234,7 +234,7 @@ export default function GuruDaftarKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getDetailIcon()}
                         color='info'
-                        label={'Detail Kelas'}
+                        label={'Class Detail'}
                       />
                     </Link>
                     {semesterSatu ? (
@@ -248,7 +248,7 @@ export default function GuruDaftarKelasPage() {
                         <DataGridActionButton
                           icon={DataGridActionButtonHelper.getManageIcon()}
                           color='success'
-                          label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)}`}
+                          label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)} Semester Schedule`}
                           buttonProps={{ disabled: !!row.deletedAt }}
                         />
                       </Link>
@@ -264,7 +264,7 @@ export default function GuruDaftarKelasPage() {
                         <DataGridActionButton
                           icon={DataGridActionButtonHelper.getManageIcon()}
                           color='success'
-                          label={`Jadwal Semester ${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)}`}
+                          label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterDua.urutan as SemesterAjaranUrutan)} Semester Schedule`}
                           buttonProps={{ disabled: !!row.deletedAt }}
                         />
                       </Link>

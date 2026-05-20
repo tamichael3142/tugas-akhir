@@ -28,19 +28,19 @@ export default function GuruMataPelajaranDetailPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer
-      title={`Mata Pelajaran: ${loader.mataPelajaran?.nama}`}
+      title={`Subject: ${loader.mataPelajaran?.nama}`}
       actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.guru.daftarKelas()} />]}
     >
-      <Card className='!p-0'>
+      <Card className='p-0!'>
         <div className='grid grid-cols-3 gap-4 lg:gap-8 p-4 lg:p-8'>
-          <DetailItem label={'Tahun Ajaran'}>{loader.mataPelajaran?.semesterAjaran?.tahunAjaran?.nama}</DetailItem>
-          <DetailItem label={'Semester Ajaran'}>
+          <DetailItem label={'Academic Year'}>{loader.mataPelajaran?.semesterAjaran?.tahunAjaran?.nama}</DetailItem>
+          <DetailItem label={'Academic Semester'}>
             {EnumsTitleUtils.getSemesterAjaranUrutan(
               loader.mataPelajaran?.semesterAjaran?.urutan as SemesterAjaranUrutan,
             )}
           </DetailItem>
           {loader.mataPelajaran?.guru ? (
-            <DetailItem label={'Guru'}>{DBHelpers.akun.getDisplayName(loader.mataPelajaran.guru)}</DetailItem>
+            <DetailItem label={'Teacher'}>{DBHelpers.akun.getDisplayName(loader.mataPelajaran.guru)}</DetailItem>
           ) : null}
           <DetailItem label={'Status'}>{loader.mataPelajaran?.deletedAt ? 'Deleted' : 'Active'}</DetailItem>
           {loader.mataPelajaran?.createdAt ? (

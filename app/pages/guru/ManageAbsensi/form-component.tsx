@@ -34,7 +34,7 @@ export default function GuruMasterPengumumanFormComponent() {
           name={'tanggal'}
           render={({ field }) => (
             <TextInput
-              label='Tanggal'
+              label='Date'
               inputProps={{
                 type: 'date',
                 value: format(field.value, constants.dateFormats.rawDateInput),
@@ -64,7 +64,7 @@ export default function GuruMasterPengumumanFormComponent() {
           name='kelasId'
           render={({ field }) => (
             <StaticSelect
-              label='Kelas'
+              label='Class'
               options={[
                 {
                   label: loader.absensi?.kelas?.nama ?? '',
@@ -78,7 +78,7 @@ export default function GuruMasterPengumumanFormComponent() {
       </InputWrapper>
       <InputWrapper className='md:col-span-1'>
         <StaticSelect
-          label='Tahun Ajaran'
+          label='Academic Year'
           options={[
             {
               label: loader.absensi?.kelas.tahunAjaran?.nama ?? '',
@@ -94,7 +94,7 @@ export default function GuruMasterPengumumanFormComponent() {
           name='semesterAjaranId'
           render={({ field }) => (
             <StaticSelect
-              label='Semester Ajaran'
+              label='Academic Semester'
               options={loader.absensi?.kelas.tahunAjaran?.semesterAjaran.map(item => ({
                 label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
                 value: item.urutan,

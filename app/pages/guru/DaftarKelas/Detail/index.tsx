@@ -28,9 +28,9 @@ export default function GuruDaftarKelasDetailPage() {
       title={`Kelas: ${loader.kelas?.nama}`}
       actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}
     >
-      <Card className='!p-0'>
+      <Card className='p-0!'>
         <div className='grid grid-cols-3 gap-4 lg:gap-8 p-4 lg:p-8'>
-          <DetailItem label={'Tahun Ajaran'}>{loader.kelas?.tahunAjaran.nama}</DetailItem>
+          <DetailItem label={'Academic Year'}>{loader.kelas?.tahunAjaran.nama}</DetailItem>
           {loader.kelas?.wali ? (
             <DetailItem label={'Wali Kelas'}>{DBHelpers.akun.getDisplayName(loader.kelas?.wali)}</DetailItem>
           ) : null}

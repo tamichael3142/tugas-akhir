@@ -42,7 +42,7 @@ export default function AdminMasterTahunAjaranFormComponent() {
           name={'tahunMulai'}
           render={({ field }) => (
             <TextInput
-              label='Tahun Mulai'
+              label='Start Year'
               inputProps={{
                 ...field,
                 type: 'number',
@@ -65,7 +65,7 @@ export default function AdminMasterTahunAjaranFormComponent() {
           name={'tahunBerakhir'}
           render={({ field }) => (
             <TextInput
-              label='Tahun Berakhir'
+              label='End Year'
               inputProps={{
                 ...field,
                 type: 'number',

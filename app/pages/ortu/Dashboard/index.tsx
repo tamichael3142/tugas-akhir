@@ -12,11 +12,11 @@ export default function OrtuDashboardPage() {
   return (
     <OrtuPageContainer title='Dashboard'>
       <div className='text-xl p-4 rounded-lg bg-secondary text-white text-center max-w-sm'>
-        Selamat datang {DBHelpers.akun.getDisplayName(loader.user)} !
+        Welcome {DBHelpers.akun.getDisplayName(loader.user)} !
       </div>
 
       <div className='mt-8'>
-        <p className='font-semibold text-lg mb-2'>List Anak:</p>
+        <p className='font-semibold text-lg mb-2'>Children List:</p>
         <div className='grid grid-cols-3 gap-4'>
           {loader.user.children?.map(item => (
             <button

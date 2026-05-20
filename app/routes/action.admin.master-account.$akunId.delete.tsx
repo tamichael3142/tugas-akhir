@@ -30,7 +30,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(result => {
         return {
           success: true,
-          message: 'Akun berhasil dihapus!',
+          message: 'Account deleted!',
           data: {
             deletedAkun: result,
           },

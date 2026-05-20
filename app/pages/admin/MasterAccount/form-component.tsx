@@ -45,7 +45,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
               inputProps={{
                 ...field,
                 readOnly: true,
-                placeholder: 'Masukkan Nama Depan, Nama Belakang, dan Tanggal Lahir...',
+                placeholder: 'Enter First Name, Last Name, and Birth Date to automatically generate the username...',
               }}
             />
           )}
@@ -104,7 +104,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'tempatLahir'}
-          render={({ field }) => <TextInput label='Tempat Lahir' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Birth Place' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
@@ -113,7 +113,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
           name={'tanggalLahir'}
           render={({ field }) => (
             <TextInput
-              label='Tanggal Lahir'
+              label='Birth Date'
               inputProps={{
                 type: 'date',
                 ...field,
@@ -140,7 +140,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
           name={'jenisKelamin'}
           render={({ field }) => (
             <StaticSelect
-              label='Jenis Kelamin'
+              label='Gender'
               options={Object.values(JenisKelamin).map(opt => ({
                 value: opt,
                 label: EnumsTitleUtils.getJenisKelamin(opt),
@@ -154,14 +154,14 @@ export default function AdminMasterAccountFormComponent(props: Props) {
         <Controller
           control={formHook.control}
           name={'alamat'}
-          render={({ field }) => <TextInput label='Alamat' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Address' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
         <Controller
           control={formHook.control}
           name={'agama'}
-          render={({ field }) => <TextInput label='Agama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Religion' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>
@@ -170,7 +170,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
           name={'golonganDarah'}
           render={({ field }) => (
             <StaticSelect
-              label='Golongan Darah'
+              label='Blood Type'
               options={Object.values(GolonganDarah).map(opt => ({
                 value: opt,
                 label: EnumsTitleUtils.getGolonganDarah(opt),
@@ -186,7 +186,7 @@ export default function AdminMasterAccountFormComponent(props: Props) {
           name={'kewarganegaraan'}
           render={({ field }) => (
             <StaticSelect
-              label='Kewarganegaraan'
+              label='Nationality'
               options={Object.values(Kewarganegaraan).map(opt => ({
                 value: opt,
                 label: EnumsTitleUtils.getKewarganegaraan(opt),

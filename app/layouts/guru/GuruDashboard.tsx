@@ -34,7 +34,7 @@ export default function GuruDashboardLayout() {
     popup.open({
       onClose: closePopup,
       title: user?.displayName ?? user?.username ?? user?.email,
-      content: <p>Apakah anda ingin logout?</p>,
+      content: <p>Do you want to logout?</p>,
       actionButtons: [
         { label: 'Cancel', variant: 'text', color: 'secondary', buttonProps: { onClick: closePopup } },
         {

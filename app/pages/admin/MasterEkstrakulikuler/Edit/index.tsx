@@ -50,13 +50,13 @@ export default function AdminMasterEkstrakulikulerEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Edit Ekstrakulikuler'
+      title='Edit Extracurricular'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.admin.masterEkstrakulikuler()} />]}
     >
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.ekstrakulikuler?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Ekstrakulikuler</p>
+            <p className='font-semibold text-lg'>Edit Extracurricular</p>
             <hr className='my-4' />
 
             <AdminMasterEkstrakulikulerFormComponent tahunAjarans={loader.tahunAjarans} pengajars={loader.pengajars} />
@@ -67,7 +67,7 @@ export default function AdminMasterEkstrakulikulerEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

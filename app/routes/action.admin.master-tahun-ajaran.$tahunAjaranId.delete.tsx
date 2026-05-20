@@ -19,7 +19,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
 
     if (!currTahunAjaran)
       throw {
-        message: 'Data tahun ajaran ini tidak ditemukan!',
+        message: 'Academic year not found!',
       }
 
     const deletedAt = new Date()
@@ -41,7 +41,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(result => {
         return {
           success: true,
-          message: 'Tahun ajaran berhasil dihapus!',
+          message: 'Academic year deleted!',
           data: {
             deletedTahunAjaran: result,
           },

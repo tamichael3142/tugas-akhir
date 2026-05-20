@@ -112,7 +112,7 @@ export async function action({
     if (!kelasId || !mataPelajaranId)
       throw {
         code: 404,
-        message: 'Kelas dan/atau Mata Pelajaran tidak ditemukan!',
+        message: 'Class and/or Subject not found!',
       }
 
     return await prisma

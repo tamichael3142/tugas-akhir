@@ -25,7 +25,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(result => {
         return {
           success: true,
-          message: 'Pengumuman berhasil dihapus!',
+          message: 'Announcement deleted!',
           data: {
             deletedPengumuman: result,
           },

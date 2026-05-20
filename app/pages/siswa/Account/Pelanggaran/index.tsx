@@ -22,18 +22,18 @@ export default function SiswaAccountPelanggaranPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <SiswaPageContainer
-      title='Pelanggaran'
+      title='Violation'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} label='Back' buttonProps={{ color: 'secondary' }} />]}
     >
       {loader.pelanggarans && Array.isArray(loader.pelanggarans.data) ? (
         <DataGrid
           id={`${sectionPrefix}-data-grid`}
-          leadingView={<div className='font-bold mb-4'>Total Pengurangan Poin: {loader.totalPoint}</div>}
+          leadingView={<div className='font-bold mb-4'>Total Minus Point: {loader.totalPoint}</div>}
           columns={[
-            { field: 'remark', label: 'Keterangan' },
-            { field: 'poin', label: 'Poin Pengurangan' },
-            { field: 'kelas', label: 'Kelas', render: row => row.kelas.nama },
-            { field: 'kelas', label: 'Mata Pelajaran', render: row => row.mataPelajaran.nama },
+            { field: 'remark', label: 'Remark' },
+            { field: 'poin', label: 'Minus Points' },
+            { field: 'kelas', label: 'Class', render: row => row.kelas.nama },
+            { field: 'kelas', label: 'Subject', render: row => row.mataPelajaran.nama },
             {
               field: 'createdAt',
               label: 'Created At',

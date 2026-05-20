@@ -67,7 +67,7 @@ export default function AdminMasterAccountEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

@@ -47,7 +47,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
 
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Detail Tugas</h2>
+            <h2 className='font-semibold text-xl'>Detail Assignment</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'primary' }} />
           </div>
@@ -63,7 +63,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
         <fetcher.Form method='post' encType='multipart/form-data'>
           <div className='p-4 lg:px-8'>
             <div className='flex flex-row items-center gap-4'>
-              <h2 className='font-semibold text-xl'>Submit Tugas</h2>
+              <h2 className='font-semibold text-xl'>Submit Assignment</h2>
               <div className='grow' />
             </div>
             <hr className='my-4' />
@@ -74,12 +74,12 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
             />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>
-              <Button variant='text' color='secondary' label='Kosongkan form' buttonProps={{ type: 'reset' }} />
+              <Button variant='text' color='secondary' label='Empty form' buttonProps={{ type: 'reset' }} />
               <Button
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ disabled: !isSubmitable, type: 'submit' }}
               />
             </div>

@@ -13,7 +13,7 @@ import { LoaderDataGuruMasterPengumumanEdit } from '~/types/loaders-data/guru'
 import { GuruMasterPengumumanCreateFormType } from '../form-types'
 import { emptyUserValue, resolver, translateRawToFormData } from '../Create/form'
 
-const sectionPrefix = 'guru-master-Pengumuman-edit'
+const sectionPrefix = 'guru-master-pengumuman-edit'
 
 export default function GuruMasterPengumumanEditPage() {
   const loader = useLoaderData<LoaderDataGuruMasterPengumumanEdit>()
@@ -50,13 +50,13 @@ export default function GuruMasterPengumumanEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer
-      title='Edit Pengumuman'
+      title='Edit Announcement'
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.guru.masterPengumuman()} />]}
     >
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.pengumuman?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Pengumuman</p>
+            <p className='font-semibold text-lg'>Edit Announcement</p>
             <hr className='my-4' />
 
             <GuruMasterPengumumanFormComponent />
@@ -67,7 +67,7 @@ export default function GuruMasterPengumumanEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

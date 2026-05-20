@@ -50,13 +50,13 @@ export default function AdminMasterMataPelajaranEditPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Edit Mata Pelajaran'
+      title='Edit Subject'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.admin.masterMataPelajaran()} />]}
     >
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.mataPelajaran?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>
-            <p className='font-semibold text-lg'>Edit Mata Pelajaran</p>
+            <p className='font-semibold text-lg'>Edit Subject</p>
             <hr className='my-4' />
 
             <AdminMasterMataPelajaranFormComponent tahunAjarans={loader.tahunAjarans} gurus={loader.gurus} />
@@ -67,7 +67,7 @@ export default function AdminMasterMataPelajaranEditPage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit' }}
               />
             </div>

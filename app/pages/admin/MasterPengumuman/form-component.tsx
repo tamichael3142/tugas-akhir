@@ -17,7 +17,7 @@ export default function AdminMasterPengumumanFormComponent() {
         <Controller
           control={formHook.control}
           name={'nama'}
-          render={({ field }) => <TextInput label='Nama' inputProps={{ ...field }} />}
+          render={({ field }) => <TextInput label='Name' inputProps={{ ...field }} />}
         />
       </InputWrapper>
       <InputWrapper>

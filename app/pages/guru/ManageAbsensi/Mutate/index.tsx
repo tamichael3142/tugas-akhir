@@ -110,7 +110,7 @@ export default function GuruManageAbsensiMutatePage() {
                   <div className={classNames('border p-4 bg-grey-light/90 font-bold w-20 rounded-tl-lg')}></div>
                   <div className='flex flex-col lg:flex-row grow'>
                     <div className={classNames('border p-4 bg-grey-light/90 flex-1 font-bold text-xl')}>
-                      {'Pilih semua'}
+                      {'Choose All'}
                     </div>
                     <div className={classNames('border p-4 bg-grey-light/90 rounded-tr-lg flex-1')}>
                       <div className='flex flex-row items-center justify-between flex-wrap gap-4'>
@@ -192,7 +192,7 @@ export default function GuruManageAbsensiMutatePage() {
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
-                label='Simpan'
+                label='Save'
                 buttonProps={{ type: 'submit', disabled: !isAbsensiMutable }}
               />
             </div>

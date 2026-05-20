@@ -30,7 +30,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail
 
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Detail Tugas</h2>
+            <h2 className='font-semibold text-xl'>Assignment Detail</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'primary' }} />
           </div>

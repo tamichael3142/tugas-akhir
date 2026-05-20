@@ -77,13 +77,12 @@ export default function AdminMasterMataPelajaranPage() {
 
   function openDeletePopup(row: MataPelajaran) {
     popup.open({
-      title: 'Hapus mata pelajaran?',
+      title: 'Delete subject?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus mata pelajaran{' '}
-            <span className='font-semibold text-red-500'>{row.nama}</span>?
+            Are you sure to delete subject <span className='font-semibold text-red-500'>{row.nama}</span>?
           </p>
           <fetcher.Form
             id={deleteFormId}
@@ -116,10 +115,10 @@ export default function AdminMasterMataPelajaranPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Master Mata Pelajaran'
+      title='Master Subject'
       actions={[
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterMataPelajaranCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
@@ -127,9 +126,9 @@ export default function AdminMasterMataPelajaranPage() {
         <div className='grid grid-cols-2 gap-4'>
           <FilterGridItem>
             <StaticSelect
-              label='Tahun Ajaran'
+              label='Academic Year'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{
@@ -147,9 +146,9 @@ export default function AdminMasterMataPelajaranPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Semester Ajaran'
+              label='Academic Semester'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...getSemesterAjaranOptions().map(item => ({
                   value: item.id,
                   label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
@@ -170,9 +169,9 @@ export default function AdminMasterMataPelajaranPage() {
           </FilterGridItem>
           <FilterGridItem>
             <StaticSelect
-              label='Guru'
+              label='Teacher'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...loader.gurus.map(item => ({ value: item.id, label: DBHelpers.akun.getDisplayName(item) })),
               ]}
               selectProps={{
@@ -192,20 +191,20 @@ export default function AdminMasterMataPelajaranPage() {
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
-          { field: 'nama', label: 'Nama' },
+          { field: 'nama', label: 'Name' },
           {
             field: 'tahunAjaran',
-            label: 'Tahun Ajaran',
+            label: 'Academic Year',
             render: row => row.semesterAjaran.tahunAjaran.nama,
           },
           {
             field: 'semesterAjaran',
-            label: 'Semester Ajaran',
+            label: 'Academic Semester',
             render: row => EnumsTitleUtils.getSemesterAjaranUrutan(row.semesterAjaran.urutan as SemesterAjaranUrutan),
           },
           {
             field: 'guru',
-            label: 'Guru',
+            label: 'Teacher',
             render: row => (row.guru ? DBHelpers.akun.getDisplayName(row.guru) : '-'),
           },
           {
@@ -225,7 +224,7 @@ export default function AdminMasterMataPelajaranPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <Link to={AppNav.admin.masterMataPelajaranEdit({ id: row.id })}>

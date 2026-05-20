@@ -49,7 +49,7 @@ export default function SiswaAccountPage() {
   if (revalidator.state === 'loading' || !loader.account) return <LoadingFullScreen />
   return (
     <SiswaPageContainer
-      title='Atur Akun'
+      title='Manage Account'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} label='Back' buttonProps={{ color: 'secondary' }} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
@@ -71,7 +71,7 @@ export default function SiswaAccountPage() {
               variant='contained'
               color='secondary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ type: 'submit' }}
             />
           </div>

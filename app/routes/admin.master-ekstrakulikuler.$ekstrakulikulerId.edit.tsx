@@ -64,7 +64,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Ekstrakulikuler berhasil diupdate!',
+          message: 'Extracurricular updated!',
           data: {
             updatedEkstrakulikuler: result,
           },

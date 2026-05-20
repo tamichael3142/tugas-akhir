@@ -16,7 +16,7 @@ export default function SiswaKelasDetailTab(props: SiswaKelasDetailTabProps) {
   const { activeTabKey = TabKey.MATA_PELAJARAN, kelas } = props
   const navigate = useNavigate()
 
-  const items: TabItem[] = [{ key: TabKey.MATA_PELAJARAN, label: 'Mata Pelajaran' }]
+  const items: TabItem[] = [{ key: TabKey.MATA_PELAJARAN, label: 'Subject' }]
 
   if (!kelas) return null
   return (

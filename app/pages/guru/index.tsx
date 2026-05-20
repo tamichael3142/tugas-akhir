@@ -20,7 +20,7 @@ export default function GuruDashboardPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Jadwal Mengajar' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+    <GuruPageContainer title='Teaching Schedule' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
       <Card>
         {days.length && hours.length ? (
           <div className='overflow-x-auto relative mb-4'>

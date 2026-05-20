@@ -64,7 +64,7 @@ export default function AdminAccountChangePasswordPage() {
               variant='contained'
               color='primary'
               startIcon={<FaSave />}
-              label='Simpan'
+              label='Save'
               buttonProps={{ disabled: !formHook.formState.isValid, type: 'submit' }}
             />
           </div>

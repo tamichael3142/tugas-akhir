@@ -26,7 +26,7 @@ export type LoaderDataAdminIndex = {
 }
 
 /**
- * * Master Tahun Ajaran
+ * * Master Academic Year
  */
 export type LoaderDataAdminMasterTahunAjaran = {
   tahunAjarans: PaginationReturns<TahunAjaran>
@@ -37,7 +37,7 @@ export type LoaderDataAdminMasterTahunAjaranEdit = {
 }
 
 /**
- * * Master Kelas
+ * * Master Class
  */
 export type LoaderDataAdminMasterKelas = {
   tahunAjarans: TahunAjaran[]
@@ -93,7 +93,7 @@ export type LoaderDataAdminMasterKelasAddSiswa = {
 }
 
 /**
- * * Master Mata Pelajaran
+ * * Master Subject
  */
 export type LoaderDataAdminMasterMataPelajaran = {
   tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
@@ -137,7 +137,7 @@ export type LoaderDataAdminMasterEkstrakulikulerEdit = {
 }
 
 /**
- * * Master Pengumuman
+ * * Master Announcement
  */
 export type LoaderDataAdminMasterPengumuman = {
   pengumumans: PaginationReturns<Pengumuman & { createdBy: AKun | null }>

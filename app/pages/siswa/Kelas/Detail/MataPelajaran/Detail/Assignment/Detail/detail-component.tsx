@@ -30,7 +30,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
 
   return (
     <div className='grid grid-cols-3 gap-4 lg:gap-8'>
-      <DetailItem label='Judul' colSpan={2}>
+      <DetailItem label='Title' colSpan={2}>
         {props.assignment.title}
       </DetailItem>
       <DetailItem label='Status' colSpan={1}>
@@ -40,10 +40,10 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
             )
           : ''}
       </DetailItem>
-      <DetailItem label='Tanggal Mulai'>
+      <DetailItem label='Start Date'>
         {format(new Date(props.assignment.tanggalMulai), constants.dateFormats.rawDateTimeInput)}
       </DetailItem>
-      <DetailItem label='Tanggal Berakhir'>
+      <DetailItem label='End Date'>
         {format(new Date(props.assignment.tanggalBerakhir), constants.dateFormats.rawDateTimeInput)}
       </DetailItem>
       <DetailItem label='Submission'>
@@ -53,7 +53,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
           <span className='text-primary'>{'Sudah ditutup'}</span>
         )}
       </DetailItem>
-      <DetailItem label='Deskripsi' colSpan={3}>
+      <DetailItem label='Description' colSpan={3}>
         {props.assignment.description}
       </DetailItem>
     </div>

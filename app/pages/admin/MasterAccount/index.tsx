@@ -83,12 +83,12 @@ export default function AdminMasterAccountPage() {
 
   function openDeletePopup(row: Akun) {
     popup.open({
-      title: 'Hapus akun?',
+      title: 'Delete account?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Apakah anda yakin untuk menghapus akun{' '}
+            Are you sure to delete account{' '}
             <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span>?
           </p>
           <deleteFetcher.Form
@@ -117,14 +117,15 @@ export default function AdminMasterAccountPage() {
 
   function openResetPasswordPopup(row: Akun) {
     popup.open({
-      title: 'Reset password akun?',
+      title: 'Reset account password?',
       onClose: popup.close,
       content: (
         <Fragment>
           <p>
-            Akun atas nama <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span>
-            dengan username <span className='font-semibold text-red-500'>{row.username}</span> akan direset password
-            menjadi sama dengan username terlampir.
+            Account with name of{' '}
+            <span className='font-semibold text-red-500'>{DBHelpers.akun.getDisplayName(row)}</span> and username of{' '}
+            <span className='font-semibold text-red-500'>{row.username}</span> password will be reseted to be same as
+            the username.
           </p>
           <deleteFetcher.Form
             id={resetPasswordFormId}
@@ -168,7 +169,7 @@ export default function AdminMasterAccountPage() {
           buttonProps={{ onClick: downloadExportIds, disabled: selectedAkuns.length <= 0 }}
         />,
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterAccountCreate()}>
-          <Button label='Tambah' startIcon={<FaPlus />} onlyIconOnSmallView />
+          <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
@@ -178,7 +179,7 @@ export default function AdminMasterAccountPage() {
             <StaticSelect
               label='Role'
               options={[
-                { value: '', label: 'Semua' },
+                { value: '', label: 'All' },
                 ...Object.values(Role).map(item => ({ value: item, label: EnumsTitleUtils.getRole(item) })),
               ]}
               selectProps={{
@@ -232,8 +233,8 @@ export default function AdminMasterAccountPage() {
           },
           { field: 'username', label: 'Username' },
           { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.role as Role) },
-          { field: 'firstName', label: 'Nama Depan' },
-          { field: 'lastName', label: 'Nama Belakang' },
+          { field: 'firstName', label: 'First Name' },
+          { field: 'lastName', label: 'Last Name' },
           { field: 'email', label: 'Email' },
           {
             field: 'createdAt',
@@ -252,7 +253,7 @@ export default function AdminMasterAccountPage() {
           },
           {
             field: 'actions',
-            label: 'Aksi',
+            label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
                 <DataGridActionButton

@@ -29,7 +29,7 @@ export default function OrtuNilaiPage() {
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
     <OrtuPageContainer
-      title='Nilai Siswa'
+      title='Student Score'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}
@@ -45,7 +45,7 @@ export default function OrtuNilaiPage() {
         <StaticSelect
           className='max-w-md'
           options={[
-            { value: '', label: 'Pilih siswa...' },
+            { value: '', label: 'Choose a student...' },
             ...(loader.user.children
               ? loader.user.children.map(item => ({
                   value: item.siswaId,
@@ -80,9 +80,7 @@ export default function OrtuNilaiPage() {
           <div className='bg-neutral-100 rounded-xl p-4 mt-8 shadow'>
             <p className='font-semibold mb-2'>Oops!</p>
             <p className='text-sm'>
-              {currentSiswaId
-                ? 'Belum ada nilai tercatat pada semester ini.'
-                : 'Mohon memilih siswa yang akan diakses.'}
+              {currentSiswaId ? 'No score recorded on this semester yet.' : 'Please select a student.'}
             </p>
           </div>
         )}

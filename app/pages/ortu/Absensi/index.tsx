@@ -29,7 +29,7 @@ export default function OrtuAbsensiPage() {
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
     <OrtuPageContainer
-      title='Absensi Siswa'
+      title='Student Absence'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}
@@ -45,7 +45,7 @@ export default function OrtuAbsensiPage() {
         <StaticSelect
           className='max-w-md'
           options={[
-            { value: '', label: 'Pilih siswa...' },
+            { value: '', label: 'Choose a student...' },
             ...(loader.user.children
               ? loader.user.children.map(item => ({
                   value: item.siswaId,
@@ -69,7 +69,7 @@ export default function OrtuAbsensiPage() {
       {!currentSiswaId ? (
         <div className='bg-neutral-100 rounded-xl p-4 mt-8 shadow'>
           <p className='font-semibold mb-2'>Oops!</p>
-          <p className='text-sm'>Mohon memilih siswa yang akan diakses.</p>
+          <p className='text-sm'>Please select a student.</p>
         </div>
       ) : loader.kelass && loader.kelass.length > 0 ? (
         <AbsensiTable

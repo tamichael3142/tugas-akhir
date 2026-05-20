@@ -61,7 +61,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
     if (!kelasId || !semesterAjaranId)
       throw {
         code: 404,
-        message: 'Kelas dan/atau Semester Ajaran tidak ditemukan!',
+        message: 'Class and/or Academic Semester not found!',
       }
 
     return await prisma
@@ -115,7 +115,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(() => {
         return {
           success: true,
-          message: 'Jadwal pelajaran berhasil diupdate!',
+          message: 'Lesson timetable updated!',
           data: {},
         }
       })

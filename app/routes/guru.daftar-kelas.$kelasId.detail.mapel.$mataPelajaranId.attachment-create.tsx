@@ -87,7 +87,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Lampiran berhasil dibuat!',
+          message: 'Attachment created!',
           data: {
             createdAttachment: result,
           },
