@@ -17,7 +17,7 @@ export type GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType = 
 export const resolver = zodResolver(validationSchema)
 
 export function generateTitle({ date, kelasName, mapelName }: { date: Date; kelasName: string; mapelName: string }) {
-  return `Berita Acara (${format(date, constants.dateFormats.dateMonthYearSimple)}) ${kelasName} - ${mapelName}`
+  return `Daily Report (${format(date, constants.dateFormats.dateMonthYearSimple)}) ${kelasName} - ${mapelName}`
 }
 
 export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType = {

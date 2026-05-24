@@ -65,7 +65,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
 
     return {
       success: true,
-      message: 'Akun berhasil dibuat!',
+      message: 'Account created!',
       data: {
         deletedCount: results[1].count,
         createdAkuns: results[0],
@@ -76,7 +76,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
     return {
       success: false,
       error,
-      message: 'Akun gagal dibuat!',
+      message: 'Account creation failed!',
       data: {
         oldFormData: data,
       },

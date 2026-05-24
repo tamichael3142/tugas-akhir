@@ -60,7 +60,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(() => {
         return {
           success: true,
-          message: 'Akun berhasil diupdate!',
+          message: 'Account updated!',
           data: {},
         }
       })

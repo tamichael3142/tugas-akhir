@@ -163,7 +163,7 @@ export async function action({
       .then(() => {
         return {
           success: true,
-          message: 'Penilaian berhasil diupdate!',
+          message: 'Scoring updated!',
           data: {},
         }
       })

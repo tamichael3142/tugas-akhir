@@ -125,7 +125,7 @@ export async function action({
       .then(() => {
         return {
           success: true,
-          message: 'List anak berhasil di-update!',
+          message: 'Children list updated!',
           data: {},
         }
       })

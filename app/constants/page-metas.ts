@@ -75,7 +75,7 @@ const pageMetas = {
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageBeritaAcara: [
-    { title: `Manage Berita Acara - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Daily Report - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruManageAssignment: [
@@ -152,19 +152,23 @@ const pageMetas = {
   ],
   ortuDashboard: [
     { title: `Dashboard - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs orang tua SBBS' },
+    { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuNilai: [
     { title: `Student Score - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs orang tua SBBS' },
+    { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuAbsensi: [
     { title: `Student Absence - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs orang tua SBBS' },
+    { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuPengumuman: [
     { title: `Announcement - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs orang tua SBBS' },
+    { name: 'description', content: 'Site for parent on SBBS' },
+  ],
+  ortuAccount: [
+    { title: `Account - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Site for parent on SBBS' },
   ],
 }
 

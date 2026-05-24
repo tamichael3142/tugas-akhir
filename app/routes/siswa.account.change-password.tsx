@@ -69,7 +69,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   try {
     if (data.password !== data.passwordVerification)
       throw {
-        message: 'Verifikasi password tidak sama!',
+        message: 'Password verification not valid!',
       }
 
     return await prisma.akun
@@ -84,7 +84,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(() => {
         return {
           success: true,
-          message: 'Password akun berhasil diupdate!',
+          message: 'Account password updated!',
           data: {},
         }
       })

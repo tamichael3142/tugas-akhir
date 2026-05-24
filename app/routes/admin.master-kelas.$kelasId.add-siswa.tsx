@@ -154,7 +154,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(() => {
         return {
           success: true,
-          message: 'Siswa per kelas berhasil diupdate!',
+          message: 'Student of this class updated!',
           data: {},
         }
       })

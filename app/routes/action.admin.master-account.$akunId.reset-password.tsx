@@ -35,7 +35,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Password berhasil di reset!',
+          message: 'Password reset success!',
           data: {
             updatedAkun: result,
           },

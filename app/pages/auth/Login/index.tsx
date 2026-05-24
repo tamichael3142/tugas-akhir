@@ -20,7 +20,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (actionData) {
       if (actionData.success) {
-        toast.success('Login berhasil!')
+        toast.success('Login success!')
       } else {
         if (actionData.message) toast.error(actionData.message)
       }

@@ -8,16 +8,16 @@ import { prisma } from '~/utils/db.server'
 import { getValidatedFormData } from 'remix-hook-form'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 import PasswordUtils from '~/utils/password.utils'
-import { LoaderDataAdminAccountChangePassword } from '~/types/loaders-data/admin'
-import { ActionDataAdminAccountChangePassword } from '~/types/actions-data/admin'
-import { AdminAccountChangePasswordFormType, resolver } from '~/pages/admin/Account/ChangePassword/form'
-import AdminAccountChangePasswordPage from '~/pages/admin/Account/ChangePassword'
+import { LoaderDataOrtuAccountChangePassword } from '~/types/loaders-data/ortu'
+import { ActionDataOrtuAccountChangePassword } from '~/types/actions-data/ortu'
+import { OrtuAccountChangePasswordFormType, resolver } from '~/pages/ortu/Account/ChangePassword/form'
+import OrtuAccountChangePasswordPage from '~/pages/ortu/Account/ChangePassword'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.adminAccount
+  return constants.pageMetas.ortuAccount
 }
 
-export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataAdminAccountChangePassword> {
+export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataOrtuAccountChangePassword> {
   const userId = await requireAuthCookie(request)
 
   const storageManager = akunProfileStorageManager()
@@ -53,11 +53,11 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         ? await storageManager.getDownloadUrl({ fullPath: account.profileImageObjectPath })
         : undefined,
     },
-  } as LoaderDataAdminAccountChangePassword
+  } as LoaderDataOrtuAccountChangePassword
 }
 
-export async function action({ request }: ActionFunctionArgs): Promise<ActionDataAdminAccountChangePassword> {
-  const { errors, data } = await getValidatedFormData<AdminAccountChangePasswordFormType>(request, resolver)
+export async function action({ request }: ActionFunctionArgs): Promise<ActionDataOrtuAccountChangePassword> {
+  const { errors, data } = await getValidatedFormData<OrtuAccountChangePasswordFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -104,6 +104,6 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   }
 }
 
-export default function AdminAccountDetailChangePasswordRoute() {
-  return <AdminAccountChangePasswordPage />
+export default function OrtuAccountDetailChangePasswordRoute() {
+  return <OrtuAccountChangePasswordPage />
 }

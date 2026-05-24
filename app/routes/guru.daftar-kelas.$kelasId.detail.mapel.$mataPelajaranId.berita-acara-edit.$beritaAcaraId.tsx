@@ -86,7 +86,7 @@ export async function action({
   try {
     if (!beritaAcaraId)
       throw {
-        message: 'Berita Acara tidak ditemukan!',
+        message: 'Daily report data not found!',
       }
 
     // TODO: tambah validator untuk hari jam yang bertabrakan
@@ -107,7 +107,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Berita Acara berhasil update!',
+          message: 'Daily report updated!',
           data: {
             updatedBeritaAcara: result,
           },

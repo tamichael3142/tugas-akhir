@@ -96,7 +96,7 @@ export default function AdminMasterKelasManageJadwalPage() {
 
   return (
     <AdminPageContainer
-      title='Manage Jadwal Pelajaran'
+      title='Manage Lesson Timetable'
       actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelas()} />]}
     >
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>

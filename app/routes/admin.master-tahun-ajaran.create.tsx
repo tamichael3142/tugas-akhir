@@ -58,7 +58,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(result => {
         return {
           success: true,
-          message: 'Tahun ajaran berhasil dibuat!',
+          message: 'Academic year created!',
           data: {
             createdTahunAjaran: result,
           },

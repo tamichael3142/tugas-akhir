@@ -1,21 +1,21 @@
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
-import GuruAccountPage from '~/pages/guru/Account'
 import akunProfileStorageManager from '~/storage-manager/akunProfile.storageManager.server'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
-import { resolver, GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
 import { getValidatedFormData } from 'remix-hook-form'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
-import { LoaderDataGuruAccount } from '~/types/loaders-data/guru'
-import { ActionDataGuruAccountSelfUpdate } from '~/types/actions-data/guru'
+import { LoaderDataOrtuAccount } from '~/types/loaders-data/ortu'
+import { ActionDataOrtuAccountSelfUpdate } from '~/types/actions-data/ortu'
+import { OrtuAccountSelfUpdateFormType, resolver } from '~/pages/ortu/Account/form'
+import OrtuAccountPage from '~/pages/ortu/Account'
 
 export const meta: MetaFunction = () => {
-  return constants.pageMetas.guruAccount
+  return constants.pageMetas.ortuAccount
 }
 
-export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataGuruAccount> {
+export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataOrtuAccount> {
   const userId = await requireAuthCookie(request)
 
   const storageManager = akunProfileStorageManager()
@@ -29,11 +29,11 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         ? await storageManager.getDownloadUrl({ fullPath: account.profileImageObjectPath })
         : undefined,
     },
-  } as LoaderDataGuruAccount
+  } as LoaderDataOrtuAccount
 }
 
-export async function action({ request }: ActionFunctionArgs): Promise<ActionDataGuruAccountSelfUpdate> {
-  const { errors, data } = await getValidatedFormData<GuruAccountSelfUpdateFormType>(request, resolver)
+export async function action({ request }: ActionFunctionArgs): Promise<ActionDataOrtuAccountSelfUpdate> {
+  const { errors, data } = await getValidatedFormData<OrtuAccountSelfUpdateFormType>(request, resolver)
   if (errors) {
     console.log(errors)
     return { success: false, error: errors, data: { oldFormData: data } }
@@ -80,6 +80,6 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   }
 }
 
-export default function GuruAccountDetailRoute() {
-  return <GuruAccountPage />
+export default function OrtuAccountDetailRoute() {
+  return <OrtuAccountPage />
 }

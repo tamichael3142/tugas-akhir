@@ -87,3 +87,12 @@ export type LoaderDataOrtuPengumuman = {
 export type LoaderDataOrtuPengumumanDetail = {
   pengumuman: Pengumuman
 }
+
+/**
+ * * Account
+ */
+export type LoaderDataOrtuAccount = {
+  account: Akun & { profileImageObjectUrl?: string }
+}
+
+export type LoaderDataOrtuAccountChangePassword = LoaderDataOrtuAccount

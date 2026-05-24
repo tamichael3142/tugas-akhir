@@ -62,7 +62,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(result => {
         return {
           success: true,
-          message: 'Absensi berhasil diupdate!',
+          message: 'Absence updated!',
           data: {
             updatedAbsensi: result,
           },

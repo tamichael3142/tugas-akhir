@@ -287,7 +287,7 @@ export default function AdminDashboardPage() {
 
       {!!createdAkuns && createdAkuns.length ? (
         <div className='mt-4 p-4 bg-primary/10 rounded-xl'>
-          <p className='font-semibold mb-4'>Akun yang berhasil dibuat:</p>
+          <p className='font-semibold mb-4'>Created accounts:</p>
           <div className='grid grid-cols-4 gap-4'>
             {createdAkuns.map((akun, index) => (
               <div

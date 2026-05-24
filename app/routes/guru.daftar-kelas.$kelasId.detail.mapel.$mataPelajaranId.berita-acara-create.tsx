@@ -85,7 +85,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Berita Acara berhasil dibuat!',
+          message: 'Daily report created!',
           data: {
             createdBeritaAcara: result,
           },

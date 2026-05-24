@@ -47,7 +47,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .then(result => {
         return {
           success: true,
-          message: 'Akun berhasil dibuat!',
+          message: 'Account created!',
           data: {
             createdAkun: result,
           },

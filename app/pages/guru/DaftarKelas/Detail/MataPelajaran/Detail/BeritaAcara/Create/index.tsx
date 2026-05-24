@@ -68,7 +68,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreat
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Buat Berita Acara</h2>
+            <h2 className='font-semibold text-xl'>Create Daily Report</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'secondary' }} />
           </div>
