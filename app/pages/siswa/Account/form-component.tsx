@@ -1,10 +1,5 @@
-import { Controller } from 'react-hook-form'
-import { useRemixFormContext } from 'remix-hook-form'
-import { Button, StaticSelect, TextInput } from '~/components/forms'
-import { ReactNode, useRef } from 'react'
-import { GolonganDarah, Kewarganegaraan } from '~/database/enums/prisma.enums'
-import EnumsTitleUtils from '~/utils/enums-title.utils'
-import { SiswaAccountSelfUpdateFormType } from './form'
+import { Button } from '~/components/forms'
+import { useRef } from 'react'
 import { Akun } from '@prisma/client'
 import { Form, useNavigate } from '@remix-run/react'
 import AppNav from '~/navigation'
@@ -20,12 +15,6 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
 
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
-
-  const formHook = useRemixFormContext<SiswaAccountSelfUpdateFormType>()
-
-  function InputWrapper({ children }: { children?: ReactNode }) {
-    return <div className='col-span-2 md:col-span-1'>{children}</div>
-  }
 
   return (
     <div className='grid grid-cols-2 gap-x-8 gap-y-2'>
@@ -91,7 +80,13 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
         </div>
       </div>
 
-      <InputWrapper>
+      <div className='col-span-2 mt-4'>
+        <div className='p-4 rounded-lg border border-secondary bg-secondary/10 text-secondary font-semibold'>
+          *To do update on your current info, please do contact admins!
+        </div>
+      </div>
+
+      {/* <InputWrapper>
         <Controller
           control={formHook.control}
           name={'email'}
@@ -150,7 +145,7 @@ export default function SiswaAccountSelfUpdateFormComponent(props: Props) {
             />
           )}
         />
-      </InputWrapper>
+      </InputWrapper> */}
     </div>
   )
 }

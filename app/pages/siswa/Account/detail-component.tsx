@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { format } from 'date-fns'
 import { ReactNode } from 'react'
 import constants from '~/constants'
-import { JenisKelamin, Role } from '~/database/enums/prisma.enums'
+import { JenisKelamin, Kewarganegaraan, Role } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 type Props = {
@@ -48,6 +48,24 @@ export default function SiswaAccountSelfUpdateDetailComponent(props: Props) {
       </DetailItem>
       <DetailItem label='Gender' colSpan={1}>
         {EnumsTitleUtils.getJenisKelamin(props.account.jenisKelamin as JenisKelamin)}
+      </DetailItem>
+      <DetailItem label='Email' colSpan={1}>
+        {props.account.email}
+      </DetailItem>
+      <DetailItem label='Birth Place' colSpan={1}>
+        {props.account.tempatLahir}
+      </DetailItem>
+      <DetailItem label='Religion' colSpan={1}>
+        {props.account.agama}
+      </DetailItem>
+      <DetailItem label='Address' colSpan={3}>
+        {props.account.alamat}
+      </DetailItem>
+      <DetailItem label='Blood Type' colSpan={1}>
+        {props.account.golonganDarah}
+      </DetailItem>
+      <DetailItem label='Nationality' colSpan={1}>
+        {EnumsTitleUtils.getKewarganegaraan(props.account.kewarganegaraan as Kewarganegaraan)}
       </DetailItem>
     </div>
   )

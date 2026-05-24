@@ -8,7 +8,6 @@ import {
 import { BaseActionData } from './base-action'
 import { GuruMasterPengumumanCreateFormType } from '~/pages/guru/MasterPengumuman/form-types'
 import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '~/pages/guru/ManageAbsensi/form-types'
-import { GuruManageMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/ManageMataPelajaran/Detail/Assignment/Create/form'
 import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
@@ -121,27 +120,6 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = 
     updatedPelanggaran?: PelanggaranPerMapel
     // * Error
     oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType
-  }
-}
-
-/**
- * * Manage Subject
- */
-export type ActionDataGuruManageMataPelajaranDetailAssignmentCreate = BaseActionData & {
-  data: {
-    // * Success
-    createdAssignment?: Assignment
-    // * Error
-    oldFormData?: GuruManageMataPelajaranDetailAssignmentCreateFormType
-  }
-}
-
-export type ActionDataGuruManageMataPelajaranDetailAssignmentEdit = BaseActionData & {
-  data: {
-    // * Success
-    updatedAssignment?: Assignment
-    // * Error
-    oldFormData?: GuruManageMataPelajaranDetailAssignmentCreateFormType
   }
 }
 

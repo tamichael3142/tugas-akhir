@@ -7,8 +7,6 @@ import { RemixFormProvider, useRemixForm } from 'remix-hook-form'
 import { SiswaAccountSelfUpdateFormType, resolver, defaultValues, translateRawToFormData } from './form'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { Button } from '~/components/forms'
-import { FaSave } from 'react-icons/fa'
 import { ActionDataSiswaAccountSelfUpdate } from '~/types/actions-data/siswa'
 import SiswaAccountSelfUpdateDetailComponent from './detail-component'
 
@@ -63,18 +61,6 @@ export default function SiswaAccountPage() {
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
             <SiswaAccountSelfUpdateFormComponent account={loader.account} />
           </RemixFormProvider>
-
-          <hr className='my-8' />
-          <div className='flex flex-row items-center justify-end gap-4'>
-            <Button variant='text' color='primary' label='Reset form' buttonProps={{ onClick: resetForm }} />
-            <Button
-              variant='contained'
-              color='secondary'
-              startIcon={<FaSave />}
-              label='Save'
-              buttonProps={{ type: 'submit' }}
-            />
-          </div>
         </Card>
       </fetcher.Form>
     </SiswaPageContainer>
