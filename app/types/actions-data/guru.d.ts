@@ -123,6 +123,13 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = 
   }
 }
 
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedPelanggaran?: PelanggaranPerMapel
+  }
+}
+
 /**
  * * Master Announcement
  */

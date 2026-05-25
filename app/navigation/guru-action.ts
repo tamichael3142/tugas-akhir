@@ -1,4 +1,4 @@
-import { Kelas, MataPelajaran, MataPelajaranAttachment, SemesterAjaran } from '@prisma/client'
+import { Kelas, MataPelajaran, MataPelajaranAttachment, PelanggaranPerMapel, SemesterAjaran } from '@prisma/client'
 
 const baseUrl = '/action/guru'
 
@@ -32,6 +32,18 @@ function daftarKelasDetailMataPelajaranDetailAttachmentDelete({
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment/${attachmentId}/delete`
 }
 
+function daftarKelasDetailMataPelajaranDetailPelanggaranDelete({
+  kelasId,
+  mataPelajaranId,
+  pelanggaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  pelanggaranId: PelanggaranPerMapel['id']
+}) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran/${pelanggaranId}/delete`
+}
+
 function accountUploadProfileImage() {
   return `${baseUrl}/account/upload-profile-image`
 }
@@ -41,6 +53,7 @@ const guruAction = {
   masterPengumumanDelete,
   daftarKelasDetailAbsensiCreate,
   daftarKelasDetailMataPelajaranDetailAttachmentDelete,
+  daftarKelasDetailMataPelajaranDetailPelanggaranDelete,
   accountUploadProfileImage,
 }
 

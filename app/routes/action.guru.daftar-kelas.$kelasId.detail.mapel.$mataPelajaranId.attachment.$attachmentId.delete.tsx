@@ -38,7 +38,7 @@ export async function action({
       .then(result => {
         return {
           success: true,
-          message: 'Attachment saved!',
+          message: 'Attachment deleted!',
           data: {
             deletedAttachment: result,
           },
