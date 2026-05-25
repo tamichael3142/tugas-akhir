@@ -42,7 +42,7 @@ export default function LoginPage() {
             <TextInput
               label='Username/NIP'
               className='mb-2'
-              inputProps={{ id: 'login-username-input', placeholder: 'Masukkan Username/NIP', ...field }}
+              inputProps={{ id: 'login-username-input', placeholder: 'Enter Username/NIP', ...field }}
             />
           )}
         />
@@ -52,15 +52,15 @@ export default function LoginPage() {
           render={({ field }) => (
             <TextInput
               label='Password'
-              inputProps={{ id: 'login-password-input', placeholder: 'Masukkan Password', type: 'password', ...field }}
+              inputProps={{ id: 'login-password-input', placeholder: 'Enter Password', type: 'password', ...field }}
             />
           )}
         />
         <div className='max-w-xs mt-10 mx-auto'>
-          <Button label='Masuk' className='w-full' buttonProps={{ type: 'submit' }} />
+          <Button label='Submit' className='w-full' buttonProps={{ type: 'submit' }} />
         </div>
         <div className='mt-4 flex flex-row justify-center hover:text-primary'>
-          <Link to={AppNav.auth.forgotPassword()}>{'Lupa password?'}</Link>
+          <Link to={AppNav.auth.forgotPassword()}>{'Forgot password?'}</Link>
         </div>
       </div>
     </Form>

@@ -1,12 +1,12 @@
 import { prisma } from '~/utils/db.server'
 
 const data = [
-  { id: 'UJIAN_1', label: 'Ujian 1' },
-  { id: 'UJIAN_2', label: 'Ujian 2' },
-  { id: 'UTS', label: 'UTS' },
-  { id: 'UJIAN_3', label: 'Ujian 3' },
-  { id: 'UJIAN_4', label: 'Ujian 4' },
-  { id: 'UAS', label: 'UAS' },
+  { id: 'UJIAN_1', label: 'Test 1' },
+  { id: 'UJIAN_2', label: 'Test 2' },
+  { id: 'UTS', label: 'Mid Test' },
+  { id: 'UJIAN_3', label: 'Test 3' },
+  { id: 'UJIAN_4', label: 'Test 4' },
+  { id: 'UAS', label: 'Final Test' },
   { id: 'TUGAS_1', label: 'Assignment 1' },
   { id: 'TUGAS_2', label: 'Assignment 2' },
   { id: 'TES_1', label: 'Tes 1' },

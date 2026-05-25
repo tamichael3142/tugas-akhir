@@ -34,11 +34,10 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
         {props.assignment.title}
       </DetailItem>
       <DetailItem label='Status' colSpan={1}>
-        {props.assignmentSubmission
-          ? EnumsTitleUtils.getAssignmentSubmissionStatus(
-              props.assignmentSubmission.submissionStatus as AssignmentSubmissionStatus,
-            )
-          : ''}
+        {EnumsTitleUtils.getAssignmentSubmissionStatus(
+          (props.assignmentSubmission?.submissionStatus ??
+            AssignmentSubmissionStatus.ASSIGNED) as AssignmentSubmissionStatus,
+        )}
       </DetailItem>
       <DetailItem label='Start Date'>
         {format(new Date(props.assignment.tanggalMulai), constants.dateFormats.rawDateTimeInput)}
@@ -48,13 +47,13 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
       </DetailItem>
       <DetailItem label='Submission'>
         {DBHelpers.mapelAssignment.getIsSubmittable(props.assignment) ? (
-          <span className='text-secondary'>{'Terbuka'}</span>
+          <span className='text-secondary'>{'Open'}</span>
         ) : (
-          <span className='text-primary'>{'Sudah ditutup'}</span>
+          <span className='text-primary'>{'Closed'}</span>
         )}
       </DetailItem>
       <DetailItem label='Description' colSpan={3}>
-        {props.assignment.description}
+        {props.assignment.description ?? '-'}
       </DetailItem>
     </div>
   )

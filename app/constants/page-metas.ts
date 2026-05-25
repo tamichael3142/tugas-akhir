@@ -52,11 +52,11 @@ const pageMetas = {
   ],
   authLogin: [
     { title: `Login | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Masuk ke SBBS' },
+    { name: 'description', content: 'Log in to SBBS' },
   ],
   authForgotPassword: [
     { title: `Forgot Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Lupa password di SBBS' },
+    { name: 'description', content: 'Forgot password on SBBS' },
   ],
   guruDefault: [
     { title: `Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },

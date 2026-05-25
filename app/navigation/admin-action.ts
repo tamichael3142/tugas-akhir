@@ -28,6 +28,10 @@ function masterKelasImportExcelSiswa({
   return `${baseUrl}/master-kelas/${kelasId}/import-siswa/${semesterAjaranId}`
 }
 
+function masterKelasImportExcel() {
+  return `${baseUrl}/master-kelas/import-excel-user`
+}
+
 function masterMataPelajaranDelete({ mataPelajaranId }: { mataPelajaranId: string }) {
   return `${baseUrl}/master-mata-pelajaran/${mataPelajaranId}/delete`
 }
@@ -62,6 +66,7 @@ const adminAction = {
   masterPengumumanDelete,
   masterKelasDeleteSiswa,
   masterKelasImportExcelSiswa,
+  masterKelasImportExcel,
   masterAccountDelete,
   masterAccountResetPassword,
   accountUploadProfileImage,
