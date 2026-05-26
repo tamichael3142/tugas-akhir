@@ -59,7 +59,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
         return where
       },
-      orderBy: [{ createdAt: 'desc' }],
+      orderBy: [{ createdAt: 'desc' }, { nama: 'asc' }],
     },
   })
 

@@ -13,11 +13,24 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   try {
     const kelasId = params.kelasId as Kelas['id'] | null
 
+    if (!kelasId)
+      throw {
+        message: 'Class not found!',
+      }
+
+    const currKelas = await prisma.kelas.findUnique({ where: { id: kelasId, deletedAt: null } })
+
+    if (!currKelas)
+      throw {
+        message: 'Class not found or already deleted!',
+      }
+
     const deletedAt = new Date()
     return await prisma.kelas
       .update({
-        where: { id: kelasId ?? '' },
+        where: { id: kelasId },
         data: {
+          nama: `${currKelas.nama} (deleted-${new Date().getTime()})`,
           deletedAt,
           lastUpdateById: currUser?.id,
         },

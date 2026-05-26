@@ -1,5 +1,5 @@
-import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
-import { FaPlus } from 'react-icons/fa'
+import { Form, Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { FaFileExcel, FaPlus } from 'react-icons/fa'
 import { Button, StaticSelect } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
@@ -12,7 +12,7 @@ import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/W
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 import { usePopup } from '~/hooks/usePopup'
 import { Kelas } from '@prisma/client'
-import { ReactNode, useEffect, Fragment } from 'react'
+import { ReactNode, useEffect, Fragment, useRef } from 'react'
 import { ActionDataAdminMasterKelasDelete } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
 import { PiStudent } from 'react-icons/pi'
@@ -21,6 +21,7 @@ import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'admin-master-kelas'
 const deleteFormId = `${sectionPrefix}-delete-form`
+const importExcelFormId = `${sectionPrefix}-import-excel-form`
 
 export default function AdminMasterKelasPage() {
   const loader = useLoaderData<LoaderDataAdminMasterKelas>()
@@ -32,6 +33,9 @@ export default function AdminMasterKelasPage() {
 
   const isDeleting = fetcher.state === 'submitting'
   const isSuccess = fetcher.data?.success
+
+  const importExcelFormRef = useRef<HTMLFormElement>(null)
+  const importExcelInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (isSuccess) {
@@ -102,11 +106,35 @@ export default function AdminMasterKelasPage() {
     <AdminPageContainer
       title='Master Class'
       actions={[
+        <Button
+          key={importExcelFormId}
+          label='Import Excel'
+          startIcon={<FaFileExcel />}
+          color='secondary'
+          onlyIconOnSmallView
+          buttonProps={{ onClick: () => importExcelInputRef.current?.click() }}
+        />,
         <Link key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelasCreate()}>
           <Button label='Add' startIcon={<FaPlus />} onlyIconOnSmallView />
         </Link>,
       ]}
     >
+      <Form
+        id={importExcelFormId}
+        method='post'
+        encType='multipart/form-data'
+        action={AppNav.adminAction.masterKelasImportExcel()}
+        ref={importExcelFormRef}
+      >
+        <input
+          type='file'
+          name='file'
+          hidden
+          ref={importExcelInputRef}
+          accept='.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          onChange={() => importExcelFormRef.current?.submit()}
+        />
+      </Form>
       <Card className='mb-8 shadow-lg'>
         <div className='grid grid-cols-2 gap-4'>
           <FilterGridItem>
@@ -188,7 +216,7 @@ export default function AdminMasterKelasPage() {
                   <Link
                     to={`${AppNav.admin.masterKelasManageSiswa({ id: row.id })}?semesterAjaranId=${semesterSatu?.id}`}
                   >
-                    <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Siswa'} />
+                    <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Student'} />
                   </Link>
                   {semesterSatu ? (
                     <Link to={AppNav.admin.masterKelasManageJadwal({ id: row.id, semesterAjaranId: semesterSatu.id })}>
