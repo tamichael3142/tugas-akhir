@@ -19,7 +19,7 @@ const pageMetas = {
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterKelasManageSiswa: [
-    { title: `Manage Siswa - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Manage Student - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs admin SBBS' },
   ],
   adminMasterKelasAddSiswa: [

@@ -96,7 +96,7 @@ export default function AdminMasterKelasManageSiswaPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
-      title='Manage Siswa'
+      title='Manage Student'
       actions={[<BackButton key={`${sectionPrefix}-back-button`} to={AppNav.admin.masterKelas()} />]}
     >
       <Card className='mb-8 shadow-lg'>
