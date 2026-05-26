@@ -74,7 +74,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailBeritaAcaraForm
           name={'dayId'}
           render={({ field }) => (
             <StaticSelect
-              label='Hari'
+              label='Day'
               options={props.days.map(item => ({
                 label: item.label,
                 value: item.id,
@@ -90,7 +90,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailBeritaAcaraForm
           name={'hourStartId'}
           render={({ field }) => (
             <StaticSelect
-              label='Jam Mulai'
+              label='Start Hour'
               options={props.hours.map(item => ({
                 label: item.label.split('-')[0],
                 value: item.id,
@@ -106,7 +106,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailBeritaAcaraForm
           name={'hourEndId'}
           render={({ field }) => (
             <StaticSelect
-              label='Jam Berakhir'
+              label='End Hour'
               options={props.hours.map(item => ({
                 label: item.label.split('-')[1],
                 value: item.id,

@@ -117,6 +117,11 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraEdit =
     beritaAcara: MataPelajaranBeritaAcara & { day: Days; hourStart: Hour; hourEnd: Hour }
   }
 
+export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraDetail =
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    beritaAcara: MataPelajaranBeritaAcara & { day: Days; hourStart: Hour; hourEnd: Hour }
+  }
+
 /**
  * * Class list Detail > Subject Detail > Assignment
  */

@@ -81,7 +81,7 @@ function getSemesterAjaranUrutan(value: SemesterAjaranUrutan) {
 function getTipeAbsensi(value: TipeAbsensi) {
   switch (value) {
     case TipeAbsensi.HADIR:
-      return 'Presence'
+      return 'Present'
     case TipeAbsensi.IZIN:
       return 'Excused'
     case TipeAbsensi.SAKIT:
