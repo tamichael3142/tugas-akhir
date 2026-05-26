@@ -36,6 +36,10 @@ export type LoaderDataSiswaIndex = {
   days?: Days[]
   hours?: Hour[]
   jadwalPelajarans?: (JadwalPelajaran & { mataPelajaran: MataPelajaran | null; kelas: Kelas | null })[]
+  assignments?: (Assignment & {
+    mataPelajaran: MataPelajaran
+    kelas: Kelas
+  })[]
 }
 
 /**

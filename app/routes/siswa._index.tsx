@@ -55,11 +55,38 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     },
   })
 
+  const assignments = await prisma.assignment.findMany({
+    where: {
+      OR: [
+        { isSubmitable: true },
+        {
+          tanggalMulai: { lte: now },
+          tanggalBerakhir: { gte: now },
+        },
+      ],
+      mataPelajaran: {
+        jadwalPelajarans: {
+          some: {
+            kelas: {
+              siswaPerKelasDanSemester: {
+                some: { siswaId: userId },
+              },
+            },
+          },
+        },
+      },
+    },
+    include: {
+      kelas: true,
+      mataPelajaran: true,
+    },
+  })
+
   return {
     days,
     hours,
     jadwalPelajarans,
-    currentTahunAjaran: currentTahunAjarans,
+    assignments,
   } as LoaderDataSiswaIndex
 }
 
