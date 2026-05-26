@@ -66,7 +66,7 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <Card className='!p-0 mt-4 lg:mt-8'>
+    <Card className='p-0! mt-4 lg:mt-8'>
       <GuruDaftarKelasDetailTab kelas={loader.kelas} activeTabKey={TabKey.DAFTAR_SISWA} />
 
       <DataGrid
@@ -114,13 +114,8 @@ export default function GuruDaftarKelasDetailDaftarSiswaPage() {
             label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
-                <Link to={AppNav.admin.masterMataPelajaranEdit({ id: row.kelasId })}>
-                  <DataGridActionButton
-                    icon={DataGridActionButtonHelper.getEditIcon()}
-                    color='warning'
-                    label={'Edit'}
-                    // buttonProps={{ disabled: !!row.deletedAt }}
-                  />
+                <Link to={AppNav.guru.daftarKelasDetailDetailSiswa({ kelasId: row.kelasId, akunId: row.siswaId })}>
+                  <DataGridActionButton icon={DataGridActionButtonHelper.getDetailIcon()} color='info' label={'Info'} />
                 </Link>
               </DataGridActionButtonWrapper>
             ),

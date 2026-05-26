@@ -72,6 +72,15 @@ export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
 }
 
 /**
+ * * Class list Detail > Daftar Siswa > Detail
+ */
+export type LoaderDataGuruDaftarKelasDetailDetailSiswa = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  siswa: Akun & { pelanggaransPerMapel: (PelanggaranPerMapel & { mataPelajaran: MataPelajaran })[] }
+  totalPoint: number
+}
+
+/**
  * * Class list Detail > Subject
  */
 export type LoaderDataGuruDaftarKelasDetailMataPelajaran = {

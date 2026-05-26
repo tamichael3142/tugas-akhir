@@ -1,5 +1,6 @@
 import {
   Absensi,
+  Akun,
   Assignment,
   Kelas,
   MataPelajaran,
@@ -63,6 +64,10 @@ function daftarKelasDetailDaftarSiswa({
   const params = new URLSearchParams()
   if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa${params.size ? `?${params.toString()}` : ''}`
+}
+
+function daftarKelasDetailDetailSiswa({ kelasId, akunId }: { kelasId: Kelas['id']; akunId: Akun['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/detail-siswa/${akunId}`
 }
 
 /*
@@ -424,6 +429,7 @@ const guru = {
   daftarKelas,
   daftarKelasDetail,
   daftarKelasDetailDaftarSiswa,
+  daftarKelasDetailDetailSiswa,
   daftarKelasDetailMataPelajaran,
   daftarKelasDetailMataPelajaranDetailAssignment,
   daftarKelasDetailMataPelajaranDetailAssignmentCreate,

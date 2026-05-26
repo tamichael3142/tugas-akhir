@@ -63,7 +63,7 @@ export async function action({ request }: ActionFunctionArgs) {
     })),
   })
 
-  return redirect(AppNav.admin.dashboard())
+  return redirect(AppNav.admin.masterKelas())
 }
 
 export default function AdminImportExcelUserRoute() {
