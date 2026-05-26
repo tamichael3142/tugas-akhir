@@ -3,7 +3,7 @@ import { Kelas } from '@prisma/client'
 import * as z from 'zod'
 
 export const validationSchema = z.object({
-  nama: z.string().min(2),
+  nama: z.string().min(1),
   tahunAjaranId: z.string().min(2),
   waliId: z.string(),
 })
