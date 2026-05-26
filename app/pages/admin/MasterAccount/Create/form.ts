@@ -14,7 +14,7 @@ export const validationSchema = z.object({
   tanggalLahir: z.string().nullish(),
   role: z.enum(Object.values(Role)),
   username: z.string().min(2),
-  password: z.string().min(2),
+  password: z.string().optional(),
   email: z.email(),
   jenisKelamin: z.enum(Object.values(JenisKelamin)),
   agama: z.string(),
