@@ -3,7 +3,6 @@ import constants from '~/constants'
 import { prisma } from '~/utils/db.server'
 import { LoaderDataSiswaIndex } from '~/types/loaders-data/siswa'
 import SiswaDashboardPage from '~/pages/siswa/Dashboard'
-import { SemesterAjaran, TahunAjaran } from '@prisma/client'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import DBHelpers from '~/database/helpers'
@@ -15,23 +14,26 @@ export const meta: MetaFunction = () => {
 export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataSiswaIndex> {
   const userId = await requireAuthCookie(request)
   const now = new Date()
-  let currentTahunAjaran: (TahunAjaran & { semesterAjaran: SemesterAjaran[] }) | null = null
-  const currentTahunAjarans = await prisma.tahunAjaran.findMany({
-    where: { deletedAt: null, tahunBerakhir: { gte: now }, tahunMulai: { lte: now } },
+  let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+    where: {
+      tahunMulai: { lte: new Date() },
+      tahunBerakhir: { gte: new Date() },
+      deletedAt: null,
+    },
     include: { semesterAjaran: true },
-    orderBy: [{ tahunBerakhir: 'desc' }, { createdAt: 'desc' }, { tahunMulai: 'desc' }],
   })
 
-  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
-  let currentSemester: SemesterAjaran | null = null
-
-  if (currentTahunAjarans && Array.isArray(currentTahunAjarans) && currentTahunAjarans.length) {
-    currentTahunAjaran = currentTahunAjarans[0]
-    currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
-      currentSemesterUrutan,
-      semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+  if (!currentTahunAjaran)
+    currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+      include: { semesterAjaran: true },
+      orderBy: { createdAt: 'desc' },
     })
-  }
+
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+  const currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+    currentSemesterUrutan,
+    semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+  })
 
   const days = await prisma.days.findMany({ orderBy: { sequenceNumber: 'asc' } })
   const hours = await prisma.hour.findMany({ orderBy: { sequenceNumber: 'asc' } })
