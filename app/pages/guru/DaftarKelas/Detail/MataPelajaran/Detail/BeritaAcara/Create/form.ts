@@ -23,7 +23,7 @@ export function generateTitle({ date, kelasName, mapelName }: { date: Date; kela
 export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailBeritaAcaraCreateFormType = {
   title: '',
   remark: '',
-  dayId: 'SENIN',
+  dayId: 'MON',
   hourStartId: '07:45',
   hourEndId: '07:45',
 }

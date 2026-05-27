@@ -1,16 +1,14 @@
 import { prisma } from '~/utils/db.server'
 
 const data = [
-  { id: 'UJIAN_1', label: 'Test 1', isConnectable: false },
-  { id: 'UJIAN_2', label: 'Test 2', isConnectable: false },
-  { id: 'UTS', label: 'Mid Test', isConnectable: false },
-  { id: 'UJIAN_3', label: 'Test 3', isConnectable: false },
-  { id: 'UJIAN_4', label: 'Test 4', isConnectable: false },
-  { id: 'UAS', label: 'Final Test', isConnectable: false },
+  { id: 'PS_1', label: 'Assessment 1', isConnectable: false },
+  { id: 'PS_2', label: 'Assessment 2', isConnectable: false },
+  { id: 'PS_3', label: 'Assessment 3', isConnectable: false },
+  { id: 'PAS', label: 'Final Test', isConnectable: false },
   { id: 'TUGAS_1', label: 'Assignment 1', isConnectable: true },
   { id: 'TUGAS_2', label: 'Assignment 2', isConnectable: true },
-  { id: 'TES_1', label: 'Tes 1', isConnectable: true },
-  { id: 'TES_2', label: 'Tes 2', isConnectable: true },
+  { id: 'TUGAS_3', label: 'Assignment 3', isConnectable: true },
+  { id: 'TUGAS_4', label: 'Assignment 4', isConnectable: true },
 ]
 
 async function seed() {

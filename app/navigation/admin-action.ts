@@ -29,7 +29,17 @@ function masterKelasImportExcelSiswa({
 }
 
 function masterKelasImportExcel() {
-  return `${baseUrl}/master-kelas/import-excel-user`
+  return `${baseUrl}/master-kelas/import-excel`
+}
+
+function masterKelasManageJadwalImportExcel({
+  kelasId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  semesterAjaranId: SemesterAjaran['id']
+}) {
+  return `${baseUrl}/master-kelas/${kelasId}/manage-jadwal/${semesterAjaranId}/import-excel`
 }
 
 function masterMataPelajaranDelete({ mataPelajaranId }: { mataPelajaranId: string }) {
@@ -67,6 +77,7 @@ const adminAction = {
   masterKelasDeleteSiswa,
   masterKelasImportExcelSiswa,
   masterKelasImportExcel,
+  masterKelasManageJadwalImportExcel,
   masterAccountDelete,
   masterAccountResetPassword,
   accountUploadProfileImage,

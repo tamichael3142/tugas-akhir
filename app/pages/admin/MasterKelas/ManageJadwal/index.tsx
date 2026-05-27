@@ -1,6 +1,6 @@
-import { useActionData, useFetcher, useLoaderData, useParams, useRevalidator } from '@remix-run/react'
-import { Fragment, useEffect } from 'react'
-import { FaSave } from 'react-icons/fa'
+import { Form, useActionData, useFetcher, useLoaderData, useParams, useRevalidator } from '@remix-run/react'
+import { Fragment, useEffect, useRef } from 'react'
+import { FaFileExcel, FaSave } from 'react-icons/fa'
 import { useRemixForm } from 'remix-hook-form'
 import { Button, TextInput } from '~/components/forms'
 import { BackButton, Card } from '~/components/ui'
@@ -17,6 +17,7 @@ import DBHelpers from '~/database/helpers'
 import constants from '~/constants'
 
 const sectionPrefix = 'admin-master-kelas-manage-jadwal'
+const importExcelFormId = `${sectionPrefix}-import-excel-form`
 
 export default function AdminMasterKelasManageJadwalPage() {
   const params = useParams()
@@ -24,6 +25,9 @@ export default function AdminMasterKelasManageJadwalPage() {
   const actionData = useActionData<ActionDataAdminMasterKelasManageJadwal>()
   const revalidator = useRevalidator()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
+
+  const importExcelFormRef = useRef<HTMLFormElement>(null)
+  const importExcelInputRef = useRef<HTMLInputElement>(null)
 
   const formHook = useRemixForm<AdminMasterKelasManageJadwalFormType>({
     defaultValues: emptyValues,
@@ -94,11 +98,42 @@ export default function AdminMasterKelasManageJadwalPage() {
     return existing
   }
 
+  const currSemesterAjaran = loader.kelas?.tahunAjaran.semesterAjaran.find(item => item.id === params.semesterAjaranId)
+
   return (
     <AdminPageContainer
       title='Manage Lesson Timetable'
-      actions={[<BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelas()} />]}
+      actions={[
+        <Button
+          key={importExcelFormId}
+          label='Import Excel'
+          startIcon={<FaFileExcel />}
+          color='secondary'
+          onlyIconOnSmallView
+          buttonProps={{ onClick: () => importExcelInputRef.current?.click() }}
+        />,
+        <BackButton key={`${sectionPrefix}-add-button`} to={AppNav.admin.masterKelas()} />,
+      ]}
     >
+      <Form
+        id={importExcelFormId}
+        method='post'
+        encType='multipart/form-data'
+        action={AppNav.adminAction.masterKelasManageJadwalImportExcel({
+          kelasId: loader.kelas?.id ?? '',
+          semesterAjaranId: currSemesterAjaran?.id ?? '',
+        })}
+        ref={importExcelFormRef}
+      >
+        <input
+          type='file'
+          name='file'
+          hidden
+          ref={importExcelInputRef}
+          accept='.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          onChange={() => importExcelFormRef.current?.submit()}
+        />
+      </Form>
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <Card className='mt-4'>
           <div className='w-full mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
@@ -117,10 +152,7 @@ export default function AdminMasterKelasManageJadwalPage() {
               <TextInput
                 label='Academic Semester'
                 inputProps={{
-                  value: EnumsTitleUtils.getSemesterAjaranUrutan(
-                    loader.kelas?.tahunAjaran.semesterAjaran.find(item => item.id === params.semesterAjaranId)
-                      ?.urutan as SemesterAjaranUrutan,
-                  ),
+                  value: EnumsTitleUtils.getSemesterAjaranUrutan(currSemesterAjaran?.urutan as SemesterAjaranUrutan),
                 }}
               />
             </div>

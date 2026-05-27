@@ -51,9 +51,9 @@ export enum AssignmentSubmissionStatus {
 }
 
 export enum DayID {
-  MON = 'SENIN',
-  TUE = 'SELASA',
-  WED = 'RABU',
-  THU = 'KAMIS',
-  FRI = 'JUMAT',
+  MON = 'MON',
+  TUE = 'TUE',
+  WED = 'WED',
+  THU = 'THU',
+  FRI = 'FRI',
 }

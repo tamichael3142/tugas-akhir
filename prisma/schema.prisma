@@ -148,6 +148,7 @@ model Akun {
   pelanggaransPerMapel               PelanggaranPerMapel[]
   children                           AkunChildren[]                       @relation(name: "children")
   parents                            AkunChildren[]                       @relation(name: "parents")
+  penilaiansExtrakulikuler           PenilaianExtrakulikuler[]
 
   @@index([role])
   @@schema("public")
@@ -331,6 +332,7 @@ model Ekstrakulikuler {
   lastUpdateBy                       Akun?                                @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   siswaPerEkstrakulikulerDanSemester SiswaPerEkstrakulikulerDanSemester[]
+  penilaiansExtrakulikuler           PenilaianExtrakulikuler[]
 
   @@schema("public")
 }
@@ -440,6 +442,8 @@ model Kompetensi {
   isConnectable  Boolean     @default(false)
   // ? relations
   penilaians     Penilaian[]
+  // ? meta data
+  deletedAt      DateTime?
 
   @@schema("public")
 }
@@ -519,6 +523,43 @@ model MataPelajaranBeritaAcara {
   createdBy       Akun?         @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById  String?
   lastUpdateBy    Akun?         @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+
+  @@schema("public")
+}
+
+model PenilaianExtrakulikuler {
+  id                          Int                       @id @default(autoincrement())
+  // ? credentials
+  ekstrakulikulerId           String
+  ekstrakulikuler             Ekstrakulikuler           @relation(fields: [ekstrakulikulerId], references: [id])
+  kompetensiEkstrakulikulerId String
+  kompetensiEkstrakulikuler   KompetensiEkstrakulikuler @relation(fields: [kompetensiEkstrakulikulerId], references: [id])
+  siswaId                     String
+  siswa                       Akun                      @relation(fields: [siswaId], references: [id])
+  // ? general
+  nilai                       Decimal?                  @default(0)
+  remark                      String?
+  // ? meta data
+  updatedAt                   DateTime                  @default(now())
+  createdAt                   DateTime                  @default(now())
+
+  @@unique([ekstrakulikulerId, kompetensiEkstrakulikulerId, siswaId])
+  @@index([ekstrakulikulerId])
+  @@index([kompetensiEkstrakulikulerId])
+  @@index([siswaId])
+  @@index([siswaId, ekstrakulikulerId])
+  @@schema("public")
+}
+
+model KompetensiEkstrakulikuler {
+  id                        String                    @id
+  // ? credentials
+  sequenceNumber            Int                       @default(autoincrement())
+  label                     String
+  // ? relations
+  penilaiansEkstrakulikuler PenilaianExtrakulikuler[]
+  // ? meta data
+  deletedAt                 DateTime?
 
   @@schema("public")
 }

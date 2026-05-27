@@ -31,12 +31,12 @@ export async function action({ request }: ActionFunctionArgs) {
   for (let i = 0; i < jsonDataRaw.length; i++) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item: any = jsonDataRaw[i]
-    const tahunAjaranLabel = (item['Academic Year'] ?? '') as string
-    const waliDisplayName = (item['Homeroom Teacher'] ?? '') as string
+    const tahunAjaranLabel = ((item['Academic Year'] ?? '') as string).trim()
+    const waliDisplayName = ((item['Homeroom Teacher'] ?? '') as string).trim()
     const splitedWaliName = waliDisplayName.split(' ')
     const waliFirstName = splitedWaliName[0]
     const waliLastName = splitedWaliName[1]
-    const nama = (item['Name'] ?? '') as string
+    const nama = ((item['Name'] ?? '') as string).trim()
 
     const existingTahunAjaran = await prisma.tahunAjaran.findMany({
       where: { OR: [{ id: tahunAjaranLabel }, { nama: tahunAjaranLabel }] },

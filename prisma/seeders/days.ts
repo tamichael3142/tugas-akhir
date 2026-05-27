@@ -4,11 +4,11 @@ async function seed() {
   try {
     await prisma.days.createMany({
       data: [
-        { id: 'SENIN', label: 'Monday' },
-        { id: 'SELASA', label: 'Tuesday' },
-        { id: 'RABU', label: 'Wednesday' },
-        { id: 'KAMIS', label: 'Thursday' },
-        { id: 'JUMAT', label: 'Friday' },
+        { id: 'MON', label: 'Monday' },
+        { id: 'TUE', label: 'Tuesday' },
+        { id: 'WED', label: 'Wednesday' },
+        { id: 'THU', label: 'Thursday' },
+        { id: 'FRI', label: 'Friday' },
       ],
     })
   } catch (e) {

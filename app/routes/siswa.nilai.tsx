@@ -36,6 +36,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   })
 
   const kompetensis = await prisma.kompetensi.findMany({
+    where: { deletedAt: null },
     orderBy: { sequenceNumber: 'asc' },
   })
 

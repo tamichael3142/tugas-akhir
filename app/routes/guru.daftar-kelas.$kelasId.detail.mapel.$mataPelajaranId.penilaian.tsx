@@ -49,6 +49,7 @@ export async function loader({
   })
 
   const kompetensis = await prisma.kompetensi.findMany({
+    where: { deletedAt: null },
     orderBy: { sequenceNumber: 'asc' },
   })
 
