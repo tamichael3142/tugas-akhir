@@ -39,12 +39,12 @@ export async function action({ request }: ActionFunctionArgs) {
     const nama = (item['Name'] ?? '') as string
 
     const existingTahunAjaran = await prisma.tahunAjaran.findMany({
-      where: { nama: tahunAjaranLabel },
+      where: { OR: [{ id: tahunAjaranLabel }, { nama: tahunAjaranLabel }] },
       orderBy: { tahunMulai: 'desc' },
     })
 
     const existingWali = await prisma.akun.findMany({
-      where: { firstName: waliFirstName, lastName: waliLastName, role: Role.GURU },
+      where: { OR: [{ id: waliDisplayName }, { firstName: waliFirstName, lastName: waliLastName, role: Role.GURU }] },
       orderBy: { createdAt: 'desc' },
     })
 

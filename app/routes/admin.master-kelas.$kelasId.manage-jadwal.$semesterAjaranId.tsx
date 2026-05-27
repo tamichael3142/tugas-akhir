@@ -65,25 +65,39 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       }
 
     return await prisma
-      .$transaction(async tx => {
-        for (const row of data.jadwalPelajarans) {
-          // 1. DELETE jika mapelId null & id ada
-          if (!row.mataPelajaranId && row.id) {
-            await tx.jadwalPelajaran.delete({
-              where: { id: row.id },
-            })
-            continue
-          }
+      .$transaction(
+        async tx => {
+          for (const row of data.jadwalPelajarans) {
+            // 1. DELETE jika mapelId null & id ada
+            if (!row.mataPelajaranId && row.id) {
+              await tx.jadwalPelajaran.delete({
+                where: { id: row.id },
+              })
+              continue
+            }
 
-          // 2. SKIP jika mapelId null & id null
-          if (!row.mataPelajaranId && !row.id) {
-            continue
-          }
+            // 2. SKIP jika mapelId null & id null
+            if (!row.mataPelajaranId && !row.id) {
+              continue
+            }
 
-          // 3. UPDATE jika id ada
-          if (row.id) {
-            await tx.jadwalPelajaran.update({
-              where: { id: row.id },
+            // 3. UPDATE jika id ada
+            if (row.id) {
+              await tx.jadwalPelajaran.update({
+                where: { id: row.id },
+                data: {
+                  kelasId: kelasId,
+                  dayId: row.dayId,
+                  hourId: row.hourId,
+                  mataPelajaranId: row.mataPelajaranId,
+                  semesterAjaranId: row.semesterAjaranId,
+                },
+              })
+              continue
+            }
+
+            // 4. CREATE jika id null & mapelId ada
+            await tx.jadwalPelajaran.create({
               data: {
                 kelasId: kelasId,
                 dayId: row.dayId,
@@ -92,26 +106,18 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
                 semesterAjaranId: row.semesterAjaranId,
               },
             })
-            continue
+
+            await tx.kelas.update({
+              where: { id: kelasId },
+              data: { lastUpdateById: currUser?.id, updatedAt: new Date() },
+            })
           }
-
-          // 4. CREATE jika id null & mapelId ada
-          await tx.jadwalPelajaran.create({
-            data: {
-              kelasId: kelasId,
-              dayId: row.dayId,
-              hourId: row.hourId,
-              mataPelajaranId: row.mataPelajaranId,
-              semesterAjaranId: row.semesterAjaranId,
-            },
-          })
-
-          await tx.kelas.update({
-            where: { id: kelasId },
-            data: { lastUpdateById: currUser?.id, updatedAt: new Date() },
-          })
-        }
-      })
+        },
+        {
+          timeout: 20_000,
+          maxWait: 15_000,
+        },
+      )
       .then(() => {
         return {
           success: true,

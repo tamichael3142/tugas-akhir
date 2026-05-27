@@ -21,6 +21,8 @@ export function prismaErrorHandler(error: unknown): PrismaHandledError {
         return { status: 400, message: 'Invalid field value.', code, type: 'known' }
       case 'P2025':
         return { status: 404, message: 'Record not found.', code, type: 'known' }
+      case 'P2028':
+        return { status: 500, message: 'Prisma transaction timeout.', code, type: 'known' }
       case 'P2033':
         return { status: 400, message: 'Numeric overflow occurred.', code, type: 'known' }
       case 'P2024':

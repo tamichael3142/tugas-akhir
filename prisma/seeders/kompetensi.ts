@@ -1,16 +1,16 @@
 import { prisma } from '~/utils/db.server'
 
 const data = [
-  { id: 'UJIAN_1', label: 'Test 1' },
-  { id: 'UJIAN_2', label: 'Test 2' },
-  { id: 'UTS', label: 'Mid Test' },
-  { id: 'UJIAN_3', label: 'Test 3' },
-  { id: 'UJIAN_4', label: 'Test 4' },
-  { id: 'UAS', label: 'Final Test' },
-  { id: 'TUGAS_1', label: 'Assignment 1' },
-  { id: 'TUGAS_2', label: 'Assignment 2' },
-  { id: 'TES_1', label: 'Tes 1' },
-  { id: 'TES_2', label: 'Tes 2' },
+  { id: 'UJIAN_1', label: 'Test 1', isConnectable: false },
+  { id: 'UJIAN_2', label: 'Test 2', isConnectable: false },
+  { id: 'UTS', label: 'Mid Test', isConnectable: false },
+  { id: 'UJIAN_3', label: 'Test 3', isConnectable: false },
+  { id: 'UJIAN_4', label: 'Test 4', isConnectable: false },
+  { id: 'UAS', label: 'Final Test', isConnectable: false },
+  { id: 'TUGAS_1', label: 'Assignment 1', isConnectable: true },
+  { id: 'TUGAS_2', label: 'Assignment 2', isConnectable: true },
+  { id: 'TES_1', label: 'Tes 1', isConnectable: true },
+  { id: 'TES_2', label: 'Tes 2', isConnectable: true },
 ]
 
 async function seed() {
@@ -19,6 +19,7 @@ async function seed() {
       data: data.map(item => ({
         id: item.id,
         label: item.label,
+        isConnectable: item.isConnectable,
       })),
     })
   } catch (e) {

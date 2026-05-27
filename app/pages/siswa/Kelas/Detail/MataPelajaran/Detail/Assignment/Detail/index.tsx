@@ -59,7 +59,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
         </div>
       </Card>
 
-      <Card className='!p-0 mt-4 lg:mt-8'>
+      <Card className='p-0! mt-4 lg:mt-8'>
         <fetcher.Form method='post' encType='multipart/form-data'>
           <div className='p-4 lg:px-8'>
             <div className='flex flex-row items-center gap-4'>
@@ -74,10 +74,10 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
             />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>
-              <Button variant='text' color='secondary' label='Empty form' buttonProps={{ type: 'reset' }} />
+              <Button variant='text' color='primary' label='Empty form' buttonProps={{ type: 'reset' }} />
               <Button
                 variant='contained'
-                color='primary'
+                color='secondary'
                 startIcon={<FaSave />}
                 label='Save'
                 buttonProps={{ disabled: !isSubmitable, type: 'submit' }}

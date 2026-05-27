@@ -437,6 +437,7 @@ model Kompetensi {
   // ? credentials
   sequenceNumber Int         @default(autoincrement())
   label          String
+  isConnectable  Boolean     @default(false)
   // ? relations
   penilaians     Penilaian[]
 
