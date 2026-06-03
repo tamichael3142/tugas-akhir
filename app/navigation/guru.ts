@@ -50,8 +50,16 @@ function daftarKelas() {
   return `${baseUrl}${daftarKelasUrl}`
 }
 
-function daftarKelasDetail({ kelasId }: { kelasId: Kelas['id'] }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa`
+function daftarKelasDetail({
+  kelasId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/daftar-siswa${params.size ? `?${params.toString()}` : ''}`
 }
 
 function daftarKelasDetailDaftarSiswa({

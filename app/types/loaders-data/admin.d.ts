@@ -5,8 +5,10 @@ import {
   Hour,
   JadwalPelajaran,
   Kelas,
+  Kompetensi,
   MataPelajaran,
   Pengumuman,
+  Penilaian,
   SemesterAjaran,
   SiswaPerKelasDanSemester,
   TahunAjaran,
@@ -90,6 +92,18 @@ export type LoaderDataAdminMasterKelasAddSiswa = {
     | null
   siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { semesterAjaran: SemesterAjaran | null })[]
   availableSiswas: PaginationReturns<Akun>
+}
+
+export type LoaderDataAdminMasterKelasAssessment = {
+  kelas: Kelas & {
+    tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+    wali: Akun | null
+    siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & { siswa: Akun })[]
+  }
+  mataPelajarans: (MataPelajaran & {
+    penilaians: Penilaian[]
+  })[]
+  kompetensis: Kompetensi[]
 }
 
 /**

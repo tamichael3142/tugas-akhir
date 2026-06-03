@@ -167,7 +167,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPenilaianPage() 
                       <td key={containerKey} className='border'>
                         <input
                           type='phone'
-                          className='w-28 p-2 text-center'
+                          className='w-32 p-2 text-center'
                           min={0}
                           max={100}
                           value={currPenilaian ? String(Number(currPenilaian.nilai)) : ''}

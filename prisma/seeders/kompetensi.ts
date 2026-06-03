@@ -9,6 +9,7 @@ const data = [
   { id: 'TUGAS_2', label: 'Assignment 2', isConnectable: true },
   { id: 'TUGAS_3', label: 'Assignment 3', isConnectable: true },
   { id: 'TUGAS_4', label: 'Assignment 4', isConnectable: true },
+  { id: 'FS', label: 'Final Score', isConnectable: false },
 ]
 
 async function seed() {

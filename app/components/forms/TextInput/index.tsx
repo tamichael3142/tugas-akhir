@@ -4,6 +4,7 @@ import { ComponentProps, ReactNode, useState } from 'react'
 export type TextInputProps = {
   label?: ReactNode
   className?: string
+  labelClassName?: string
   inputProps?: ComponentProps<'input'>
   endIcon?: ReactNode
   isError?: boolean
@@ -20,7 +21,7 @@ export default function TextInput(props: TextInputProps) {
     <div className={classNames('', props.className)}>
       {props.label ? (
         typeof props.label === 'string' ? (
-          <label htmlFor={props.inputProps?.id} className='text-sm'>
+          <label htmlFor={props.inputProps?.id} className={classNames('text-sm', props.labelClassName)}>
             {props.label}
           </label>
         ) : (

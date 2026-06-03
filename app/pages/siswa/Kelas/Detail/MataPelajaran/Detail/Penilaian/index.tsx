@@ -64,7 +64,7 @@ export default function SiswaKelasDetailMataPelajaranDetailPenilaianPage() {
 
                 return (
                   <td key={containerKey} className='border'>
-                    <div className='w-28 p-2 text-center'>
+                    <div className='w-32 p-2 text-center'>
                       {currPenilaian ? String(Number(currPenilaian.nilai)) : ''}
                     </div>
                   </td>

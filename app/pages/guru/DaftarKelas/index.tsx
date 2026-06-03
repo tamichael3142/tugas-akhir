@@ -24,6 +24,7 @@ export default function GuruDaftarKelasPage() {
   const user = useAuthStore(state => state.user)
 
   const currWaliId = searchParams.get('waliId')
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
 
   function handlePageChange({
     newPage,
@@ -54,25 +55,17 @@ export default function GuruDaftarKelasPage() {
   const loadCurrentPeriod = useCallback(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
     const firstAvailableTahunAjaran = loader.currentTahunAjaran ?? loader.tahunAjarans[0]
-    const currentSemester = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
-    const firstAvailableSemesterAjaran = firstAvailableTahunAjaran.semesterAjaran.find(
-      item => item.urutan === currentSemester,
-    )
-    if (!selectedTahunAjaranId && firstAvailableTahunAjaran && firstAvailableSemesterAjaran) {
+    const currentSemester = firstAvailableTahunAjaran.semesterAjaran.find(item => item.urutan === currentSemesterUrutan)
+    if (!selectedTahunAjaranId && firstAvailableTahunAjaran && currentSemester) {
       handlePageChange({
         newPage: loader.kelass?.pagination.page ?? 1,
         tahunAjaranId: firstAvailableTahunAjaran.id,
-        semesterAjaranId: firstAvailableSemesterAjaran.id,
+        semesterAjaranId: currentSemester.id,
         waliId: searchParams.get('waliId') ?? undefined,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
-
-  // useEffect(() => {
-  //   if (window.confirm('Apakah ingin load periode saat ini?')) loadCurrentPeriod()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [loader.currentTahunAjaran])
 
   const selectedTahunAjaran = useCallback(() => {
     const selectedTahunAjaranId = searchParams.get('tahunAjaranId') ?? ''
@@ -227,10 +220,13 @@ export default function GuruDaftarKelasPage() {
                 const semesterDua = row.tahunAjaran.semesterAjaran.find(
                   item => item.urutan === SemesterAjaranUrutan.DUA,
                 )
+                const currentSemester = currentSemesterUrutan === SemesterAjaranUrutan.SATU ? semesterSatu : semesterDua
 
                 return (
                   <DataGridActionButtonWrapper>
-                    <Link to={AppNav.guru.daftarKelasDetail({ kelasId: row.id })}>
+                    <Link
+                      to={AppNav.guru.daftarKelasDetail({ kelasId: row.id, semesterAjaranId: currentSemester?.id })}
+                    >
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getDetailIcon()}
                         color='info'

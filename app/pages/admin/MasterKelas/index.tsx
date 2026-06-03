@@ -18,6 +18,8 @@ import DBHelpers from '~/database/helpers'
 import { PiStudent } from 'react-icons/pi'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
+import { LuListChecks } from 'react-icons/lu'
+import { MdFactCheck } from 'react-icons/md'
 
 const sectionPrefix = 'admin-master-kelas'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -36,6 +38,8 @@ export default function AdminMasterKelasPage() {
 
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
+
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
 
   useEffect(() => {
     if (isSuccess) {
@@ -210,13 +214,18 @@ export default function AdminMasterKelasPage() {
                 item => item.urutan === SemesterAjaranUrutan.SATU,
               )
               const semesterDua = row.tahunAjaran.semesterAjaran.find(item => item.urutan === SemesterAjaranUrutan.DUA)
+              const currentSemester = currentSemesterUrutan === SemesterAjaranUrutan.SATU ? semesterSatu : semesterDua
 
               return (
-                <DataGridActionButtonWrapper>
-                  <Link
-                    to={`${AppNav.admin.masterKelasManageSiswa({ id: row.id })}?semesterAjaranId=${semesterSatu?.id}`}
-                  >
+                <DataGridActionButtonWrapper className='flex-wrap max-w-40'>
+                  <Link to={AppNav.admin.masterKelasManageSiswa({ id: row.id, semesterAjaranId: currentSemester?.id })}>
                     <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Student'} />
+                  </Link>
+                  <Link to={AppNav.admin.masterKelasAbsence({ id: row.id, semesterAjaranId: currentSemester?.id })}>
+                    <DataGridActionButton icon={<LuListChecks />} color='primary' label={'Absence'} />
+                  </Link>
+                  <Link to={AppNav.admin.masterKelasAssessment({ id: row.id, semesterAjaranId: currentSemester?.id })}>
+                    <DataGridActionButton icon={<MdFactCheck />} color='primary' label={'Assessment'} />
                   </Link>
                   {semesterSatu ? (
                     <Link to={AppNav.admin.masterKelasManageJadwal({ id: row.id, semesterAjaranId: semesterSatu.id })}>

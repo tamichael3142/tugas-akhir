@@ -1,3 +1,5 @@
+import { Kelas, SemesterAjaran } from '@prisma/client'
+
 const baseUrl = '/admin'
 
 /*
@@ -53,8 +55,28 @@ function masterKelasManageJadwal({ id, semesterAjaranId }: { id: string; semeste
   return `${baseUrl}${masterKelasUrl}/${id}/manage-jadwal/${semesterAjaranId}`
 }
 
-function masterKelasManageSiswa({ id }: { id: string }) {
-  return `${baseUrl}${masterKelasUrl}/${id}/manage-siswa`
+function masterKelasManageSiswa({
+  id,
+  semesterAjaranId,
+}: {
+  id: Kelas['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${masterKelasUrl}/${id}/manage-siswa${params.size ? `?${params.toString()}` : ''}`
+}
+
+function masterKelasAbsence({ id, semesterAjaranId }: { id: Kelas['id']; semesterAjaranId?: SemesterAjaran['id'] }) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${masterKelasUrl}/${id}/absence${params.size ? `?${params.toString()}` : ''}`
+}
+
+function masterKelasAssessment({ id, semesterAjaranId }: { id: Kelas['id']; semesterAjaranId?: SemesterAjaran['id'] }) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${masterKelasUrl}/${id}/penilaian${params.size ? `?${params.toString()}` : ''}`
 }
 
 function masterKelasAddSiswa({ id }: { id: string }) {
@@ -188,6 +210,8 @@ const admin = {
   masterKelasEdit,
   masterKelasManageJadwal,
   masterKelasManageSiswa,
+  masterKelasAbsence,
+  masterKelasAssessment,
   masterKelasAddSiswa,
   masterMataPelajaran,
   masterMataPelajaranCreate,

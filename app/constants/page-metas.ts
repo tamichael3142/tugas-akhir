@@ -8,47 +8,55 @@ const pageMetas = {
   ],
   adminDefault: [
     { title: `Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterTahunAjaran: [
     { title: `Master Academic Year - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterKelas: [
     { title: `Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterKelasManageSiswa: [
     { title: `Manage Student - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterKelasAddSiswa: [
     { title: `Add Student - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
+  adminMasterKelasAbsensi: [
+    { title: `Absence - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
+  adminMasterKelasPenilaian: [
+    { title: `Assessment - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterMataPelajaran: [
     { title: `Master Subject - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterEkstrakulikuler: [
     { title: `Master Extracurricular - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterPengumuman: [
     { title: `Master Announcement - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterAccount: [
     { title: `Master Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterAccountManageChildren: [
     { title: `Manage Children - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminAccount: [
     { title: `Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
-    { name: 'description', content: 'Situs admin SBBS' },
+    { name: 'description', content: 'Admin site of SBBS' },
   ],
   authLogin: [
     { title: `Login | ${pages.defaultTitle} - ${sbbs.name.long}` },
