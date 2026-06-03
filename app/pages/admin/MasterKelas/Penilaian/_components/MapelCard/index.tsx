@@ -62,7 +62,7 @@ export default function MapelCard(props: Props) {
                         key={`${sectionPrefix}-${props.mapel.id}-tbody-siswaPerKelSem-${siswaPerKelSem.id}-kompetensi-${kompetensi.id}-nilai`}
                         className='bg-white border text-center print:text-[8px] print:w-16 print:min-w-0'
                       >
-                        {penilaian?.nilai ? Number(penilaian.nilai) : null}
+                        {penilaian?.nilai ? Number(penilaian.nilai) : '-'}
                       </td>
                     )
                   })}

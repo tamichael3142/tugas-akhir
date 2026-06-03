@@ -23,7 +23,9 @@ export default function MapelSection(props: Props) {
         <tbody>
           <tr>
             {props.kompetensis.map(item => {
-              const currNilai = props.allPenilaians.find(penilaian => penilaian.kompetensiId === item.id)
+              const currNilai = props.allPenilaians.find(
+                penilaian => penilaian.kompetensiId === item.id && penilaian.mataPelajaranId === props.mataPelajaran.id,
+              )
 
               return (
                 <td
