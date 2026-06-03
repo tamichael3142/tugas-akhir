@@ -118,6 +118,11 @@ export default function AdminMasterKelasPenilaianPage() {
               siswaPerKelasDanSemester={siswaSemester1}
             />
           ))}
+          {mapelSemester1.length <= 0 ? (
+            <div>
+              <p>No data to show on this semester yet.</p>
+            </div>
+          ) : null}
         </div>
       </Card>
 
@@ -151,6 +156,11 @@ export default function AdminMasterKelasPenilaianPage() {
               siswaPerKelasDanSemester={siswaSemester2}
             />
           ))}
+          {mapelSemester2.length <= 0 ? (
+            <div>
+              <p>No data to show on this semester yet.</p>
+            </div>
+          ) : null}
         </div>
       </Card>
     </AdminPageContainer>
