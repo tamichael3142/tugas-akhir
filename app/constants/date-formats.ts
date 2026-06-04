@@ -5,6 +5,7 @@ const dateFormats = {
   monthNumberFull: 'MM',
   yearFull: 'yyyy',
   akunUsername: 'ddMM',
+  dateMonth: 'dd/MM',
   dateMonthYearSimple: 'dd/MM/yyyy',
   dateColumn: 'dd/MM/yyyy H:mm',
   displayFullDate: 'dd MMM yyyy',

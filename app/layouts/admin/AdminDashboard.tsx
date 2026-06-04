@@ -70,7 +70,7 @@ export default function AdminDashboardLayout() {
     <div className='w-screen min-h-screen relative'>
       <div
         className={classNames(
-          'fixed bg-white w-[300px] md:translate-x-0 h-screen z-[100] rounded-r-2xl md:shadow-2xl duration-300',
+          'fixed bg-white w-[300px] md:translate-x-0 h-screen z-[100] rounded-r-2xl md:shadow-2xl duration-300 no-print',
           {
             ['translate-x-[-300px]']: !openSidebar,
             ['shadow-2xl']: openSidebar,
@@ -141,7 +141,7 @@ export default function AdminDashboardLayout() {
         })}
         onClick={closeSidebar}
       />
-      <div className='bg-grey-light min-h-screen md:pl-[300px]'>
+      <div className='bg-grey-light min-h-screen md:pl-[300px] print:pl-0'>
         <Outlet />
       </div>
     </div>

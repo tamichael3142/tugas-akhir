@@ -1,11 +1,11 @@
 import { Akun, Kompetensi, SiswaPerKelasDanSemester } from '@prisma/client'
 import classNames from 'classnames'
 import DBHelpers from '~/database/helpers'
-import { LoaderDataAdminMasterKelasAssessment } from '~/types/loaders-data/admin'
+import { LoaderDataAdminMasterKelasPenilaian } from '~/types/loaders-data/admin'
 
 type Props = {
   index: number
-  mapel: LoaderDataAdminMasterKelasAssessment['mataPelajarans'][0]
+  mapel: LoaderDataAdminMasterKelasPenilaian['mataPelajarans'][0]
   kompetensis: Kompetensi[]
   siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & { siswa: Akun })[]
 }

@@ -97,7 +97,7 @@ export default function GuruMasterPengumumanFormComponent() {
               label='Academic Semester'
               options={loader.absensi?.kelas.tahunAjaran?.semesterAjaran.map(item => ({
                 label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
-                value: item.urutan,
+                value: item.id,
               }))}
               selectProps={{ value: field.value, disabled: true }}
             />

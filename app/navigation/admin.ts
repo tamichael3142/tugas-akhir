@@ -67,16 +67,15 @@ function masterKelasManageSiswa({
   return `${baseUrl}${masterKelasUrl}/${id}/manage-siswa${params.size ? `?${params.toString()}` : ''}`
 }
 
-function masterKelasAbsence({ id, semesterAjaranId }: { id: Kelas['id']; semesterAjaranId?: SemesterAjaran['id'] }) {
+function masterKelasAbsensi({ id, startDate, endDate }: { id: Kelas['id']; startDate?: string; endDate?: string }) {
   const params = new URLSearchParams()
-  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
-  return `${baseUrl}${masterKelasUrl}/${id}/absence${params.size ? `?${params.toString()}` : ''}`
+  if (startDate) params.set('startDate', startDate)
+  if (endDate) params.set('endDate', endDate)
+  return `${baseUrl}${masterKelasUrl}/${id}/absensi${params.size ? `?${params.toString()}` : ''}`
 }
 
-function masterKelasAssessment({ id, semesterAjaranId }: { id: Kelas['id']; semesterAjaranId?: SemesterAjaran['id'] }) {
-  const params = new URLSearchParams()
-  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
-  return `${baseUrl}${masterKelasUrl}/${id}/penilaian${params.size ? `?${params.toString()}` : ''}`
+function masterKelasPenilaian({ id }: { id: Kelas['id'] }) {
+  return `${baseUrl}${masterKelasUrl}/${id}/penilaian`
 }
 
 function masterKelasAddSiswa({ id }: { id: string }) {
@@ -210,8 +209,8 @@ const admin = {
   masterKelasEdit,
   masterKelasManageJadwal,
   masterKelasManageSiswa,
-  masterKelasAbsence,
-  masterKelasAssessment,
+  masterKelasAbsensi,
+  masterKelasPenilaian,
   masterKelasAddSiswa,
   masterMataPelajaran,
   masterMataPelajaranCreate,

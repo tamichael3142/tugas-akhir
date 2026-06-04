@@ -221,10 +221,10 @@ export default function AdminMasterKelasPage() {
                   <Link to={AppNav.admin.masterKelasManageSiswa({ id: row.id, semesterAjaranId: currentSemester?.id })}>
                     <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Student'} />
                   </Link>
-                  <Link to={AppNav.admin.masterKelasAbsence({ id: row.id, semesterAjaranId: currentSemester?.id })}>
+                  <Link to={AppNav.admin.masterKelasAbsensi({ id: row.id })}>
                     <DataGridActionButton icon={<LuListChecks />} color='primary' label={'Absence'} />
                   </Link>
-                  <Link to={AppNav.admin.masterKelasAssessment({ id: row.id, semesterAjaranId: currentSemester?.id })}>
+                  <Link to={AppNav.admin.masterKelasPenilaian({ id: row.id })}>
                     <DataGridActionButton icon={<MdFactCheck />} color='primary' label={'Assessment'} />
                   </Link>
                   {semesterSatu ? (

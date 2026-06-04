@@ -91,6 +91,19 @@ function getTipeAbsensi(value: TipeAbsensi) {
   }
 }
 
+function getTipeAbsensiShort(value: TipeAbsensi) {
+  switch (value) {
+    case TipeAbsensi.HADIR:
+      return 'P'
+    case TipeAbsensi.IZIN:
+      return 'E'
+    case TipeAbsensi.SAKIT:
+      return 'S'
+    default:
+      return 'X'
+  }
+}
+
 function getAssignmentSubmissionType(value: AssignmentSubmissionType) {
   switch (value) {
     case AssignmentSubmissionType.LONG_TEXT:
@@ -126,6 +139,7 @@ const EnumsTitleUtils = {
   getKewarganegaraan,
   getSemesterAjaranUrutan,
   getTipeAbsensi,
+  getTipeAbsensiShort,
   getAssignmentSubmissionType,
   getAssignmentSubmissionStatus,
 }

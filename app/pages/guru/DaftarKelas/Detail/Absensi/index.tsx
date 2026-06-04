@@ -58,7 +58,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
     const semesterAjaranId = searchParams.get('semesterAjaranId')
     if (loader.todayAbsensi) navigate(AppNav.guru.manageAbsensiEdit({ absensiId: loader.todayAbsensi.id }))
     else if (semesterAjaranId)
-      navigate(AppNav.guruAction.daftarKelasDetailAbsensiCreate({ kelasId: loader.kelas?.id ?? '', semesterAjaranId }))
+      navigate(AppNav.guruAction.daftarKelasDetailAbsensiCreate({ kelasId: loader.kelas?.id ?? '' }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, loader.todayAbsensi])
 
@@ -112,7 +112,6 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
               label={'Today Absence'}
               color='primary'
               buttonProps={{
-                disabled: !searchParams.get('semesterAjaranId'),
                 onClick: absenHariIniButtonClick,
               }}
             />

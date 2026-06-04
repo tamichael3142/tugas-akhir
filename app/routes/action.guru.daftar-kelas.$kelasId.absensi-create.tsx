@@ -4,6 +4,7 @@ import { MetaFunction, redirect } from '@remix-run/react'
 import { format } from 'date-fns'
 import { LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
+import DBHelpers from '~/database/helpers'
 import AppNav from '~/navigation'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import DateUtils from '~/utils/date.utils'
@@ -31,17 +32,21 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     },
   })
 
-  const semesterAjaranId = query.get('semesterAjaranId')
+  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+  const currentSemesterAjaran = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+    semesterAjaran: kelas?.tahunAjaran.semesterAjaran ?? [],
+    currentSemesterUrutan,
+  })
 
   const date = query.get('date')
   const selectedDate = date ? new Date(date) : new Date()
   const dateTreshold = DateUtils.getADateTreshold(selectedDate)
 
-  let absensi = semesterAjaranId
+  let absensi = currentSemesterAjaran?.id
     ? await prisma.absensi.findFirst({
         where: {
           kelasId: kelas?.id,
-          semesterAjaranId: semesterAjaranId,
+          semesterAjaranId: currentSemesterAjaran.id,
           tanggal: {
             gte: dateTreshold.start,
             lt: dateTreshold.end,
@@ -51,7 +56,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     : null
 
   if (!absensi) {
-    if (!semesterAjaranId) return redirect(AppNav.guru.daftarKelasDetailAbsensiList({ kelasId: kelasId ?? '' }))
+    if (!currentSemesterAjaran?.id)
+      return redirect(AppNav.guru.daftarKelasDetailAbsensiList({ kelasId: kelasId ?? '' }))
 
     const newTanggalText = format(selectedDate, constants.dateFormats.displayFullDate)
     absensi = await prisma.absensi.create({
@@ -60,7 +66,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
         tanggal: selectedDate,
         tanggalText: newTanggalText,
         kelasId: kelasId ?? '',
-        semesterAjaranId: semesterAjaranId ?? '',
+        semesterAjaranId: currentSemesterAjaran.id ?? '',
         createdAt: new Date(),
         createdById: userId,
         updatedAt: new Date(),

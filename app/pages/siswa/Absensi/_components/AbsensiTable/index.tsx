@@ -52,10 +52,18 @@ export default function AbsensiTable(props: Props) {
               <th key={`${props.sectionPrefix}-absensi-table-th-kelas-${kelas.id}`} className='p-2 min-w-44 border'>
                 <p className='text-secondary'>{kelas.nama}</p>
                 <div className='flex flex-row flex-wrap gap-2 items-center justify-center text-xs'>
-                  <p className='text-green-500'>P:{kelas.stats.totalHadir}</p>
-                  <p className='text-blue-500'>S:{kelas.stats.totalSakit}</p>
-                  <p className='text-gray-500'>E:{kelas.stats.totalIzin}</p>
-                  <p className='text-red-500'>X:{kelas.stats.totalTanpaKeterangan}</p>
+                  <p className='text-green-500'>
+                    {EnumsTitleUtils.getTipeAbsensiShort(TipeAbsensi.HADIR)}:{kelas.stats.totalHadir}
+                  </p>
+                  <p className='text-blue-500'>
+                    {EnumsTitleUtils.getTipeAbsensiShort(TipeAbsensi.SAKIT)}:{kelas.stats.totalSakit}
+                  </p>
+                  <p className='text-gray-500'>
+                    {EnumsTitleUtils.getTipeAbsensiShort(TipeAbsensi.IZIN)}:{kelas.stats.totalIzin}
+                  </p>
+                  <p className='text-red-500'>
+                    {EnumsTitleUtils.getTipeAbsensiShort(TipeAbsensi.UNKNOWN)}:{kelas.stats.totalTanpaKeterangan}
+                  </p>
                 </div>
               </th>
             ))}

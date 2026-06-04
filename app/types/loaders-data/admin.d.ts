@@ -1,4 +1,6 @@
 import {
+  Absensi,
+  AbsensiXSiswa,
   Akun,
   AkunChildren,
   Days,
@@ -95,7 +97,7 @@ export type LoaderDataAdminMasterKelasAddSiswa = {
   availableSiswas: PaginationReturns<Akun>
 }
 
-export type LoaderDataAdminMasterKelasAssessment = {
+export type LoaderDataAdminMasterKelasPenilaian = {
   kelas: Kelas & {
     tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
     wali: Akun | null
@@ -105,6 +107,15 @@ export type LoaderDataAdminMasterKelasAssessment = {
     penilaians: Penilaian[]
   })[]
   kompetensis: Kompetensi[]
+}
+
+export type LoaderDataAdminMasterKelasAbsensi = {
+  kelas: Kelas & {
+    tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+    wali: Akun | null
+    siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & { siswa: Akun })[]
+  }
+  absensis?: (Absensi & { siswaTerabsen: AbsensiXSiswa[] })[]
 }
 
 /**

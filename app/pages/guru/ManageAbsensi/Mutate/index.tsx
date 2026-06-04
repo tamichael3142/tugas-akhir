@@ -100,7 +100,7 @@ export default function GuruManageAbsensiMutatePage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Absen Siswa' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+    <GuruPageContainer title='Student Absence' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
       <RemixFormProvider key={`${sectionPrefix}-form-${loader.absensi?.id}`} {...formHook}>
         <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
           <Card className=''>

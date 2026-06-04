@@ -1,4 +1,4 @@
-import { Kelas, MataPelajaran, MataPelajaranAttachment, PelanggaranPerMapel, SemesterAjaran } from '@prisma/client'
+import { Kelas, MataPelajaran, MataPelajaranAttachment, PelanggaranPerMapel } from '@prisma/client'
 
 const baseUrl = '/action/guru'
 
@@ -8,16 +8,8 @@ function masterPengumumanDelete({ pengumumanId }: { pengumumanId: string }) {
 
 const daftarKelasUrl = '/daftar-kelas'
 
-function daftarKelasDetailAbsensiCreate({
-  kelasId,
-  semesterAjaranId,
-}: {
-  kelasId: Kelas['id']
-  semesterAjaranId?: SemesterAjaran['id']
-}) {
-  const params = new URLSearchParams()
-  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/absensi-create?${params.toString()}`
+function daftarKelasDetailAbsensiCreate({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/absensi-create`
 }
 
 function daftarKelasDetailMataPelajaranDetailAttachmentDelete({

@@ -2,7 +2,7 @@ import { useLoaderData, useRevalidator } from '@remix-run/react'
 import { Button, Checkbox, TextInput } from '~/components/forms'
 import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import { FaPrint } from 'react-icons/fa6'
-import { LoaderDataAdminMasterKelasAssessment } from '~/types/loaders-data/admin'
+import { LoaderDataAdminMasterKelasPenilaian } from '~/types/loaders-data/admin'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
@@ -14,7 +14,7 @@ import classNames from 'classnames'
 const sectionPrefix = 'admin-master-kelas-penilaian'
 
 export default function AdminMasterKelasPenilaianPage() {
-  const loader = useLoaderData<LoaderDataAdminMasterKelasAssessment>()
+  const loader = useLoaderData<LoaderDataAdminMasterKelasPenilaian>()
   const revalidator = useRevalidator()
 
   const [showPrintSmt1, setShowPrintSmt1] = useState<boolean>(true)
@@ -36,6 +36,7 @@ export default function AdminMasterKelasPenilaianPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <AdminPageContainer
+      key={sectionPrefix}
       title='Class Assessment'
       actions={[
         <Button
