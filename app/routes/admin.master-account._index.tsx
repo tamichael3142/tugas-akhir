@@ -16,6 +16,13 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     model: prisma.akun,
     options: {
       defaultLimit: 10,
+      include: {
+        parents: {
+          include: {
+            parent: true,
+          },
+        },
+      },
       mapQueryToWhere: query => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const where: any = {}
@@ -38,7 +45,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
   return {
     akuns,
-  }
+  } as LoaderDataAdminMasterAkun
 }
 
 export default function AdminMasterAccountRoute() {

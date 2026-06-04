@@ -235,6 +235,17 @@ export default function AdminMasterAccountPage() {
           { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.role as Role) },
           { field: 'firstName', label: 'First Name' },
           { field: 'lastName', label: 'Last Name' },
+          {
+            field: 'parents',
+            label: 'Parents',
+            render: row => (
+              <ul className='min-w-40 list-disc'>
+                {row.parents.map(item => (
+                  <li key={`orang-tua-siswa-${row.id}-${item.id}`}>{DBHelpers.akun.getDisplayName(item.parent)}</li>
+                ))}
+              </ul>
+            ),
+          },
           { field: 'email', label: 'Email' },
           {
             field: 'createdAt',

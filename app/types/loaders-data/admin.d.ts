@@ -1,5 +1,6 @@
 import {
   Akun,
+  AkunChildren,
   Days,
   Ekstrakulikuler,
   Hour,
@@ -165,7 +166,7 @@ export type LoaderDataAdminMasterPengumumanEdit = {
  * * Master Account
  */
 export type LoaderDataAdminMasterAkun = {
-  akuns: PaginationReturns<Akun>
+  akuns: PaginationReturns<Akun & { parents: (AkunChildren & { parent: Akun })[] }>
 }
 
 export type LoaderDataAdminMasterAkunEdit = {
