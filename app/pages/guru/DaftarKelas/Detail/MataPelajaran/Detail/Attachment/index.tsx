@@ -1,7 +1,7 @@
 import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
-import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
+import { BackButton, Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAttachment } from '~/types/loaders-data/guru'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
@@ -15,6 +15,7 @@ import { MataPelajaranAttachment } from '@prisma/client'
 import { usePopup } from '~/hooks/usePopup'
 import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentDelete } from '~/types/actions-data/guru'
 import useAuthStore from '~/store/authStore'
+import useGuruPageStore from '~/store/guruPageStore'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-attachment'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -32,6 +33,28 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentPage()
   const isSuccess = fetcher.data?.success
 
   const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
+
+  // * Customize back button direction
+  useEffect(() => {
+    useGuruPageStore.setState(oldVal => ({
+      ...oldVal,
+      actions: [
+        <BackButton
+          key={`${sectionPrefix}-back-button`}
+          to={AppNav.guru.daftarKelasDetailMataPelajaran({ kelasId: loader.kelas.id })}
+        />,
+      ],
+    }))
+
+    return () => {
+      useGuruPageStore.setState(oldVal => ({
+        title: oldVal.title,
+        openSidebar: oldVal.openSidebar,
+        actions: undefined,
+      }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (isSuccess) {

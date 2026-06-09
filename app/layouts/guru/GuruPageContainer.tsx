@@ -13,6 +13,9 @@ interface Props {
 
 export default function GuruPageContainer(props: Props) {
   const title = useGuruPageStore(state => state.title)
+  const actions = useGuruPageStore(state => state.actions)
+
+  const currActions = actions && actions.length > 0 ? actions : props.actions
 
   return (
     <Fragment>
@@ -25,7 +28,7 @@ export default function GuruPageContainer(props: Props) {
             <h1 className='text-2xl font-semibold grow line-clamp-1' title={title ?? props.title}>
               {title ?? props.title}
             </h1>
-            <div className='flex flex-row items-center gap-4'>{props.actions?.map(item => item)}</div>
+            <div className='flex flex-row items-center gap-4'>{currActions?.map(item => item)}</div>
           </div>
         </div>
         <div className='p-4 md:px-8 pt-2'>{props.children}</div>

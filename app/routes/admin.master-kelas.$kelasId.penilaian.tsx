@@ -48,34 +48,6 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
     },
   })
 
-  // const dataSiswa = await prisma.akun.findUnique({
-  //   where: { id: siswaId },
-  //   include: {
-  //     siswaPerKelasDanSemester: {
-  //       where: { semesterAjaranId: currentSemester?.id },
-  //       include: {
-  //         kelas: {
-  //           include: {
-  //             jadwalPelajarans: {
-  //               where: { semesterAjaranId: currentSemester?.id },
-  //               distinct: 'mataPelajaranId',
-  //               include: {
-  //                 mataPelajaran: true,
-  //               },
-  //             },
-  //             penilaians: {
-  //               where: {
-  //                 siswaId: siswaId,
-  //                 mataPelajaran: { semesterAjaranId: currentSemester?.id },
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // })
-
   return {
     kelas,
     mataPelajarans: mataPelajarans.map(mapel => ({
