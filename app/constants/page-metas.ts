@@ -139,7 +139,7 @@ const pageMetas = {
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaNilai: [
-    { title: `Score - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Assessment - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaAbsensi: [
@@ -163,7 +163,7 @@ const pageMetas = {
     { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuNilai: [
-    { title: `Student Score - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Student Assessment - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuAbsensi: [

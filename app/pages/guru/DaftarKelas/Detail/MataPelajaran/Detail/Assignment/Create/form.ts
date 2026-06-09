@@ -12,6 +12,7 @@ export const validationSchema = z.object({
   tanggalBerakhir: z.string(),
   isSubmitable: z.boolean(),
   submissionType: z.enum(Object.values(AssignmentSubmissionType)),
+  connectedKompetensiId: z.string().optional().nullable(),
 })
 
 export type GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType = z.infer<typeof validationSchema>
@@ -25,6 +26,7 @@ export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailAssignmentCrea
   tanggalBerakhir: format(new Date(), constants.dateFormats.rawDateTimeInput),
   isSubmitable: false,
   submissionType: AssignmentSubmissionType.FILE_UPLOAD,
+  connectedKompetensiId: null,
 }
 
 export function translateRawToFormData(
@@ -39,5 +41,6 @@ export function translateRawToFormData(
     submissionType: data.submissionType
       ? (data.submissionType as AssignmentSubmissionType)
       : AssignmentSubmissionType.FILE_UPLOAD,
+    connectedKompetensiId: data.connectedKompetensiId ?? null,
   }
 }

@@ -1,3 +1,4 @@
+import { Kompetensi } from '@prisma/client'
 import { Controller } from 'react-hook-form'
 import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from './form-types'
 import { useRemixFormContext } from 'remix-hook-form'
@@ -9,7 +10,12 @@ import constants from '~/constants'
 import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
-export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent() {
+interface Props {
+  connectableKompetensis?: Kompetensi[]
+}
+
+export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent(props: Props) {
+  const { connectableKompetensis = [] } = props
   const formHook = useRemixFormContext<GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType>()
 
   function InputWrapper({ children, cutting = 'full' }: { children?: ReactNode; cutting?: 'full' | 'half' }) {
@@ -112,6 +118,25 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
                 }}
               />
             </div>
+          )}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <Controller
+          control={formHook.control}
+          name='connectedKompetensiId'
+          render={({ field }) => (
+            <StaticSelect
+              label='Connected Kompetensi (optional)'
+              options={[
+                { value: '', label: '' },
+                ...connectableKompetensis.map(k => ({ value: k.id, label: k.label })),
+              ]}
+              selectProps={{
+                value: field.value ?? '',
+                onChange: e => field.onChange(e.target.value === '' ? null : e.target.value),
+              }}
+            />
           )}
         />
       </InputWrapper>

@@ -73,6 +73,13 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit = B
   }
 }
 
+export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentScoreSubmission = BaseActionData & {
+  data: {
+    // * Success
+    // * Error
+  }
+}
+
 export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailAttachmentCreate = BaseActionData & {
   data: {
     // * Success

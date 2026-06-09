@@ -29,7 +29,7 @@ export default function OrtuNilaiPage() {
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
     <OrtuPageContainer
-      title='Student Score'
+      title='Student Assessment'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}
@@ -80,7 +80,7 @@ export default function OrtuNilaiPage() {
           <div className='bg-neutral-100 rounded-xl p-4 mt-8 shadow'>
             <p className='font-semibold mb-2'>Oops!</p>
             <p className='text-sm'>
-              {currentSiswaId ? 'No score recorded on this semester yet.' : 'Please select a student.'}
+              {currentSiswaId ? 'No assessment recorded on this semester yet.' : 'Please select a student.'}
             </p>
           </div>
         )}

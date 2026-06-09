@@ -81,8 +81,9 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailAssignment = LoaderData
 
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailAssignmentDetail =
   LoaderDataSiswaKelasDetailMataPelajaranDetail & {
-    assignment: Assignment
+    assignment: Assignment & { connectedKompetensi: Kompetensi | null }
     assignmentSubmission: AssignmentSubmission | null
+    penilaian: (Penilaian & { nilai: number }) | null
   }
 
 /**

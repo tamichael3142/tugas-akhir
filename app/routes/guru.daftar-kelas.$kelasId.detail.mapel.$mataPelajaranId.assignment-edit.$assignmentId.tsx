@@ -48,9 +48,35 @@ export async function loader({
 
   const assignment = await prisma.assignment.findUnique({
     where: { id: assignmentId ?? '' },
+    include: { connectedKompetensi: true },
   })
 
-  return { kelas, mataPelajaran, assignment } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit
+  // Cari kompetensi id yang sudah konek dengan assignment lainnya
+  const connectedAssignments = await prisma.assignment.findMany({
+    where: {
+      mataPelajaranId: mataPelajaranId ?? '',
+      connectedKompetensiId: { not: null },
+      id: { not: assignmentId ?? '' },
+    },
+    select: { connectedKompetensiId: true },
+  })
+  const usedKompetensiIds = connectedAssignments.map(a => a.connectedKompetensiId as string)
+
+  const connectableKompetensis = await prisma.kompetensi.findMany({
+    where: {
+      isConnectable: true,
+      deletedAt: null,
+      id: { notIn: usedKompetensiIds },
+    },
+    orderBy: { sequenceNumber: 'asc' },
+  })
+
+  return {
+    kelas,
+    mataPelajaran,
+    assignment,
+    connectableKompetensis,
+  } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit
 }
 
 export async function action({
@@ -87,6 +113,7 @@ export async function action({
           tanggalBerakhir: new Date(data.tanggalBerakhir),
           isSubmitable: data.isSubmitable,
           submissionType: data.submissionType,
+          connectedKompetensiId: data.connectedKompetensiId ?? null,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

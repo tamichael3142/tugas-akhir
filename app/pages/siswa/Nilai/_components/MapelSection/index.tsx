@@ -14,7 +14,7 @@ export default function MapelSection(props: Props) {
         <thead>
           <tr className='w-full'>
             <th className='border p-2 print:text-xs w-1/2'>Competence</th>
-            <th className='border p-2 print:text-xs w-1/2'>Score</th>
+            <th className='border p-2 print:text-xs w-1/2'>Assessment</th>
           </tr>
         </thead>
         <tbody>

@@ -18,6 +18,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail
     item => !submitedSiswaIds.includes(item.siswaId),
   )
 
+  function getExistingNilai(siswaId: string) {
+    const penilaian = loader.penilaians.find(p => p.siswaId === siswaId)
+    return penilaian ? Number(penilaian.nilai) : null
+  }
+
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Fragment key={sectionPrefix}>
@@ -54,6 +59,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail
                 key={`${sectionPrefix}-${submission.id}-submission-card`}
                 assignment={loader.assignment}
                 submission={submission}
+                existingNilai={getExistingNilai(submission.siswaId)}
               />
             ))}
             {filteredSiswaPerKelasPerSemesters.map(item => (

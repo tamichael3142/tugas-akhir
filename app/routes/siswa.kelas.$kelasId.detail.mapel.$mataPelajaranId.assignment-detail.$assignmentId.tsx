@@ -17,6 +17,7 @@ import SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage from '~/pages/sis
 import assignmentSubmissionStorageManager from '~/storage-manager/assignmentSubmission.storageManager.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 import DBHelpers from '~/database/helpers'
+import DBUtils from '~/database/utils'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.siswaMapelAssignment
@@ -64,11 +65,25 @@ export async function loader({
 
   const assignment = await prisma.assignment.findUnique({
     where: { id: assignmentId ?? '' },
+    include: { connectedKompetensi: true },
   })
 
   const assignmentSubmission = await prisma.assignmentSubmission.findUnique({
     where: { assignmentId_siswaId: { assignmentId: assignment?.id ?? '', siswaId: userId } },
   })
+
+  const penilaian = assignment?.connectedKompetensiId
+    ? await prisma.penilaian.findUnique({
+        where: {
+          kelasId_mataPelajaranId_kompetensiId_siswaId: {
+            kelasId: kelasId ?? '',
+            mataPelajaranId: mataPelajaranId ?? '',
+            kompetensiId: assignment.connectedKompetensiId,
+            siswaId: userId,
+          },
+        },
+      })
+    : null
 
   const storageManager = assignmentSubmissionStorageManager()
 
@@ -86,6 +101,7 @@ export async function loader({
             : undefined,
         }
       : null,
+    penilaian: penilaian !== null ? { ...penilaian, nilai: DBUtils.decimal.decimalToNumber(penilaian.nilai) } : null,
   } as LoaderDataSiswaKelasDetailMataPelajaranDetailAssignmentDetail
 }
 

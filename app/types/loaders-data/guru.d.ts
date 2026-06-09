@@ -131,18 +131,22 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment =
   }
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate =
-  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail
+  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+    connectableKompetensis: Kompetensi[]
+  }
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentEdit =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    assignment: Assignment
+    assignment: Assignment & { connectedKompetensi: Kompetensi | null }
+    connectableKompetensis: Kompetensi[]
   }
 
 export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail =
   LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    assignment: Assignment
+    assignment: Assignment & { connectedKompetensi: Kompetensi | null }
     siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun })[]
     assignmentSubmissions: (AssignmentSubmission & { siswa: Akun })[]
+    penilaians: Penilaian[]
   }
 
 /**

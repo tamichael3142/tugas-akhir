@@ -16,7 +16,7 @@ export default function SiswaNilaiPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <SiswaPageContainer
-      title='Score'
+      title='Assessment'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}

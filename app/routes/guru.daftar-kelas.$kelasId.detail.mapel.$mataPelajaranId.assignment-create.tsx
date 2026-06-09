@@ -45,7 +45,27 @@ export async function loader({
     },
   })
 
-  return { kelas, mataPelajaran } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate
+  // Find kompetensi IDs already connected to other assignments in the same mataPelajaran
+  const connectedAssignments = await prisma.assignment.findMany({
+    where: { mataPelajaranId: mataPelajaranId ?? '', connectedKompetensiId: { not: null } },
+    select: { connectedKompetensiId: true },
+  })
+  const usedKompetensiIds = connectedAssignments.map(a => a.connectedKompetensiId as string)
+
+  const connectableKompetensis = await prisma.kompetensi.findMany({
+    where: {
+      isConnectable: true,
+      deletedAt: null,
+      id: { notIn: usedKompetensiIds },
+    },
+    orderBy: { sequenceNumber: 'asc' },
+  })
+
+  return {
+    kelas,
+    mataPelajaran,
+    connectableKompetensis,
+  } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignmentCreate
 }
 
 export async function action({
@@ -79,6 +99,7 @@ export async function action({
           tanggalBerakhir: new Date(data.tanggalBerakhir),
           isSubmitable: data.isSubmitable,
           submissionType: data.submissionType,
+          connectedKompetensiId: data.connectedKompetensiId ?? null,
           createdById: currUser?.id,
         },
       })

@@ -55,6 +55,7 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
           <SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetailComponent
             assignment={loader.assignment}
             assignmentSubmission={loader.assignmentSubmission}
+            penilaian={loader.penilaian}
           />
         </div>
       </Card>

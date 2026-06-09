@@ -77,7 +77,9 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentEditPa
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
-            <AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent />
+            <AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent
+              connectableKompetensis={loader.connectableKompetensis}
+            />
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>

@@ -1,4 +1,4 @@
-import { Assignment, AssignmentSubmission } from '@prisma/client'
+import { Assignment, AssignmentSubmission, Kompetensi, Penilaian } from '@prisma/client'
 import classNames from 'classnames'
 import { format } from 'date-fns'
 import { ReactNode } from 'react'
@@ -8,8 +8,9 @@ import DBHelpers from '~/database/helpers'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 type Props = {
-  assignment: Assignment
+  assignment: Assignment & { connectedKompetensi: Kompetensi | null }
   assignmentSubmission?: AssignmentSubmission | null
+  penilaian?: (Penilaian & { nilai: number }) | null
 }
 
 export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetailComponent(props: Props) {
@@ -27,6 +28,8 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
       </div>
     )
   }
+
+  const nilaiValue = props.penilaian?.nilai != null ? Number(props.penilaian.nilai) : null
 
   return (
     <div className='grid grid-cols-3 gap-4 lg:gap-8'>
@@ -55,6 +58,15 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetai
       <DetailItem label='Description' colSpan={3}>
         {props.assignment.description ?? '-'}
       </DetailItem>
+      {props.assignment.connectedKompetensi ? (
+        <DetailItem label={`Score — ${props.assignment.connectedKompetensi.label}`} colSpan={3}>
+          {nilaiValue != null ? (
+            <span className='font-semibold text-lg text-primary'>{nilaiValue}</span>
+          ) : (
+            <span className='text-gray-400'>Not yet scored</span>
+          )}
+        </DetailItem>
+      ) : null}
     </div>
   )
 }

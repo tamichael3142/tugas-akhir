@@ -404,8 +404,11 @@ model Assignment {
   createdBy       Akun?                    @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById  String?
   lastUpdateBy    Akun?                    @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  // ? connected kompetensi
+  connectedKompetensiId String?
+  connectedKompetensi   Kompetensi?              @relation(fields: [connectedKompetensiId], references: [id])
   // ? relations
-  submissions     AssignmentSubmission[]
+  submissions           AssignmentSubmission[]
 
   @@index([kelasId])
   @@index([mataPelajaranId])
@@ -435,13 +438,14 @@ model MataPelajaranAttachment {
 }
 
 model Kompetensi {
-  id             String      @id
+  id             String       @id
   // ? credentials
-  sequenceNumber Int         @default(autoincrement())
+  sequenceNumber Int          @default(autoincrement())
   label          String
-  isConnectable  Boolean     @default(false)
+  isConnectable  Boolean      @default(false)
   // ? relations
   penilaians     Penilaian[]
+  assignments    Assignment[]
   // ? meta data
   deletedAt      DateTime?
 
