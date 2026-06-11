@@ -14,6 +14,7 @@ import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pag
 import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran/form-types'
 import { GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
 import { GuruAccountChangePasswordFormType } from '~/pages/guru/Account/ChangePassword/form'
+import { GuruManageEkstrakulikulerDetailAssessmentFormType } from '~/pages/guru/ManageEkstrakulikuler/Detail/Assessment/form'
 
 /**
  * * Manage Absensi
@@ -134,6 +135,16 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete 
   data: {
     // * Success
     deletedPelanggaran?: PelanggaranPerMapel
+  }
+}
+
+/**
+ * * Manage Ekstrakulikuler
+ */
+export type ActionDataGuruManageEkstrakulikulerDetailAssessment = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: GuruManageEkstrakulikulerDetailAssessmentFormType
   }
 }
 

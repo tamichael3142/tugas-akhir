@@ -7,6 +7,8 @@ import { AdminMasterKelasCreateFormType } from '~/pages/admin/MasterKelas/Create
 import { AdminMasterKelasManageJadwalFormType } from '~/pages/admin/MasterKelas/ManageJadwal/form'
 import { AdminMasterKelasAddSiswaFormType } from '~/pages/admin/MasterKelas/AddSiswa/form'
 import { AdminMasterKelasDeleteSiswaFormType } from '~/pages/admin/MasterKelas/ManageSiswa/form'
+import { AdminMasterEkstrakulikulerAddSiswaFormType } from '~/pages/admin/MasterEkstrakulikuler/AddSiswa/form'
+import { AdminMasterEkstrakulikulerDeleteSiswaFormType } from '~/pages/admin/MasterEkstrakulikuler/ManageSiswa/form'
 import { AdminMasterAccountManageChildrenFormType } from '~/pages/admin/MasterAccount/ManageChildren/form'
 import { AdminAccountSelfUpdateFormType } from '~/pages/admin/Account/form'
 import { AdminAccountChangePasswordFormType } from '~/pages/admin/Account/ChangePassword/form'
@@ -154,6 +156,20 @@ export type ActionDataAdminMasterEkstrakulikulerDelete = BaseActionData & {
   data: {
     // * Success
     deletedEkstrakulikuler?: Ekstrakulikuler
+  }
+}
+
+export type ActionDataAdminMasterEkstrakulikulerAddSiswa = BaseActionData & {
+  data: {
+    // * Error
+    oldFormData?: AdminMasterEkstrakulikulerAddSiswaFormType
+  }
+}
+
+export type ActionDataAdminMasterEkstrakulikulerDeleteSiswa = BaseActionData & {
+  data: {
+    // * Success
+    oldFormData?: AdminMasterEkstrakulikulerDeleteSiswaFormType
   }
 }
 

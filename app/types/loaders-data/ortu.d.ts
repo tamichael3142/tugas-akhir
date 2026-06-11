@@ -3,13 +3,17 @@ import {
   AbsensiXSiswa,
   Akun,
   AkunChildren,
+  Ekstrakulikuler,
   JadwalPelajaran,
   Kelas,
   Kompetensi,
+  KompetensiEkstrakulikuler,
   MataPelajaran,
   Pengumuman,
   Penilaian,
+  PenilaianExtrakulikuler,
   SemesterAjaran,
+  SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
   TahunAjaran,
 } from '@prisma/client'
@@ -40,7 +44,10 @@ export type LoaderDataOrtuIndex = {
  */
 export type LoaderDataOrtuNilai = OrtuWithChildren &
   CurrentTahunAndSemesterAjaran & {
+    tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
     kompetensis: Kompetensi[]
+    kompetensiEkstrakulikulers: KompetensiEkstrakulikuler[]
+    penilaianEkstrakulikulers: (PenilaianExtrakulikuler & { nilai: number })[]
     dataSiswa:
       | (Akun & {
           siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & {
@@ -50,6 +57,9 @@ export type LoaderDataOrtuNilai = OrtuWithChildren &
               })[]
               penilaians: (Penilaian & { nilai: number })[]
             }
+          })[]
+          siswaPerEkstrakulikuler: (SiswaPerEkstrakulikuler & {
+            ekstrakulikuler: Ekstrakulikuler
           })[]
         })
       | null

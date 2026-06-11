@@ -2,6 +2,7 @@ import {
   Absensi,
   Akun,
   Assignment,
+  Ekstrakulikuler,
   Kelas,
   MataPelajaran,
   MataPelajaranAttachment,
@@ -360,10 +361,22 @@ function manageMataPelajaranDetailPelanggaran({ mataPelajaranId }: { mataPelajar
 /*
  * Guru's manage ekstrakulikuler level routes
  */
-const manageEkstrakulikulerUrl = '/manage-mata-pelajaran'
+const manageEkstrakulikulerUrl = '/manage-ekstrakulikuler'
 
 function manageEkstrakulikuler() {
   return `${baseUrl}${manageEkstrakulikulerUrl}`
+}
+
+function manageEkstrakulikulerDetail({ ekstrakulikulerId }: { ekstrakulikulerId: Ekstrakulikuler['id'] }) {
+  return `${baseUrl}${manageEkstrakulikulerUrl}/${ekstrakulikulerId}/detail/daftar-siswa`
+}
+
+function manageEkstrakulikulerDetailDaftarSiswa({ ekstrakulikulerId }: { ekstrakulikulerId: Ekstrakulikuler['id'] }) {
+  return `${baseUrl}${manageEkstrakulikulerUrl}/${ekstrakulikulerId}/detail/daftar-siswa`
+}
+
+function manageEkstrakulikulerDetailAssessment({ ekstrakulikulerId }: { ekstrakulikulerId: Ekstrakulikuler['id'] }) {
+  return `${baseUrl}${manageEkstrakulikulerUrl}/${ekstrakulikulerId}/detail/assessment`
 }
 
 /*
@@ -468,6 +481,9 @@ const guru = {
   manageMataPelajaranDetailNilai,
   manageMataPelajaranDetailPelanggaran,
   manageEkstrakulikuler,
+  manageEkstrakulikulerDetail,
+  manageEkstrakulikulerDetailDaftarSiswa,
+  manageEkstrakulikulerDetailAssessment,
   manageAssignmentDetail,
   masterPengumuman,
   masterPengumumanCreate,

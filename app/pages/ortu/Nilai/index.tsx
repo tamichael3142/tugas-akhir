@@ -1,11 +1,13 @@
-import { Akun } from '@prisma/client'
+import { Akun, SemesterAjaran, TahunAjaran } from '@prisma/client'
 import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { Button, StaticSelect } from '~/components/forms'
-import { LoadingFullScreen } from '~/components/ui'
+import { Card, LoadingFullScreen } from '~/components/ui'
 import DBHelpers from '~/database/helpers'
+import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { LoaderDataOrtuNilai } from '~/types/loaders-data/ortu'
-import TahunDanSemesterAjaranCard from '../_components/TahunDanSemesterAjaranCard'
+import EkstrakulikulerCard from './_components/EkstrakulikulerCard'
 import KelasCard from './_components/KelasCard'
 import { FaPrint } from 'react-icons/fa6'
 
@@ -18,11 +20,25 @@ export default function OrtuNilaiPage() {
   const revalidator = useRevalidator()
 
   const currentSiswaId = searchParams.get('siswaId') ?? ''
+  const currentTahunAjaranId = searchParams.get('tahunAjaranId') || (loader.currentTahunAjaran?.id ?? '')
+  const currentSemesterAjaranId = searchParams.get('semesterAjaranId') || (loader.currentSemester?.id ?? '')
 
-  function handlePageChange({ siswaId }: { siswaId: Akun['id'] }) {
+  function handlePageChange({
+    siswaId,
+    tahunAjaranId,
+    semesterAjaranId,
+  }: {
+    siswaId?: Akun['id']
+    tahunAjaranId?: TahunAjaran['id']
+    semesterAjaranId?: SemesterAjaran['id']
+  }) {
     const params = new URLSearchParams(searchParams)
     if (siswaId) params.set('siswaId', siswaId)
     else params.delete('siswaId')
+    if (tahunAjaranId) params.set('tahunAjaranId', tahunAjaranId)
+    else params.delete('tahunAjaranId')
+    if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+    else params.delete('semesterAjaranId')
     navigate(`?${params.toString()}`, { replace: false })
   }
 
@@ -55,15 +71,46 @@ export default function OrtuNilaiPage() {
           ]}
           selectProps={{
             value: currentSiswaId,
-            onChange: e => handlePageChange({ siswaId: e.target.value }),
+            onChange: e =>
+              handlePageChange({
+                siswaId: e.target.value,
+                tahunAjaranId: currentTahunAjaranId,
+                semesterAjaranId: currentSemesterAjaranId,
+              }),
           }}
         />
 
-        <TahunDanSemesterAjaranCard
-          className='mt-6'
-          currentTahunAjaran={loader.currentTahunAjaran}
-          currentSemester={loader.currentSemester}
-        />
+        <Card className='mt-6 grid grid-cols-2 gap-4 lg:gap-8 print:shadow-none print:rounded-none'>
+          <StaticSelect
+            label='Academic Year'
+            options={loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama }))}
+            selectProps={{
+              value: currentTahunAjaranId,
+              onChange: e =>
+                handlePageChange({
+                  siswaId: currentSiswaId,
+                  tahunAjaranId: e.target.value,
+                  semesterAjaranId: '',
+                }),
+            }}
+          />
+          <StaticSelect
+            label='Academic Semester'
+            options={(loader.currentTahunAjaran?.semesterAjaran ?? []).map(item => ({
+              value: item.id,
+              label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
+            }))}
+            selectProps={{
+              value: currentSemesterAjaranId,
+              onChange: e =>
+                handlePageChange({
+                  siswaId: currentSiswaId,
+                  tahunAjaranId: currentTahunAjaranId,
+                  semesterAjaranId: e.target.value,
+                }),
+            }}
+          />
+        </Card>
 
         {loader.dataSiswa &&
         loader.dataSiswa.siswaPerKelasDanSemester &&
@@ -84,6 +131,16 @@ export default function OrtuNilaiPage() {
             </p>
           </div>
         )}
+
+        {loader.dataSiswa?.siswaPerEkstrakulikuler?.map(item => (
+          <EkstrakulikulerCard
+            key={`ekstrakulikuler-card-${item.id}`}
+            ekstrakulikuler={item.ekstrakulikuler}
+            kompetensiEkstrakulikulers={loader.kompetensiEkstrakulikulers}
+            penilaianEkstrakulikulers={loader.penilaianEkstrakulikulers}
+            className='mt-8'
+          />
+        ))}
       </div>
     </OrtuPageContainer>
   )

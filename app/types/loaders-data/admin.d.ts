@@ -13,6 +13,7 @@ import {
   Pengumuman,
   Penilaian,
   SemesterAjaran,
+  SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
   TahunAjaran,
   TempAkun,
@@ -160,6 +161,17 @@ export type LoaderDataAdminMasterEkstrakulikulerEdit = {
   tahunAjarans: TahunAjaran[]
   pengajars: Akun[]
   ekstrakulikuler: (Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }) | null
+}
+
+export type LoaderDataAdminMasterEkstrakulikulerManageSiswa = {
+  ekstrakulikuler: (Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }) | null
+  siswaPerEkstrakulikulers: PaginationReturns<SiswaPerEkstrakulikuler & { siswa: Akun | null }>
+}
+
+export type LoaderDataAdminMasterEkstrakulikulerAddSiswa = {
+  ekstrakulikuler: (Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }) | null
+  existingSiswaPerEkstrakulikulers: SiswaPerEkstrakulikuler[]
+  availableSiswas: PaginationReturns<Akun>
 }
 
 /**

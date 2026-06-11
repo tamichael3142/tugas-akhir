@@ -3,12 +3,16 @@ import {
   AbsensiXSiswa,
   Akun,
   Days,
+  Ekstrakulikuler,
   Hour,
   JadwalPelajaran,
   Kelas,
+  KompetensiEkstrakulikuler,
   MataPelajaran,
+  PenilaianExtrakulikuler,
   Pengumuman,
   SemesterAjaran,
+  SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
   TahunAjaran,
   Assignment,
@@ -205,6 +209,27 @@ export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
 
 export type LoaderDataGuruDaftarKelasDetailAbsensiCreate = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+}
+
+/**
+ * * Manage Ekstrakulikuler
+ */
+export type LoaderDataGuruManageEkstrakulikuler = {
+  ekstrakulikulers: PaginationReturns<Ekstrakulikuler & { tahunAjaran: TahunAjaran }>
+}
+
+export type LoaderDataGuruManageEkstrakulikulerDetail = {
+  ekstrakulikuler: (Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }) | null
+}
+
+export type LoaderDataGuruManageEkstrakulikulerDetailDaftarSiswa = LoaderDataGuruManageEkstrakulikulerDetail & {
+  siswaPerEkstrakulikulers: PaginationReturns<SiswaPerEkstrakulikuler & { siswa: Akun | null }>
+}
+
+export type LoaderDataGuruManageEkstrakulikulerDetailAssessment = LoaderDataGuruManageEkstrakulikulerDetail & {
+  kompetensiEkstrakulikulers: KompetensiEkstrakulikuler[]
+  siswaPerEkstrakulikulers: (SiswaPerEkstrakulikuler & { siswa: Akun | null })[]
+  penilaianEkstrakulikulers: PenilaianExtrakulikuler[]
 }
 
 /**

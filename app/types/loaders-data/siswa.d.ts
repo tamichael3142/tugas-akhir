@@ -5,15 +5,18 @@ import {
   Assignment,
   AssignmentSubmission,
   Days,
+  Ekstrakulikuler,
   Hour,
   JadwalPelajaran,
   Kelas,
   Kompetensi,
+  KompetensiEkstrakulikuler,
   MataPelajaran,
   MataPelajaranAttachment,
   PelanggaranPerMapel,
   Pengumuman,
   Penilaian,
+  PenilaianExtrakulikuler,
   SemesterAjaran,
   SiswaPerKelasDanSemester,
   TahunAjaran,
@@ -107,6 +110,19 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
   pelanggarans: PaginationReturns<PelanggaranPerMapel>
+}
+
+/**
+ * * Ekstrakulikuler
+ */
+export type LoaderDataSiswaEkstrakulikuler = {
+  ekstrakulikulers: PaginationReturns<Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }>
+}
+
+export type LoaderDataSiswaEkstrakulikulerDetail = {
+  ekstrakulikuler: (Ekstrakulikuler & { tahunAjaran: TahunAjaran; pengajar: Akun | null }) | null
+  kompetensiEkstrakulikulers: KompetensiEkstrakulikuler[]
+  penilaianEkstrakulikulers: PenilaianExtrakulikuler[]
 }
 
 /**

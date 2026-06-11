@@ -42,6 +42,14 @@ const pageMetas = {
     { title: `Master Extracurricular - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
   ],
+  adminMasterEkstrakulikulerManageSiswa: [
+    { title: `Manage Student - Master Extracurricular - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
+  adminMasterEkstrakulikulerAddSiswa: [
+    { title: `Add Student - Master Extracurricular - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
   adminMasterPengumuman: [
     { title: `Master Announcement - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
@@ -82,6 +90,10 @@ const pageMetas = {
     { title: `Manage Subject - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruManageEkstrakulikuler: [
+    { title: `Manage Extracurricular - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   guruManageBeritaAcara: [
     { title: `Manage Daily Report - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
@@ -120,6 +132,10 @@ const pageMetas = {
   ],
   siswaKelas: [
     { title: `Class - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs siswa SBBS' },
+  ],
+  siswaEkstrakulikuler: [
+    { title: `Extracurricular - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaMapelAssignment: [

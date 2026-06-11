@@ -15,6 +15,7 @@ import { Ekstrakulikuler } from '@prisma/client'
 import { ReactNode, useEffect, Fragment } from 'react'
 import { ActionDataAdminMasterEkstrakulikulerDelete } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
+import { PiStudent } from 'react-icons/pi'
 
 const sectionPrefix = 'admin-master-ekstrakulikuler'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -175,7 +176,10 @@ export default function AdminMasterEkstrakulikulerPage() {
             field: 'actions',
             label: 'Action',
             render: row => (
-              <DataGridActionButtonWrapper>
+              <DataGridActionButtonWrapper className='flex-wrap max-w-40'>
+                <Link to={AppNav.admin.masterEkstrakulikulerManageSiswa({ id: row.id })}>
+                  <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Student'} />
+                </Link>
                 <Link to={AppNav.admin.masterEkstrakulikulerEdit({ id: row.id })}>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}

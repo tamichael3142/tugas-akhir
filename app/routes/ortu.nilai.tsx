@@ -29,27 +29,43 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
   const siswaId = query.get('siswaId') as string | null
 
-  let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
-    where: {
-      tahunMulai: { lte: new Date() },
-      tahunBerakhir: { gte: new Date() },
-    },
+  const tahunAjarans = await prisma.tahunAjaran.findMany({
+    where: { deletedAt: null },
     include: { semesterAjaran: true },
+    orderBy: { tahunMulai: 'desc' },
   })
+
+  const tahunAjaranIdParam = query.get('tahunAjaranId')
+  const semesterAjaranIdParam = query.get('semesterAjaranId')
+
+  let currentTahunAjaran = tahunAjaranIdParam
+    ? (tahunAjarans.find(item => item.id === tahunAjaranIdParam) ?? null)
+    : null
 
   if (!currentTahunAjaran)
-    currentTahunAjaran = await prisma.tahunAjaran.findFirst({
-      include: { semesterAjaran: true },
-      orderBy: { createdAt: 'desc' },
-    })
+    currentTahunAjaran =
+      tahunAjarans.find(item => item.tahunMulai <= new Date() && item.tahunBerakhir >= new Date()) ??
+      tahunAjarans[0] ??
+      null
 
-  const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
-  const currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
-    currentSemesterUrutan,
-    semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
-  })
+  let currentSemester = semesterAjaranIdParam
+    ? (currentTahunAjaran?.semesterAjaran.find(item => item.id === semesterAjaranIdParam) ?? null)
+    : null
+
+  if (!currentSemester) {
+    const currentSemesterUrutan = DBHelpers.semesterAjaran.getTodaySemesterAjaranUrutan()
+    currentSemester = DBHelpers.semesterAjaran.getCurrentSemesterAjaranFromTahunAjaran({
+      currentSemesterUrutan,
+      semesterAjaran: currentTahunAjaran?.semesterAjaran ?? [],
+    })
+  }
 
   const kompetensis = await prisma.kompetensi.findMany({
+    where: { deletedAt: null },
+    orderBy: { sequenceNumber: 'asc' },
+  })
+
+  const kompetensiEkstrakulikulers = await prisma.kompetensiEkstrakulikuler.findMany({
     where: { deletedAt: null },
     orderBy: { sequenceNumber: 'asc' },
   })
@@ -57,9 +73,12 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   if (!siswaId)
     return {
       user: currUser,
+      tahunAjarans,
       currentTahunAjaran,
       currentSemester,
       kompetensis,
+      kompetensiEkstrakulikulers,
+      penilaianEkstrakulikulers: [],
       dataSiswa: null,
     }
 
@@ -90,14 +109,40 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
           },
         },
       },
+      siswaPerEkstrakulikuler: {
+        where: {
+          ekstrakulikuler: {
+            tahunAjaranId: currentTahunAjaran?.id,
+            deletedAt: null,
+          },
+        },
+        include: {
+          ekstrakulikuler: true,
+        },
+      },
+    },
+  })
+
+  const penilaianEkstrakulikulers = await prisma.penilaianExtrakulikuler.findMany({
+    where: {
+      siswaId: siswaId,
+      ekstrakulikulerId: {
+        in: dataSiswa?.siswaPerEkstrakulikuler.map(item => item.ekstrakulikulerId) ?? [],
+      },
     },
   })
 
   return {
     user: currUser,
+    tahunAjarans,
     currentTahunAjaran,
     currentSemester,
     kompetensis,
+    kompetensiEkstrakulikulers,
+    penilaianEkstrakulikulers: penilaianEkstrakulikulers.map(item => ({
+      ...item,
+      nilai: DBUtils.decimal.decimalToNumber(item.nilai),
+    })),
     dataSiswa: {
       ...dataSiswa,
       siswaPerKelasDanSemester: dataSiswa?.siswaPerKelasDanSemester

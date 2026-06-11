@@ -1,4 +1,4 @@
-import { Kelas, SemesterAjaran } from '@prisma/client'
+import { Ekstrakulikuler, Kelas, SemesterAjaran } from '@prisma/client'
 
 const baseUrl = '/admin'
 
@@ -124,6 +124,14 @@ function masterEkstrakulikulerEdit({ id }: { id: string }) {
   return `${baseUrl}${masterEkstrakulikulerUrl}/${id}/edit`
 }
 
+function masterEkstrakulikulerManageSiswa({ id }: { id: Ekstrakulikuler['id'] }) {
+  return `${baseUrl}${masterEkstrakulikulerUrl}/${id}/manage-siswa`
+}
+
+function masterEkstrakulikulerAddSiswa({ id }: { id: Ekstrakulikuler['id'] }) {
+  return `${baseUrl}${masterEkstrakulikulerUrl}/${id}/add-siswa`
+}
+
 /*
  * Admin's master jadwal pelajaran level routes
  */
@@ -220,6 +228,8 @@ const admin = {
   masterEkstrakulikulerCreate,
   masterEkstrakulikulerDetail,
   masterEkstrakulikulerEdit,
+  masterEkstrakulikulerManageSiswa,
+  masterEkstrakulikulerAddSiswa,
   masterJadwalPelajaran,
   masterPengumuman,
   masterPengumumanCreate,

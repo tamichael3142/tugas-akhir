@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./node_modules/.bin/prisma db *)",
+      "Bash(grep -E \"^pg$\")",
+      "Bash(npx prisma *)",
+      "Bash(npx eslint *)"
+    ]
+  }
+}
