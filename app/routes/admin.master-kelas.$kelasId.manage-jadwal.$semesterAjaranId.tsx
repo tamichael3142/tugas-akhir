@@ -39,6 +39,7 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
     where: {
       semesterAjaranId: semesterAjaranId ?? '',
     },
+    include: { guru: true },
   })
 
   return { kelas, days, hours, mataPelajarans }
@@ -64,10 +65,76 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         message: 'Class and/or Academic Semester not found!',
       }
 
+    // ? Validasi: guru pengajar tidak boleh memiliki jadwal mengajar di kelas lain
+    // ? pada hari & jam yang sama dalam semester ajaran yang sama
+    const activeRows = data.jadwalPelajarans.filter(row => row.mataPelajaranId)
+
+    const teacherScheduleConflicts: NonNullable<
+      ActionDataAdminMasterKelasManageJadwal['data']['teacherScheduleConflicts']
+    > = []
+
+    // ? Baris yang bertabrakan jadwal guru-nya tidak ikut disimpan ke DB
+    let jadwalPelajaransToSave = data.jadwalPelajarans
+
+    if (activeRows.length > 0) {
+      const mataPelajaranIds = [...new Set(activeRows.map(row => row.mataPelajaranId))]
+
+      const mataPelajarans = await prisma.mataPelajaran.findMany({
+        where: { id: { in: mataPelajaranIds } },
+      })
+
+      const mataPelajaranMap = new Map(mataPelajarans.map(item => [item.id, item]))
+
+      const guruIds = [...new Set(mataPelajarans.map(item => item.guruId).filter((id): id is string => !!id))]
+
+      const otherClassesJadwals = guruIds.length
+        ? await prisma.jadwalPelajaran.findMany({
+            where: {
+              semesterAjaranId,
+              kelasId: { not: kelasId },
+              mataPelajaran: { guruId: { in: guruIds } },
+            },
+            include: {
+              kelas: true,
+              day: true,
+              hour: true,
+              mataPelajaran: { include: { guru: true } },
+            },
+          })
+        : []
+
+      const conflictRowKeys = new Set<string>()
+
+      for (const row of activeRows) {
+        const mataPelajaran = mataPelajaranMap.get(row.mataPelajaranId)
+        if (!mataPelajaran?.guruId) continue
+
+        const conflictingJadwal = otherClassesJadwals.find(
+          item =>
+            item.dayId === row.dayId &&
+            item.hourId === row.hourId &&
+            item.mataPelajaran.guruId === mataPelajaran.guruId,
+        )
+
+        if (conflictingJadwal?.mataPelajaran.guru) {
+          teacherScheduleConflicts.push({
+            day: conflictingJadwal.day,
+            hour: conflictingJadwal.hour,
+            guru: conflictingJadwal.mataPelajaran.guru,
+            mataPelajaran,
+            conflictingJadwal,
+          })
+          conflictRowKeys.add(`${row.dayId}__${row.hourId}`)
+        }
+      }
+
+      jadwalPelajaransToSave = data.jadwalPelajarans.filter(row => !conflictRowKeys.has(`${row.dayId}__${row.hourId}`))
+    }
+
     return await prisma
       .$transaction(
         async tx => {
-          for (const row of data.jadwalPelajarans) {
+          for (const row of jadwalPelajaransToSave) {
             // 1. DELETE jika mapelId null & id ada
             if (!row.mataPelajaranId && row.id) {
               await tx.jadwalPelajaran.delete({
@@ -121,8 +188,11 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       .then(() => {
         return {
           success: true,
-          message: 'Lesson timetable updated!',
-          data: {},
+          message:
+            teacherScheduleConflicts.length > 0
+              ? `Lesson timetable updated! ${teacherScheduleConflicts.length} schedule(s) were skipped due to teacher conflicts. See details below.`
+              : 'Lesson timetable updated!',
+          data: teacherScheduleConflicts.length > 0 ? { teacherScheduleConflicts } : {},
         }
       })
       .catch(error => {

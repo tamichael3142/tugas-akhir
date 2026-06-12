@@ -47,14 +47,21 @@ export default function AdminMasterKelasManageJadwalPage() {
   }, [loader])
 
   useEffect(() => {
-    if (actionData?.success) {
+    if (actionData?.data?.teacherScheduleConflicts?.length) {
+      toast.error(actionData.message ?? '')
+    } else if (actionData?.success) {
       toast.success(actionData.message ?? '')
-      revalidator.revalidate()
     } else if (actionData?.error) {
       toast.error(actionData.message ?? '')
     }
+
+    if (actionData?.success) {
+      revalidator.revalidate()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData])
+
+  const teacherScheduleConflicts = actionData?.data?.teacherScheduleConflicts ?? []
 
   function setMapel(dayId: string, hourId: string, mapelId: string, semesterAjaranId: string) {
     const jadwalPelajarans = [...formHook.getValues('jadwalPelajarans')]
@@ -136,6 +143,20 @@ export default function AdminMasterKelasManageJadwalPage() {
       </Form>
       <fetcher.Form method='post' onSubmit={formHook.handleSubmit}>
         <Card className='mt-4'>
+          {teacherScheduleConflicts.length > 0 && (
+            <div className='w-full mb-4 rounded-xl border border-red-300 bg-red-50 p-4 text-red-700'>
+              <p className='font-semibold mb-2'>{actionData?.message}</p>
+              <ul className='list-disc list-inside text-sm space-y-1'>
+                {teacherScheduleConflicts.map((conflict, idx) => (
+                  <li key={idx}>
+                    {conflict.day.label}, {conflict.hour.label}: {DBHelpers.akun.getDisplayName(conflict.guru)} is
+                    already scheduled to teach &quot;{conflict.conflictingJadwal.mataPelajaran.nama}&quot; for class
+                    &quot;{conflict.conflictingJadwal.kelas.nama}&quot; at this day and hour.
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className='w-full mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
             <div className='col-span-1'>
               <TextInput
@@ -235,7 +256,7 @@ export default function AdminMasterKelasManageJadwalPage() {
                             <option value=''></option>
                             {loader.mataPelajarans.map((mapel, mapelIdx) => (
                               <option key={mapelIdx} value={mapel.id}>
-                                {mapel.nama}
+                                {mapel.nama} ({mapel.guru ? DBHelpers.akun.getDisplayName(mapel.guru) : '-'})
                               </option>
                             ))}
                           </select>

@@ -74,7 +74,7 @@ export type LoaderDataAdminMasterKelasManageJadwal = {
     | null
   days: Days[]
   hours: Hour[]
-  mataPelajarans: MataPelajaran[]
+  mataPelajarans: (MataPelajaran & { guru: Akun | null })[]
 }
 
 export type LoaderDataAdminMasterKelasManageSiswa = {

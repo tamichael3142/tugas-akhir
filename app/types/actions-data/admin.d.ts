@@ -1,4 +1,14 @@
-import { Akun, Ekstrakulikuler, Kelas, MataPelajaran, Pengumuman, TahunAjaran } from '@prisma/client'
+import {
+  Akun,
+  Days,
+  Ekstrakulikuler,
+  Hour,
+  JadwalPelajaran,
+  Kelas,
+  MataPelajaran,
+  Pengumuman,
+  TahunAjaran,
+} from '@prisma/client'
 import { BaseActionData } from './base-action'
 import { AdminDashboardInsertBulkAkunFormType } from '~/pages/admin/Dashboard/form'
 import { AdminMasterAccountInsertAkunFormType } from '~/pages/admin/MasterAccount/form-types'
@@ -79,6 +89,17 @@ export type ActionDataAdminMasterKelasManageJadwal = BaseActionData & {
   data: {
     // * Error
     oldFormData?: AdminMasterKelasManageJadwalFormType
+    // * Error: jadwal mengajar guru bertabrakan dengan kelas lain
+    teacherScheduleConflicts?: {
+      day: Days
+      hour: Hour
+      guru: Akun
+      mataPelajaran: MataPelajaran
+      conflictingJadwal: JadwalPelajaran & {
+        kelas: Kelas
+        mataPelajaran: MataPelajaran
+      }
+    }[]
   }
 }
 
