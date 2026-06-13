@@ -13,7 +13,22 @@ export async function loader() {
     console.log(error)
     return []
   })
-  const response: LoaderDataAdminIndex = { tempAkuns }
+
+  let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+    where: {
+      tahunMulai: { lte: new Date() },
+      tahunBerakhir: { gte: new Date() },
+      deletedAt: null,
+    },
+  })
+
+  if (!currentTahunAjaran)
+    currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+      where: { deletedAt: null },
+      orderBy: { createdAt: 'desc' },
+    })
+
+  const response: LoaderDataAdminIndex = { tempAkuns, currentTahunAjaran }
 
   return response
 }

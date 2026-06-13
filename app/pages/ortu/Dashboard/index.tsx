@@ -1,5 +1,5 @@
 import { useLoaderData, useRevalidator } from '@remix-run/react'
-import { LoadingFullScreen } from '~/components/ui'
+import { AcademicCalendarCard, LoadingFullScreen } from '~/components/ui'
 import DBHelpers from '~/database/helpers'
 import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
 import { LoaderDataOrtuIndex } from '~/types/loaders-data/ortu'
@@ -15,7 +15,7 @@ export default function OrtuDashboardPage() {
         Welcome {DBHelpers.akun.getDisplayName(loader.user)} !
       </div>
 
-      <div className='mt-8'>
+      <div className='mt-4 md:mt-8'>
         <p className='font-semibold text-lg mb-2'>Children List:</p>
         <div className='grid grid-cols-3 gap-4'>
           {loader.user.children?.map(item => (
@@ -29,6 +29,8 @@ export default function OrtuDashboardPage() {
           ))}
         </div>
       </div>
+
+      <AcademicCalendarCard currentTahunAjaran={loader.currentTahunAjaran} className='mt-4 md:mt-8' />
     </OrtuPageContainer>
   )
 }

@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useRevalidator } from '@remix-run/react'
 import classNames from 'classnames'
 import { Fragment } from 'react'
-import { BackButton, Card, LoadingFullScreen } from '~/components/ui'
+import { AcademicCalendarCard, BackButton, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
@@ -10,7 +10,7 @@ import { LoaderDataGuruDashboard } from '~/types/loaders-data/guru'
 const sectionPrefix = 'guru-dashboard'
 
 export default function GuruDashboardPage() {
-  const { days = [], hours = [], jadwalPelajarans = [] } = useLoaderData<LoaderDataGuruDashboard>()
+  const { currentTahunAjaran, days = [], hours = [], jadwalPelajarans = [] } = useLoaderData<LoaderDataGuruDashboard>()
   const revalidator = useRevalidator()
 
   function getJadwalPelajaran(dayId: string, hourId: string) {
@@ -21,6 +21,8 @@ export default function GuruDashboardPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer title='Teaching Schedule' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+      <AcademicCalendarCard currentTahunAjaran={currentTahunAjaran} className='mb-4 md:mb-8' />
+
       <Card>
         {days.length && hours.length ? (
           <div className='overflow-x-auto relative mb-4'>

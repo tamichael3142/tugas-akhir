@@ -46,6 +46,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
           ...data,
           tahunMulai: tepatTahunMulai,
           tahunBerakhir: tepatTahunBerakhir,
+          academicCalendarEmbedUrl: data.academicCalendarEmbedUrl || null,
           createdById: currUser?.id,
           semesterAjaran: {
             create: [

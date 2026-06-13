@@ -204,23 +204,24 @@ model Days {
 }
 
 model TahunAjaran {
-  id              String            @id @default(cuid())
+  id                       String            @id @default(cuid())
   // ? credentials
-  nama            String
-  tahunMulai      DateTime
-  tahunBerakhir   DateTime
+  nama                     String
+  tahunMulai               DateTime
+  tahunBerakhir            DateTime
+  academicCalendarEmbedUrl String?
   // ? meta data
-  updatedAt       DateTime          @default(now())
-  createdAt       DateTime          @default(now())
-  deletedAt       DateTime?
-  createdById     String?
-  createdBy       Akun?             @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById  String?
-  lastUpdateBy    Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt                DateTime          @default(now())
+  createdAt                DateTime          @default(now())
+  deletedAt                DateTime?
+  createdById              String?
+  createdBy                Akun?             @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById           String?
+  lastUpdateBy             Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
-  semesterAjaran  SemesterAjaran[]
-  kelas           Kelas[]
-  ekstrakulikuler Ekstrakulikuler[]
+  semesterAjaran           SemesterAjaran[]
+  kelas                    Kelas[]
+  ekstrakulikuler          Ekstrakulikuler[]
 
   @@schema("public")
 }

@@ -37,6 +37,7 @@ export type CurrentTahunAndSemesterAjaran = {
  */
 export type LoaderDataOrtuIndex = {
   user: OrtuWithChildren['user'] | null
+  currentTahunAjaran: TahunAjaran | null
 }
 
 /**

@@ -58,6 +58,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           nama: data.nama,
           tahunMulai: tepatTahunMulai,
           tahunBerakhir: tepatTahunBerakhir,
+          academicCalendarEmbedUrl: data.academicCalendarEmbedUrl || null,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

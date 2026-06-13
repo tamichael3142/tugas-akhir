@@ -19,7 +19,21 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     },
   })
 
-  return { user: currUser }
+  let currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+    where: {
+      tahunMulai: { lte: new Date() },
+      tahunBerakhir: { gte: new Date() },
+      deletedAt: null,
+    },
+  })
+
+  if (!currentTahunAjaran)
+    currentTahunAjaran = await prisma.tahunAjaran.findFirst({
+      where: { deletedAt: null },
+      orderBy: { createdAt: 'desc' },
+    })
+
+  return { user: currUser, currentTahunAjaran }
 }
 
 export default function OrtuDashboardRoute() {

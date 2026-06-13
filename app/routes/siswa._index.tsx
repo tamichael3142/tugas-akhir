@@ -85,6 +85,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   })
 
   return {
+    currentTahunAjaran,
     days,
     hours,
     jadwalPelajarans,

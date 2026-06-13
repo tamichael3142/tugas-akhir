@@ -21,6 +21,7 @@ import AppNav from '~/navigation'
 import { ActionDataAdminIndex } from '~/types/actions-data/admin'
 import DBHelpers from '~/database/helpers'
 import { Akun } from '@prisma/client'
+import { AcademicCalendarCard } from '~/components/ui'
 
 const sectionPrefix = 'admin-bulk-insert'
 const formId = `${sectionPrefix}-user-form`
@@ -111,6 +112,8 @@ export default function AdminDashboardPage() {
         />,
       ]}
     >
+      <AcademicCalendarCard currentTahunAjaran={loader.currentTahunAjaran} className='mb-4 md:mb-8' />
+
       <Form
         id={importExcelFormId}
         method='post'

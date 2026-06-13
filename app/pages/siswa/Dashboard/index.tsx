@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { format } from 'date-fns'
 import { Fragment } from 'react'
 import { Button } from '~/components/forms'
-import { Card, LoadingFullScreen } from '~/components/ui'
+import { AcademicCalendarCard, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
@@ -12,7 +12,13 @@ import { LoaderDataSiswaIndex } from '~/types/loaders-data/siswa'
 const sectionPrefix = 'siswa-dashboard'
 
 export default function SiswaDashboardPage() {
-  const { days = [], hours = [], jadwalPelajarans = [], assignments = [] } = useLoaderData<LoaderDataSiswaIndex>()
+  const {
+    currentTahunAjaran,
+    days = [],
+    hours = [],
+    jadwalPelajarans = [],
+    assignments = [],
+  } = useLoaderData<LoaderDataSiswaIndex>()
   const revalidator = useRevalidator()
   const navigate = useNavigate()
 
@@ -24,6 +30,8 @@ export default function SiswaDashboardPage() {
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <GuruPageContainer title='Dashboard' className='pb-72'>
+      <AcademicCalendarCard currentTahunAjaran={currentTahunAjaran} className='mb-4 md:mb-8' />
+
       <Card className=''>
         <h2 className='font-semibold text-xl mb-4'>Weekly Schedule</h2>
 

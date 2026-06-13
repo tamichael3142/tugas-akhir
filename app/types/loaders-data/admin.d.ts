@@ -29,6 +29,7 @@ export type LoaderDataAdmin = {
  */
 export type LoaderDataAdminIndex = {
   tempAkuns: TempAkun[]
+  currentTahunAjaran: TahunAjaran | null
 }
 
 /**
