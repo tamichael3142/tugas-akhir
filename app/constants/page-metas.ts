@@ -114,6 +114,18 @@ const pageMetas = {
     { title: `Manage Violation - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
+  guruManageViolations: [
+    { title: `Manage Violations - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruManageViolationsCreate: [
+    { title: `Create Violation - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruManageViolationsEdit: [
+    { title: `Edit Violation - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
   guruMasterPengumuman: [
     { title: `Master Announcement - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },

@@ -431,6 +431,23 @@ function manageAbsensiMutate({ absensiId }: { absensiId: Absensi['id'] }) {
 }
 
 /*
+ * Guru's manage violations level routes
+ */
+const manageViolationsUrl = '/manage-violations'
+
+function manageViolations() {
+  return `${baseUrl}${manageViolationsUrl}`
+}
+
+function manageViolationsCreate() {
+  return `${baseUrl}${manageViolationsUrl}/create`
+}
+
+function manageViolationsEdit({ pelanggaranId }: { pelanggaranId: PelanggaranPerMapel['id'] }) {
+  return `${baseUrl}${manageViolationsUrl}/${pelanggaranId}/edit`
+}
+
+/*
  * Guru's account level routes
  */
 const accountUrl = '/account'
@@ -493,6 +510,9 @@ const guru = {
   manageAbsensiCreate,
   manageAbsensiEdit,
   manageAbsensiMutate,
+  manageViolations,
+  manageViolationsCreate,
+  manageViolationsEdit,
   account,
   accountChangePassword,
 }

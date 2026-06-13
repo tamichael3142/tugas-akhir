@@ -40,12 +40,19 @@ function accountUploadProfileImage() {
   return `${baseUrl}/account/upload-profile-image`
 }
 
+const manageViolationsUrl = '/manage-violations'
+
+function manageViolationsDelete({ pelanggaranId }: { pelanggaranId: PelanggaranPerMapel['id'] }) {
+  return `${baseUrl}${manageViolationsUrl}/${pelanggaranId}/delete`
+}
+
 const guruAction = {
   baseUrl,
   masterPengumumanDelete,
   daftarKelasDetailAbsensiCreate,
   daftarKelasDetailMataPelajaranDetailAttachmentDelete,
   daftarKelasDetailMataPelajaranDetailPelanggaranDelete,
+  manageViolationsDelete,
   accountUploadProfileImage,
 }
 

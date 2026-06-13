@@ -127,7 +127,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
           name='connectedKompetensiId'
           render={({ field }) => (
             <StaticSelect
-              label='Connected Kompetensi (optional)'
+              label='Connected Competence (optional)'
               options={[
                 { value: '', label: '' },
                 ...connectableKompetensis.map(k => ({ value: k.id, label: k.label })),

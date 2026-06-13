@@ -284,6 +284,27 @@ export type LoaderDataGuruManageAbsensiMutate = {
 }
 
 /**
+ * * Manage Violations
+ */
+export type LoaderDataGuruManageViolations = {
+  pelanggarans: PaginationReturns<
+    PelanggaranPerMapel & { siswa: Akun; kelas: Kelas; mataPelajaran: MataPelajaran; createdBy: Akun | null }
+  >
+  kelass: Kelas[]
+  mataPelajarans: MataPelajaran[]
+}
+
+export type LoaderDataGuruManageViolationsCreate = {
+  siswas: Akun[]
+  kelass: Kelas[]
+  mataPelajarans: MataPelajaran[]
+}
+
+export type LoaderDataGuruManageViolationsEdit = LoaderDataGuruManageViolationsCreate & {
+  pelanggaran: PelanggaranPerMapel
+}
+
+/**
  * * Master Announcement
  */
 export type LoaderDataGuruMasterPengumuman = {

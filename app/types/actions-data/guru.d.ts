@@ -12,6 +12,7 @@ import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
 import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran/form-types'
+import { GuruManageViolationsCreateFormType } from '~/pages/guru/ManageViolations/form-types'
 import { GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
 import { GuruAccountChangePasswordFormType } from '~/pages/guru/Account/ChangePassword/form'
 import { GuruManageEkstrakulikulerDetailAssessmentFormType } from '~/pages/guru/ManageEkstrakulikuler/Detail/Assessment/form'
@@ -132,6 +133,34 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = 
 }
 
 export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedPelanggaran?: PelanggaranPerMapel
+  }
+}
+
+/**
+ * * Manage Violations
+ */
+export type ActionDataGuruManageViolationsCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdPelanggaran?: PelanggaranPerMapel
+    // * Error
+    oldFormData?: GuruManageViolationsCreateFormType
+  }
+}
+
+export type ActionDataGuruManageViolationsEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedPelanggaran?: PelanggaranPerMapel
+    // * Error
+    oldFormData?: GuruManageViolationsCreateFormType
+  }
+}
+
+export type ActionDataGuruManageViolationsDelete = BaseActionData & {
   data: {
     // * Success
     deletedPelanggaran?: PelanggaranPerMapel
