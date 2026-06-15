@@ -18,6 +18,7 @@ import {
   Penilaian,
   PenilaianExtrakulikuler,
   SemesterAjaran,
+  SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
   TahunAjaran,
 } from '@prisma/client'
@@ -131,6 +132,8 @@ export type LoaderDataSiswaEkstrakulikulerDetail = {
  */
 export type LoaderDataSiswaNilai = CurrentTahunAndSemesterAjaran & {
   kompetensis: Kompetensi[]
+  kompetensiEkstrakulikulers: KompetensiEkstrakulikuler[]
+  penilaianEkstrakulikulers: (PenilaianExtrakulikuler & { nilai: number })[]
   dataSiswa:
     | (Akun & {
         siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & {
@@ -140,6 +143,9 @@ export type LoaderDataSiswaNilai = CurrentTahunAndSemesterAjaran & {
             })[]
             penilaians: (Penilaian & { nilai: number })[]
           }
+        })[]
+        siswaPerEkstrakulikuler: (SiswaPerEkstrakulikuler & {
+          ekstrakulikuler: Ekstrakulikuler
         })[]
       })
     | null

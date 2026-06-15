@@ -3,6 +3,7 @@ import { Button } from '~/components/forms'
 import { LoadingFullScreen } from '~/components/ui'
 import TahunDanSemesterAjaranCard from '../_components/TahunDanSemesterAjaranCard'
 import KelasCard from './_components/KelasCard'
+import EkstrakulikulerCard from './_components/EkstrakulikulerCard'
 import { FaPrint } from 'react-icons/fa6'
 import { LoaderDataSiswaNilai } from '~/types/loaders-data/siswa'
 import SiswaPageContainer from '~/layouts/siswa/SiswaPageContainer'
@@ -52,6 +53,16 @@ export default function SiswaNilaiPage() {
             <p className='text-sm'>{'Belum ada nilai tercatat pada semester ini.'}</p>
           </div>
         )}
+
+        {loader.dataSiswa?.siswaPerEkstrakulikuler?.map(item => (
+          <EkstrakulikulerCard
+            key={`ekstrakulikuler-card-${item.id}`}
+            ekstrakulikuler={item.ekstrakulikuler}
+            kompetensiEkstrakulikulers={loader.kompetensiEkstrakulikulers}
+            penilaianEkstrakulikulers={loader.penilaianEkstrakulikulers}
+            className='mt-8'
+          />
+        ))}
       </div>
     </SiswaPageContainer>
   )

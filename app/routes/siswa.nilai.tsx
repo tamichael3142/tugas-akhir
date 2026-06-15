@@ -40,11 +40,18 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     orderBy: { sequenceNumber: 'asc' },
   })
 
+  const kompetensiEkstrakulikulers = await prisma.kompetensiEkstrakulikuler.findMany({
+    where: { deletedAt: null },
+    orderBy: { sequenceNumber: 'asc' },
+  })
+
   if (!siswaId)
     return {
       currentTahunAjaran,
       currentSemester,
       kompetensis,
+      kompetensiEkstrakulikulers,
+      penilaianEkstrakulikulers: [],
       dataSiswa: null,
     }
 
@@ -73,6 +80,26 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
           },
         },
       },
+      siswaPerEkstrakulikuler: {
+        where: {
+          ekstrakulikuler: {
+            tahunAjaranId: currentTahunAjaran?.id,
+            deletedAt: null,
+          },
+        },
+        include: {
+          ekstrakulikuler: true,
+        },
+      },
+    },
+  })
+
+  const penilaianEkstrakulikulers = await prisma.penilaianExtrakulikuler.findMany({
+    where: {
+      siswaId: siswaId,
+      ekstrakulikulerId: {
+        in: dataSiswa?.siswaPerEkstrakulikuler.map(item => item.ekstrakulikulerId) ?? [],
+      },
     },
   })
 
@@ -80,6 +107,11 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     currentTahunAjaran,
     currentSemester,
     kompetensis,
+    kompetensiEkstrakulikulers,
+    penilaianEkstrakulikulers: penilaianEkstrakulikulers.map(item => ({
+      ...item,
+      nilai: DBUtils.decimal.decimalToNumber(item.nilai),
+    })),
     dataSiswa: {
       ...dataSiswa,
       siswaPerKelasDanSemester: dataSiswa?.siswaPerKelasDanSemester
