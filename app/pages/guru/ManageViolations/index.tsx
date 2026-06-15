@@ -15,7 +15,8 @@ import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
 import { usePopup } from '~/hooks/usePopup'
 import useAuthStore from '~/store/authStore'
-import { Akun, Kelas, MataPelajaran, PelanggaranPerMapel, Role } from '@prisma/client'
+import { Akun, Kelas, MataPelajaran, PelanggaranPerMapel } from '@prisma/client'
+import { Role } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'guru-manage-violations'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -116,7 +117,7 @@ export default function GuruManageViolationsPage() {
         </Link>,
       ]}
     >
-      <Card className='mb-8 shadow-lg'>
+      <Card key={`${sectionPrefix}-card`} className='mb-8 shadow-lg'>
         <div className='grid grid-cols-3 gap-4'>
           <FilterGridItem>
             <TextInput
@@ -176,6 +177,7 @@ export default function GuruManageViolationsPage() {
           </FilterGridItem>
         </div>
       </Card>
+
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
