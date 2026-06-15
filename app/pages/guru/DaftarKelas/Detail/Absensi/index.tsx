@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { useCallback, useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
@@ -9,6 +9,9 @@ import constants from '~/constants'
 import * as dateFns from 'date-fns'
 import AppNav from '~/navigation'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
+import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
+import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
+import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
 
 const sectionPrefix = 'guru-daftar-kelas-detail-absensi-list'
 
@@ -109,7 +112,7 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
               }}
             />
             <Button
-              label={'Today Absence'}
+              label={'Today Attendance'}
               color='primary'
               buttonProps={{
                 onClick: absenHariIniButtonClick,
@@ -129,6 +132,24 @@ export default function GuruDaftarKelasDetailAbsensiListPage() {
             field: 'updatedAt',
             label: 'Updated At',
             render: row => dateFns.format(row.updatedAt, constants.dateFormats.dateColumn),
+          },
+          {
+            field: 'actions',
+            label: 'Action',
+            render: row => (
+              <DataGridActionButtonWrapper>
+                <Link to={AppNav.guru.manageAbsensiEdit({ absensiId: row.id })}>
+                  <DataGridActionButton icon={DataGridActionButtonHelper.getEditIcon()} color='warning' label='Edit' />
+                </Link>
+                <Link to={AppNav.guru.manageAbsensiMutate({ absensiId: row.id })}>
+                  <DataGridActionButton
+                    icon={DataGridActionButtonHelper.getMutateIcon()}
+                    color='secondary'
+                    label='Mutate'
+                  />
+                </Link>
+              </DataGridActionButtonWrapper>
+            ),
           },
         ]}
         rows={loader.absensis.data}

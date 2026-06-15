@@ -23,7 +23,7 @@ export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTab
   const items: TabItem[] = [
     { key: TabKey.DAFTAR_SISWA, label: 'Student List' },
     { key: TabKey.MATA_PELAJARAN, label: 'Subject' },
-    { key: TabKey.ABSENSI, label: 'Absence', disabled: kelas?.waliId !== user?.id },
+    { key: TabKey.ABSENSI, label: 'Attendance', disabled: kelas?.waliId !== user?.id },
   ]
 
   if (!kelas) return null

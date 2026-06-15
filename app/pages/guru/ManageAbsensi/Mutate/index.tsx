@@ -1,5 +1,5 @@
 import { useActionData, useFetcher, useLoaderData, useRevalidator } from '@remix-run/react'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { FaSave } from 'react-icons/fa'
 import { RemixFormProvider, useRemixForm } from 'remix-hook-form'
 import { Button, Radio } from '~/components/forms'
@@ -14,7 +14,6 @@ import DBHelpers from '~/database/helpers'
 import classNames from 'classnames'
 import { TipeAbsensi } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
-import DateUtils from '~/utils/date.utils'
 
 const sectionPrefix = 'guru-manage-absensi-mutate'
 
@@ -25,12 +24,6 @@ export default function GuruManageAbsensiMutatePage() {
   const actionData = useActionData<ActionDataGuruManageAbsensiMutate>()
   const fetcher = useFetcher({ key: `${sectionPrefix}-mutate-form-${loader.absensi?.id}` })
   const revalidator = useRevalidator()
-
-  const isAbsensiMutable = useMemo(() => {
-    const dateTreshold = DateUtils.getADateTreshold(loader.absensi?.tanggal)
-    const today = new Date()
-    return dateTreshold.start <= today && today < dateTreshold.end
-  }, [loader.absensi])
 
   const formHook = useRemixForm<GuruManageAbsensiMutateFormType>({
     defaultValues: emptyUserValue,
@@ -124,7 +117,6 @@ export default function GuruManageAbsensiMutatePage() {
                               color='secondary'
                               buttonProps={{
                                 onClick: () => updateAllTipeState(opt),
-                                disabled: !isAbsensiMutable,
                               }}
                             />
                           )
@@ -167,7 +159,6 @@ export default function GuruManageAbsensiMutatePage() {
                                     id: `${inputName}-${opt}`,
                                     checked: opt === item.tipe,
                                     onChange: () => updateTipeState(item.siswaId ?? '', opt),
-                                    disabled: !isAbsensiMutable,
                                   }}
                                 />
                               )
@@ -182,18 +173,13 @@ export default function GuruManageAbsensiMutatePage() {
             </div>
 
             <div className='flex flex-row items-center justify-end gap-4'>
-              <Button
-                variant='text'
-                color='secondary'
-                label='Reset form'
-                buttonProps={{ onClick: resetForm, disabled: !isAbsensiMutable }}
-              />
+              <Button variant='text' color='secondary' label='Reset form' buttonProps={{ onClick: resetForm }} />
               <Button
                 variant='contained'
                 color='primary'
                 startIcon={<FaSave />}
                 label='Save'
-                buttonProps={{ type: 'submit', disabled: !isAbsensiMutable }}
+                buttonProps={{ type: 'submit' }}
               />
             </div>
           </Card>

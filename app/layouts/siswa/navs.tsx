@@ -10,7 +10,7 @@ export const siswaNavs: SidebarItemProps[] = [
   { icon: <MdDashboard />, label: 'Dashboard', href: AppNav.siswa.dashboard() },
   { icon: <PiStudentFill />, label: 'Class', href: AppNav.siswa.kelas() },
   { icon: <MdSportsSoccer />, label: 'Extracurricular', href: AppNav.siswa.ekstrakulikuler() },
-  { icon: <MdChecklistRtl />, label: 'Absence', href: AppNav.siswa.absensi() },
+  { icon: <MdChecklistRtl />, label: 'Attendance', href: AppNav.siswa.absensi() },
   { icon: <MdFactCheck />, label: 'Assessment', href: AppNav.siswa.nilai() },
   { icon: <GrAnnounce />, label: 'Announcement', href: AppNav.siswa.pengumuman() },
   { icon: <FaUser />, label: 'My Account', href: AppNav.siswa.account() },

@@ -269,7 +269,8 @@ export type LoaderDataGuruManageMataPelajaranDetailAssignmentEdit = {
  * * Manage Absensi
  */
 export type LoaderDataGuruManageAbsensi = {
-  absensis: PaginationReturns<Absensi>
+  absensis: PaginationReturns<Absensi & { kelas: Kelas }>
+  tahunAjarans: (TahunAjaran & { semesterAjaran: SemesterAjaran[] })[]
 }
 
 export type LoaderDataGuruManageAbsensiEdit = {

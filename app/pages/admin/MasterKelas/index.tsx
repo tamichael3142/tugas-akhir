@@ -222,7 +222,7 @@ export default function AdminMasterKelasPage() {
                     <DataGridActionButton icon={<PiStudent />} color='info' label={'Manage Student'} />
                   </Link>
                   <Link to={AppNav.admin.masterKelasAbsensi({ id: row.id })}>
-                    <DataGridActionButton icon={<LuListChecks />} color='primary' label={'Absence'} />
+                    <DataGridActionButton icon={<LuListChecks />} color='primary' label={'Attendance'} />
                   </Link>
                   <Link to={AppNav.admin.masterKelasPenilaian({ id: row.id })}>
                     <DataGridActionButton icon={<MdFactCheck />} color='primary' label={'Assessment'} />

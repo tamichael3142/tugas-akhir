@@ -11,7 +11,6 @@ import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 import GuruManageAbsensiMutatePage from '~/pages/guru/ManageAbsensi/Mutate'
-import DateUtils from '~/utils/date.utils'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.guruManageAbsensi
@@ -64,14 +63,6 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
       throw {
         code: 401,
         message: 'You are not the homeroom teacher!',
-      }
-
-    const dateTreshold = DateUtils.getADateTreshold(currAbsensi.tanggal)
-    const today = new Date()
-    if (!(dateTreshold.start <= today && today < dateTreshold.end))
-      throw {
-        code: 404,
-        message: 'This absence data has been froze!',
       }
 
     return await prisma

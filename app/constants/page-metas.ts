@@ -27,7 +27,7 @@ const pageMetas = {
     { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterKelasAbsensi: [
-    { title: `Absence - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Attendance - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
   ],
   adminMasterKelasPenilaian: [
@@ -171,7 +171,7 @@ const pageMetas = {
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaAbsensi: [
-    { title: `Absence - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Attendance - Student | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs siswa SBBS' },
   ],
   siswaPelanggaran: [
@@ -195,7 +195,7 @@ const pageMetas = {
     { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuAbsensi: [
-    { title: `Student Absence - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { title: `Student Attendance - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Site for parent on SBBS' },
   ],
   ortuPengumuman: [

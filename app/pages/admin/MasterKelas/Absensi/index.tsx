@@ -45,7 +45,7 @@ export default function AdminMasterKelasAbsensiPage() {
   return (
     <AdminPageContainer
       key={sectionPrefix}
-      title='Class Absence'
+      title='Class Attendance'
       actions={[
         <Button
           key={`${sectionPrefix}-print-button`}
@@ -147,7 +147,7 @@ export default function AdminMasterKelasAbsensiPage() {
           <div>
             <p className='font-bold'>Oops!</p>
             <p className='text-primary'>
-              There are no absence data yet on your selected dates. Please select other dates combinations.
+              There are no attendance data yet on your selected dates. Please select other dates combinations.
             </p>
           </div>
         ) : (

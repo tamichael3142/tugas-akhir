@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
-import { FaPlus } from 'react-icons/fa'
-import { Button } from '~/components/forms'
-import { DataGrid, LoadingFullScreen } from '~/components/ui'
+import { ReactNode, useEffect, useState } from 'react'
+import { StaticSelect, TextInput } from '~/components/forms'
+import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
 import { LoaderDataGuruManageAbsensi } from '~/types/loaders-data/guru'
@@ -10,7 +10,8 @@ import constants from '~/constants'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
-import { Tooltip } from '~/components/ui/Tooltip'
+import EnumsTitleUtils from '~/utils/enums-title.utils'
+import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'guru-manage-absensi'
 
@@ -20,40 +21,112 @@ export default function GuruManageAbsensiPage() {
   const [searchParams] = useSearchParams()
   const revalidator = useRevalidator()
 
-  function handlePageChange({
-    newPage,
-    semesterAjaranId,
-    kelasId,
-  }: {
-    newPage: number
-    semesterAjaranId?: string
-    kelasId?: string
-  }) {
+  const [searchText, setSearchText] = useState(searchParams.get('search') ?? '')
+
+  const selectedTahunAjaran = loader.tahunAjarans.find(t => t.id === (searchParams.get('tahunAjaranId') ?? ''))
+  const semesterOptions = selectedTahunAjaran?.semesterAjaran ?? []
+
+  function FilterGridItem({ children }: { children?: ReactNode }) {
+    return <div className='col-span-3 md:col-span-1'>{children}</div>
+  }
+
+  function updateParams(updates: Record<string, string | undefined>) {
     const params = new URLSearchParams(searchParams)
-    params.set('page', String(newPage))
-    if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
-    else params.delete('semesterAjaranId')
-    if (kelasId) params.set('kelasId', kelasId)
-    else params.delete('kelasId')
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+      else params.delete(key)
+    })
+    params.set('page', '1')
     navigate(`?${params.toString()}`, { replace: false })
   }
 
+  function handlePageChange(newPage: number) {
+    const params = new URLSearchParams(searchParams)
+    params.set('page', String(newPage))
+    navigate(`?${params.toString()}`, { replace: false })
+  }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      updateParams({ search: searchText || undefined })
+    }, 400)
+    return () => clearTimeout(timeout)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText])
+
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer
-      title='Manage Absence'
-      actions={[
-        <Tooltip key={`${sectionPrefix}-add-button`} label='Create absence from class detail page' placement='left'>
-          <Link to={AppNav.guru.daftarKelas()}>
-            <Button label='Create New' startIcon={<FaPlus />} onlyIconOnSmallView />
-          </Link>
-        </Tooltip>,
-      ]}
-    >
+    <GuruPageContainer title='Manage Attendance'>
+      <Card key={`${sectionPrefix}-filter-card`} className='mb-8 shadow-lg'>
+        <div className='grid grid-cols-3 gap-4'>
+          <FilterGridItem>
+            <TextInput
+              label='Search'
+              inputProps={{
+                placeholder: 'Search by label, date, class, or student...',
+                value: searchText,
+                onChange: e => setSearchText(e.target.value),
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <StaticSelect
+              label='Academic Year'
+              options={[
+                { value: '', label: 'All' },
+                ...loader.tahunAjarans.map(item => ({ value: item.id, label: item.nama })),
+              ]}
+              selectProps={{
+                value: searchParams.get('tahunAjaranId') ?? '',
+                onChange: e =>
+                  updateParams({ tahunAjaranId: e.target.value || undefined, semesterAjaranId: undefined }),
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <StaticSelect
+              label='Semester'
+              options={[
+                { value: '', label: 'All' },
+                ...semesterOptions.map(item => ({
+                  value: item.id,
+                  label: EnumsTitleUtils.getSemesterAjaranUrutan(item.urutan as SemesterAjaranUrutan),
+                })),
+              ]}
+              selectProps={{
+                value: searchParams.get('semesterAjaranId') ?? '',
+                onChange: e => updateParams({ semesterAjaranId: e.target.value || undefined }),
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <TextInput
+              label='From Date'
+              inputProps={{
+                type: 'date',
+                value: searchParams.get('startDate') ?? '',
+                onChange: e => updateParams({ startDate: e.target.value || undefined }),
+              }}
+            />
+          </FilterGridItem>
+          <FilterGridItem>
+            <TextInput
+              label='To Date'
+              inputProps={{
+                type: 'date',
+                value: searchParams.get('endDate') ?? '',
+                onChange: e => updateParams({ endDate: e.target.value || undefined }),
+              }}
+            />
+          </FilterGridItem>
+        </div>
+      </Card>
+
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
         columns={[
           { field: 'tanggalText', label: 'Date', render: row => row.tanggalText },
+          { field: 'kelas', label: 'Class', render: row => row.kelas.nama },
           { field: 'label', label: 'Label', render: row => row.label },
           {
             field: 'createdAt',
@@ -68,26 +141,20 @@ export default function GuruManageAbsensiPage() {
           {
             field: 'actions',
             label: 'Action',
-            render: row => {
-              const now = new Date()
-              const mutable =
-                row.tanggal.getFullYear() >= now.getFullYear() &&
-                row.tanggal.getMonth() >= now.getMonth() &&
-                row.tanggal.getDate() >= now.getDate()
-
-              return (
-                <DataGridActionButtonWrapper>
-                  <Link to={AppNav.guru.manageAbsensiEdit({ absensiId: row.id })}>
-                    <DataGridActionButton
-                      icon={DataGridActionButtonHelper.getEditIcon()}
-                      color='warning'
-                      label={'Edit'}
-                      buttonProps={{ disabled: !mutable }}
-                    />
-                  </Link>
-                </DataGridActionButtonWrapper>
-              )
-            },
+            render: row => (
+              <DataGridActionButtonWrapper>
+                <Link to={AppNav.guru.manageAbsensiEdit({ absensiId: row.id })}>
+                  <DataGridActionButton icon={DataGridActionButtonHelper.getEditIcon()} color='warning' label='Edit' />
+                </Link>
+                <Link to={AppNav.guru.manageAbsensiMutate({ absensiId: row.id })}>
+                  <DataGridActionButton
+                    icon={DataGridActionButtonHelper.getMutateIcon()}
+                    color='secondary'
+                    label='Mutate'
+                  />
+                </Link>
+              </DataGridActionButtonWrapper>
+            ),
           },
         ]}
         rows={loader.absensis.data}
@@ -96,12 +163,7 @@ export default function GuruManageAbsensiPage() {
           pageSize: loader.absensis.pagination.limit,
           total: loader.absensis.pagination.total,
           totalPages: loader.absensis.pagination.totalPages,
-          onPageChange: newPage =>
-            handlePageChange({
-              newPage,
-              semesterAjaranId: searchParams.get('semesterAjaranId') ?? undefined,
-              kelasId: searchParams.get('kelasId') ?? undefined,
-            }),
+          onPageChange: handlePageChange,
         }}
         className='shadow-primary'
       />
