@@ -186,6 +186,23 @@ function masterAccountManageChildren({ id }: { id: string }) {
 }
 
 /*
+ * Admin's import excel template level routes
+ */
+const importExcelTemplateUrl = '/import-excel-template'
+
+function importExcelTemplate() {
+  return `${baseUrl}${importExcelTemplateUrl}`
+}
+
+function importExcelTemplateCreate() {
+  return `${baseUrl}${importExcelTemplateUrl}/create`
+}
+
+function importExcelTemplateEdit({ id }: { id: string }) {
+  return `${baseUrl}${importExcelTemplateUrl}/${id}/edit`
+}
+
+/*
  * Admin's reporting level routes
  */
 function reporting() {
@@ -235,6 +252,9 @@ const admin = {
   masterPengumumanCreate,
   masterPengumumanDetail,
   masterPengumumanEdit,
+  importExcelTemplate,
+  importExcelTemplateCreate,
+  importExcelTemplateEdit,
   masterAccount,
   masterAccountCreate,
   masterAccountDetail,

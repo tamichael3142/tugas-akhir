@@ -3,6 +3,7 @@ import {
   Days,
   Ekstrakulikuler,
   Hour,
+  ImportExcelTemplate,
   JadwalPelajaran,
   Kelas,
   MataPelajaran,
@@ -268,6 +269,50 @@ export type ActionDataAdminMasterAccountDeleteChildren = BaseActionData & {
   data: {
     // * Success
     deletedChild?: Akun
+  }
+}
+
+/**
+ * * Import Excel Template
+ */
+export type ActionDataAdminImportExcelTemplateCreate = BaseActionData & {
+  data: {
+    // * Success
+    createdImportExcelTemplate?: ImportExcelTemplate
+    // * Error
+    oldFormData?: {
+      id: string
+      title: string
+      remark?: string
+    }
+    errors?: {
+      id?: string
+      title?: string
+    }
+  }
+}
+
+export type ActionDataAdminImportExcelTemplateEdit = BaseActionData & {
+  data: {
+    // * Success
+    updatedImportExcelTemplate?: ImportExcelTemplate
+    // * Error
+    oldFormData?: {
+      id: string
+      title: string
+      remark?: string
+    }
+    errors?: {
+      id?: string
+      title?: string
+    }
+  }
+}
+
+export type ActionDataAdminImportExcelTemplateDelete = BaseActionData & {
+  data: {
+    // * Success
+    deletedImportExcelTemplate?: ImportExcelTemplate
   }
 }
 

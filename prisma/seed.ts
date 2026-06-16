@@ -3,6 +3,7 @@ import HourSeeder from './seeders/hour'
 import DaysSeeder from './seeders/days'
 import KompetensisSeeder from './seeders/kompetensi'
 import KompetensisEkstrakulikulerSeeder from './seeders/kompetensi-ekstrakulikuler'
+import ImportExcelTemplateSeeder from './seeders/import-excel-template'
 
 const seedFlags = {
   primaryAccount: false,
@@ -10,6 +11,7 @@ const seedFlags = {
   days: false,
   kompetensi: false,
   kompetensiEkstrakulikuler: false,
+  importExcelTemplate: false,
 }
 
 export async function seed() {
@@ -18,6 +20,7 @@ export async function seed() {
   if (seedFlags.days) await DaysSeeder.seed()
   if (seedFlags.kompetensi) await KompetensisSeeder.seed()
   if (seedFlags.kompetensiEkstrakulikuler) await KompetensisEkstrakulikulerSeeder.seed()
+  if (seedFlags.importExcelTemplate) await ImportExcelTemplateSeeder.seed()
 }
 
 // seed()

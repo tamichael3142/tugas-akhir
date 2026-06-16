@@ -136,6 +136,8 @@ model Akun {
   pelanggaranUpdator             PelanggaranPerMapel[]      @relation(name: "lastUpdateBy")
   beritaAcaraCreator             MataPelajaranBeritaAcara[] @relation(name: "createdBy")
   beritaAcaraUpdator             MataPelajaranBeritaAcara[] @relation(name: "lastUpdateBy")
+  importExcelTemplateCreator     ImportExcelTemplate[]      @relation(name: "createdBy")
+  importExcelTemplateUpdator     ImportExcelTemplate[]      @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester       SiswaPerKelasDanSemester[]
   waliKelas                      Kelas[]                    @relation(name: "wali")
@@ -564,6 +566,23 @@ model KompetensiEkstrakulikuler {
   penilaiansEkstrakulikuler PenilaianExtrakulikuler[]
   // ? meta data
   deletedAt                 DateTime?
+
+  @@schema("public")
+}
+
+model ImportExcelTemplate {
+  id             String   @id @default(cuid())
+  // ? general
+  title          String
+  filePath       String? // ? Public object url
+  remark         String?
+  // ? meta data
+  updatedAt      DateTime @default(now())
+  createdAt      DateTime @default(now())
+  createdById    String?
+  createdBy      Akun?    @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById String?
+  lastUpdateBy   Akun?    @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
 
   @@schema("public")
 }

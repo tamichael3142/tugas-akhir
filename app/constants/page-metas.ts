@@ -54,6 +54,10 @@ const pageMetas = {
     { title: `Master Announcement - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
   ],
+  adminImportExcelTemplate: [
+    { title: `Import Excel Templates - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
   adminMasterAccount: [
     { title: `Master Account - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },

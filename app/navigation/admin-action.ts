@@ -58,6 +58,10 @@ function masterAccountDelete({ akunId }: { akunId: string }) {
   return `${baseUrl}/master-account/${akunId}/delete`
 }
 
+function importExcelTemplateDelete({ importExcelTemplateId }: { importExcelTemplateId: string }) {
+  return `${baseUrl}/import-excel-template/${importExcelTemplateId}/delete`
+}
+
 function masterAccountResetPassword({ akunId }: { akunId: string }) {
   return `${baseUrl}/master-account/${akunId}/reset-password`
 }
@@ -81,6 +85,7 @@ const adminAction = {
   masterAccountDelete,
   masterAccountResetPassword,
   accountUploadProfileImage,
+  importExcelTemplateDelete,
 }
 
 export default adminAction

@@ -6,6 +6,7 @@ import {
   Days,
   Ekstrakulikuler,
   Hour,
+  ImportExcelTemplate,
   JadwalPelajaran,
   Kelas,
   Kompetensi,
@@ -200,6 +201,22 @@ export type LoaderDataAdminMasterAkunEdit = {
 export type LoaderDataAdminMasterAkunManageChildren = {
   children: Akun[]
   akuns: PaginationReturns<Akun>
+}
+
+/**
+ * * Import Excel Template
+ */
+export type LoaderDataAdminImportExcelTemplate = {
+  importExcelTemplates: PaginationReturns<ImportExcelTemplate & { downloadUrl: string | null }>
+}
+
+export type LoaderDataAdminImportExcelTemplateCreate = {
+  defaultId: string
+}
+
+export type LoaderDataAdminImportExcelTemplateEdit = {
+  importExcelTemplate: ImportExcelTemplate | null
+  downloadUrl: string | null
 }
 
 /**
