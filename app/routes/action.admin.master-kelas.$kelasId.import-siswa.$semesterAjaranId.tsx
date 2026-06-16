@@ -48,13 +48,31 @@ export async function action({ request, params }: ActionFunctionArgs) {
         where: { kelasId: kelasId, semesterAjaranId: semesterAjaranId },
       })
 
-      for (const siswaId of newSiswaIds) {
-        const exists = existing.find(e => e.siswaId === siswaId)
-        if (!exists) {
-          await tx.siswaPerKelasDanSemester.create({
-            data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterAjaranId },
+      const isInitial = existing.length === 0
+      const maxNomorAbsen = existing.reduce((max, e) => Math.max(max, e.nomorAbsen ?? 0), 0)
+      const toCreateIds = isInitial
+        ? newSiswaIds
+        : newSiswaIds.filter(id => !existing.find(e => e.siswaId === id))
+
+      const siswas = toCreateIds.length > 0
+        ? await tx.akun.findMany({
+            where: { id: { in: toCreateIds } },
+            select: { id: true, firstName: true, lastName: true },
           })
-        }
+        : []
+      const siswaMap = new Map(siswas.map(s => [s.id, s]))
+
+      const sortedIds = [...toCreateIds].sort((a, b) => {
+        const nameA = `${siswaMap.get(a)?.firstName ?? ''} ${siswaMap.get(a)?.lastName ?? ''}`.toLowerCase()
+        const nameB = `${siswaMap.get(b)?.firstName ?? ''} ${siswaMap.get(b)?.lastName ?? ''}`.toLowerCase()
+        return nameA.localeCompare(nameB)
+      })
+
+      let counter = maxNomorAbsen + 1
+      for (const siswaId of sortedIds) {
+        await tx.siswaPerKelasDanSemester.create({
+          data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterAjaranId, nomorAbsen: counter++ },
+        })
       }
 
       await tx.kelas.update({

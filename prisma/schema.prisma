@@ -138,6 +138,8 @@ model Akun {
   beritaAcaraUpdator             MataPelajaranBeritaAcara[] @relation(name: "lastUpdateBy")
   importExcelTemplateCreator     ImportExcelTemplate[]      @relation(name: "createdBy")
   importExcelTemplateUpdator     ImportExcelTemplate[]      @relation(name: "lastUpdateBy")
+  academicCalendarEventCreator   AcademicCalendarEvent[]    @relation(name: "createdBy")
+  academicCalendarEventUpdator   AcademicCalendarEvent[]    @relation(name: "lastUpdateBy")
   // ? relations
   siswaPerKelasDanSemester       SiswaPerKelasDanSemester[]
   waliKelas                      Kelas[]                    @relation(name: "wali")
@@ -206,24 +208,25 @@ model Days {
 }
 
 model TahunAjaran {
-  id                       String            @id @default(cuid())
+  id                       String                  @id @default(cuid())
   // ? credentials
   nama                     String
   tahunMulai               DateTime
   tahunBerakhir            DateTime
   academicCalendarEmbedUrl String?
   // ? meta data
-  updatedAt                DateTime          @default(now())
-  createdAt                DateTime          @default(now())
+  updatedAt                DateTime                @default(now())
+  createdAt                DateTime                @default(now())
   deletedAt                DateTime?
   createdById              String?
-  createdBy                Akun?             @relation(fields: [createdById], references: [id], name: "createdBy")
+  createdBy                Akun?                   @relation(fields: [createdById], references: [id], name: "createdBy")
   lastUpdateById           String?
-  lastUpdateBy             Akun?             @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  lastUpdateBy             Akun?                   @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
   semesterAjaran           SemesterAjaran[]
   kelas                    Kelas[]
   ekstrakulikuler          Ekstrakulikuler[]
+  academicCalendarEvents   AcademicCalendarEvent[]
 
   @@schema("public")
 }
@@ -587,6 +590,29 @@ model ImportExcelTemplate {
   @@schema("public")
 }
 
+model AcademicCalendarEvent {
+  id             String      @id @default(cuid())
+  // ? general
+  title          String
+  description    String?
+  startDate      DateTime
+  endDate        DateTime
+  isAllDay       Boolean     @default(true)
+  googleEventId  String?
+  // ? relations
+  tahunAjaranId  String
+  tahunAjaran    TahunAjaran @relation(fields: [tahunAjaranId], references: [id])
+  // ? meta data
+  updatedAt      DateTime    @default(now())
+  createdAt      DateTime    @default(now())
+  createdById    String?
+  createdBy      Akun?       @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById String?
+  lastUpdateBy   Akun?       @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+
+  @@schema("public")
+}
+
 // ? ======
 
 // ? RELATIONS
@@ -617,6 +643,7 @@ model JadwalPelajaran {
 
 model SiswaPerKelasDanSemester {
   id               Int            @id @default(autoincrement())
+  nomorAbsen       Int?
   // ? foreign
   siswaId          String
   siswa            Akun           @relation(fields: [siswaId], references: [id])
@@ -625,7 +652,8 @@ model SiswaPerKelasDanSemester {
   semesterAjaranId String
   semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
 
-  @@unique([siswaId, kelasId, semesterAjaranId])
+  @@unique([siswaId, kelasId, semesterAjaranId, nomorAbsen])
+  @@index([nomorAbsen])
   @@index([siswaId])
   @@index([kelasId])
   @@index([semesterAjaranId])

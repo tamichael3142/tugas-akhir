@@ -212,29 +212,15 @@ export default function AdminMasterKelasManageSiswaPage() {
               </div>
             ),
           },
+          // {
+          //   field: 'nomorAbsen',
+          //   label: 'Class Number',
+          //   render: row => row.nomorAbsen,
+          // },
           { field: 'username', label: 'Username', render: row => row.siswa?.username },
-          // { field: 'role', label: 'Role', render: row => EnumsTitleUtils.getRole(row.siswa?.role as Role) },
           { field: 'firstName', label: 'First Name', render: row => row.siswa?.firstName },
           { field: 'lastName', label: 'Last Name', render: row => row.siswa?.lastName },
           { field: 'email', label: 'Email', render: row => row.siswa?.email },
-          // {
-          //   field: 'createdAt',
-          //   label: 'Created At',
-          //   render: row =>
-          //     row.siswa?.createdAt ? dateFns.format(row.siswa.createdAt, constants.dateFormats.dateColumn) : '-',
-          // },
-          // {
-          //   field: 'updatedAt',
-          //   label: 'Updated At',
-          //   render: row =>
-          //     row.siswa?.updatedAt ? dateFns.format(row.siswa.updatedAt, constants.dateFormats.dateColumn) : '-',
-          // },
-          // {
-          //   field: 'deletedAt',
-          //   label: 'Deleted At',
-          //   render: row =>
-          //     row.siswa?.deletedAt ? dateFns.format(row.siswa.deletedAt, constants.dateFormats.dateColumn) : '-',
-          // },
         ]}
         rows={loader.siswaPerKelasPerSemesters.data}
         pagination={{

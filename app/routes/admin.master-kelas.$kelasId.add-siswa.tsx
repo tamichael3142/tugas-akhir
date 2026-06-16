@@ -110,6 +110,38 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           include: { semesterAjaran: true },
         })
 
+        const existingSem1 = existing.filter(e => e.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU)
+        const existingSem2 = existing.filter(e => e.semesterAjaran?.urutan === SemesterAjaranUrutan.DUA)
+
+        const maxNomorAbsenSem1 = existingSem1.reduce((max, e) => Math.max(max, e.nomorAbsen ?? 0), 0)
+        const maxNomorAbsenSem2 = existingSem2.reduce((max, e) => Math.max(max, e.nomorAbsen ?? 0), 0)
+
+        const isInitialSem1 = existingSem1.length === 0
+        const isInitialSem2 = existingSem2.length === 0
+
+        const newSem1Ids = data.semester1Ids.filter(id => !existingSem1.find(e => e.siswaId === id))
+        const newSem2Ids = data.semester2Ids.filter(id => !existingSem2.find(e => e.siswaId === id))
+
+        const allFormIds = [...new Set([...data.semester1Ids, ...data.semester2Ids])]
+        const siswas = allFormIds.length > 0
+          ? await tx.akun.findMany({
+              where: { id: { in: allFormIds } },
+              select: { id: true, firstName: true, lastName: true },
+            })
+          : []
+        const siswaMap = new Map(siswas.map(s => [s.id, s]))
+
+        function sortByName(ids: string[]) {
+          return [...ids].sort((a, b) => {
+            const nameA = `${siswaMap.get(a)?.firstName ?? ''} ${siswaMap.get(a)?.lastName ?? ''}`.toLowerCase()
+            const nameB = `${siswaMap.get(b)?.firstName ?? ''} ${siswaMap.get(b)?.lastName ?? ''}`.toLowerCase()
+            return nameA.localeCompare(nameB)
+          })
+        }
+
+        const sortedNewSem1Ids = sortByName(isInitialSem1 ? data.semester1Ids : newSem1Ids)
+        const sortedNewSem2Ids = sortByName(isInitialSem2 ? data.semester2Ids : newSem2Ids)
+
         // Hapus data yang ada di DB tapi di form tidak ada
         for (const row of existing) {
           if (row.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU && !data.semester1Ids.includes(row.siswaId)) {
@@ -122,28 +154,20 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
           }
         }
 
-        // Create data yang belum ada di semester SATU
-        for (const siswaId of data.semester1Ids) {
-          const exists = existing.find(
-            e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.SATU,
-          )
-          if (!exists) {
-            await tx.siswaPerKelasDanSemester.create({
-              data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterSatu.id },
-            })
-          }
+        // Create semester SATU dengan nomorAbsen
+        let counterSem1 = maxNomorAbsenSem1 + 1
+        for (const siswaId of sortedNewSem1Ids) {
+          await tx.siswaPerKelasDanSemester.create({
+            data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterSatu.id, nomorAbsen: counterSem1++ },
+          })
         }
 
-        // Create data yang belum ada di semester DUA
-        for (const siswaId of data.semester2Ids) {
-          const exists = existing.find(
-            e => e.siswaId === siswaId && e.semesterAjaran?.urutan === SemesterAjaranUrutan.DUA,
-          )
-          if (!exists) {
-            await tx.siswaPerKelasDanSemester.create({
-              data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterDua.id },
-            })
-          }
+        // Create semester DUA dengan nomorAbsen
+        let counterSem2 = maxNomorAbsenSem2 + 1
+        for (const siswaId of sortedNewSem2Ids) {
+          await tx.siswaPerKelasDanSemester.create({
+            data: { kelasId: kelasId, siswaId, semesterAjaranId: semesterDua.id, nomorAbsen: counterSem2++ },
+          })
         }
 
         await tx.kelas.update({

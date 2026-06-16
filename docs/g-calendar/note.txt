@@ -1,0 +1,34 @@
+Setup
+1. Buat Google Cloud Project
+- link: https://console.cloud.google.com/home/dashboard?project=tugas-akhir-499612&organizationId=0
+- project id: tugas-akhir-499612
+
+2. Enable Google Calendar API
+- link: https://console.cloud.google.com/apis/library?organizationId=0&project=tugas-akhir-499612
+- enable: Google Calendar API
+
+3. Buat Service Account
+- link: https://console.cloud.google.com/apis/credentials?project=tugas-akhir-499612
+- service account:
+- - email: school-calendar-service@tugas-akhir-499612.iam.gserviceaccount.com
+- - name: school-calendar-service
+
+4. Generate JSON Key
+- link: https://console.cloud.google.com/iam-admin/serviceaccounts/details/102175480210343883949;edit=true/keys?project=tugas-akhir-499612
+
+5. Buat Google Calendar
+- buat calendar normal aja di google calendar
+
+6. Share Calendar tersebut ke Service Account yang tadi dibuat
+- link: https://calendar.google.com/calendar/u/0/r/settings/calendar/dGFtaWNoYWVsMzE0MkBnbWFpbC5jb20?pli=1
+- shared with: email, role: Make changes to events
+
+7. Ambil Calendar ID
+- link: https://calendar.google.com/calendar/u/0/r/settings/calendar/dGFtaWNoYWVsMzE0MkBnbWFpbC5jb20?pli=1
+- section: Integrate calendar
+- calendar id: tamichael3142@gmail.com
+
+8. Simpan ke env yang diperlukan ke vercel (prod)
+- GOOGLE_CLIENT_EMAIL -> ada di json yang generate tadi
+- GOOGLE_PRIVATE_KEY -> ada di json yang generate tadi
+- GOOGLE_CALENDAR_ID -> diambil waktu step 7

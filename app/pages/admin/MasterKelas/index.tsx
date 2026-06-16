@@ -232,7 +232,7 @@ export default function AdminMasterKelasPage() {
                       <DataGridActionButton
                         icon={DataGridActionButtonHelper.getManageIcon()}
                         color='success'
-                        label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)} Semester Schedule}`}
+                        label={`${EnumsTitleUtils.getSemesterAjaranUrutan(semesterSatu.urutan as SemesterAjaranUrutan)} Semester Schedule`}
                         buttonProps={{ disabled: !!row.deletedAt }}
                       />
                     </Link>

@@ -61,7 +61,7 @@ export async function loader({ request, params }: LoaderFunctionArgs): Promise<L
 
         return where
       },
-      orderBy: [{ siswa: { createdAt: 'desc' } }],
+      orderBy: [{ nomorAbsen: 'asc' }, { siswa: { createdAt: 'desc' } }],
     },
   })
 
