@@ -10,12 +10,16 @@ import {
   JadwalPelajaran,
   Kelas,
   Kompetensi,
+  KompetensiEkstrakulikuler,
   MataPelajaran,
+  PenilaianExtrakulikuler,
   Pengumuman,
   Penilaian,
+  ReportConfig,
   SemesterAjaran,
   SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
+  StudentSubjectReport,
   TahunAjaran,
   TempAkun,
 } from '@prisma/client'
@@ -107,9 +111,57 @@ export type LoaderDataAdminMasterKelasPenilaian = {
     siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & { siswa: Akun })[]
   }
   mataPelajarans: (MataPelajaran & {
-    penilaians: Penilaian[]
+    penilaians: (Penilaian & { nilai: number | null })[]
   })[]
   kompetensis: Kompetensi[]
+}
+
+export type LoaderDataAdminMasterKelasReportSettings = {
+  kelas:
+    | (Kelas & {
+        tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+        wali: Akun | null
+      })
+    | null
+  semesterAjaran: SemesterAjaran | null
+  reportConfig: ReportConfig | null
+}
+
+export type StudentReportData = {
+  schoolName: string
+  schoolAddress: string
+  schoolPhone: string
+  student: Akun & {
+    siswaPerKelasDanSemester: (SiswaPerKelasDanSemester & { kelas: Kelas })[]
+  }
+  kelas: Kelas & { wali: Akun | null }
+  semesterAjaran: SemesterAjaran & { tahunAjaran: TahunAjaran }
+  nomorAbsen: number | null
+  academicAssessments: {
+    mataPelajaran: MataPelajaran
+    kkm: number
+    penilaians: (Penilaian & { nilai: number | null; kompetensi: Kompetensi })[]
+  }[]
+  extracurricularAssessments: {
+    ekstrakulikuler: Ekstrakulikuler
+    penilaians: (PenilaianExtrakulikuler & {
+      nilai: number | null
+      kompetensiEkstrakulikuler: KompetensiEkstrakulikuler
+    })[]
+  }[]
+  attendanceSummary: { sick: number; excused: number; unexcused: number }
+  homeroomTeacherNote: string | null
+  competencyDescriptions: (StudentSubjectReport & { mataPelajaran: MataPelajaran })[]
+}
+
+export type LoaderDataAdminMasterKelasViewReport = {
+  kelas:
+    | (Kelas & {
+        tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }
+        wali: Akun | null
+      })
+    | null
+  reportData: StudentReportData | null
 }
 
 export type LoaderDataAdminMasterKelasAbsensi = {

@@ -55,6 +55,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         where: { id: mataPelajaranId ?? '' },
         data: {
           nama: data.nama,
+          kkm: data.kkm,
           semesterAjaranId: data.semesterAjaranId ?? '',
           // eslint-disable-next-line no-extra-boolean-cast
           guruId: !!data.guruId ? data.guruId : null,

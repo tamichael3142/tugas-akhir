@@ -34,6 +34,14 @@ const pageMetas = {
     { title: `Assessment - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
   ],
+  adminMasterKelasReportSettings: [
+    { title: `Report Settings - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
+  adminMasterKelasViewReport: [
+    { title: `View Report - Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
   adminMasterMataPelajaran: [
     { title: `Master Subject - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
@@ -136,6 +144,18 @@ const pageMetas = {
   ],
   guruManageAbsensi: [
     { title: `Manage Abnsence - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruReportDescriptions: [
+    { title: `Report Descriptions - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruHomeroomNotes: [
+    { title: `Homeroom Notes - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Situs guru SBBS' },
+  ],
+  guruHomeroomNotesEdit: [
+    { title: `Edit Homeroom Note - Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },
   ],
   guruAccount: [

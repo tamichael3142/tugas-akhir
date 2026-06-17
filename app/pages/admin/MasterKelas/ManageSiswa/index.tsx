@@ -14,9 +14,10 @@ import EnumsTitleUtils from '~/utils/enums-title.utils'
 import { SemesterAjaranUrutan } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
 import { IoAdd } from 'react-icons/io5'
-import { FaTrash } from 'react-icons/fa'
+import { FaFileAlt, FaTrash } from 'react-icons/fa'
 import { useRemixForm } from 'remix-hook-form'
 import { emptyValues, resolver } from './form'
+import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 
 const sectionPrefix = 'admin-master-kelas-manage-siswa'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -221,6 +222,33 @@ export default function AdminMasterKelasManageSiswaPage() {
           { field: 'firstName', label: 'First Name', render: row => row.siswa?.firstName },
           { field: 'lastName', label: 'Last Name', render: row => row.siswa?.lastName },
           { field: 'email', label: 'Email', render: row => row.siswa?.email },
+          {
+            field: 'action',
+            label: 'Action',
+            render: row => {
+              const semesterAjaranId = searchParams.get('semesterAjaranId') ?? ''
+              if (!semesterAjaranId || !row.siswaId || !loader.kelas?.id) return null
+              return (
+                <DataGridActionButtonWrapper>
+                  <DataGridActionButton
+                    label='View Report'
+                    color='secondary'
+                    icon={<FaFileAlt />}
+                    buttonProps={{
+                      onClick: () =>
+                        navigate(
+                          AppNav.admin.masterKelasViewReport({
+                            id: loader.kelas!.id,
+                            semesterAjaranId,
+                            siswaId: row.siswaId,
+                          }),
+                        ),
+                    }}
+                  />
+                </DataGridActionButtonWrapper>
+              )
+            },
+          },
         ]}
         rows={loader.siswaPerKelasPerSemesters.data}
         pagination={{

@@ -123,12 +123,13 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         const newSem2Ids = data.semester2Ids.filter(id => !existingSem2.find(e => e.siswaId === id))
 
         const allFormIds = [...new Set([...data.semester1Ids, ...data.semester2Ids])]
-        const siswas = allFormIds.length > 0
-          ? await tx.akun.findMany({
-              where: { id: { in: allFormIds } },
-              select: { id: true, firstName: true, lastName: true },
-            })
-          : []
+        const siswas =
+          allFormIds.length > 0
+            ? await tx.akun.findMany({
+                where: { id: { in: allFormIds } },
+                select: { id: true, firstName: true, lastName: true },
+              })
+            : []
         const siswaMap = new Map(siswas.map(s => [s.id, s]))
 
         function sortByName(ids: string[]) {

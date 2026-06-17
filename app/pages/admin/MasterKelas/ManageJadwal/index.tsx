@@ -1,6 +1,14 @@
-import { Form, useActionData, useFetcher, useLoaderData, useParams, useRevalidator } from '@remix-run/react'
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+  useNavigate,
+  useParams,
+  useRevalidator,
+} from '@remix-run/react'
 import { Fragment, useEffect, useRef } from 'react'
-import { FaFileExcel, FaSave } from 'react-icons/fa'
+import { FaCog, FaFileExcel, FaSave } from 'react-icons/fa'
 import { useRemixForm } from 'remix-hook-form'
 import { Button, TextInput } from '~/components/forms'
 import { BackButton, Card } from '~/components/ui'
@@ -25,6 +33,7 @@ export default function AdminMasterKelasManageJadwalPage() {
   const actionData = useActionData<ActionDataAdminMasterKelasManageJadwal>()
   const revalidator = useRevalidator()
   const fetcher = useFetcher({ key: `${sectionPrefix}-form` })
+  const navigate = useNavigate()
 
   const importExcelFormRef = useRef<HTMLFormElement>(null)
   const importExcelInputRef = useRef<HTMLInputElement>(null)
@@ -111,6 +120,25 @@ export default function AdminMasterKelasManageJadwalPage() {
     <AdminPageContainer
       title='Manage Lesson Timetable'
       actions={[
+        <Button
+          key={`${sectionPrefix}-report-settings`}
+          label='Report Settings'
+          startIcon={<FaCog />}
+          color='default'
+          onlyIconOnSmallView
+          buttonProps={{
+            onClick: () => {
+              if (loader.kelas?.id && currSemesterAjaran?.id) {
+                navigate(
+                  AppNav.admin.masterKelasReportSettings({
+                    id: loader.kelas.id,
+                    semesterAjaranId: currSemesterAjaran.id,
+                  }),
+                )
+              }
+            },
+          }}
+        />,
         <Button
           key={importExcelFormId}
           label='Import Excel'

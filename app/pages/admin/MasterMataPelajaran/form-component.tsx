@@ -98,6 +98,34 @@ export default function AdminMasterMataPelajaranFormComponent(props: Props) {
           render={({ field }) => <TextInput label='Name' inputProps={{ ...field }} />}
         />
       </InputWrapper>
+      <InputWrapper>
+        <Controller
+          control={formHook.control}
+          name={'kkm'}
+          render={({ field }) => (
+            <TextInput
+              label='Minimum Score (KKM)'
+              inputProps={{
+                ...field,
+                type: 'phone',
+                onChange: e => {
+                  let value = e.target.value
+                  value = value.replace(/\D/g, '')
+                  value = value.replace(/^0+(?=\d)/, '')
+                  if (value === '') {
+                    field.onChange('')
+                    return
+                  }
+                  let num = Number(value)
+                  if (num > 100) num = 100
+                  if (num < 0) num = 0
+                  field.onChange(String(num))
+                },
+              }}
+            />
+          )}
+        />
+      </InputWrapper>
     </div>
   )
 }

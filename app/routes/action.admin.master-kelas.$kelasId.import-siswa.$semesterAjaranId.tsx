@@ -50,16 +50,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
       const isInitial = existing.length === 0
       const maxNomorAbsen = existing.reduce((max, e) => Math.max(max, e.nomorAbsen ?? 0), 0)
-      const toCreateIds = isInitial
-        ? newSiswaIds
-        : newSiswaIds.filter(id => !existing.find(e => e.siswaId === id))
+      const toCreateIds = isInitial ? newSiswaIds : newSiswaIds.filter(id => !existing.find(e => e.siswaId === id))
 
-      const siswas = toCreateIds.length > 0
-        ? await tx.akun.findMany({
-            where: { id: { in: toCreateIds } },
-            select: { id: true, firstName: true, lastName: true },
-          })
-        : []
+      const siswas =
+        toCreateIds.length > 0
+          ? await tx.akun.findMany({
+              where: { id: { in: toCreateIds } },
+              select: { id: true, firstName: true, lastName: true },
+            })
+          : []
       const siswaMap = new Map(siswas.map(s => [s.id, s]))
 
       const sortedIds = [...toCreateIds].sort((a, b) => {

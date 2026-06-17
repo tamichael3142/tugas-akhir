@@ -11,9 +11,12 @@ import {
   MataPelajaran,
   PenilaianExtrakulikuler,
   Pengumuman,
+  ReportConfig,
   SemesterAjaran,
   SiswaPerEkstrakulikuler,
   SiswaPerKelasDanSemester,
+  StudentReport,
+  StudentSubjectReport,
   TahunAjaran,
   Assignment,
   MataPelajaranAttachment,
@@ -314,6 +317,34 @@ export type LoaderDataGuruMasterPengumuman = {
 
 export type LoaderDataGuruMasterPengumumanEdit = {
   pengumuman: Pengumuman | null
+}
+
+/**
+ * * Report Descriptions (Subject Teacher)
+ */
+export type LoaderDataGuruReportDescriptions = LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
+  reportConfig: ReportConfig | null
+  siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun })[]
+  studentSubjectReports: StudentSubjectReport[]
+  semesterAjaranId: string | null
+}
+
+/**
+ * * Homeroom Notes
+ */
+export type LoaderDataGuruHomeroomNotes = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  reportConfig: ReportConfig | null
+  siswaPerKelasPerSemesters: (SiswaPerKelasDanSemester & { siswa: Akun })[]
+  studentReports: StudentReport[]
+  selectedSemesterAjaranId: string | null
+}
+
+export type LoaderDataGuruHomeroomNotesEdit = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  siswa: Akun | null
+  studentReport: StudentReport | null
+  semesterAjaranId: string | null
 }
 
 /**

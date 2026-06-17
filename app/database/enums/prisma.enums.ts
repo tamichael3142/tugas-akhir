@@ -50,6 +50,12 @@ export enum AssignmentSubmissionStatus {
   SCORED = 'SCORED',
 }
 
+export enum ReportStatus {
+  DRAFT = 'DRAFT',
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}
+
 export enum DayID {
   MON = 'MON',
   TUE = 'TUE',

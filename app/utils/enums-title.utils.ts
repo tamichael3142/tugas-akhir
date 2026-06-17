@@ -4,6 +4,7 @@ import {
   GolonganDarah,
   JenisKelamin,
   Kewarganegaraan,
+  ReportStatus,
   Role,
   SemesterAjaranUrutan,
   TipeAbsensi,
@@ -132,8 +133,22 @@ function getAssignmentSubmissionStatus(value: AssignmentSubmissionStatus) {
   }
 }
 
+function reportStatus(value: ReportStatus) {
+  switch (value) {
+    case ReportStatus.DRAFT:
+      return 'Draft'
+    case ReportStatus.OPEN:
+      return 'Open'
+    case ReportStatus.CLOSED:
+      return 'Closed'
+    default:
+      return '-'
+  }
+}
+
 const EnumsTitleUtils = {
   getRole,
+  reportStatus,
   getJenisKelamin,
   getGolonganDarah,
   getKewarganegaraan,

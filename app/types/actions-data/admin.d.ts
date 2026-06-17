@@ -125,6 +125,10 @@ export type ActionDataAdminMasterKelasDelete = BaseActionData & {
   }
 }
 
+export type ActionDataAdminMasterKelasReportSettings = BaseActionData & {
+  data: Record<string, never>
+}
+
 /**
  * * Master Subject
  */

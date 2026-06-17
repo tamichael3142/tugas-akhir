@@ -47,6 +47,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       .create({
         data: {
           nama: data.nama,
+          kkm: data.kkm,
           semesterAjaranId: data.semesterAjaranId ?? '',
           // eslint-disable-next-line no-extra-boolean-cast
           guruId: !!data.guruId ? data.guruId : null,

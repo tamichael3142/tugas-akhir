@@ -288,6 +288,52 @@ function daftarKelasDetailMataPelajaranDetailBeritaAcaraDetail({
 }
 
 /*
+ * Guru's daftar kelas detail mata pelajaran detail report descriptions
+ */
+function daftarKelasDetailMataPelajaranDetailReportDescriptions({
+  kelasId,
+  mataPelajaranId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  mataPelajaranId: MataPelajaran['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/report-descriptions${params.size ? `?${params.toString()}` : ''}`
+}
+
+/*
+ * Guru's daftar kelas detail homeroom notes
+ */
+function daftarKelasDetailHomeroomNotes({
+  kelasId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/homeroom-notes${params.size ? `?${params.toString()}` : ''}`
+}
+
+function daftarKelasDetailHomeroomNotesEdit({
+  kelasId,
+  siswaId,
+  semesterAjaranId,
+}: {
+  kelasId: Kelas['id']
+  siswaId: Akun['id']
+  semesterAjaranId?: SemesterAjaran['id']
+}) {
+  const params = new URLSearchParams()
+  if (semesterAjaranId) params.set('semesterAjaranId', semesterAjaranId)
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/hr-note/${siswaId}/edit${params.size ? `?${params.toString()}` : ''}`
+}
+
+/*
  * Guru's daftar kelas detail absensi level routes
  */
 function daftarKelasDetailAbsensiList({ kelasId }: { kelasId: Kelas['id'] }) {
@@ -478,6 +524,9 @@ const guru = {
   daftarKelasDetailMataPelajaranDetailAttachmentEdit,
   daftarKelasDetailMataPelajaranDetailAttachmentDetail,
   daftarKelasDetailMataPelajaranDetailPenilaian,
+  daftarKelasDetailMataPelajaranDetailReportDescriptions,
+  daftarKelasDetailHomeroomNotes,
+  daftarKelasDetailHomeroomNotesEdit,
   daftarKelasDetailMataPelajaranDetailPelanggaran,
   daftarKelasDetailMataPelajaranDetailPelanggaranCreate,
   daftarKelasDetailMataPelajaranDetailPelanggaranEdit,

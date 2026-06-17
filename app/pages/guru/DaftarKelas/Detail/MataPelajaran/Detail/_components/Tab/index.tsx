@@ -1,6 +1,6 @@
 import { Kelas, MataPelajaran } from '@prisma/client'
 import { useNavigate } from '@remix-run/react'
-import { FaBookOpen } from 'react-icons/fa'
+import { FaBookOpen, FaFileAlt } from 'react-icons/fa'
 import { MdAssignment, MdFactCheck } from 'react-icons/md'
 import { GrAttachment } from 'react-icons/gr'
 import { TabItem, Tabs } from '~/components/ui'
@@ -14,6 +14,7 @@ export enum TabKey {
   ATTACHMENT = 'attachment',
   PENILAIAN = 'penilaian',
   PELANGGARAN = 'pelanggaran',
+  REPORT_DESCRIPTIONS = 'report-descriptions',
 }
 
 export type GuruManageMataPelajaranDetailTabProps = {
@@ -33,6 +34,7 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
     { key: TabKey.ATTACHMENT, label: 'Attachment', icon: <GrAttachment /> },
     { key: TabKey.PENILAIAN, label: 'Assessment', icon: <MdFactCheck />, disabled: mataPelajaran?.guruId !== user?.id },
     { key: TabKey.PELANGGARAN, label: 'Violation', icon: <BiSolidErrorAlt /> },
+    { key: TabKey.REPORT_DESCRIPTIONS, label: 'Report', icon: <FaFileAlt /> },
   ]
 
   if (!mataPelajaran) return null
@@ -71,6 +73,13 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
         else if (newTab === TabKey.PELANGGARAN)
           navigate(
             AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaran({
+              kelasId: kelas.id,
+              mataPelajaranId: mataPelajaran.id,
+            }),
+          )
+        else if (newTab === TabKey.REPORT_DESCRIPTIONS)
+          navigate(
+            AppNav.guru.daftarKelasDetailMataPelajaranDetailReportDescriptions({
               kelasId: kelas.id,
               mataPelajaranId: mataPelajaran.id,
             }),

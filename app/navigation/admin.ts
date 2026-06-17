@@ -1,4 +1,4 @@
-import { Ekstrakulikuler, Kelas, SemesterAjaran } from '@prisma/client'
+import { Akun, Ekstrakulikuler, Kelas, SemesterAjaran } from '@prisma/client'
 
 const baseUrl = '/admin'
 
@@ -80,6 +80,40 @@ function masterKelasPenilaian({ id }: { id: Kelas['id'] }) {
 
 function masterKelasAddSiswa({ id }: { id: string }) {
   return `${baseUrl}${masterKelasUrl}/${id}/add-siswa`
+}
+
+function masterKelasReportSettings({
+  id,
+  semesterAjaranId,
+}: {
+  id: Kelas['id']
+  semesterAjaranId: SemesterAjaran['id']
+}) {
+  return `${baseUrl}${masterKelasUrl}/${id}/report-settings/${semesterAjaranId}`
+}
+
+function masterKelasViewReport({
+  id,
+  semesterAjaranId,
+  siswaId,
+}: {
+  id: Kelas['id']
+  semesterAjaranId: SemesterAjaran['id']
+  siswaId: Akun['id']
+}) {
+  return `${baseUrl}${masterKelasUrl}/${id}/view-report/${semesterAjaranId}/${siswaId}`
+}
+
+function masterKelasGenerateReport({
+  id,
+  semesterAjaranId,
+  siswaId,
+}: {
+  id: Kelas['id']
+  semesterAjaranId: SemesterAjaran['id']
+  siswaId: Akun['id']
+}) {
+  return `${baseUrl}${masterKelasUrl}/${id}/generate-report/${semesterAjaranId}/${siswaId}`
 }
 
 /*
@@ -237,6 +271,9 @@ const admin = {
   masterKelasAbsensi,
   masterKelasPenilaian,
   masterKelasAddSiswa,
+  masterKelasReportSettings,
+  masterKelasViewReport,
+  masterKelasGenerateReport,
   masterMataPelajaran,
   masterMataPelajaranCreate,
   masterMataPelajaranDetail,

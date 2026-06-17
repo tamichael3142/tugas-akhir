@@ -206,6 +206,20 @@ export type ActionDataGuruMasterPengumumanDelete = BaseActionData & {
 }
 
 /**
+ * * Report Descriptions (Subject Teacher)
+ */
+export type ActionDataGuruReportDescriptions = BaseActionData & {
+  data: Record<string, never>
+}
+
+/**
+ * * Homeroom Notes
+ */
+export type ActionDataGuruHomeroomNotesEdit = BaseActionData & {
+  data: Record<string, never>
+}
+
+/**
  * * Account
  */
 export type ActionDataGuruAccountSelfUpdate = BaseActionData & {

@@ -78,6 +78,14 @@ enum AssignmentSubmissionStatus {
   @@schema("public")
 }
 
+enum ReportStatus {
+  DRAFT
+  OPEN
+  CLOSED
+
+  @@schema("public")
+}
+
 // ? =====
 
 // ? TABLES
@@ -153,6 +161,8 @@ model Akun {
   children                       AkunChildren[]             @relation(name: "children")
   parents                        AkunChildren[]             @relation(name: "parents")
   penilaiansExtrakulikuler       PenilaianExtrakulikuler[]
+  studentReports                 StudentReport[]            @relation(name: "studentReports")
+  studentSubjectReports          StudentSubjectReport[]     @relation(name: "studentSubjectReports")
 
   @@index([role])
   @@schema("public")
@@ -251,6 +261,9 @@ model SemesterAjaran {
   siswaPerKelasDanSemester SiswaPerKelasDanSemester[]
   jadwalPelajarans         JadwalPelajaran[]
   absensis                 Absensi[]
+  reportConfigs            ReportConfig[]
+  studentReports           StudentReport[]
+  studentSubjectReports    StudentSubjectReport[]
 
   @@schema("public")
 }
@@ -281,6 +294,7 @@ model Kelas {
   mataPelajaranAttachments  MataPelajaranAttachment[]
   pelanggaransPerMapel      PelanggaranPerMapel[]
   mataPelajaranBeritaAcaras MataPelajaranBeritaAcara[]
+  reportConfigs             ReportConfig[]
 
   @@index([tahunAjaranId])
   @@schema("public")
@@ -291,6 +305,7 @@ model MataPelajaran {
   // ? credentials
   nama                     String
   // ? general
+  kkm                      Int                        @default(75)
   jumlahSesi               Int                        @default(1)
   // ? foreign
   guruId                   String?
@@ -312,6 +327,7 @@ model MataPelajaran {
   mataPelajaranAttachments MataPelajaranAttachment[]
   pelanggarans             PelanggaranPerMapel[]
   beritaAcaras             MataPelajaranBeritaAcara[]
+  studentSubjectReports    StudentSubjectReport[]
 
   @@schema("public")
 }
@@ -610,6 +626,65 @@ model AcademicCalendarEvent {
   lastUpdateById String?
   lastUpdateBy   Akun?       @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
 
+  @@schema("public")
+}
+
+model ReportConfig {
+  id               String         @id @default(cuid())
+  // ? credentials
+  kelasId          String
+  kelas            Kelas          @relation(fields: [kelasId], references: [id])
+  semesterAjaranId String
+  semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+  status           ReportStatus   @default(DRAFT)
+  // ? meta data
+  updatedAt        DateTime       @default(now())
+  createdAt        DateTime       @default(now())
+
+  @@unique([kelasId, semesterAjaranId])
+  @@index([kelasId])
+  @@index([semesterAjaranId])
+  @@schema("public")
+}
+
+model StudentReport {
+  id                   String         @id @default(cuid())
+  // ? credentials
+  siswaId              String
+  siswa                Akun           @relation(fields: [siswaId], references: [id], name: "studentReports")
+  semesterAjaranId     String
+  semesterAjaran       SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+  // ? general
+  homeroomTeacherNote  String?
+  // ? meta data
+  updatedAt            DateTime       @default(now())
+  createdAt            DateTime       @default(now())
+
+  @@unique([siswaId, semesterAjaranId])
+  @@index([siswaId])
+  @@index([semesterAjaranId])
+  @@schema("public")
+}
+
+model StudentSubjectReport {
+  id               String        @id @default(cuid())
+  // ? credentials
+  siswaId          String
+  siswa            Akun          @relation(fields: [siswaId], references: [id], name: "studentSubjectReports")
+  semesterAjaranId String
+  semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+  mataPelajaranId  String
+  mataPelajaran    MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  // ? general
+  description      String?
+  // ? meta data
+  updatedAt        DateTime      @default(now())
+  createdAt        DateTime      @default(now())
+
+  @@unique([siswaId, semesterAjaranId, mataPelajaranId])
+  @@index([siswaId])
+  @@index([semesterAjaranId])
+  @@index([mataPelajaranId])
   @@schema("public")
 }
 
