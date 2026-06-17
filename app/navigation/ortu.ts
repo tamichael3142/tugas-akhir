@@ -41,6 +41,15 @@ function pengumumanDetail({ pengumumanId }: { pengumumanId: Pengumuman['id'] }) 
 }
 
 /*
+ * Ortu's violations level routes
+ */
+const violationsUrl = '/violations'
+
+function violations() {
+  return `${baseUrl}${violationsUrl}`
+}
+
+/*
  * Ortu's account level routes
  */
 const accountUrl = '/account'
@@ -58,6 +67,7 @@ const ortu = {
   dashboard,
   nilaiSiswa,
   absensiSiswa,
+  violations,
   pengumuman,
   pengumumanDetail,
   account,

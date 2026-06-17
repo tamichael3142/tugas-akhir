@@ -230,6 +230,10 @@ const pageMetas = {
     { title: `Account - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Site for parent on SBBS' },
   ],
+  ortuViolations: [
+    { title: `Student Violations - Parent | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Site for parent on SBBS' },
+  ],
 }
 
 export default pageMetas

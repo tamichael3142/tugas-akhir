@@ -9,6 +9,7 @@ import {
   Kompetensi,
   KompetensiEkstrakulikuler,
   MataPelajaran,
+  PelanggaranPerMapel,
   Pengumuman,
   Penilaian,
   PenilaianExtrakulikuler,
@@ -107,3 +108,12 @@ export type LoaderDataOrtuAccount = {
 }
 
 export type LoaderDataOrtuAccountChangePassword = LoaderDataOrtuAccount
+
+/**
+ * * Violations
+ */
+export type LoaderDataOrtuViolations = OrtuWithChildren & {
+  pelanggarans: PaginationReturns<
+    PelanggaranPerMapel & { siswa: Akun; kelas: Kelas; mataPelajaran: MataPelajaran; createdBy: Akun | null }
+  >
+}
