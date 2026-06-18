@@ -42,6 +42,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       defaultLimit: 10,
       where: {
         siswaId: userId,
+        deletedAt: null,
       },
       include: {
         mataPelajaran: true,
@@ -68,7 +69,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
   const totalPoint = await prisma.pelanggaranPerMapel
     .aggregate({
       _sum: { poin: true },
-      where: { siswaId: userId },
+      where: { siswaId: userId, deletedAt: null },
     })
     .then(res => res._sum.poin ?? 0)
     .catch(() => 0)

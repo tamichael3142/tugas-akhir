@@ -147,7 +147,10 @@ export default function GuruManageViolationsPage() {
               label='Subject'
               options={[
                 { value: '', label: 'All subjects' },
-                ...loader.mataPelajarans.map(item => ({ value: item.id, label: item.nama })),
+                ...loader.mataPelajarans.map(item => ({
+                  value: item.id,
+                  label: `${item.nama} - (${item.semesterAjaranId})`,
+                })),
               ]}
               selectProps={{
                 value: searchParams.get('mataPelajaranId') ?? '',
