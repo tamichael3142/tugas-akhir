@@ -1,19 +1,20 @@
+import { TahunAjaran } from '@prisma/client'
 import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import * as dateFns from 'date-fns'
+import { Fragment, useEffect } from 'react'
 import { FaPlus } from 'react-icons/fa'
+// import { MdCalendarMonth } from 'react-icons/md'
 import { Button } from '~/components/forms'
 import { DataGrid, LoadingFullScreen } from '~/components/ui'
+import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
+import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
+import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
+import constants from '~/constants'
+import { usePopup } from '~/hooks/usePopup'
 import AdminPageContainer from '~/layouts/admin/AdminPageContainer'
 import AppNav from '~/navigation'
-import { LoaderDataAdminMasterTahunAjaran } from '~/types/loaders-data/admin'
-import * as dateFns from 'date-fns'
-import constants from '~/constants'
-import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
-import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
-import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
-import { usePopup } from '~/hooks/usePopup'
-import { TahunAjaran } from '@prisma/client'
-import { useEffect, Fragment } from 'react'
 import { ActionDataAdminMasterTahunAjaranDelete } from '~/types/actions-data/admin'
+import { LoaderDataAdminMasterTahunAjaran } from '~/types/loaders-data/admin'
 
 const sectionPrefix = 'admin-master-tahunAjaran'
 const deleteFormId = `${sectionPrefix}-delete-form`
@@ -121,6 +122,14 @@ export default function AdminMasterTahunAjaranPage() {
             label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
+                {/* <Link to={AppNav.admin.masterTahunAjaranManageAcademicCalendar({ id: row.id })}>
+                  <DataGridActionButton
+                    icon={<MdCalendarMonth />}
+                    color='info'
+                    label='Manage Academic Calendar'
+                    buttonProps={{ disabled: !!row.deletedAt }}
+                  />
+                </Link> */}
                 <Link to={AppNav.admin.masterTahunAjaranEdit({ id: row.id })}>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}

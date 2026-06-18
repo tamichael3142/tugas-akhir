@@ -14,6 +14,10 @@ const pageMetas = {
     { title: `Master Academic Year - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },
   ],
+  adminMasterTahunAjaranManageAcademicCalendar: [
+    { title: `Manage Academic Calendar - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Admin site of SBBS' },
+  ],
   adminMasterKelas: [
     { title: `Master Class - Admin | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Admin site of SBBS' },

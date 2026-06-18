@@ -1,4 +1,5 @@
 import {
+  AcademicCalendarEvent,
   Akun,
   Days,
   Ekstrakulikuler,
@@ -62,6 +63,24 @@ export type ActionDataAdminMasterTahunAjaranDelete = BaseActionData & {
   data: {
     // * Success
     deletedTahunAjaran?: TahunAjaran
+  }
+}
+
+export type ActionDataAdminMasterTahunAjaranAcademicCalendarEventCreate = BaseActionData & {
+  data: {
+    createdEvent?: AcademicCalendarEvent
+  }
+}
+
+export type ActionDataAdminMasterTahunAjaranAcademicCalendarEventEdit = BaseActionData & {
+  data: {
+    updatedEvent?: AcademicCalendarEvent
+  }
+}
+
+export type ActionDataAdminMasterTahunAjaranAcademicCalendarEventDelete = BaseActionData & {
+  data: {
+    deletedEvent?: AcademicCalendarEvent
   }
 }
 

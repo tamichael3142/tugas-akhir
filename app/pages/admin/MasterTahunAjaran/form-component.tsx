@@ -5,8 +5,6 @@ import { Checkbox, TextInput } from '~/components/forms'
 import { addYears, format } from 'date-fns'
 import constants from '~/constants'
 import { useEffect, useState } from 'react'
-import { AcademicCalendarCard } from '~/components/ui'
-import { TahunAjaran } from '@prisma/client'
 
 const MIN_YEAR = 1950
 const MAX_YEAR = Number(new Date().getFullYear()) + 20
@@ -34,10 +32,6 @@ export default function AdminMasterTahunAjaranFormComponent() {
       new Date(`${Number(newValue) < MIN_YEAR ? MIN_YEAR : Number(newValue) > MAX_YEAR ? MAX_YEAR : newValue}/06/01`),
       constants.dateFormats.rawDateInput,
     )
-  }
-
-  const currentTahunAjaran: Partial<TahunAjaran> = {
-    academicCalendarEmbedUrl: formHook.watch('academicCalendarEmbedUrl'),
   }
 
   return (
@@ -98,31 +92,6 @@ export default function AdminMasterTahunAjaranFormComponent() {
               />
             </div>
           )}
-        />
-      </div>
-      <div className='col-span-2'>
-        <Controller
-          control={formHook.control}
-          name={'academicCalendarEmbedUrl'}
-          render={({ field, fieldState }) => (
-            <TextInput
-              label='Academic Calendar Embed URL'
-              inputProps={{
-                ...field,
-                value: field.value ?? '',
-                placeholder: 'https://calendar.google.com/calendar/embed?...',
-              }}
-              isError={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
-        />
-
-        <AcademicCalendarCard
-          title='Academic Calendar Preview'
-          forceHideSetButton
-          currentTahunAjaran={currentTahunAjaran}
-          className='mt-4 md:mt-8'
         />
       </div>
     </div>

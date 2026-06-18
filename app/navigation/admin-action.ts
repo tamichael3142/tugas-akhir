@@ -10,6 +10,10 @@ function masterTahunAjaranDelete({ tahunAjaranId }: { tahunAjaranId: string }) {
   return `${baseUrl}/master-tahun-ajaran/${tahunAjaranId}/delete`
 }
 
+function academicCalendarEventDelete({ tahunAjaranId, eventId }: { tahunAjaranId: string; eventId: string }) {
+  return `${baseUrl}/master-tahun-ajaran/${tahunAjaranId}/academic-calendar-event/${eventId}/delete`
+}
+
 function masterKelasDelete({ kelasId }: { kelasId: string }) {
   return `${baseUrl}/master-kelas/${kelasId}/delete`
 }
@@ -74,6 +78,7 @@ const adminAction = {
   baseUrl,
   importExcelUser,
   masterTahunAjaranDelete,
+  academicCalendarEventDelete,
   masterKelasDelete,
   masterMataPelajaranDelete,
   masterEkstrakulikulerDelete,

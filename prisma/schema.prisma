@@ -218,25 +218,24 @@ model Days {
 }
 
 model TahunAjaran {
-  id                       String                  @id @default(cuid())
+  id                     String                  @id @default(cuid())
   // ? credentials
-  nama                     String
-  tahunMulai               DateTime
-  tahunBerakhir            DateTime
-  academicCalendarEmbedUrl String?
+  nama                   String
+  tahunMulai             DateTime
+  tahunBerakhir          DateTime
   // ? meta data
-  updatedAt                DateTime                @default(now())
-  createdAt                DateTime                @default(now())
-  deletedAt                DateTime?
-  createdById              String?
-  createdBy                Akun?                   @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById           String?
-  lastUpdateBy             Akun?                   @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt              DateTime                @default(now())
+  createdAt              DateTime                @default(now())
+  deletedAt              DateTime?
+  createdById            String?
+  createdBy              Akun?                   @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById         String?
+  lastUpdateBy           Akun?                   @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? relations
-  semesterAjaran           SemesterAjaran[]
-  kelas                    Kelas[]
-  ekstrakulikuler          Ekstrakulikuler[]
-  academicCalendarEvents   AcademicCalendarEvent[]
+  semesterAjaran         SemesterAjaran[]
+  kelas                  Kelas[]
+  ekstrakulikuler        Ekstrakulikuler[]
+  academicCalendarEvents AcademicCalendarEvent[]
 
   @@schema("public")
 }
@@ -648,17 +647,17 @@ model ReportConfig {
 }
 
 model StudentReport {
-  id                   String         @id @default(cuid())
+  id                  String         @id @default(cuid())
   // ? credentials
-  siswaId              String
-  siswa                Akun           @relation(fields: [siswaId], references: [id], name: "studentReports")
-  semesterAjaranId     String
-  semesterAjaran       SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
+  siswaId             String
+  siswa               Akun           @relation(fields: [siswaId], references: [id], name: "studentReports")
+  semesterAjaranId    String
+  semesterAjaran      SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
   // ? general
-  homeroomTeacherNote  String?
+  homeroomTeacherNote String?
   // ? meta data
-  updatedAt            DateTime       @default(now())
-  createdAt            DateTime       @default(now())
+  updatedAt           DateTime       @default(now())
+  createdAt           DateTime       @default(now())
 
   @@unique([siswaId, semesterAjaranId])
   @@index([siswaId])
@@ -667,19 +666,19 @@ model StudentReport {
 }
 
 model StudentSubjectReport {
-  id               String        @id @default(cuid())
+  id               String         @id @default(cuid())
   // ? credentials
   siswaId          String
-  siswa            Akun          @relation(fields: [siswaId], references: [id], name: "studentSubjectReports")
+  siswa            Akun           @relation(fields: [siswaId], references: [id], name: "studentSubjectReports")
   semesterAjaranId String
   semesterAjaran   SemesterAjaran @relation(fields: [semesterAjaranId], references: [id])
   mataPelajaranId  String
-  mataPelajaran    MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
+  mataPelajaran    MataPelajaran  @relation(fields: [mataPelajaranId], references: [id])
   // ? general
   description      String?
   // ? meta data
-  updatedAt        DateTime      @default(now())
-  createdAt        DateTime      @default(now())
+  updatedAt        DateTime       @default(now())
+  createdAt        DateTime       @default(now())
 
   @@unique([siswaId, semesterAjaranId, mataPelajaranId])
   @@index([siswaId])

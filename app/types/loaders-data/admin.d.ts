@@ -1,6 +1,7 @@
 import {
   Absensi,
   AbsensiXSiswa,
+  AcademicCalendarEvent,
   Akun,
   AkunChildren,
   Days,
@@ -46,6 +47,20 @@ export type LoaderDataAdminMasterTahunAjaran = {
 
 export type LoaderDataAdminMasterTahunAjaranEdit = {
   tahunAjaran: TahunAjaran | null
+}
+
+export type LoaderDataAdminMasterTahunAjaranManageAcademicCalendar = {
+  tahunAjaran: TahunAjaran | null
+  academicCalendarEvents: PaginationReturns<AcademicCalendarEvent>
+}
+
+export type LoaderDataAdminMasterTahunAjaranManageAcademicCalendarCreate = {
+  tahunAjaran: TahunAjaran | null
+}
+
+export type LoaderDataAdminMasterTahunAjaranManageAcademicCalendarEdit = {
+  tahunAjaran: TahunAjaran | null
+  academicCalendarEvent: AcademicCalendarEvent | null
 }
 
 /**

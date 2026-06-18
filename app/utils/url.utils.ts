@@ -33,9 +33,17 @@ function buildGoogleCalendarEmbedUrl(url: string): string {
   return parsed.toString()
 }
 
+function buildGoogleCalendarEmbedUrlFromId(calendarId: string): string {
+  const url = new URL('https://calendar.google.com/calendar/embed')
+  url.searchParams.set('src', calendarId)
+  for (const [key, value] of Object.entries(defaultGoogleCalendarEmbedParams)) url.searchParams.set(key, value)
+  return url.toString()
+}
+
 const UrlUtils = {
   isValidGoogleCalendarEmbedUrl,
   buildGoogleCalendarEmbedUrl,
+  buildGoogleCalendarEmbedUrlFromId,
 }
 
 export default UrlUtils

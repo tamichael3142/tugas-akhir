@@ -30,6 +30,24 @@ function masterTahunAjaranEdit({ id }: { id: string }) {
   return `${baseUrl}${masterTahunAjaranUrl}/${id}/edit`
 }
 
+function masterTahunAjaranManageAcademicCalendar({ id }: { id: string }) {
+  return `${baseUrl}${masterTahunAjaranUrl}/${id}/manage-academic-calendar`
+}
+
+function masterTahunAjaranManageAcademicCalendarCreate({ tahunAjaranId }: { tahunAjaranId: string }) {
+  return `${baseUrl}${masterTahunAjaranUrl}/${tahunAjaranId}/manage-academic-calendar/create`
+}
+
+function masterTahunAjaranManageAcademicCalendarEdit({
+  tahunAjaranId,
+  eventId,
+}: {
+  tahunAjaranId: string
+  eventId: string
+}) {
+  return `${baseUrl}${masterTahunAjaranUrl}/${tahunAjaranId}/manage-academic-calendar/${eventId}/edit`
+}
+
 /*
  * Admin's master kelas level routes
  */
@@ -262,6 +280,9 @@ const admin = {
   masterTahunAjaranCreate,
   masterTahunAjaranDetail,
   masterTahunAjaranEdit,
+  masterTahunAjaranManageAcademicCalendar,
+  masterTahunAjaranManageAcademicCalendarCreate,
+  masterTahunAjaranManageAcademicCalendarEdit,
   masterKelas,
   masterKelasCreate,
   masterKelasDetail,
