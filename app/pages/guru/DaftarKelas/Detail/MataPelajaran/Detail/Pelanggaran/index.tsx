@@ -1,4 +1,4 @@
-import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
+import { useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
@@ -178,19 +178,6 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
 
               return (
                 <DataGridActionButtonWrapper>
-                  <Link
-                    to={AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranDetail({
-                      kelasId: loader.kelas?.id ?? '',
-                      mataPelajaranId: loader.mataPelajaran.id,
-                      pelanggaranId: row.id,
-                    })}
-                  >
-                    <DataGridActionButton
-                      icon={DataGridActionButtonHelper.getDetailIcon()}
-                      color='info'
-                      label={'Detail'}
-                    />
-                  </Link>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}
                     color='warning'
