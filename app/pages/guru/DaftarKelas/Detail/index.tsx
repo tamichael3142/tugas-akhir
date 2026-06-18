@@ -27,6 +27,7 @@ export default function GuruDaftarKelasDetailPage() {
     <GuruPageContainer
       title={`Kelas: ${loader.kelas?.nama}`}
       actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}
+      className='pb-52'
     >
       <Card className='p-0!'>
         <div className='grid grid-cols-3 gap-4 lg:gap-8 p-4 lg:p-8'>
