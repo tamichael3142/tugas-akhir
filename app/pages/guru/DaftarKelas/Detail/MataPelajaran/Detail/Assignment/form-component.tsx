@@ -5,8 +5,6 @@ import { useRemixFormContext } from 'remix-hook-form'
 import { Checkbox, StaticSelect, TextAreaInput, TextInput } from '~/components/forms'
 import { ReactNode } from 'react'
 import classNames from 'classnames'
-import { format } from 'date-fns'
-import constants from '~/constants'
 import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
@@ -49,10 +47,9 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
               label='Start Date'
               inputProps={{
                 type: 'datetime-local',
-                value: format(field.value, constants.dateFormats.rawDateTimeInput),
+                value: field.value?.replace(' ', 'T') ?? '',
                 onChange: e => {
-                  const selectedDate = e.target.value ? new Date(e.target.value) : null
-                  field.onChange(selectedDate ? format(selectedDate, constants.dateFormats.rawDateTimeInput) : null)
+                  field.onChange(e.target.value ? e.target.value.replace('T', ' ') : null)
                   formHook.trigger('tanggalMulai')
                 },
               }}
@@ -69,10 +66,9 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
               label='End Date'
               inputProps={{
                 type: 'datetime-local',
-                value: format(field.value, constants.dateFormats.rawDateTimeInput),
+                value: field.value?.replace(' ', 'T') ?? '',
                 onChange: e => {
-                  const selectedDate = e.target.value ? new Date(e.target.value) : null
-                  field.onChange(selectedDate ? format(selectedDate, constants.dateFormats.rawDateTimeInput) : null)
+                  field.onChange(e.target.value ? e.target.value.replace('T', ' ') : null)
                   formHook.trigger('tanggalBerakhir')
                 },
               }}

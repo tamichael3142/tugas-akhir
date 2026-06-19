@@ -36,6 +36,15 @@ export function normalizeDateRange({ startDate, endDate }: { startDate: Date | s
   }
 }
 
-const DateUtils = { getADateTreshold, normalizeDateRange }
+// ? Format date dari DB untuk datetime-local input — konversi UTC ke waktu lokal (WIB)
+// ! Bisa berubah tergantung DB yang digunakan
+function formatStoredDatetime(input: Date | string | null | undefined, fallback?: string): string {
+  const d = input ? new Date(input) : new Date()
+  if (isNaN(d.getTime())) return fallback ?? ''
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
+const DateUtils = { getADateTreshold, normalizeDateRange, formatStoredDatetime }
 
 export default DateUtils

@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import * as z from 'zod'
 import constants from '~/constants'
 import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
+import DateUtils from '~/utils/date.utils'
 
 export const validationSchema = z.object({
   title: z.string().min(2),
@@ -35,8 +36,14 @@ export function translateRawToFormData(
   return {
     title: data.title ?? '',
     description: data.description ?? '',
-    tanggalMulai: format(data.tanggalMulai ?? new Date(), constants.dateFormats.rawDateTimeInput),
-    tanggalBerakhir: format(data.tanggalBerakhir ?? new Date(), constants.dateFormats.rawDateTimeInput),
+    tanggalMulai: DateUtils.formatStoredDatetime(
+      data.tanggalMulai,
+      format(new Date(), constants.dateFormats.rawDateTimeInput),
+    ),
+    tanggalBerakhir: DateUtils.formatStoredDatetime(
+      data.tanggalBerakhir,
+      format(new Date(), constants.dateFormats.rawDateTimeInput),
+    ),
     isSubmitable: data.isSubmitable ?? false,
     submissionType: data.submissionType
       ? (data.submissionType as AssignmentSubmissionType)
