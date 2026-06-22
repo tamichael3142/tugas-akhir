@@ -1,32 +1,23 @@
-import { PelanggaranPerMapel } from '@prisma/client'
+import { PelanggaranPerKelas } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { LoadingFullScreen } from '~/components/ui'
-import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete } from '~/types/actions-data/guru'
+import { ActionDataGuruDaftarKelasDetailPelanggaranDelete } from '~/types/actions-data/guru'
 import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 
-export async function action({
-  request,
-  params,
-}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete> {
+export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranDelete> {
   try {
     const userId = await requireAuthCookie(request)
-    if (!userId)
-      throw {
-        message: 'Unauthorized! User not logged in!',
-      }
+    if (!userId) throw { message: 'Unauthorized! User not logged in!' }
 
-    const pelanggaranId = params.pelanggaranId as PelanggaranPerMapel['id'] | null
+    const pelanggaranId = params.pelanggaranId as PelanggaranPerKelas['id'] | null
 
-    const currPelanggaran = await prisma.pelanggaranPerMapel.findUnique({ where: { id: pelanggaranId ?? '' } })
+    const currPelanggaran = await prisma.pelanggaranPerKelas.findUnique({ where: { id: pelanggaranId ?? '' } })
 
-    if (!currPelanggaran || !pelanggaranId)
-      throw {
-        message: 'Violation not found!',
-      }
+    if (!currPelanggaran || !pelanggaranId) throw { message: 'Violation not found!' }
 
-    return await prisma.pelanggaranPerMapel
+    return await prisma.pelanggaranPerKelas
       .update({
         where: { id: pelanggaranId },
         data: {
@@ -38,9 +29,7 @@ export async function action({
         return {
           success: true,
           message: 'Violation deleted!',
-          data: {
-            deletedPelanggaran: result,
-          },
+          data: { deletedPelanggaran: result },
         }
       })
       .catch(error => {
@@ -57,6 +46,6 @@ export async function action({
   }
 }
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranDeleteRoute() {
+export default function GuruDaftarKelasDetailPelanggaranDeleteRoute() {
   return <LoadingFullScreen />
 }

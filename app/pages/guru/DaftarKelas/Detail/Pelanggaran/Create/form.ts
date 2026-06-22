@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PelanggaranPerMapel } from '@prisma/client'
+import { PelanggaranPerKelas } from '@prisma/client'
 import * as z from 'zod'
 
 export const validationSchema = z.object({
@@ -11,19 +11,19 @@ export const validationSchema = z.object({
   remark: z.string().optional().nullish(),
 })
 
-export type GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType = z.infer<typeof validationSchema>
+export type GuruDaftarKelasDetailPelanggaranCreateFormType = z.infer<typeof validationSchema>
 
 export const resolver = zodResolver(validationSchema)
 
-export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType = {
+export const emptyValues: GuruDaftarKelasDetailPelanggaranCreateFormType = {
   siswaId: '',
   poin: 0,
   remark: '',
 }
 
 export function translateRawToFormData(
-  data: PelanggaranPerMapel,
-): GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType {
+  data: PelanggaranPerKelas,
+): GuruDaftarKelasDetailPelanggaranCreateFormType {
   return {
     siswaId: data.siswaId ?? '',
     poin: data.poin ?? 0,

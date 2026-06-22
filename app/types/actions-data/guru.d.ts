@@ -2,7 +2,7 @@ import {
   Assignment,
   MataPelajaranAttachment,
   MataPelajaranBeritaAcara,
-  PelanggaranPerMapel,
+  PelanggaranPerKelas,
   Pengumuman,
 } from '@prisma/client'
 import { BaseActionData } from './base-action'
@@ -11,7 +11,7 @@ import { GuruManageAbsensiEditFormType, GuruManageAbsensiMutateFormType } from '
 import { GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Assignment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailAttachmentCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Attachment/form-types'
 import { GuruDaftarKelasDetailMataPelajaranDetailPenilaianFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Penilaian/form'
-import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran/form-types'
+import { GuruDaftarKelasDetailPelanggaranCreateFormType } from '~/pages/guru/DaftarKelas/Detail/Pelanggaran/form-types'
 import { GuruManageViolationsCreateFormType } from '~/pages/guru/ManageViolations/form-types'
 import { GuruAccountSelfUpdateFormType } from '~/pages/guru/Account/form'
 import { GuruAccountChangePasswordFormType } from '~/pages/guru/Account/ChangePassword/form'
@@ -114,28 +114,28 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian = BaseAc
   }
 }
 
-export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreate = BaseActionData & {
+export type ActionDataGuruDaftarKelasDetailPelanggaranCreate = BaseActionData & {
   data: {
     // * Success
-    createdPelanggaran?: PelanggaranPerMapel
+    createdPelanggaran?: PelanggaranPerKelas
     // * Error
-    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType
+    oldFormData?: GuruDaftarKelasDetailPelanggaranCreateFormType
   }
 }
 
-export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit = BaseActionData & {
+export type ActionDataGuruDaftarKelasDetailPelanggaranEdit = BaseActionData & {
   data: {
     // * Success
-    updatedPelanggaran?: PelanggaranPerMapel
+    updatedPelanggaran?: PelanggaranPerKelas
     // * Error
-    oldFormData?: GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType
+    oldFormData?: GuruDaftarKelasDetailPelanggaranCreateFormType
   }
 }
 
-export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete = BaseActionData & {
+export type ActionDataGuruDaftarKelasDetailPelanggaranDelete = BaseActionData & {
   data: {
     // * Success
-    deletedPelanggaran?: PelanggaranPerMapel
+    deletedPelanggaran?: PelanggaranPerKelas
   }
 }
 
@@ -145,7 +145,7 @@ export type ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete 
 export type ActionDataGuruManageViolationsCreate = BaseActionData & {
   data: {
     // * Success
-    createdPelanggaran?: PelanggaranPerMapel
+    createdPelanggaran?: PelanggaranPerKelas
     // * Error
     oldFormData?: GuruManageViolationsCreateFormType
   }
@@ -154,7 +154,7 @@ export type ActionDataGuruManageViolationsCreate = BaseActionData & {
 export type ActionDataGuruManageViolationsEdit = BaseActionData & {
   data: {
     // * Success
-    updatedPelanggaran?: PelanggaranPerMapel
+    updatedPelanggaran?: PelanggaranPerKelas
     // * Error
     oldFormData?: GuruManageViolationsCreateFormType
   }
@@ -163,7 +163,7 @@ export type ActionDataGuruManageViolationsEdit = BaseActionData & {
 export type ActionDataGuruManageViolationsDelete = BaseActionData & {
   data: {
     // * Success
-    deletedPelanggaran?: PelanggaranPerMapel
+    deletedPelanggaran?: PelanggaranPerKelas
   }
 }
 

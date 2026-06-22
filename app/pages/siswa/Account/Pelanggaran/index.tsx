@@ -33,7 +33,6 @@ export default function SiswaAccountPelanggaranPage() {
             { field: 'remark', label: 'Remark' },
             { field: 'poin', label: 'Minus Points' },
             { field: 'kelas', label: 'Class', render: row => row.kelas.nama },
-            { field: 'kelas', label: 'Subject', render: row => row.mataPelajaran.nama },
             {
               field: 'createdAt',
               label: 'Created At',

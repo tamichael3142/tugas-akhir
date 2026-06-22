@@ -4,13 +4,12 @@ import { useRemixFormContext } from 'remix-hook-form'
 import { StaticSelect, TextAreaInput, TextInput } from '~/components/forms'
 import { ReactNode } from 'react'
 import classNames from 'classnames'
-import { Akun, Kelas, MataPelajaran } from '@prisma/client'
+import { Akun, Kelas } from '@prisma/client'
 import DBHelpers from '~/database/helpers'
 
 type Props = {
   siswas: Akun[]
   kelass: Kelas[]
-  mataPelajarans: MataPelajaran[]
 }
 
 export default function GuruManageViolationsFormComponent(props: Props) {
@@ -64,22 +63,6 @@ export default function GuruManageViolationsFormComponent(props: Props) {
               options={[
                 { value: '', label: 'Choose a class...' },
                 ...props.kelass.map(item => ({ value: item.id, label: item.nama })),
-              ]}
-              selectProps={{ ...field }}
-            />
-          )}
-        />
-      </InputWrapper>
-      <InputWrapper cutting='half'>
-        <Controller
-          control={formHook.control}
-          name={'mataPelajaranId'}
-          render={({ field }) => (
-            <StaticSelect
-              label='Subject'
-              options={[
-                { value: '', label: 'Choose a subject...' },
-                ...props.mataPelajarans.map(item => ({ value: item.id, label: item.nama })),
               ]}
               selectProps={{ ...field }}
             />

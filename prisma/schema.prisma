@@ -140,8 +140,8 @@ model Akun {
   assignmentUpdator              Assignment[]               @relation(name: "lastUpdateBy")
   mataPelajaranAttachmentCreator MataPelajaranAttachment[]  @relation(name: "createdBy")
   mataPelajaranAttachmentUpdator MataPelajaranAttachment[]  @relation(name: "lastUpdateBy")
-  pelanggaranCreator             PelanggaranPerMapel[]      @relation(name: "createdBy")
-  pelanggaranUpdator             PelanggaranPerMapel[]      @relation(name: "lastUpdateBy")
+  pelanggaranCreator             PelanggaranPerKelas[]      @relation(name: "createdBy")
+  pelanggaranUpdator             PelanggaranPerKelas[]      @relation(name: "lastUpdateBy")
   beritaAcaraCreator             MataPelajaranBeritaAcara[] @relation(name: "createdBy")
   beritaAcaraUpdator             MataPelajaranBeritaAcara[] @relation(name: "lastUpdateBy")
   importExcelTemplateCreator     ImportExcelTemplate[]      @relation(name: "createdBy")
@@ -157,7 +157,7 @@ model Akun {
   absensiSiswaPerKelas           AbsensiXSiswa[]
   assignmentSubmissions          AssignmentSubmission[]
   penilaians                     Penilaian[]
-  pelanggaransPerMapel           PelanggaranPerMapel[]
+  pelanggaransPerKelas           PelanggaranPerKelas[]
   children                       AkunChildren[]             @relation(name: "children")
   parents                        AkunChildren[]             @relation(name: "parents")
   penilaiansExtrakulikuler       PenilaianExtrakulikuler[]
@@ -291,7 +291,7 @@ model Kelas {
   assignments               Assignment[]
   penilaians                Penilaian[]
   mataPelajaranAttachments  MataPelajaranAttachment[]
-  pelanggaransPerMapel      PelanggaranPerMapel[]
+  pelanggaransPerKelas      PelanggaranPerKelas[]
   mataPelajaranBeritaAcaras MataPelajaranBeritaAcara[]
   reportConfigs             ReportConfig[]
 
@@ -324,7 +324,6 @@ model MataPelajaran {
   assignments              Assignment[]
   penilaians               Penilaian[]
   mataPelajaranAttachments MataPelajaranAttachment[]
-  pelanggarans             PelanggaranPerMapel[]
   beritaAcaras             MataPelajaranBeritaAcara[]
   studentSubjectReports    StudentSubjectReport[]
 
@@ -500,13 +499,11 @@ model Penilaian {
   @@schema("public")
 }
 
-model PelanggaranPerMapel {
+model PelanggaranPerKelas {
   id              String        @id @default(cuid())
   // ? credentials
   kelasId         String
   kelas           Kelas         @relation(fields: [kelasId], references: [id])
-  mataPelajaranId String
-  mataPelajaran   MataPelajaran @relation(fields: [mataPelajaranId], references: [id])
   siswaId         String
   siswa           Akun          @relation(fields: [siswaId], references: [id])
   // ? general

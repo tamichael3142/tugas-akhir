@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useRevalidator } from '@remix-run/react'
 import classNames from 'classnames'
 import { Fragment } from 'react'
-import { AcademicCalendarCard, BackButton, Card, LoadingFullScreen } from '~/components/ui'
+import { AcademicCalendarCard, Card, LoadingFullScreen } from '~/components/ui'
 import constants from '~/constants'
 import GuruPageContainer from '~/layouts/guru/GuruPageContainer'
 import AppNav from '~/navigation'
@@ -20,10 +20,10 @@ export default function GuruDashboardPage() {
 
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
-    <GuruPageContainer title='Teaching Schedule' actions={[<BackButton key={`${sectionPrefix}-back-button`} />]}>
+    <GuruPageContainer title='Teaching Schedule'>
       <AcademicCalendarCard currentTahunAjaran={currentTahunAjaran} className='mb-4 md:mb-8' />
 
-      <Card>
+      <Card key={`${sectionPrefix}-card`}>
         {days.length && hours.length ? (
           <div className='overflow-x-auto relative mb-4'>
             <div className='w-full min-w-xl grid grid-cols-2 mb-1'>

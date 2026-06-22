@@ -13,7 +13,7 @@ import {
   KompetensiEkstrakulikuler,
   MataPelajaran,
   MataPelajaranAttachment,
-  PelanggaranPerMapel,
+  PelanggaranPerKelas,
   Pengumuman,
   Penilaian,
   PenilaianExtrakulikuler,
@@ -111,7 +111,7 @@ export type LoaderDataSiswaKelasDetailMataPelajaranDetailPenilaian = LoaderDataS
  * * Kelas > Subject > Pelanggaran
  */
 export type LoaderDataSiswaKelasDetailMataPelajaranDetailPelanggaran = LoaderDataSiswaKelasDetailMataPelajaranDetail & {
-  pelanggarans: PaginationReturns<PelanggaranPerMapel>
+  pelanggarans: PaginationReturns<PelanggaranPerKelas>
 }
 
 /**
@@ -193,7 +193,7 @@ export type LoaderDataSiswaAccount = CurrentTahunAndSemesterAjaran & {
 
 export type LoaderDataSiswaAccountPelanggaran = CurrentTahunAndSemesterAjaran & {
   totalPoint: number
-  pelanggarans: PaginationReturns<PelanggaranPerMapel & { kelas: Kelas; mataPelajaran: MataPelajaran }>
+  pelanggarans: PaginationReturns<PelanggaranPerKelas & { kelas: Kelas }>
 }
 
 export type LoaderDataSiswaAccountChangePassword = LoaderDataSiswaAccount

@@ -55,11 +55,10 @@ export async function loader({
 
   const pelanggarans = await getPaginatedData({
     request,
-    model: prisma.pelanggaranPerMapel,
+    model: prisma.pelanggaranPerKelas,
     options: {
       defaultLimit: 10,
       where: {
-        mataPelajaranId,
         kelasId,
         siswaId: userId,
       },

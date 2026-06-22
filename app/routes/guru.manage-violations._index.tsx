@@ -24,14 +24,9 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     orderBy: [{ nama: 'asc' }],
   })
 
-  const mataPelajarans = await prisma.mataPelajaran.findMany({
-    where: { deletedAt: null, guruId: userId },
-    orderBy: [{ nama: 'asc' }],
-  })
-
   const pelanggarans = await getPaginatedData({
     request,
-    model: prisma.pelanggaranPerMapel,
+    model: prisma.pelanggaranPerKelas,
     options: {
       defaultLimit: 10,
       where: {
@@ -41,7 +36,6 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       include: {
         siswa: true,
         kelas: true,
-        mataPelajaran: true,
         createdBy: true,
       },
       mapQueryToWhere: query => {
@@ -61,9 +55,6 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         const kelasId = query.get('kelasId')
         if (kelasId) where.kelasId = kelasId
 
-        const mataPelajaranId = query.get('mataPelajaranId')
-        if (mataPelajaranId) where.mataPelajaranId = mataPelajaranId
-
         const startDate = query.get('startDate')
         const endDate = query.get('endDate')
         if (startDate || endDate) {
@@ -79,7 +70,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     },
   })
 
-  return { pelanggarans, kelass, mataPelajarans } as LoaderDataGuruManageViolations
+  return { pelanggarans, kelass } as LoaderDataGuruManageViolations
 }
 
 export default function GuruManageViolationsRoute() {

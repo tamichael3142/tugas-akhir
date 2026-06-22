@@ -55,7 +55,6 @@ export default function GuruManageViolationsCreatePage() {
             <GuruManageViolationsFormComponent
               siswas={loader.siswas}
               kelass={loader.kelass}
-              mataPelajarans={loader.mataPelajarans}
             />
           </RemixFormProvider>
           <hr className='my-8' />

@@ -1,4 +1,4 @@
-import { Kelas, MataPelajaran, MataPelajaranAttachment, PelanggaranPerMapel } from '@prisma/client'
+import { Kelas, MataPelajaran, MataPelajaranAttachment, PelanggaranPerKelas } from '@prisma/client'
 
 const baseUrl = '/action/guru'
 
@@ -24,16 +24,14 @@ function daftarKelasDetailMataPelajaranDetailAttachmentDelete({
   return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/attachment/${attachmentId}/delete`
 }
 
-function daftarKelasDetailMataPelajaranDetailPelanggaranDelete({
+function daftarKelasDetailPelanggaranDelete({
   kelasId,
-  mataPelajaranId,
   pelanggaranId,
 }: {
   kelasId: Kelas['id']
-  mataPelajaranId: MataPelajaran['id']
-  pelanggaranId: PelanggaranPerMapel['id']
+  pelanggaranId: PelanggaranPerKelas['id']
 }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran/${pelanggaranId}/delete`
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/pelanggaran/${pelanggaranId}/delete`
 }
 
 function accountUploadProfileImage() {
@@ -42,7 +40,7 @@ function accountUploadProfileImage() {
 
 const manageViolationsUrl = '/manage-violations'
 
-function manageViolationsDelete({ pelanggaranId }: { pelanggaranId: PelanggaranPerMapel['id'] }) {
+function manageViolationsDelete({ pelanggaranId }: { pelanggaranId: PelanggaranPerKelas['id'] }) {
   return `${baseUrl}${manageViolationsUrl}/${pelanggaranId}/delete`
 }
 
@@ -51,7 +49,7 @@ const guruAction = {
   masterPengumumanDelete,
   daftarKelasDetailAbsensiCreate,
   daftarKelasDetailMataPelajaranDetailAttachmentDelete,
-  daftarKelasDetailMataPelajaranDetailPelanggaranDelete,
+  daftarKelasDetailPelanggaranDelete,
   manageViolationsDelete,
   accountUploadProfileImage,
 }

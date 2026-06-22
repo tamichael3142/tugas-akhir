@@ -22,7 +22,7 @@ import {
   MataPelajaranAttachment,
   Kompetensi,
   Penilaian,
-  PelanggaranPerMapel,
+  PelanggaranPerKelas,
   MataPelajaranBeritaAcara,
   AssignmentSubmission,
 } from '@prisma/client'
@@ -83,7 +83,7 @@ export type LoaderDataGuruDaftarKelasDetailDaftarSiswa = {
  */
 export type LoaderDataGuruDaftarKelasDetailDetailSiswa = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
-  siswa: Akun & { pelanggaransPerMapel: (PelanggaranPerMapel & { mataPelajaran: MataPelajaran })[] }
+  siswa: Akun & { pelanggaransPerKelas: PelanggaranPerKelas[] }
   totalPoint: number
 }
 
@@ -183,23 +183,23 @@ export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPenilaian =
   }
 
 /**
- * * Class list Detail > Subject Detail > Pelanggaram
+ * * Class list Detail > Pelanggaran
  */
-export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran =
-  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    pelanggarans: PaginationReturns<PelanggaranPerMapel & { siswa: Akun }>
-  }
+export type LoaderDataGuruDaftarKelasDetailPelanggaran = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  pelanggarans: PaginationReturns<PelanggaranPerKelas & { siswa: Akun }>
+}
 
-export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreate =
-  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    siswas: Akun[]
-  }
+export type LoaderDataGuruDaftarKelasDetailPelanggaranCreate = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  siswas: Akun[]
+}
 
-export type LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranEdit =
-  LoaderDataGuruDaftarKelasDetailMataPelajaranDetail & {
-    siswas: Akun[]
-    pelanggaran: PelanggaranPerMapel & { siswa: Akun }
-  }
+export type LoaderDataGuruDaftarKelasDetailPelanggaranEdit = {
+  kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  siswas: Akun[]
+  pelanggaran: PelanggaranPerKelas & { siswa: Akun }
+}
 
 /**
  * * Class list Detail > Absensi
@@ -292,20 +292,18 @@ export type LoaderDataGuruManageAbsensiMutate = {
  */
 export type LoaderDataGuruManageViolations = {
   pelanggarans: PaginationReturns<
-    PelanggaranPerMapel & { siswa: Akun; kelas: Kelas; mataPelajaran: MataPelajaran; createdBy: Akun | null }
+    PelanggaranPerKelas & { siswa: Akun; kelas: Kelas; createdBy: Akun | null }
   >
   kelass: Kelas[]
-  mataPelajarans: MataPelajaran[]
 }
 
 export type LoaderDataGuruManageViolationsCreate = {
   siswas: Akun[]
   kelass: Kelas[]
-  mataPelajarans: MataPelajaran[]
 }
 
 export type LoaderDataGuruManageViolationsEdit = LoaderDataGuruManageViolationsCreate & {
-  pelanggaran: PelanggaranPerMapel
+  pelanggaran: PelanggaranPerKelas
 }
 
 /**

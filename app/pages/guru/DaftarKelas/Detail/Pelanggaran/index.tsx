@@ -2,7 +2,7 @@ import { useFetcher, useLoaderData, useNavigate, useRevalidator, useSearchParams
 import { Fragment, useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran } from '~/types/loaders-data/guru'
+import { LoaderDataGuruDaftarKelasDetailPelanggaran } from '~/types/loaders-data/guru'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
 import DataGridActionButtonHelper from '~/components/ui/DataGrid/ActionButton/helper'
@@ -10,22 +10,22 @@ import AppNav from '~/navigation'
 import { format } from 'date-fns'
 import { MdAdd } from 'react-icons/md'
 import constants from '~/constants'
-import GuruManageMataPelajaranDetailTab, { TabKey } from '../_components/Tab'
+import GuruDaftarKelasDetailTab, { TabKey } from '../_components/Tab'
 import useAuthStore from '~/store/authStore'
 import DBHelpers from '~/database/helpers'
 import { Role } from '~/database/enums/prisma.enums'
-import { Akun, PelanggaranPerMapel } from '@prisma/client'
+import { Akun, PelanggaranPerKelas } from '@prisma/client'
 import { usePopup } from '~/hooks/usePopup'
-import { ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete } from '~/types/actions-data/guru'
+import { ActionDataGuruDaftarKelasDetailPelanggaranDelete } from '~/types/actions-data/guru'
 
-const sectionPrefix = 'guru-daftar-kelas-detail-mata-pelajaran-detail-pelanggaran'
+const sectionPrefix = 'guru-daftar-kelas-detail-pelanggaran'
 const deleteFormId = `${sectionPrefix}-delete-form`
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage() {
+export default function GuruDaftarKelasDetailPelanggaranPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran>()
-  const deleteFetcher = useFetcher<ActionDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaranDelete>({
+  const loader = useLoaderData<LoaderDataGuruDaftarKelasDetailPelanggaran>()
+  const deleteFetcher = useFetcher<ActionDataGuruDaftarKelasDetailPelanggaranDelete>({
     key: deleteFormId,
   })
   const revalidator = useRevalidator()
@@ -38,13 +38,8 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
 
   useEffect(() => {
     if (isSuccessDelete) {
-      deleteFetcher.load(
-        AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaran({
-          kelasId: loader.kelas.id,
-          mataPelajaranId: loader.mataPelajaran.id,
-        }),
-      )
-      revalidator.revalidate() // refresh data loader parent
+      deleteFetcher.load(AppNav.guru.daftarKelasDetailPelanggaran({ kelasId: loader.kelas?.id ?? '' }))
+      revalidator.revalidate()
       popup.close()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +53,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
     navigate(`?${params.toString()}`, { replace: false })
   }
 
-  function openDeletePopup(row: PelanggaranPerMapel & { siswa: Akun }) {
+  function openDeletePopup(row: PelanggaranPerKelas & { siswa: Akun }) {
     popup.open({
       title: 'Delete violation?',
       onClose: popup.close,
@@ -74,9 +69,8 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
           <deleteFetcher.Form
             id={deleteFormId}
             method='delete'
-            action={AppNav.guruAction.daftarKelasDetailMataPelajaranDetailPelanggaranDelete({
-              kelasId: loader.kelas.id,
-              mataPelajaranId: loader.mataPelajaran.id,
+            action={AppNav.guruAction.daftarKelasDetailPelanggaranDelete({
+              kelasId: loader.kelas?.id ?? '',
               pelanggaranId: row.id,
             })}
           ></deleteFetcher.Form>
@@ -114,11 +108,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
   if (revalidator.state === 'loading') return <LoadingFullScreen />
   return (
     <Card className='p-0! mt-4 lg:mt-8'>
-      <GuruManageMataPelajaranDetailTab
-        kelas={loader.kelas}
-        mataPelajaran={loader.mataPelajaran}
-        activeTabKey={TabKey.PELANGGARAN}
-      />
+      <GuruDaftarKelasDetailTab kelas={loader.kelas} activeTabKey={TabKey.PELANGGARAN} />
 
       <DataGrid
         id={`${sectionPrefix}-data-grid`}
@@ -138,14 +128,9 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
               label={'Add'}
               startIcon={<MdAdd />}
               buttonProps={{
-                disabled: loader.mataPelajaran.guruId !== user?.id,
+                disabled: loader.kelas?.waliId !== user?.id,
                 onClick: () =>
-                  navigate(
-                    AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranCreate({
-                      kelasId: loader.kelas?.id ?? '',
-                      mataPelajaranId: loader.mataPelajaran.id,
-                    }),
-                  ),
+                  navigate(AppNav.guru.daftarKelasDetailPelanggaranCreate({ kelasId: loader.kelas?.id ?? '' })),
               }}
             />
           </div>
@@ -183,12 +168,11 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage(
                     color='warning'
                     label={'Edit'}
                     buttonProps={{
-                      disabled: loader.mataPelajaran.guruId !== user?.id,
+                      disabled: loader.kelas?.waliId !== user?.id,
                       onClick: () =>
                         navigate(
-                          AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaranEdit({
+                          AppNav.guru.daftarKelasDetailPelanggaranEdit({
                             kelasId: loader.kelas?.id ?? '',
-                            mataPelajaranId: loader.mataPelajaran.id,
                             pelanggaranId: row.id,
                           }),
                         ),

@@ -33,7 +33,7 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
   const siswa = await prisma.akun.findUnique({
     where: { id: akunId ?? '' },
     include: {
-      pelanggaransPerMapel: {
+      pelanggaransPerKelas: {
         where: {
           deletedAt: null,
           createdAt: {
@@ -41,14 +41,11 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData
             gte: kelas?.tahunAjaran.tahunMulai,
           },
         },
-        include: {
-          mataPelajaran: true,
-        },
       },
     },
   })
 
-  const totalPoint = await prisma.pelanggaranPerMapel
+  const totalPoint = await prisma.pelanggaranPerKelas
     .aggregate({
       _sum: { poin: true },
       where: {

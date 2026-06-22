@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form'
-import { GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType } from './form-types'
+import { GuruDaftarKelasDetailPelanggaranCreateFormType } from './form-types'
 import { useRemixFormContext } from 'remix-hook-form'
 import { StaticSelect, TextAreaInput, TextInput } from '~/components/forms'
 import { ReactNode } from 'react'
@@ -11,8 +11,8 @@ type Props = {
   siswas: Akun[]
 }
 
-export default function AdminDaftarKelasDetailMataPelajaranDetailPelanggaranFormComponent(props: Props) {
-  const formHook = useRemixFormContext<GuruDaftarKelasDetailMataPelajaranDetailPelanggaranCreateFormType>()
+export default function GuruDaftarKelasDetailPelanggaranFormComponent(props: Props) {
+  const formHook = useRemixFormContext<GuruDaftarKelasDetailPelanggaranCreateFormType>()
 
   function InputWrapper({ children, cutting = 'full' }: { children?: ReactNode; cutting?: 'full' | 'half' }) {
     return (
@@ -56,7 +56,7 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailPelanggaranForm
         <Controller
           control={formHook.control}
           name={'remark'}
-          render={({ field }) => <TextAreaInput label='Remark ' inputProps={{ ...field, value: field.value ?? '' }} />}
+          render={({ field }) => <TextAreaInput label='Remark' inputProps={{ ...field, value: field.value ?? '' }} />}
         />
       </InputWrapper>
     </div>

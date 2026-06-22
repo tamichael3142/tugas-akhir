@@ -123,7 +123,6 @@ export default function OrtuViolationsPage() {
             columns={[
               { field: 'siswa', label: 'Student', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
               { field: 'kelas', label: 'Class', render: row => row.kelas.nama },
-              { field: 'mataPelajaran', label: 'Subject', render: row => row.mataPelajaran.nama },
               { field: 'remark', label: 'Description', render: row => row.remark || '-' },
               {
                 field: 'createdAt',

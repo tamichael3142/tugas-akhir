@@ -1,4 +1,3 @@
-import { PelanggaranPerMapel } from '@prisma/client'
 import { LoaderFunctionArgs, redirect } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { endOfDay, startOfDay } from 'date-fns'
@@ -34,8 +33,8 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     return {
       user: currUser,
       pelanggarans: {
-        data: [] as PelanggaranPerMapel[],
-        pagination: { page: 1, limit: 10, total: 0, totalPages: 0 },
+        data: [] as never[],
+        pagination: { page: 1, limit: 10, total: 0, totalPages: 0, hasNextPage: false, hasPrevPage: false },
         filters: {},
       },
     } as LoaderDataOrtuViolations
@@ -47,7 +46,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
   const pelanggarans = await getPaginatedData({
     request,
-    model: prisma.pelanggaranPerMapel,
+    model: prisma.pelanggaranPerKelas,
     options: {
       defaultLimit: 10,
       where: {
@@ -57,7 +56,6 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
       include: {
         siswa: true,
         kelas: true,
-        mataPelajaran: true,
         createdBy: true,
       },
       mapQueryToWhere: q => {

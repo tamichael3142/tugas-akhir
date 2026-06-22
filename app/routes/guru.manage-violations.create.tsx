@@ -32,12 +32,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     orderBy: [{ nama: 'asc' }],
   })
 
-  const mataPelajarans = await prisma.mataPelajaran.findMany({
-    where: { deletedAt: null, guruId: userId },
-    orderBy: [{ nama: 'asc' }],
-  })
-
-  return { siswas, kelass, mataPelajarans }
+  return { siswas, kelass }
 }
 
 export async function action({ request }: ActionFunctionArgs): Promise<ActionDataGuruManageViolationsCreate> {
@@ -50,12 +45,11 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
   const userId = await requireAuthCookie(request)
 
   try {
-    return await prisma.pelanggaranPerMapel
+    return await prisma.pelanggaranPerKelas
       .create({
         data: {
           siswaId: data.siswaId,
           kelasId: data.kelasId,
-          mataPelajaranId: data.mataPelajaranId,
           poin: data.poin,
           remark: data.remark,
           createdById: userId,

@@ -15,7 +15,7 @@ import constants from '~/constants'
 import DBHelpers from '~/database/helpers'
 import { usePopup } from '~/hooks/usePopup'
 import useAuthStore from '~/store/authStore'
-import { Akun, Kelas, MataPelajaran, PelanggaranPerMapel } from '@prisma/client'
+import { Akun, Kelas } from '@prisma/client'
 import { Role } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'guru-manage-violations'
@@ -72,7 +72,7 @@ export default function GuruManageViolationsPage() {
     return <div className='col-span-3 md:col-span-1'>{children}</div>
   }
 
-  function openDeletePopup(row: PelanggaranPerMapel & { siswa: Akun; kelas: Kelas; mataPelajaran: MataPelajaran }) {
+  function openDeletePopup(row: { id: string; remark: string | null; siswa: Akun; kelas: Kelas; createdById: string | null }) {
     popup.open({
       title: 'Delete Violation',
       onClose: popup.close,
@@ -143,22 +143,6 @@ export default function GuruManageViolationsPage() {
             />
           </FilterGridItem>
           <FilterGridItem>
-            <StaticSelect
-              label='Subject'
-              options={[
-                { value: '', label: 'All subjects' },
-                ...loader.mataPelajarans.map(item => ({
-                  value: item.id,
-                  label: `${item.nama} - (${item.semesterAjaranId})`,
-                })),
-              ]}
-              selectProps={{
-                value: searchParams.get('mataPelajaranId') ?? '',
-                onChange: e => updateParams({ mataPelajaranId: e.target.value || undefined }),
-              }}
-            />
-          </FilterGridItem>
-          <FilterGridItem>
             <TextInput
               label='From Date'
               inputProps={{
@@ -186,7 +170,6 @@ export default function GuruManageViolationsPage() {
         columns={[
           { field: 'siswa', label: 'Student', render: row => DBHelpers.akun.getDisplayName(row.siswa) },
           { field: 'kelas', label: 'Class', render: row => row.kelas.nama },
-          { field: 'mataPelajaran', label: 'Subject', render: row => row.mataPelajaran.nama },
           { field: 'remark', label: 'Description', render: row => row.remark || '-' },
           {
             field: 'createdAt',
@@ -203,7 +186,7 @@ export default function GuruManageViolationsPage() {
             field: 'actions',
             label: 'Action',
             render: row => {
-              const isEditable = row.mataPelajaran.guruId === user?.id
+              const isEditable = user?.role === Role.ADMIN || user?.id === row.createdById
               const isDeletable = user?.role === Role.ADMIN || user?.id === row.createdById
 
               return (

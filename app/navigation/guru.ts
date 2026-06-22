@@ -7,7 +7,7 @@ import {
   MataPelajaran,
   MataPelajaranAttachment,
   MataPelajaranBeritaAcara,
-  PelanggaranPerMapel,
+  PelanggaranPerKelas,
   SemesterAjaran,
   TahunAjaran,
 } from '@prisma/client'
@@ -194,50 +194,24 @@ function daftarKelasDetailMataPelajaranDetailPenilaian({
 }
 
 /*
- * Guru's daftar kelas detail mata pelajaran detail pelanggaran level routes
+ * Guru's daftar kelas detail pelanggaran level routes
  */
-function daftarKelasDetailMataPelajaranDetailPelanggaran({
-  kelasId,
-  mataPelajaranId,
-}: {
-  kelasId: Kelas['id']
-  mataPelajaranId: MataPelajaran['id']
-}) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran`
+function daftarKelasDetailPelanggaran({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/pelanggaran`
 }
 
-function daftarKelasDetailMataPelajaranDetailPelanggaranCreate({
-  kelasId,
-  mataPelajaranId,
-}: {
-  kelasId: Kelas['id']
-  mataPelajaranId: MataPelajaran['id']
-}) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-create`
+function daftarKelasDetailPelanggaranCreate({ kelasId }: { kelasId: Kelas['id'] }) {
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/pelanggaran-create`
 }
 
-function daftarKelasDetailMataPelajaranDetailPelanggaranEdit({
+function daftarKelasDetailPelanggaranEdit({
   kelasId,
-  mataPelajaranId,
   pelanggaranId,
 }: {
   kelasId: Kelas['id']
-  mataPelajaranId: MataPelajaran['id']
-  pelanggaranId: PelanggaranPerMapel['id']
+  pelanggaranId: PelanggaranPerKelas['id']
 }) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-edit/${pelanggaranId}`
-}
-
-function daftarKelasDetailMataPelajaranDetailPelanggaranDetail({
-  kelasId,
-  mataPelajaranId,
-  pelanggaranId,
-}: {
-  kelasId: Kelas['id']
-  mataPelajaranId: MataPelajaran['id']
-  pelanggaranId: PelanggaranPerMapel['id']
-}) {
-  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/mapel/${mataPelajaranId}/pelanggaran-detail/${pelanggaranId}`
+  return `${baseUrl}${daftarKelasUrl}/${kelasId}/detail/pelanggaran-edit/${pelanggaranId}`
 }
 
 /*
@@ -489,7 +463,7 @@ function manageViolationsCreate() {
   return `${baseUrl}${manageViolationsUrl}/create`
 }
 
-function manageViolationsEdit({ pelanggaranId }: { pelanggaranId: PelanggaranPerMapel['id'] }) {
+function manageViolationsEdit({ pelanggaranId }: { pelanggaranId: PelanggaranPerKelas['id'] }) {
   return `${baseUrl}${manageViolationsUrl}/${pelanggaranId}/edit`
 }
 
@@ -527,10 +501,9 @@ const guru = {
   daftarKelasDetailMataPelajaranDetailReportDescriptions,
   daftarKelasDetailHomeroomNotes,
   daftarKelasDetailHomeroomNotesEdit,
-  daftarKelasDetailMataPelajaranDetailPelanggaran,
-  daftarKelasDetailMataPelajaranDetailPelanggaranCreate,
-  daftarKelasDetailMataPelajaranDetailPelanggaranEdit,
-  daftarKelasDetailMataPelajaranDetailPelanggaranDetail,
+  daftarKelasDetailPelanggaran,
+  daftarKelasDetailPelanggaranCreate,
+  daftarKelasDetailPelanggaranEdit,
   daftarKelasDetailMataPelajaranDetailBeritaAcara,
   daftarKelasDetailMataPelajaranDetailBeritaAcaraCreate,
   daftarKelasDetailMataPelajaranDetailBeritaAcaraEdit,

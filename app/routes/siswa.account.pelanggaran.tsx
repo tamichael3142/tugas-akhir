@@ -37,7 +37,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
 
   const pelanggarans = await getPaginatedData({
     request,
-    model: prisma.pelanggaranPerMapel,
+    model: prisma.pelanggaranPerKelas,
     options: {
       defaultLimit: 10,
       where: {
@@ -45,7 +45,6 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         deletedAt: null,
       },
       include: {
-        mataPelajaran: true,
         kelas: true,
       },
       mapQueryToWhere: query => {
@@ -66,7 +65,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     },
   })
 
-  const totalPoint = await prisma.pelanggaranPerMapel
+  const totalPoint = await prisma.pelanggaranPerKelas
     .aggregate({
       _sum: { poin: true },
       where: { siswaId: userId, deletedAt: null },

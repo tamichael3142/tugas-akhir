@@ -61,7 +61,6 @@ export default function GuruManageViolationsEditPage() {
             <GuruManageViolationsFormComponent
               siswas={loader.siswas}
               kelass={loader.kelass}
-              mataPelajarans={loader.mataPelajarans}
             />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>

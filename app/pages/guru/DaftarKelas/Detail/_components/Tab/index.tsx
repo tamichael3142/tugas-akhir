@@ -9,6 +9,7 @@ export enum TabKey {
   MATA_PELAJARAN = 'mata-pelajaran',
   ABSENSI = 'absensi',
   HOMEROOM_NOTES = 'homeroom-notes',
+  PELANGGARAN = 'pelanggaran',
 }
 
 export type GuruDaftarKelasDetailTabProps = {
@@ -26,6 +27,7 @@ export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTab
     { key: TabKey.MATA_PELAJARAN, label: 'Subject' },
     { key: TabKey.ABSENSI, label: 'Attendance', disabled: kelas?.waliId !== user?.id },
     { key: TabKey.HOMEROOM_NOTES, label: 'Student Reports', disabled: kelas?.waliId !== user?.id },
+    { key: TabKey.PELANGGARAN, label: 'Violations', disabled: kelas?.waliId !== user?.id },
   ]
 
   if (!kelas) return null
@@ -45,6 +47,8 @@ export default function GuruDaftarKelasDetailTab(props: GuruDaftarKelasDetailTab
         else if (newTab === TabKey.ABSENSI) navigate(AppNav.guru.daftarKelasDetailAbsensiList({ kelasId: kelas.id }))
         else if (newTab === TabKey.HOMEROOM_NOTES)
           navigate(AppNav.guru.daftarKelasDetailHomeroomNotes({ kelasId: kelas.id }))
+        else if (newTab === TabKey.PELANGGARAN)
+          navigate(AppNav.guru.daftarKelasDetailPelanggaran({ kelasId: kelas.id }))
       }}
       items={items}
     />

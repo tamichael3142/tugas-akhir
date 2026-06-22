@@ -1,4 +1,4 @@
-import { PelanggaranPerMapel, Role } from '@prisma/client'
+import { Role } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -18,7 +18,7 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ params, request }: LoaderFunctionArgs): Promise<LoaderDataGuruManageViolationsEdit> {
   const userId = await requireAuthCookie(request)
-  const pelanggaranId = params.pelanggaranId as PelanggaranPerMapel['id'] | null
+  const pelanggaranId = params.pelanggaranId as string | null
 
   const siswas = await prisma.akun.findMany({
     where: { role: Role.SISWA, deletedAt: null },
@@ -33,16 +33,11 @@ export async function loader({ params, request }: LoaderFunctionArgs): Promise<L
     orderBy: [{ nama: 'asc' }],
   })
 
-  const mataPelajarans = await prisma.mataPelajaran.findMany({
-    where: { deletedAt: null, guruId: userId },
-    orderBy: [{ nama: 'asc' }],
-  })
-
-  const pelanggaran = await prisma.pelanggaranPerMapel.findUnique({
+  const pelanggaran = await prisma.pelanggaranPerKelas.findUnique({
     where: { id: pelanggaranId ?? '' },
   })
 
-  return { siswas, kelass, mataPelajarans, pelanggaran } as LoaderDataGuruManageViolationsEdit
+  return { siswas, kelass, pelanggaran } as LoaderDataGuruManageViolationsEdit
 }
 
 export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruManageViolationsEdit> {
@@ -53,7 +48,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
   }
 
   const userId = await requireAuthCookie(request)
-  const pelanggaranId = params.pelanggaranId as PelanggaranPerMapel['id'] | null
+  const pelanggaranId = params.pelanggaranId as string | null
 
   try {
     if (!pelanggaranId)
@@ -61,13 +56,12 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         message: 'Violation not found!',
       }
 
-    return await prisma.pelanggaranPerMapel
+    return await prisma.pelanggaranPerKelas
       .update({
         where: { id: pelanggaranId },
         data: {
           siswaId: data.siswaId,
           kelasId: data.kelasId,
-          mataPelajaranId: data.mataPelajaranId,
           poin: data.poin,
           remark: data.remark,
           updatedAt: new Date(),

@@ -1,4 +1,3 @@
-import { PelanggaranPerMapel } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { LoadingFullScreen } from '~/components/ui'
 import { ActionDataGuruManageViolationsDelete } from '~/types/actions-data/guru'
@@ -14,16 +13,16 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         message: 'Unauthorized! User not logged in!',
       }
 
-    const pelanggaranId = params.pelanggaranId as PelanggaranPerMapel['id'] | null
+    const pelanggaranId = params.pelanggaranId as string | null
 
-    const currPelanggaran = await prisma.pelanggaranPerMapel.findUnique({ where: { id: pelanggaranId ?? '' } })
+    const currPelanggaran = await prisma.pelanggaranPerKelas.findUnique({ where: { id: pelanggaranId ?? '' } })
 
     if (!currPelanggaran || !pelanggaranId)
       throw {
         message: 'Violation not found!',
       }
 
-    return await prisma.pelanggaranPerMapel
+    return await prisma.pelanggaranPerKelas
       .update({
         where: { id: pelanggaranId },
         data: {

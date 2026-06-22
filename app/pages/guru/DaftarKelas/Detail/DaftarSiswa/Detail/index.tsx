@@ -32,18 +32,16 @@ export default function GuruDaftarKelasDetailDetailSiswaPage() {
             <thead>
               <tr>
                 <th className='border p-2'>Violation Date</th>
-                <th className='border p-2'>Subject</th>
                 <th className='border p-2'>Minus Point</th>
                 <th className='border p-2'>Remarks</th>
               </tr>
             </thead>
             <tbody>
-              {loader.siswa.pelanggaransPerMapel.map(pelanggaran => (
+              {loader.siswa.pelanggaransPerKelas.map(pelanggaran => (
                 <tr key={`${sectionPrefix}-violations-table-row-${pelanggaran.id}`}>
                   <td className='border p-2 text-center'>
                     {format(pelanggaran.createdAt, constants.dateFormats.dateColumn)}
                   </td>
-                  <td className='border p-2 text-center'>{pelanggaran.mataPelajaran.nama}</td>
                   <td className='border p-2 text-center'>{pelanggaran.poin}</td>
                   <td className='border p-2 text-center'>{pelanggaran.remark}</td>
                 </tr>

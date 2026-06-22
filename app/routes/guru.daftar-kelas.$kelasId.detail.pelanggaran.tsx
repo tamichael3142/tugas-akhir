@@ -1,21 +1,21 @@
-import { Kelas, MataPelajaran } from '@prisma/client'
+import { Kelas } from '@prisma/client'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import constants from '~/constants'
-import GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage from '~/pages/guru/DaftarKelas/Detail/MataPelajaran/Detail/Pelanggaran'
-import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran } from '~/types/loaders-data/guru'
+import GuruDaftarKelasDetailPelanggaranPage from '~/pages/guru/DaftarKelas/Detail/Pelanggaran'
+import { LoaderDataGuruDaftarKelasDetailPelanggaran } from '~/types/loaders-data/guru'
 import { prisma } from '~/utils/db.server'
 import { getPaginatedData } from '~/utils/pagination.utils.server'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.guruManagePelanggaran
 }
+
 export async function loader({
   request,
   params,
-}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran> {
+}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailPelanggaran> {
   const kelasId = params.kelasId as Kelas['id'] | null
-  const mataPelajaranId = params.mataPelajaranId as MataPelajaran['id'] | null
 
   const kelas = await prisma.kelas.findUnique({
     where: { id: kelasId ?? '' },
@@ -29,25 +29,12 @@ export async function loader({
     },
   })
 
-  const mataPelajaran = await prisma.mataPelajaran.findUnique({
-    where: { id: mataPelajaranId ?? '' },
-    include: {
-      semesterAjaran: {
-        include: {
-          tahunAjaran: true,
-        },
-      },
-      guru: true,
-    },
-  })
-
   const pelanggarans = await getPaginatedData({
     request,
-    model: prisma.pelanggaranPerMapel,
+    model: prisma.pelanggaranPerKelas,
     options: {
       defaultLimit: 10,
       where: {
-        mataPelajaranId,
         kelasId,
       },
       include: {
@@ -60,8 +47,9 @@ export async function loader({
         const search = query.get('search')
         if (search) {
           where.OR = [
-            { poin: { contains: search, mode: 'insensitive' } },
             { remark: { contains: search, mode: 'insensitive' } },
+            { siswa: { firstName: { contains: search, mode: 'insensitive' } } },
+            { siswa: { lastName: { contains: search, mode: 'insensitive' } } },
           ]
         }
 
@@ -71,9 +59,9 @@ export async function loader({
     },
   })
 
-  return { kelas, mataPelajaran, pelanggarans } as LoaderDataGuruDaftarKelasDetailMataPelajaranDetailPelanggaran
+  return { kelas, pelanggarans } as LoaderDataGuruDaftarKelasDetailPelanggaran
 }
 
-export default function GuruDaftarKelasDetailMataPelajaranDetailPelanggaranRoute() {
-  return <GuruDaftarKelasDetailMataPelajaranDetailPelanggaranPage />
+export default function GuruDaftarKelasDetailPelanggaranRoute() {
+  return <GuruDaftarKelasDetailPelanggaranPage />
 }
