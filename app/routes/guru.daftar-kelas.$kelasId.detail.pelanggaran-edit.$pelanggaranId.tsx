@@ -16,7 +16,10 @@ export const meta: MetaFunction = () => {
   return constants.pageMetas.guruManagePelanggaran
 }
 
-export async function loader({ params, request }: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailPelanggaranEdit> {
+export async function loader({
+  params,
+  request,
+}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailPelanggaranEdit> {
   const kelasId = params.kelasId as Kelas['id'] | null
   const pelanggaranId = params.pelanggaranId as PelanggaranPerKelas['id'] | null
 
@@ -71,7 +74,10 @@ export async function loader({ params, request }: LoaderFunctionArgs): Promise<L
   return { kelas, siswas, pelanggaran } as LoaderDataGuruDaftarKelasDetailPelanggaranEdit
 }
 
-export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranEdit> {
+export async function action({
+  request,
+  params,
+}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranEdit> {
   const { errors, data } = await getValidatedFormData<GuruDaftarKelasDetailPelanggaranCreateFormType>(request, resolver)
   if (errors) {
     console.log(errors)

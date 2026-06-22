@@ -4,7 +4,6 @@ import { FaBookOpen, FaFileAlt } from 'react-icons/fa'
 import { MdAssignment, MdFactCheck } from 'react-icons/md'
 import { GrAttachment } from 'react-icons/gr'
 import { TabItem, Tabs } from '~/components/ui'
-import { BiSolidErrorAlt } from 'react-icons/bi'
 import AppNav from '~/navigation'
 import useAuthStore from '~/store/authStore'
 
@@ -13,7 +12,6 @@ export enum TabKey {
   ASSIGNMENT = 'assignment',
   ATTACHMENT = 'attachment',
   PENILAIAN = 'penilaian',
-  PELANGGARAN = 'pelanggaran',
   REPORT_DESCRIPTIONS = 'report-descriptions',
 }
 
@@ -33,7 +31,6 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
     { key: TabKey.ASSIGNMENT, label: 'Assignment', icon: <MdAssignment /> },
     { key: TabKey.ATTACHMENT, label: 'Attachment', icon: <GrAttachment /> },
     { key: TabKey.PENILAIAN, label: 'Assessment', icon: <MdFactCheck />, disabled: mataPelajaran?.guruId !== user?.id },
-    { key: TabKey.PELANGGARAN, label: 'Violation', icon: <BiSolidErrorAlt /> },
     { key: TabKey.REPORT_DESCRIPTIONS, label: 'Report', icon: <FaFileAlt /> },
   ]
 
@@ -66,13 +63,6 @@ export default function GuruManageMataPelajaranDetailTab(props: GuruManageMataPe
         else if (newTab === TabKey.PENILAIAN)
           navigate(
             AppNav.guru.daftarKelasDetailMataPelajaranDetailPenilaian({
-              kelasId: kelas.id,
-              mataPelajaranId: mataPelajaran.id,
-            }),
-          )
-        else if (newTab === TabKey.PELANGGARAN)
-          navigate(
-            AppNav.guru.daftarKelasDetailMataPelajaranDetailPelanggaran({
               kelasId: kelas.id,
               mataPelajaranId: mataPelajaran.id,
             }),

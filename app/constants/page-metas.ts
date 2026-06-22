@@ -90,6 +90,10 @@ const pageMetas = {
     { title: `Forgot Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Forgot password on SBBS' },
   ],
+  lAuthSetInitialPassword: [
+    { title: `Set Initial Password | ${pages.defaultTitle} - ${sbbs.name.long}` },
+    { name: 'description', content: 'Set initial password on SBBS' },
+  ],
   guruDefault: [
     { title: `Teacher | ${pages.defaultTitle} - ${sbbs.name.long}` },
     { name: 'description', content: 'Situs guru SBBS' },

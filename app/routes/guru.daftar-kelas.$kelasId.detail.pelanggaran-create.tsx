@@ -16,7 +16,10 @@ export const meta: MetaFunction = () => {
   return constants.pageMetas.guruManagePelanggaran
 }
 
-export async function loader({ params, request }: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailPelanggaranCreate> {
+export async function loader({
+  params,
+  request,
+}: LoaderFunctionArgs): Promise<LoaderDataGuruDaftarKelasDetailPelanggaranCreate> {
   const kelasId = params.kelasId as Kelas['id'] | null
 
   const kelas = await prisma.kelas.findUnique({
@@ -65,7 +68,10 @@ export async function loader({ params, request }: LoaderFunctionArgs): Promise<L
   return { kelas, siswas } as LoaderDataGuruDaftarKelasDetailPelanggaranCreate
 }
 
-export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranCreate> {
+export async function action({
+  request,
+  params,
+}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranCreate> {
   const { errors, data } = await getValidatedFormData<GuruDaftarKelasDetailPelanggaranCreateFormType>(request, resolver)
   if (errors) {
     console.log(errors)

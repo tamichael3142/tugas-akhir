@@ -72,7 +72,13 @@ export default function GuruManageViolationsPage() {
     return <div className='col-span-3 md:col-span-1'>{children}</div>
   }
 
-  function openDeletePopup(row: { id: string; remark: string | null; siswa: Akun; kelas: Kelas; createdById: string | null }) {
+  function openDeletePopup(row: {
+    id: string
+    remark: string | null
+    siswa: Akun
+    kelas: Kelas
+    createdById: string | null
+  }) {
     popup.open({
       title: 'Delete Violation',
       onClose: popup.close,

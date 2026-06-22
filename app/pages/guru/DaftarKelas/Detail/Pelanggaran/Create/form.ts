@@ -21,9 +21,7 @@ export const emptyValues: GuruDaftarKelasDetailPelanggaranCreateFormType = {
   remark: '',
 }
 
-export function translateRawToFormData(
-  data: PelanggaranPerKelas,
-): GuruDaftarKelasDetailPelanggaranCreateFormType {
+export function translateRawToFormData(data: PelanggaranPerKelas): GuruDaftarKelasDetailPelanggaranCreateFormType {
   return {
     siswaId: data.siswaId ?? '',
     poin: data.poin ?? 0,

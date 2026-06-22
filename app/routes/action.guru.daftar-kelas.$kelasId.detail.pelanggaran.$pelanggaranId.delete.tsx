@@ -6,7 +6,10 @@ import { requireAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 import { prismaErrorHandler } from '~/utils/prisma-error.utils'
 
-export async function action({ request, params }: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranDelete> {
+export async function action({
+  request,
+  params,
+}: ActionFunctionArgs): Promise<ActionDataGuruDaftarKelasDetailPelanggaranDelete> {
   try {
     const userId = await requireAuthCookie(request)
     if (!userId) throw { message: 'Unauthorized! User not logged in!' }

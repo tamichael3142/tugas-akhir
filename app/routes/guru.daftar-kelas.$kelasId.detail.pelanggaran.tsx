@@ -36,6 +36,7 @@ export async function loader({
       defaultLimit: 10,
       where: {
         kelasId,
+        deletedAt: null,
       },
       include: {
         siswa: true,

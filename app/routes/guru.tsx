@@ -7,6 +7,7 @@ import { Role } from '~/database/enums/prisma.enums'
 import DBUtils from '~/database/utils'
 import { LoaderDataGuru } from '~/types/loaders-data/guru'
 import GuruDashboardLayout from '~/layouts/guru/GuruDashboard'
+import AppNav from '~/navigation'
 
 export const meta: MetaFunction = () => {
   return constants.pageMetas.guruDefault
@@ -15,6 +16,9 @@ export const meta: MetaFunction = () => {
 export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDataGuru | TypedResponse<never>> {
   const userId = await requireAuthCookie(request)
   const currUser = await prisma.akun.findUnique({ where: { id: userId } })
+
+  if (!currUser?.isChangedPassword) return redirect(AppNav.lAuth.setInitialPassword())
+
   if (currUser?.role !== Role.GURU) {
     const redirectUrl = DBUtils.auth.getGuardRedirectUrlBasedByRole(currUser?.role as Role)
     return redirect(redirectUrl)

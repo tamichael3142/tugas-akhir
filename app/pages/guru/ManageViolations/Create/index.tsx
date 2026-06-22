@@ -52,10 +52,7 @@ export default function GuruManageViolationsCreatePage() {
           <hr className='my-4' />
 
           <RemixFormProvider key={`${sectionPrefix}-form`} {...formHook}>
-            <GuruManageViolationsFormComponent
-              siswas={loader.siswas}
-              kelass={loader.kelass}
-            />
+            <GuruManageViolationsFormComponent siswas={loader.siswas} kelass={loader.kelass} />
           </RemixFormProvider>
           <hr className='my-8' />
           <div className='flex flex-row items-center justify-end gap-4'>

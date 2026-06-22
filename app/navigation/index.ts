@@ -8,10 +8,12 @@ import siswa from './siswa'
 import guruAction from './guru-action'
 import siswaAction from './siswa-action'
 import ortuAction from './ortu-action'
+import lAuth from './l-auth'
 
 const AppNav = {
   main,
   auth,
+  lAuth,
   admin,
   adminAction,
   guru,

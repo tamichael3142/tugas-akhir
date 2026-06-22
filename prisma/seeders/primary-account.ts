@@ -12,6 +12,7 @@ async function seed() {
           lastName: 'Admin',
           password: await PasswordUtils.hashPassword('superadmin'),
           role: Role.ADMIN,
+          isChangedPassword: true,
         },
         {
           username: 'gurudummy',
@@ -19,6 +20,7 @@ async function seed() {
           lastName: 'Dummy',
           password: await PasswordUtils.hashPassword('gurudummy'),
           role: Role.GURU,
+          isChangedPassword: true,
         },
         {
           username: 'ortudummy',
@@ -26,13 +28,15 @@ async function seed() {
           lastName: 'Dummy',
           password: await PasswordUtils.hashPassword('ortudummy'),
           role: Role.ORANGTUA,
+          isChangedPassword: true,
         },
         {
           username: 'siswadummy',
           firstName: 'Siswa',
           lastName: 'Dummy',
           password: await PasswordUtils.hashPassword('siswadummy'),
-          role: Role.ORANGTUA,
+          role: Role.SISWA,
+          isChangedPassword: true,
         },
       ],
     })

@@ -89,8 +89,6 @@ export async function action({
         message: 'Daily report data not found!',
       }
 
-    // TODO: tambah validator untuk hari jam yang bertabrakan
-
     return await prisma.mataPelajaranBeritaAcara
       .update({
         where: { id: beritaAcaraId },

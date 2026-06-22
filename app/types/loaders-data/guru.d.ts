@@ -291,9 +291,7 @@ export type LoaderDataGuruManageAbsensiMutate = {
  * * Manage Violations
  */
 export type LoaderDataGuruManageViolations = {
-  pelanggarans: PaginationReturns<
-    PelanggaranPerKelas & { siswa: Akun; kelas: Kelas; createdBy: Akun | null }
-  >
+  pelanggarans: PaginationReturns<PelanggaranPerKelas & { siswa: Akun; kelas: Kelas; createdBy: Akun | null }>
   kelass: Kelas[]
 }
 

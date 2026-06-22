@@ -150,12 +150,6 @@ export default function GuruDaftarKelasDetailPelanggaranPage() {
             render: row => format(new Date(row.updatedAt), constants.dateFormats.rawDateTimeInput),
           },
           {
-            field: 'deletedAt',
-            label: 'Deleted At',
-            render: row =>
-              row.deletedAt ? format(new Date(row.deletedAt), constants.dateFormats.rawDateTimeInput) : '-',
-          },
-          {
             field: 'actions',
             label: 'Action',
             render: row => {

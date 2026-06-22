@@ -97,6 +97,7 @@ model Akun {
   role                           Role                       @default(SISWA)
   nip                            String?
   // ? general
+  isChangedPassword              Boolean                    @default(false)
   displayName                    String?
   firstName                      String
   lastName                       String
@@ -169,25 +170,26 @@ model Akun {
 }
 
 model TempAkun {
-  id              String          @id @default(cuid())
-  username        String
-  password        String
-  role            Role            @default(SISWA)
-  displayName     String?
-  firstName       String
-  lastName        String
-  email           String?
-  tanggalLahir    DateTime?
-  tempatLahir     String?
-  jenisKelamin    JenisKelamin    @default(UNKNOWN)
-  alamat          String?
-  agama           String?
-  golonganDarah   GolonganDarah   @default(UNKNOWN)
-  kewarganegaraan Kewarganegaraan @default(UNKNOWN)
+  id                String          @id @default(cuid())
+  username          String
+  password          String
+  role              Role            @default(SISWA)
+  isChangedPassword Boolean         @default(false)
+  displayName       String?
+  firstName         String
+  lastName          String
+  email             String?
+  tanggalLahir      DateTime?
+  tempatLahir       String?
+  jenisKelamin      JenisKelamin    @default(UNKNOWN)
+  alamat            String?
+  agama             String?
+  golonganDarah     GolonganDarah   @default(UNKNOWN)
+  kewarganegaraan   Kewarganegaraan @default(UNKNOWN)
   // ? meta data
-  createdAt       DateTime        @default(now())
-  createdById     String?
-  createdBy       Akun?           @relation(fields: [createdById], references: [id], name: "createdBy")
+  createdAt         DateTime        @default(now())
+  createdById       String?
+  createdBy         Akun?           @relation(fields: [createdById], references: [id], name: "createdBy")
 
   @@schema("public")
 }
@@ -500,23 +502,23 @@ model Penilaian {
 }
 
 model PelanggaranPerKelas {
-  id              String        @id @default(cuid())
+  id             String    @id @default(cuid())
   // ? credentials
-  kelasId         String
-  kelas           Kelas         @relation(fields: [kelasId], references: [id])
-  siswaId         String
-  siswa           Akun          @relation(fields: [siswaId], references: [id])
+  kelasId        String
+  kelas          Kelas     @relation(fields: [kelasId], references: [id])
+  siswaId        String
+  siswa          Akun      @relation(fields: [siswaId], references: [id])
   // ? general
-  poin            Int           @default(0)
-  remark          String?
+  poin           Int       @default(0)
+  remark         String?
   // ? meta data
-  updatedAt       DateTime      @default(now())
-  createdAt       DateTime      @default(now())
-  deletedAt       DateTime?
-  createdById     String?
-  createdBy       Akun?         @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById  String?
-  lastUpdateBy    Akun?         @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt      DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+  createdById    String?
+  createdBy      Akun?     @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById String?
+  lastUpdateBy   Akun?     @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
 
   @@schema("public")
 }

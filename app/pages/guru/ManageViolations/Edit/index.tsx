@@ -58,10 +58,7 @@ export default function GuruManageViolationsEditPage() {
             <p className='font-semibold text-lg'>Edit Violation</p>
             <hr className='my-4' />
 
-            <GuruManageViolationsFormComponent
-              siswas={loader.siswas}
-              kelass={loader.kelass}
-            />
+            <GuruManageViolationsFormComponent siswas={loader.siswas} kelass={loader.kelass} />
             <hr className='my-8' />
             <div className='flex flex-row items-center justify-end gap-4'>
               <Button variant='text' color='secondary' label='Reset form' buttonProps={{ onClick: resetForm }} />
