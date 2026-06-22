@@ -2,6 +2,7 @@ import { LoaderFunctionArgs, redirect } from '@remix-run/node'
 import { Role } from '~/database/enums/prisma.enums'
 import DBUtils from '~/database/utils'
 import AuthMainLayout from '~/layouts/auth/AuthMainLayout'
+import AppNav from '~/navigation'
 import { getAuthCookie, removeAuthCookie } from '~/utils/auth.utils'
 import { prisma } from '~/utils/db.server'
 
@@ -12,6 +13,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     const user = await prisma.akun.findUnique({ where: { id: sessionUserId } })
 
     if (!user) return removeAuthCookie()
+
+    if (user?.isChangedPassword) return redirect(AppNav.lAuth.setInitialPassword())
 
     const redirectUrl = DBUtils.auth.getGuardRedirectUrlBasedByRole(user.role as Role)
     return redirect(redirectUrl)
