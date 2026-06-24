@@ -206,8 +206,9 @@ export type LoaderDataGuruDaftarKelasDetailPelanggaranEdit = {
  */
 export type LoaderDataGuruDaftarKelasDetailAbsensiList = {
   kelas: (Kelas & { tahunAjaran: TahunAjaran & { semesterAjaran: SemesterAjaran[] }; wali: Akun | null }) | null
+  currentSemesterAjaran: SemesterAjaran | null
   todayAbsensi: Absensi | null
-  absensis: PaginationReturns<Absensi>
+  absensis: (Absensi & { kelas: Kelas })[]
 }
 
 export type LoaderDataGuruDaftarKelasDetailAbsensiCreate = {
