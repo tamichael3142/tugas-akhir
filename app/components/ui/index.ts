@@ -5,7 +5,17 @@ import DataGrid from './DataGrid'
 import { DataGridProps, DataGridColumnProps } from './DataGrid/types'
 import Tabs, { TabItem, TabsProps } from './Tabs'
 import AcademicCalendarCard from './AcademicCalendarCard'
+import AbsensiCalendar, { AbsensiCalendarProps, AbsensiCalendarItem } from './AbsensiCalendar'
 
-export { Card, LoadingFullScreen, BackButton, DataGrid, Tabs, AcademicCalendarCard }
+export { Card, LoadingFullScreen, BackButton, DataGrid, Tabs, AcademicCalendarCard, AbsensiCalendar }
 
-export type { CardProps, BackButtonProps, DataGridProps, DataGridColumnProps, TabItem, TabsProps }
+export type {
+  CardProps,
+  BackButtonProps,
+  DataGridProps,
+  DataGridColumnProps,
+  TabItem,
+  TabsProps,
+  AbsensiCalendarProps,
+  AbsensiCalendarItem,
+}
