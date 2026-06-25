@@ -20,14 +20,15 @@ export async function action({
 
     if (!akunId || !currAkun)
       throw {
-        message: 'Akun tidak ditemukan!',
+        message: 'Account not found!',
       }
 
     return await prisma.akun
       .update({
         where: { id: akunId },
         data: {
-          password: await PasswordUtils.hashPassword(currAkun.username),
+          password: PasswordUtils.generatePassword(),
+          isChangedPassword: false,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,
         },

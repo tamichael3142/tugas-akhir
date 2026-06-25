@@ -162,7 +162,7 @@ export default function AdminMasterAccountPage() {
       actions={[
         <Button
           key={`${sectionPrefix}-export-button`}
-          label={`Export ID${selectedAkuns.length > 0 ? ` (${selectedAkuns.length})` : ''}`}
+          label={`Export ${selectedAkuns.length > 0 ? ` (${selectedAkuns.length})` : ''}`}
           color='secondary'
           startIcon={<CgExport />}
           onlyIconOnSmallView
@@ -261,6 +261,18 @@ export default function AdminMasterAccountPage() {
             field: 'deletedAt',
             label: 'Deleted At',
             render: row => (row.deletedAt ? dateFns.format(row.deletedAt, constants.dateFormats.dateColumn) : '-'),
+          },
+          {
+            field: 'isChangedPassword',
+            label: 'Password Changed',
+            render: row =>
+              row.isChangedPassword ? (
+                <div className='flex items-center justify-center'>
+                  <Checkbox inputProps={{ checked: row.isChangedPassword }} />
+                </div>
+              ) : (
+                row.password
+              ),
           },
           {
             field: 'actions',

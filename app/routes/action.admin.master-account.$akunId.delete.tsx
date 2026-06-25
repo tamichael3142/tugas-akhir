@@ -15,7 +15,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
 
     if (!akunId)
       throw {
-        message: 'Akun tidak ditemukan!',
+        message: 'Account not found!',
       }
 
     return await prisma.akun

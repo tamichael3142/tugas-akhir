@@ -11,6 +11,17 @@ async function verifyPassword({ password, hashedPassword }: { password: string; 
   return isMatch
 }
 
-const PasswordUtils = { hashPassword, verifyPassword }
+function generatePassword(): string {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const digits = '0123456789'
+  const digitChar = digits[Math.floor(Math.random() * digits.length)]
+  const digitPos = Math.floor(Math.random() * 8)
+
+  return Array.from({ length: 8 }, (_, i) =>
+    i === digitPos ? digitChar : letters[Math.floor(Math.random() * letters.length)],
+  ).join('')
+}
+
+const PasswordUtils = { hashPassword, verifyPassword, generatePassword }
 
 export default PasswordUtils

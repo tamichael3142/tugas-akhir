@@ -58,7 +58,7 @@ export async function action({ request }: ActionFunctionArgs): Promise<ActionDat
       tanggalLahir: item.tanggalLahir ? new Date(item.tanggalLahir) : undefined,
       role: item.role,
       username: item.username,
-      password: await PasswordUtils.hashPassword(item.username),
+      password: PasswordUtils.generatePassword(),
       email: item.email,
       jenisKelamin: item.jenisKelamin,
       agama: item.agama,

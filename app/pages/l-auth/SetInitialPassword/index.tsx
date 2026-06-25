@@ -23,9 +23,9 @@ export default function LAuthSetInitialPasswordPage() {
   useEffect(() => {
     if (actionData?.success) {
       formHook.reset()
-      toast.success(actionData.message ?? 'Password berhasil diubah!')
+      toast.success(actionData.message ?? 'Password changed!')
     } else if (actionData?.error) {
-      toast.error(actionData.message ?? 'Terjadi kesalahan!')
+      toast.error(actionData.message ?? 'Something is wrong!')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData])

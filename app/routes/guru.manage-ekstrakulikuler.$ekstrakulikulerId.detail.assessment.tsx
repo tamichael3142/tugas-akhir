@@ -80,7 +80,7 @@ export async function action({
     if (!currUser)
       throw {
         code: 404,
-        message: 'User tidak ditemukan!',
+        message: 'User not found!',
       }
 
     if (!ekstrakulikulerId)

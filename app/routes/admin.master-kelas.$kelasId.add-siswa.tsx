@@ -102,7 +102,7 @@ export async function action({ request, params }: ActionFunctionArgs): Promise<A
         if (!semesterSatu || !semesterDua)
           throw {
             code: 401,
-            message: 'Semester ajaran tidak ditemukan!',
+            message: 'Academic Semester not found!',
           }
 
         const existing = await tx.siswaPerKelasDanSemester.findMany({

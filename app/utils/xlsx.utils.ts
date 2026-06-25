@@ -10,38 +10,39 @@ function excelDateToJSDate(serial: number) {
 }
 
 function downloadExcelFromIds({ fileName, ids }: { ids: (number | string)[]; fileName: string }) {
-  // 1️⃣ Siapkan data (array of objects)
+  // Siapkan data (array of objects)
   const data = ids.map(id => ({ id }))
 
-  // 2️⃣ Buat worksheet dari data
+  // Buat worksheet dari data
   const ws = XLSX.utils.json_to_sheet(data)
 
-  // 3️⃣ Buat workbook dan tambahkan worksheet
+  // Buat workbook dan tambahkan worksheet
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws)
 
-  // 4️⃣ Generate file dan langsung download
+  // Generate file dan langsung download
   XLSX.writeFile(wb, fileName)
 }
 
 function downloadExcelFromAkun({ fileName, akuns }: { akuns: Akun[]; fileName: string }) {
-  // 1️⃣ Siapkan data (array of objects)
+  // Siapkan data (array of objects)
   const data = akuns.map(akun => ({
     id: akun.id,
     name: DBHelpers.akun.getDisplayName(akun),
     username: akun.username,
     nip: akun.nip,
     email: akun.email,
+    password: akun.isChangedPassword ? '' : akun.password,
   }))
 
-  // 2️⃣ Buat worksheet dari data
+  // Buat worksheet dari data
   const ws = XLSX.utils.json_to_sheet(data)
 
-  // 3️⃣ Buat workbook dan tambahkan worksheet
+  // Buat workbook dan tambahkan worksheet
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws)
 
-  // 4️⃣ Generate file dan langsung download
+  // Generate file dan langsung download
   XLSX.writeFile(wb, fileName)
 }
 

@@ -26,15 +26,16 @@ async function loginWithUsernameNIPAndPassword({
     },
   })
 
-  if (!existingAkun)
-    return { success: false, errorType: DBAuthErrorType.AKUN_NOT_FOUND, message: 'Akun tidak ditemukan!' }
+  if (!existingAkun) return { success: false, errorType: DBAuthErrorType.AKUN_NOT_FOUND, message: 'Account not found!' }
 
-  const passwordValid = await PasswordUtils.verifyPassword({ password, hashedPassword: existingAkun.password })
+  const passwordExactVerified = password === existingAkun.password
+  const passwordHashVerified = await PasswordUtils.verifyPassword({ password, hashedPassword: existingAkun.password })
+  const passwordValid = existingAkun.isChangedPassword ? passwordHashVerified : passwordExactVerified
 
   return {
     success: passwordValid,
     errorType: passwordValid ? undefined : DBAuthErrorType.WRONG_PASSWORD,
-    message: passwordValid ? undefined : 'Password salah!',
+    message: passwordValid ? undefined : 'Wrong password!',
     user: passwordValid ? existingAkun : undefined,
   }
 }

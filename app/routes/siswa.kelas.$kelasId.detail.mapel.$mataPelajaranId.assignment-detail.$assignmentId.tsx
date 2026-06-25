@@ -139,7 +139,7 @@ export async function action({
 
     if (currSubmission && !currSubmission)
       throw {
-        message: 'Submission tidak ditemukan!',
+        message: 'Submission not found!',
       }
 
     let newData: Partial<Omit<AssignmentSubmission, 'id' | 'siswaId' | 'assignmentId'>> = {}
