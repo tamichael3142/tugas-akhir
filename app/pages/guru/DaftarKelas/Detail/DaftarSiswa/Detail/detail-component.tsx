@@ -11,6 +11,9 @@ type Props = {
   totalPoint: number
 }
 
+const FIRST_TRESSHOLD = 50
+const SECOND_TRESSHOLD = 75
+
 export default function GuruDaftarKelasDetailDetailSiswaPageDataDetailComponent(props: Props) {
   function DetailItem({ label, colSpan = 1, children }: { label?: ReactNode; colSpan?: number; children?: ReactNode }) {
     return (
@@ -69,7 +72,19 @@ export default function GuruDaftarKelasDetailDetailSiswaPageDataDetailComponent(
         {EnumsTitleUtils.getKewarganegaraan(props.account.kewarganegaraan as Kewarganegaraan)}
       </DetailItem>
       <DetailItem label='Total Violation Point' colSpan={1}>
-        {props.totalPoint}
+        <div
+          className={classNames('rounded-lg p-1 w-fit', {
+            ['bg-yellow-300']: props.totalPoint >= FIRST_TRESSHOLD && props.totalPoint < SECOND_TRESSHOLD,
+            ['bg-red-500 text-white']: props.totalPoint >= SECOND_TRESSHOLD,
+          })}
+        >
+          {props.totalPoint}
+          {props.totalPoint >= FIRST_TRESSHOLD && props.totalPoint < SECOND_TRESSHOLD
+            ? ' (Exceeding first tresshold!)'
+            : props.totalPoint >= SECOND_TRESSHOLD
+              ? ' (Exceeding second tresshold!)'
+              : null}
+        </div>
       </DetailItem>
     </div>
   )

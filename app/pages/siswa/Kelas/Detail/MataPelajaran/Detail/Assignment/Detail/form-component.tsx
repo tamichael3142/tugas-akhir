@@ -35,7 +35,10 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailFormC
         </InputWrapper>
       ) : props.assignment.submissionType === AssignmentSubmissionType.FILE_UPLOAD ? (
         <InputWrapper>
-          <TextInput label='File' inputProps={{ type: 'file', name: 'file', accept: '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx' }} />
+          <TextInput
+            label='File'
+            inputProps={{ type: 'file', name: 'file', accept: '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx' }}
+          />
           {props.assignmentSubmission?.fileDownloadUrl ? (
             <a target='_blank' rel='noreferrer' href={props.assignmentSubmission.fileDownloadUrl}>
               <Button label='Preview' size='sm' color='secondary' className='mt-2 ml-auto' />
