@@ -9,12 +9,13 @@ export type AbsensiCalendarItem = {
   id: string
   tanggal: Date | string
   kelas: { nama: string }
+  status?: string
 }
 
 export type AbsensiCalendarProps = {
   absensis: AbsensiCalendarItem[]
-  editUrl: (id: string) => string
-  mutateUrl: (id: string) => string
+  editUrl?: (id: string) => string
+  mutateUrl?: (id: string) => string
 }
 
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -142,14 +143,18 @@ export default function AbsensiCalendar({ absensis, editUrl, mutateUrl }: Absens
                 {dayAbsensis.map(absensi => (
                   <div key={absensi.id} className='border rounded-lg px-1.5 py-1 text-xs'>
                     <div className='font-semibold truncate'>{absensi.kelas.nama}</div>
-                    <div className='flex gap-2 mt-1'>
-                      <Link to={editUrl(absensi.id)} className='text-yellow-500 hover:underline font-medium'>
-                        Edit
-                      </Link>
-                      <Link to={mutateUrl(absensi.id)} className='text-secondary hover:underline font-medium'>
-                        Mutate
-                      </Link>
-                    </div>
+                    {editUrl && mutateUrl ? (
+                      <div className='flex gap-2 mt-1'>
+                        <Link to={editUrl(absensi.id)} className='text-yellow-500 hover:underline font-medium'>
+                          Edit
+                        </Link>
+                        <Link to={mutateUrl(absensi.id)} className='text-secondary hover:underline font-medium'>
+                          Mutate
+                        </Link>
+                      </div>
+                    ) : absensi.status != null ? (
+                      <div className='mt-1 font-medium text-gray-600'>{absensi.status}</div>
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -158,8 +163,10 @@ export default function AbsensiCalendar({ absensis, editUrl, mutateUrl }: Absens
         })}
       </div>
 
-      {absensis.length === 0 && (
-        <p className='text-center text-gray-400 py-8 text-sm'>No attendance records for this month.</p>
+      {!absensis.some(a => dateFns.isSameMonth(new Date(a.tanggal as unknown as string), viewDate)) && (
+        <div className='flex flex-col items-center justify-center py-12 text-gray-400'>
+          <p className='text-sm font-medium'>No attendance records for {dateFns.format(viewDate, 'MMMM yyyy')}.</p>
+        </div>
       )}
     </>
   )
