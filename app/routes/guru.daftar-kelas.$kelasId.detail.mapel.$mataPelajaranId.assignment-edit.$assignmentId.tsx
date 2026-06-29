@@ -1,4 +1,4 @@
-import { Assignment, Kelas, MataPelajaran } from '@prisma/client'
+import { Assignment, AssignmentSubmissionType, Kelas, MataPelajaran } from '@prisma/client'
 import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node'
 import { MetaFunction } from '@remix-run/react'
 import { getValidatedFormData } from 'remix-hook-form'
@@ -113,6 +113,10 @@ export async function action({
           tanggalBerakhir: new Date(data.tanggalBerakhir),
           isSubmitable: data.isSubmitable,
           submissionType: data.submissionType,
+          submissionAllowedFileType:
+            data.submissionType === AssignmentSubmissionType.FILE_UPLOAD
+              ? (data.submissionAllowedFileType ?? null)
+              : null,
           connectedKompetensiId: data.connectedKompetensiId ?? null,
           updatedAt: new Date(),
           lastUpdateById: currUser?.id,

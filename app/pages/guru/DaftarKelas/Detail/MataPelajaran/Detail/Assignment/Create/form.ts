@@ -3,7 +3,7 @@ import { Assignment } from '@prisma/client'
 import { format } from 'date-fns'
 import * as z from 'zod'
 import constants from '~/constants'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
+import { AssignmentSubmissionAllowedFileType, AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 import DateUtils from '~/utils/date.utils'
 
 export const validationSchema = z.object({
@@ -13,6 +13,7 @@ export const validationSchema = z.object({
   tanggalBerakhir: z.string(),
   isSubmitable: z.boolean(),
   submissionType: z.enum(Object.values(AssignmentSubmissionType)),
+  submissionAllowedFileType: z.enum(Object.values(AssignmentSubmissionAllowedFileType)).optional().nullable(),
   connectedKompetensiId: z.string().optional().nullable(),
 })
 
@@ -27,6 +28,7 @@ export const emptyValues: GuruDaftarKelasDetailMataPelajaranDetailAssignmentCrea
   tanggalBerakhir: format(new Date(), constants.dateFormats.rawDateTimeInput),
   isSubmitable: false,
   submissionType: AssignmentSubmissionType.FILE_UPLOAD,
+  submissionAllowedFileType: null,
   connectedKompetensiId: null,
 }
 
@@ -48,6 +50,9 @@ export function translateRawToFormData(
     submissionType: data.submissionType
       ? (data.submissionType as AssignmentSubmissionType)
       : AssignmentSubmissionType.FILE_UPLOAD,
+    submissionAllowedFileType: data.submissionAllowedFileType
+      ? (data.submissionAllowedFileType as AssignmentSubmissionAllowedFileType)
+      : null,
     connectedKompetensiId: data.connectedKompetensiId ?? null,
   }
 }

@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { format } from 'date-fns'
 import { ReactNode } from 'react'
 import constants from '~/constants'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
+import { AssignmentSubmissionAllowedFileType, AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 import DBHelpers from '~/database/helpers'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
@@ -12,6 +12,18 @@ type Props = {
 }
 
 export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetailDetailComponent(props: Props) {
+  const getSubmissionTypeName = () => {
+    let result = EnumsTitleUtils.getAssignmentSubmissionType(
+      props.assignment.submissionType as AssignmentSubmissionType,
+    )
+    if (
+      props.assignment.submissionType === AssignmentSubmissionType.FILE_UPLOAD &&
+      !!props.assignment.submissionAllowedFileType
+    )
+      result += ` (${EnumsTitleUtils.getAssignmentSubmissionAllowedFileType(props.assignment.submissionAllowedFileType as AssignmentSubmissionAllowedFileType)})`
+    return result
+  }
+
   function DetailItem({ label, colSpan = 1, children }: { label?: ReactNode; colSpan?: number; children?: ReactNode }) {
     return (
       <div
@@ -33,7 +45,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentDetail
         {props.assignment.title}
       </DetailItem>
       <DetailItem label='Type' colSpan={1}>
-        {EnumsTitleUtils.getAssignmentSubmissionType(props.assignment.submissionType as AssignmentSubmissionType)}
+        {getSubmissionTypeName()}
       </DetailItem>
       <DetailItem label='Start Date'>
         {format(new Date(props.assignment.tanggalMulai), constants.dateFormats.rawDateTimeInput)}

@@ -69,6 +69,15 @@ enum AssignmentSubmissionType {
   @@schema("public")
 }
 
+enum AssignmentSubmissionAllowedFileType {
+  PDF
+  WORD
+  EXCEL
+  PPT
+
+  @@schema("public")
+}
+
 enum AssignmentSubmissionStatus {
   ASSIGNED
   ON_PROGRESS
@@ -405,31 +414,32 @@ model Absensi {
 }
 
 model Assignment {
-  id                    String                   @id @default(cuid())
+  id                        String                               @id @default(cuid())
   // ? credentials
-  mataPelajaranId       String
-  mataPelajaran         MataPelajaran            @relation(fields: [mataPelajaranId], references: [id])
-  kelasId               String
-  kelas                 Kelas                    @relation(fields: [kelasId], references: [id])
+  mataPelajaranId           String
+  mataPelajaran             MataPelajaran                        @relation(fields: [mataPelajaranId], references: [id])
+  kelasId                   String
+  kelas                     Kelas                                @relation(fields: [kelasId], references: [id])
   // ? general
-  title                 String
-  description           String?
-  tanggalMulai          DateTime
-  tanggalBerakhir       DateTime
-  isSubmitable          Boolean                  @default(false)
-  submissionType        AssignmentSubmissionType @default(FILE_UPLOAD)
+  title                     String
+  description               String?
+  tanggalMulai              DateTime
+  tanggalBerakhir           DateTime
+  isSubmitable              Boolean                              @default(false)
+  submissionType            AssignmentSubmissionType             @default(FILE_UPLOAD)
+  submissionAllowedFileType AssignmentSubmissionAllowedFileType? @default(PDF)
   // ? meta data
-  updatedAt             DateTime                 @default(now())
-  createdAt             DateTime                 @default(now())
-  createdById           String?
-  createdBy             Akun?                    @relation(fields: [createdById], references: [id], name: "createdBy")
-  lastUpdateById        String?
-  lastUpdateBy          Akun?                    @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
+  updatedAt                 DateTime                             @default(now())
+  createdAt                 DateTime                             @default(now())
+  createdById               String?
+  createdBy                 Akun?                                @relation(fields: [createdById], references: [id], name: "createdBy")
+  lastUpdateById            String?
+  lastUpdateBy              Akun?                                @relation(fields: [lastUpdateById], references: [id], name: "lastUpdateBy")
   // ? connected kompetensi
-  connectedKompetensiId String?
-  connectedKompetensi   Kompetensi?              @relation(fields: [connectedKompetensiId], references: [id])
+  connectedKompetensiId     String?
+  connectedKompetensi       Kompetensi?                          @relation(fields: [connectedKompetensiId], references: [id])
   // ? relations
-  submissions           AssignmentSubmission[]
+  submissions               AssignmentSubmission[]
 
   @@index([kelasId])
   @@index([mataPelajaranId])

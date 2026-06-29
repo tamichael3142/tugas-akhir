@@ -43,6 +43,13 @@ export enum AssignmentSubmissionType {
   TIME_STAMP = 'TIME_STAMP',
 }
 
+export enum AssignmentSubmissionAllowedFileType {
+  PDF = 'PDF',
+  WORD = 'WORD',
+  EXCEL = 'EXCEL',
+  PPT = 'PPT',
+}
+
 export enum AssignmentSubmissionStatus {
   ASSIGNED = 'ASSIGNED',
   ON_PROGRESS = 'ON_PROGRESS',

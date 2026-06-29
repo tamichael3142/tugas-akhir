@@ -1,4 +1,5 @@
 import {
+  AssignmentSubmissionAllowedFileType,
   AssignmentSubmissionStatus,
   AssignmentSubmissionType,
   GolonganDarah,
@@ -118,6 +119,21 @@ function getAssignmentSubmissionType(value: AssignmentSubmissionType) {
   }
 }
 
+function getAssignmentSubmissionAllowedFileType(value: AssignmentSubmissionAllowedFileType) {
+  switch (value) {
+    case AssignmentSubmissionAllowedFileType.PDF:
+      return 'PDF'
+    case AssignmentSubmissionAllowedFileType.EXCEL:
+      return 'Excel'
+    case AssignmentSubmissionAllowedFileType.PPT:
+      return 'PPT'
+    case AssignmentSubmissionAllowedFileType.WORD:
+      return 'Word'
+    default:
+      return '-'
+  }
+}
+
 function getAssignmentSubmissionStatus(value: AssignmentSubmissionStatus) {
   switch (value) {
     case AssignmentSubmissionStatus.ASSIGNED:
@@ -156,6 +172,7 @@ const EnumsTitleUtils = {
   getTipeAbsensi,
   getTipeAbsensiShort,
   getAssignmentSubmissionType,
+  getAssignmentSubmissionAllowedFileType,
   getAssignmentSubmissionStatus,
 }
 

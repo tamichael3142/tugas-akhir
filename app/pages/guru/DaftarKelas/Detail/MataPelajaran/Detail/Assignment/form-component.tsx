@@ -5,7 +5,7 @@ import { useRemixFormContext } from 'remix-hook-form'
 import { Checkbox, StaticSelect, TextAreaInput, TextInput } from '~/components/forms'
 import { ReactNode } from 'react'
 import classNames from 'classnames'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
+import { AssignmentSubmissionAllowedFileType, AssignmentSubmissionType } from '~/database/enums/prisma.enums'
 import EnumsTitleUtils from '~/utils/enums-title.utils'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormComponent(props: Props) {
   const { connectableKompetensis = [] } = props
   const formHook = useRemixFormContext<GuruDaftarKelasDetailMataPelajaranDetailAssignmentCreateFormType>()
+  const submissionType = formHook.watch('submissionType')
 
   function InputWrapper({ children, cutting = 'full' }: { children?: ReactNode; cutting?: 'full' | 'half' }) {
     return (
@@ -94,11 +95,39 @@ export default function AdminDaftarKelasDetailMataPelajaranDetailAssignmentFormC
                 label: EnumsTitleUtils.getAssignmentSubmissionType(item),
                 value: item,
               }))}
-              selectProps={{ value: field.value, onChange: e => field.onChange(e.target.value) }}
+              selectProps={{
+                value: field.value,
+                onChange: e => {
+                  if (e.target.value === AssignmentSubmissionType.FILE_UPLOAD)
+                    formHook.setValue('submissionAllowedFileType', AssignmentSubmissionAllowedFileType.PDF)
+                  field.onChange(e.target.value)
+                },
+              }}
             />
           )}
         />
       </InputWrapper>
+      {submissionType === AssignmentSubmissionType.FILE_UPLOAD && (
+        <InputWrapper cutting='half'>
+          <Controller
+            control={formHook.control}
+            name='submissionAllowedFileType'
+            render={({ field }) => (
+              <StaticSelect
+                label='Allowed File Type'
+                options={Object.values(AssignmentSubmissionAllowedFileType).map(item => ({
+                  label: EnumsTitleUtils.getAssignmentSubmissionAllowedFileType(item),
+                  value: item,
+                }))}
+                selectProps={{
+                  value: field.value ?? '',
+                  onChange: e => field.onChange(e.target.value),
+                }}
+              />
+            )}
+          />
+        </InputWrapper>
+      )}
       <InputWrapper cutting='half'>
         <Controller
           control={formHook.control}

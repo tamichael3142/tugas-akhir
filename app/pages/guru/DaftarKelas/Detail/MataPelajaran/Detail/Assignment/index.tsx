@@ -2,7 +2,7 @@ import { Link, useLoaderData, useNavigate, useRevalidator, useSearchParams } fro
 import { useEffect, useState } from 'react'
 import { Button, TextInput } from '~/components/forms'
 import { Card, DataGrid, LoadingFullScreen } from '~/components/ui'
-import { AssignmentSubmissionType } from '~/database/enums/prisma.enums'
+import { AssignmentSubmissionType, AssignmentSubmissionAllowedFileType } from '~/database/enums/prisma.enums'
 import { LoaderDataGuruDaftarKelasDetailMataPelajaranDetailAssignment } from '~/types/loaders-data/guru'
 import DataGridActionButtonWrapper from '~/components/ui/DataGrid/ActionButton/Wrapper'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
@@ -110,7 +110,12 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAssignmentPage()
           {
             field: 'submissionType',
             label: 'Type',
-            render: row => EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType),
+            render: row => {
+              let result = EnumsTitleUtils.getAssignmentSubmissionType(row.submissionType as AssignmentSubmissionType)
+              if (row.submissionType === AssignmentSubmissionType.FILE_UPLOAD && !!row.submissionAllowedFileType)
+                result += ` (${EnumsTitleUtils.getAssignmentSubmissionAllowedFileType(row.submissionAllowedFileType as AssignmentSubmissionAllowedFileType)})`
+              return result
+            },
           },
           {
             field: 'actions',

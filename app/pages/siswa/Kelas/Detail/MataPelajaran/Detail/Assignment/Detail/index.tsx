@@ -11,6 +11,7 @@ import { FaSave } from 'react-icons/fa'
 import SiswaKelasDetailMataPelajaranDetailAssignmentDetailFormComponent from './form-component'
 import SiswaKelasDetailMataPelajaranDetailAssignmentDetailDetailComponent from './detail-component'
 import DBHelpers from '~/database/helpers'
+import { AssignmentSubmissionStatus } from '~/database/enums/prisma.enums'
 
 const sectionPrefix = 'siswa-kelas-detail-mata-pelajaran-detail-assignment-detail'
 
@@ -23,7 +24,8 @@ export default function SiswaKelasDetailMataPelajaranDetailAssignmentDetailPage(
   const user = useAuthStore(state => state.user)
 
   const userIsOwner = loader.assignmentSubmission ? loader.assignmentSubmission.siswaId === user?.id : true
-  const isSubmitable = DBHelpers.mapelAssignment.getIsSubmittable(loader.assignment) && userIsOwner
+  const isScored = loader.assignmentSubmission?.submissionStatus === AssignmentSubmissionStatus.SCORED
+  const isSubmitable = DBHelpers.mapelAssignment.getIsSubmittable(loader.assignment) && userIsOwner && !isScored
 
   useEffect(() => {
     if (fetcher.state === 'idle' && fetcher.data?.success) {

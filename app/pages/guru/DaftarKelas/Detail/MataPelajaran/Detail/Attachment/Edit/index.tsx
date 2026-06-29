@@ -51,7 +51,7 @@ export default function GuruDaftarKelasDetailMataPelajaranDetailAttachmentEditPa
       <fetcher.Form method='post' encType='multipart/form-data'>
         <div className='p-4 lg:px-8'>
           <div className='flex flex-row items-center gap-4'>
-            <h2 className='font-semibold text-xl'>Edit Assignment</h2>
+            <h2 className='font-semibold text-xl'>Edit Attachment</h2>
             <div className='grow' />
             <BackButton buttonProps={{ size: 'sm', variant: 'outlined', color: 'secondary' }} />
           </div>
