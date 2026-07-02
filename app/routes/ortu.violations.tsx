@@ -37,12 +37,24 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
         pagination: { page: 1, limit: 10, total: 0, totalPages: 0, hasNextPage: false, hasPrevPage: false },
         filters: {},
       },
+      totalPoint: 0,
     } as LoaderDataOrtuViolations
   }
 
   if (!currUser.children.map(item => item.siswaId).includes(siswaId)) {
     throw redirect(AppNav.ortu.violations())
   }
+
+  const totalPoint = await prisma.pelanggaranPerKelas
+    .aggregate({
+      _sum: { poin: true },
+      where: {
+        siswaId,
+        deletedAt: null,
+      },
+    })
+    .then(res => res._sum.poin ?? 0)
+    .catch(() => 0)
 
   const pelanggarans = await getPaginatedData({
     request,
@@ -87,7 +99,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<LoaderDat
     },
   })
 
-  return { user: currUser, pelanggarans } as LoaderDataOrtuViolations
+  return { user: currUser, pelanggarans, totalPoint } as LoaderDataOrtuViolations
 }
 
 export default function OrtuViolationsRoute() {

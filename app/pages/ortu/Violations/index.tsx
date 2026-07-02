@@ -8,6 +8,7 @@ import OrtuPageContainer from '~/layouts/ortu/OrtuPageContainer'
 import { LoaderDataOrtuViolations } from '~/types/loaders-data/ortu'
 import { format } from 'date-fns'
 import constants from '~/constants'
+import classNames from 'classnames'
 
 const sectionPrefix = 'ortu-violations'
 
@@ -59,22 +60,42 @@ export default function OrtuViolationsPage() {
   if (revalidator.state === 'loading' || !loader.user) return <LoadingFullScreen />
   return (
     <OrtuPageContainer title='Violations'>
-      <StaticSelect
-        className='max-w-md mb-6'
-        options={[
-          { value: '', label: 'Choose a student...' },
-          ...(loader.user.children
-            ? loader.user.children.map(item => ({
-                value: item.siswaId,
-                label: DBHelpers.akun.getDisplayName(item.siswa),
-              }))
-            : []),
-        ]}
-        selectProps={{
-          value: currentSiswaId,
-          onChange: e => handleSiswaChange(e.target.value),
-        }}
-      />
+      <div className='flex flex-row items-start justify-between gap-4'>
+        <StaticSelect
+          className='max-w-md mb-6'
+          options={[
+            { value: '', label: 'Choose a student...' },
+            ...(loader.user.children
+              ? loader.user.children.map(item => ({
+                  value: item.siswaId,
+                  label: DBHelpers.akun.getDisplayName(item.siswa),
+                }))
+              : []),
+          ]}
+          selectProps={{
+            value: currentSiswaId,
+            onChange: e => handleSiswaChange(e.target.value),
+          }}
+        />
+
+        <div className='font-bold mb-4 flex flex-row items-center'>
+          <p>Total Minus Point:</p>
+          <div
+            className={classNames('rounded-lg p-1 w-fit', {
+              ['bg-yellow-300']:
+                loader.totalPoint >= constants.treshold.first && loader.totalPoint < constants.treshold.second,
+              ['bg-red-500 text-white']: loader.totalPoint >= constants.treshold.second,
+            })}
+          >
+            {loader.totalPoint}
+            {loader.totalPoint >= constants.treshold.first && loader.totalPoint < constants.treshold.second
+              ? ' (Exceeding first tresshold!)'
+              : loader.totalPoint >= constants.treshold.second
+                ? ' (Exceeding second tresshold!)'
+                : null}
+          </div>
+        </div>
+      </div>
 
       {!currentSiswaId ? (
         <div className='bg-neutral-100 rounded-xl p-4 shadow'>

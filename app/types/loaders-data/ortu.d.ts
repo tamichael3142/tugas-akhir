@@ -113,4 +113,5 @@ export type LoaderDataOrtuAccountChangePassword = LoaderDataOrtuAccount
  */
 export type LoaderDataOrtuViolations = OrtuWithChildren & {
   pelanggarans: PaginationReturns<PelanggaranPerKelas & { siswa: Akun; kelas: Kelas; createdBy: Akun | null }>
+  totalPoint: number
 }

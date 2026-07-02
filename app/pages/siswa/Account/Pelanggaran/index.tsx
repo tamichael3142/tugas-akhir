@@ -4,6 +4,7 @@ import { LoaderDataSiswaAccountPelanggaran } from '~/types/loaders-data/siswa'
 import SiswaPageContainer from '~/layouts/siswa/SiswaPageContainer'
 import { format } from 'date-fns'
 import constants from '~/constants'
+import classNames from 'classnames'
 
 const sectionPrefix = 'siswa-account-pelanggaran'
 
@@ -28,7 +29,25 @@ export default function SiswaAccountPelanggaranPage() {
       {loader.pelanggarans && Array.isArray(loader.pelanggarans.data) ? (
         <DataGrid
           id={`${sectionPrefix}-data-grid`}
-          leadingView={<div className='font-bold mb-4'>Total Minus Point: {loader.totalPoint}</div>}
+          leadingView={
+            <div className='font-bold mb-4'>
+              Total Minus Point:{' '}
+              <div
+                className={classNames('rounded-lg p-1 w-fit', {
+                  ['bg-yellow-300']:
+                    loader.totalPoint >= constants.treshold.first && loader.totalPoint < constants.treshold.second,
+                  ['bg-red-500 text-white']: loader.totalPoint >= constants.treshold.second,
+                })}
+              >
+                {loader.totalPoint}
+                {loader.totalPoint >= constants.treshold.first && loader.totalPoint < constants.treshold.second
+                  ? ' (Exceeding first tresshold!)'
+                  : loader.totalPoint >= constants.treshold.second
+                    ? ' (Exceeding second tresshold!)'
+                    : null}
+              </div>
+            </div>
+          }
           columns={[
             { field: 'remark', label: 'Remark' },
             { field: 'poin', label: 'Minus Points' },
