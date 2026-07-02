@@ -3,7 +3,7 @@ import { Link, useFetcher, useLoaderData, useNavigate, useRevalidator, useSearch
 import * as dateFns from 'date-fns'
 import { Fragment, useEffect } from 'react'
 import { FaPlus } from 'react-icons/fa'
-// import { MdCalendarMonth } from 'react-icons/md'
+import { MdCalendarMonth } from 'react-icons/md'
 import { Button } from '~/components/forms'
 import { DataGrid, LoadingFullScreen } from '~/components/ui'
 import DataGridActionButton from '~/components/ui/DataGrid/ActionButton'
@@ -122,14 +122,14 @@ export default function AdminMasterTahunAjaranPage() {
             label: 'Action',
             render: row => (
               <DataGridActionButtonWrapper>
-                {/* <Link to={AppNav.admin.masterTahunAjaranManageAcademicCalendar({ id: row.id })}>
+                <Link to={AppNav.admin.masterTahunAjaranManageAcademicCalendar({ id: row.id })}>
                   <DataGridActionButton
                     icon={<MdCalendarMonth />}
                     color='info'
                     label='Manage Academic Calendar'
                     buttonProps={{ disabled: !!row.deletedAt }}
                   />
-                </Link> */}
+                </Link>
                 <Link to={AppNav.admin.masterTahunAjaranEdit({ id: row.id })}>
                   <DataGridActionButton
                     icon={DataGridActionButtonHelper.getEditIcon()}
